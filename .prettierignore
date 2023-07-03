@@ -1,0 +1,8 @@
+node_modules
+bin
+dist
+build
+pnpm-lock.yaml
+.vscode
+README.md
+pnpm-workspace.yaml

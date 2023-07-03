@@ -1,0 +1,25 @@
+{
+  "name": "vue-full-calendar-core",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "test": "pnpm --stream -r test",
+    "dev:vue-3": "cd ./packages/vue3-demo && pnpm run dev",
+    "dev:vue-2": "cd ./packages/vue2-demo && pnpm run dev",
+    "install-packages": "cd ./packages/vue-full-event-calendar && npm i && cd .. && cd ./vue3-demo && npm i && cd .. && cd ./vue2-demo && npm i ",
+    "format": "prettier --write",
+    "build": "pnpm -r build && cd ./packages/vue-full-event-calendar && pnpm pack",
+    "precommit": "pretty-quick --staged",
+    "prepare": "husky install .husky"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.32.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.0",
+    "prettier": "^2.8.0",
+    "pretty-quick": "^3.1.3"
+  }
+}
