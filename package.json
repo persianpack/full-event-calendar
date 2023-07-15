@@ -1,7 +1,14 @@
 {
-  "name": "vue-full-calendar-core",
-  "description": "",
   "private": true,
+  "name": "@calendarview/root",
+  "description": "Full-event calendar with drag and drop in JavaScript",
+  "version": "0.0.0",
+  "keywords": [
+    "calendar",
+    "event",
+    "full-sized",
+    "calendarview"
+  ],
   "scripts": {
     "test": "pnpm --stream -r test",
     "dev:vue-3": "cd ./packages/vue3-demo && pnpm run dev",
@@ -12,8 +19,7 @@
     "precommit": "pretty-quick --staged",
     "prepare": "husky install .husky"
   },
-  "keywords": [],
-  "author": "",
+  "author": "Amirkian adl",
   "license": "MIT",
   "devDependencies": {
     "eslint": "^8.32.0",
