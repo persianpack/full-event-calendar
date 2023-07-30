@@ -1,3 +1,0 @@
-function sortsEvents() {
-  console.log('')
-}

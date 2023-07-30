@@ -24,6 +24,7 @@ function App() {
         </p>
       </div>
       <p class="read-the-docs">Click on the Vite and Solid logos to learn more</p>
+      <div></div>
     </>
   )
 }
