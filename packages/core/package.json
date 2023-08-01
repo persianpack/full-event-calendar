@@ -1,5 +1,5 @@
 {
-  "name": "@calendarview/root",
+  "name": "@full-event-calendar/core",
   "version": "0.0.0",
   "type": "module",
   "files": [
@@ -24,6 +24,7 @@
     "vite-plugin-solid": "^2.7.0"
   },
   "dependencies": {
+    "redux": "^4.2.1",
     "solid-js": "^1.7.7"
   }
 }

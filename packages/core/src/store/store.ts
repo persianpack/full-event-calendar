@@ -1,7 +1,9 @@
 // @ts-nocheck
 import { createStore } from 'redux'
 
-const defaultState = {}
+const defaultState = {
+  todos: []
+}
 // todos reducer
 const todos = (state = defaultState, action) => {
   switch (action.type) {

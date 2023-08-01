@@ -3,9 +3,14 @@ import { createSignal } from 'solid-js'
 import { CounterProvider } from './contex-injector/contex.jsx'
 
 import { render } from 'solid-js/web'
+import useRedux from './store/useRedux'
+import reduxStore from './store/store'
+import actions from './store/actions'
+import { useCounter } from './contex-injector/contex.js'
 
 function App() {
   const [count, setCount] = createSignal(0)
+  const data = useCounter()
 
   return (
     <>
@@ -22,8 +27,11 @@ function App() {
 }
 
 function CalendarRoot() {
+  const [store, { addTodo, toggleTodo }] = useRedux(reduxStore, actions)
+  addTodo('sdsds')
+  console.log(store)
   return (
-    <CounterProvider>
+    <CounterProvider store={store}>
       <App />
     </CounterProvider>
   )
