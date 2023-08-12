@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "redux": "^4.2.1",
+    "sass": "^1.64.2",
     "solid-js": "^1.7.7"
   }
 }
