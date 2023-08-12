@@ -1,17 +1,27 @@
-// import { CalendarApi } from './CalendarApi.js'
+export interface CalendarApi {
+  // Current Date
+  // -----------------------------------------------------------------------------------------------------------------
 
-// export class CalendarImpl implements CalendarApi {
-//     currentStorManager: any // will be set by CalendarDataManager
-//     prevDay():void{
-//         // dispatch to store manager
-//     }
-//     nextDay():void{
-//         // dispatch to store manager
-//     }
-//     getDate():Date{
-//         return new Date()
-//     }
-//     today():void{
+  prevDay(): void
+  nextDay(): void
+  //  prevYear(): void
+  // nextYear(): void
 
-//     }
-// }
+  today(): void
+  // render(): void
+  // gotoDate(zonedDateInput: DateInput): void
+  //  incrementDate(deltaInput: DurationInput): void
+  getDate(): Date
+
+  // formatDate(day: DateInput, calnedar: any, ): string
+  // formatRange(d0: DateInput, d1: DateInput, settings: any): string // TODO: settings type
+  //formatIso(d: DateInput, omitTime?: boolean): string
+
+  // Public Events API
+  // -----------------------------------------------------------------------------------------------------------------
+
+  // addEvent(eventInput: EventInput, sourceInput?: EventSourceApi | string | boolean): EventApi | null
+  // getEventById(id: string): EventApi | null
+  //getEvents(): EventApi[]
+  //removeAllEvents(): void
+}
