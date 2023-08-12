@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { createStore } from 'redux'
-
+import { Event } from '../api/EventImpl'
 const defaultState = {
   todos: []
 }
@@ -17,6 +17,14 @@ const todos = (state = defaultState, action) => {
             completed: false
           }
         ]
+      }
+    case 'SET_ALL_EVENTS':
+      const data = []
+      for (let i = 0; i < action.list.length; i++) {
+        data.push(new Event(action.list[i]))
+      }
+      return {
+        todos: data
       }
     case 'TOGGLE_TODO':
       return {
