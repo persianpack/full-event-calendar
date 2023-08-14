@@ -1,38 +1,34 @@
-// @ts-nocheck
-import { createStore } from 'redux'
-import { Event } from '../api/EventImpl'
-const defaultState = {
-  todos: []
+import { legacy_createStore as createStore, Reducer } from 'redux'
+// import { Event } from '../api/EventImpl'
+// Infer the `RootState` and `AppDispatch` types from the store itself
+// export type RootState = ReturnType<typeof store.getState>
+// // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+// export type AppDispatch = typeof store.dispatch
+
+// export type AppStore = typeof store
+// type AddSingleChatAction = {
+//   type: 'ADD_SINGLE_ROOMS';
+//   chat: ChatMessage;
+// };
+
+const defaultState: CalendarState = {
+  events: []
 }
-// todos reducer
-const todos = (state = defaultState, action) => {
+
+const calendarReducer: Reducer<CalendarState, SetAllChatsAction> = (state = defaultState, action: Action) => {
   switch (action.type) {
-    case 'ADD_TODO':
-      return {
-        todos: [
-          ...state.todos,
-          {
-            id: action.id,
-            text: action.text,
-            completed: false
-          }
-        ]
-      }
     case 'SET_ALL_EVENTS':
-      const data = []
-      for (let i = 0; i < action.list.length; i++) {
-        data.push(new Event(action.list[i]))
+      for (let i = 0; i < action.events.length; i++) {
+        //   data.push( (action.rooms[i]))
       }
-      return {
-        todos: data
-      }
-    case 'TOGGLE_TODO':
-      return {
-        todos: state.todos.map((todo) => (todo.id === action.id ? { ...todo, completed: !todo.completed } : todo))
-      }
+      return state
     default:
       return state
   }
 }
 
-export default createStore(todos)
+const store = createStore(calendarReducer)
+
+export type CalendarStore = typeof store
+
+export default store

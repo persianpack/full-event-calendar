@@ -3,12 +3,13 @@ import { DailyGrid } from './components/dailyGrid'
 import { useCounter } from './contex-injector/contex.js'
 
 export function App() {
-  const data = useCounter() as any
+  const data = useCounter()
   // const data = useCounter()
+  data.events
 
   return (
     <>
-      <DailyGrid events={data[0].todos} />
+      <DailyGrid events={data.events} />
     </>
   )
 }

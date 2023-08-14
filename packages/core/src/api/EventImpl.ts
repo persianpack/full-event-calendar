@@ -5,7 +5,6 @@ export class Event implements EventApi {
   end: Date
   name: string
   id: any
-  dosds = 'sdsd'
   constructor(eventData: any) {
     this.start = eventData.start
     this.end = eventData.end

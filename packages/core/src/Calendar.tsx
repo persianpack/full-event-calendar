@@ -1,14 +1,11 @@
 import { EventCalendar } from './api/CalendarApi.js'
-import { createSignal } from 'solid-js'
-import { useCounter } from './contex-injector/contex.js'
+
 import { CounterProvider } from './contex-injector/contex.jsx'
 import { hydrate, render } from 'solid-js/web'
-import useRedux from './store/useRedux'
-import reduxStore from './store/store'
-import actions from './store/actions'
+
 import { App } from './App.js'
 
-function CalendarRoot(props: any) {
+const CalendarRoot: Component<{ store: CalendarState }> = (props) => {
   return (
     <CounterProvider store={props.store}>
       <App />
@@ -36,22 +33,3 @@ export class Calendar extends EventCalendar {
     hydrate(() => <CalendarRoot store={this.storeManager} />, this.targetElement)
   }
 }
-
-interface InputeEvent {
-  start: Date
-  end: Date
-  id: any
-}
-interface dailyGridOptions {
-  selectedDate: Date
-}
-type CalnedarMode = 'daily'
-
-interface EventCalendarOptions {
-  events: InputeEvent[]
-  // timeZone ?: string;
-  // dailyGridOptions : dailyGridOptions;
-  // calnedarMode : CalnedarMode
-}
-
-type PickType<T, K extends keyof T> = T[K]

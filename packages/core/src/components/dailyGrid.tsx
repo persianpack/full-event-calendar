@@ -12,12 +12,15 @@ function doEventsOverlap(event1: any, event2: any) {
 
 function createLinesOfColome(mainEventList: any) {
   const eventList = [...mainEventList]
+
   eventList.sort(function (a: any, b: any) {
     return new Date(a.start).valueOf() - new Date(b.start).valueOf()
   })
+
   const lineList: any = {
     1: []
   }
+
   function checkList(num: any, event: any) {
     if (!lineList[num]) {
       lineList[num] = []
@@ -46,7 +49,7 @@ function createLinesOfColome(mainEventList: any) {
   return lineList
 }
 
-export function DailyGrid(props: any) {
+export const DailyGrid: Component<{ events: InputEvent[] }> = (props) => {
   // console.log(props)
 
   // let genders = Object.values(finalData)
