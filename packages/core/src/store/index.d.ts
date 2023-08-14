@@ -1,10 +1,10 @@
-interface SetAllChatsAction {
-  type: 'SET_ALL_EVENTS'
-  events: InputEvent[]
-}
+import type { Event } from '../api/CalendarImpl'
 
-interface CalendarState {
-  events: InputEvent[]
-}
+declare global {
+  interface SetAllChatsAction {
+    type: 'SET_ALL_EVENTS'
+    events: InputEvent[]
+  }
 
-type Action = SetAllChatsAction
+  type Action = SetAllChatsAction
+}

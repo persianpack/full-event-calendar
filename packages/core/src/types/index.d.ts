@@ -1,4 +1,5 @@
 import type { JSX, Component } from 'solid-js'
+
 declare global {
   type Component<P = {}> = (props: P & { children?: JSX.Element }) => JSX.Element
 
@@ -22,9 +23,9 @@ declare global {
     // calnedarMode : CalnedarMode
   }
 
-  interface Room {
-    messages: ChatMessage[]
-  }
+  // interface Room {
+  //   messages: ChatMessage[]
+  // }
 
   interface SetAllChatsAction {
     type: 'SET_ALL_EVENTS'

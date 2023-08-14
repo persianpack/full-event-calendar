@@ -2,7 +2,7 @@ import { EventCalendar } from './api/CalendarApi.js'
 
 import { CounterProvider } from './contex-injector/contex.jsx'
 import { hydrate, render } from 'solid-js/web'
-
+import { CalendarState } from './store/store'
 import { App } from './App.js'
 
 const CalendarRoot: Component<{ store: CalendarState }> = (props) => {
@@ -21,6 +21,7 @@ export class Calendar extends EventCalendar {
   constructor(targetElement: HTMLElement, eventCalendarOptions: EventCalendarOptions) {
     super(eventCalendarOptions)
     this.targetElement = targetElement
+    this.storeDispatch({ type: 'SET_ALL_EVENTS', events: eventCalendarOptions.events })
     // this.dailyGridOptions = eventCalendarOptions.dailyGridOptions
     // this.timeZone = eventCalendarOptions.timeZone
   }

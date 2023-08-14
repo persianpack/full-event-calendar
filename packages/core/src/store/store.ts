@@ -1,15 +1,9 @@
 import { legacy_createStore as createStore, Reducer } from 'redux'
-// import { Event } from '../api/EventImpl'
-// Infer the `RootState` and `AppDispatch` types from the store itself
-// export type RootState = ReturnType<typeof store.getState>
-// // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-// export type AppDispatch = typeof store.dispatch
+import { Event } from '../api/EventImpl'
 
-// export type AppStore = typeof store
-// type AddSingleChatAction = {
-//   type: 'ADD_SINGLE_ROOMS';
-//   chat: ChatMessage;
-// };
+export interface CalendarState {
+  events: Event[]
+}
 
 const defaultState: CalendarState = {
   events: []
@@ -18,10 +12,11 @@ const defaultState: CalendarState = {
 const calendarReducer: Reducer<CalendarState, SetAllChatsAction> = (state = defaultState, action: Action) => {
   switch (action.type) {
     case 'SET_ALL_EVENTS':
+      const data: Event[] = []
       for (let i = 0; i < action.events.length; i++) {
-        //   data.push( (action.rooms[i]))
+        data.push(new Event(action.events[i]))
       }
-      return state
+      return { ...state, events: data }
     default:
       return state
   }
@@ -30,5 +25,4 @@ const calendarReducer: Reducer<CalendarState, SetAllChatsAction> = (state = defa
 const store = createStore(calendarReducer)
 
 export type CalendarStore = typeof store
-
 export default store
