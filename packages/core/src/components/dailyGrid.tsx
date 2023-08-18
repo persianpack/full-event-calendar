@@ -1,17 +1,6 @@
 import './dailyGrid.scss'
 import { For, createEffect, getOwner, mergeProps } from 'solid-js'
-import { unwrap } from 'solid-js/store'
-
 import { Event } from '../api/EventImpl'
-
-function doEventsOverlap(event1: Event, event2: Event) {
-  const start1 = event1.start
-  const end1 = event1.end
-  const start2 = event2.start
-  const end2 = event2.end
-
-  return start1 < end2 && end1 > start2
-}
 
 interface ColList {
   [key: number]: Event[]
@@ -37,7 +26,7 @@ function createLinesOfColome(eventList: Event[]) {
     let isColAvalibale = true
 
     for (let i = 0; i < colEvents.length; i++) {
-      if (doEventsOverlap(event, colEvents[i])) {
+      if (event.checkOverLap(colEvents[i])) {
         isColAvalibale = false
         break
       }
@@ -58,17 +47,6 @@ function createLinesOfColome(eventList: Event[]) {
   return colList
 }
 
-function getEventHeigth(start: Date, end: Date) {
-  const minuteCount = end.getHours() * 60 + end.getMinutes() - (start.getHours() * 60 + start.getMinutes())
-  const heightInPersentage = (minuteCount / 60) * 100
-  return `height:  ${heightInPersentage}%;`
-}
-
-function getEventColHeight(top: Event) {
-  const eventColHeightInPersentage = (top.start.getHours() + top.start.getMinutes() / 60) * 100
-  return `top: ${eventColHeightInPersentage}%;${getEventHeigth(top.start, top.end)}`
-}
-
 export const DailyGrid: Component<{ events: Event[] }> = (props) => {
   const ColList = () => {
     const finalData = createLinesOfColome(props.events)
@@ -86,7 +64,7 @@ export const DailyGrid: Component<{ events: Event[] }> = (props) => {
                   <For each={key}>
                     {(item) => {
                       return (
-                        <div class="ec-event" style={getEventColHeight(item)}>
+                        <div class="ec-event" style={item.calculatePositionAndHeight()}>
                           <div> id : {item.id}</div>
 
                           <div>start :{item.start.toString()}</div>

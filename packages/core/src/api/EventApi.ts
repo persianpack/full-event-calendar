@@ -8,6 +8,9 @@ export interface EventApi {
 
   getEventLength(): any
   isAllDay(): any
+  // checkOverLap(event: Event): booleanc
+  // getEventHeigth(): string
+  // getEventColHeight(): string
 }
 //   constructor(start: Date, end: Date, name: string,id:any) {
 //     this.startDate = start
