@@ -5,6 +5,7 @@
   flex-direction: column;
   position: relative;
   box-sizing: border-box;
+  overflow: hidden;
   * {
     box-sizing: border-box;
   }
@@ -31,9 +32,18 @@
     display: flex;
     width: 100%;
   }
+  .wrapper-container {
+    height: 80px;
+    position: fixed;
+    z-index: 50;
+  }
 }
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  user-select: none;
+}
+.drag-element:active {
+  opacity: 0.7; /* Adjust the opacity value as needed */
 }

@@ -1,6 +1,6 @@
 import { createEffect } from 'solid-js'
-import { DailyGrid } from './components/dailyGrid'
-import { useCounter } from './contex-injector/contex.js'
+import { DailyGrid } from '../components/dailyGrid.jsx'
+import { useCounter } from '../contex-injector/contex.jsx'
 
 export function App() {
   const data = useCounter()

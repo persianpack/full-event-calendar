@@ -3,7 +3,7 @@ import { EventCalendar } from './api/CalendarApi.js'
 import { CounterProvider } from './contex-injector/contex.jsx'
 import { hydrate, render } from 'solid-js/web'
 import { CalendarState } from './store/store'
-import { App } from './App.js'
+import { App } from './lib/App.jsx'
 
 const CalendarRoot: Component<{ store: CalendarState }> = (props) => {
   return (
