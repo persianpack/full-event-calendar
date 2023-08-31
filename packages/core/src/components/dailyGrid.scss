@@ -11,8 +11,8 @@
   }
   .event-colom {
     // background-color: rgb(243, 163, 163);
-    flex: 1 1 0px;
-    height: 80px;
+    flex: 1;
+    height: 100%;
     position: relative;
   }
   .ec-event {
@@ -27,8 +27,8 @@
   }
   .time-range {
     // background-color: green;
-    border: 1px solid rgba(0, 0, 0, 0.384);
-    flex: 1 1 0px;
+    outline: 1px solid rgba(0, 0, 0, 0.384);
+    flex: 1;
     display: flex;
     width: 100%;
   }
@@ -36,6 +36,9 @@
     height: 80px;
     position: fixed;
     z-index: 50;
+    .drag-element {
+      pointer-events: none;
+    }
   }
 }
 * {

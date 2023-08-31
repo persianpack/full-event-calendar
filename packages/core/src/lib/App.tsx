@@ -4,7 +4,6 @@ import { useCounter } from '../contex-injector/contex.jsx'
 
 export function App() {
   const data = useCounter()
-  // const data = useCounter()
   return (
     <>
       <DailyGrid events={data.events} />

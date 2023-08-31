@@ -1,9 +1,5 @@
 import { legacy_createStore as createStore, Reducer } from 'redux'
-import { Event } from '../api/EventImpl'
-
-export interface CalendarState {
-  events: Event[]
-}
+import { EventImpl } from '../api/EventImpl'
 
 const defaultState: CalendarState = {
   events: []
@@ -12,9 +8,9 @@ const defaultState: CalendarState = {
 const calendarReducer: Reducer<CalendarState, SetAllChatsAction> = (state = defaultState, action: Action) => {
   switch (action.type) {
     case 'SET_ALL_EVENTS':
-      const data: Event[] = []
+      const data: EventImpl[] = []
       for (let i = 0; i < action.events.length; i++) {
-        data.push(new Event(action.events[i]))
+        data.push(new EventImpl(action.events[i]))
       }
       return { ...state, events: data }
     default:

@@ -1,11 +1,10 @@
-import { EventCalendar } from './api/CalendarApi.js'
+import { CalendarImpl } from './api/CalendarApi.js'
 
 import { CounterProvider } from './contex-injector/contex.jsx'
 import { hydrate, render } from 'solid-js/web'
-import { CalendarState } from './store/store'
 import { App } from './lib/App.jsx'
 
-const CalendarRoot: Component<{ store: CalendarState }> = (props) => {
+const CalendarRoot: Component<{ store: CalendarState; inctence: Calendar }> = (props) => {
   return (
     <CounterProvider store={props.store}>
       <App />
@@ -13,7 +12,7 @@ const CalendarRoot: Component<{ store: CalendarState }> = (props) => {
   )
 }
 
-export class Calendar extends EventCalendar {
+export class Calendar extends CalendarImpl {
   private targetElement: HTMLElement
   // private calendaerEventList: PickType<EventCalendarOptions, 'events'>
   // private timeZone : PickType<EventCalendarOptions,'timeZone'>;
@@ -27,10 +26,11 @@ export class Calendar extends EventCalendar {
   }
 
   render() {
-    render(() => <CalendarRoot store={this.storeManager} />, this.targetElement)
+    const inctence = this
+    render(() => <CalendarRoot store={this.storeManager} inctence={inctence} />, this.targetElement)
     // function hydrate(fn: () => JSX.Element, node: MountableElement): () => void;
   }
   refresh() {
-    hydrate(() => <CalendarRoot store={this.storeManager} />, this.targetElement)
+    //hydrate(() => <CalendarRoot store={this.storeManager} />, this.targetElement)
   }
 }

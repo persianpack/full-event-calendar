@@ -1,3 +1,5 @@
+import { EventImpl } from './EventImpl'
+
 export interface EventApi {
   // Current Date
   // -----------------------------------------------------------------------------------------------------------------
@@ -8,6 +10,8 @@ export interface EventApi {
 
   getEventLength(): any
   isAllDay(): any
+  calculatePositionAndHeight(): string
+  checkOverLap(event: EventImpl): Boolean
   // checkOverLap(event: Event): booleanc
   // getEventHeigth(): string
   // getEventColHeight(): string
