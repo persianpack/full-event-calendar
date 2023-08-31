@@ -6,7 +6,7 @@ import { App } from './lib/App.jsx'
 
 const CalendarRoot: Component<{ store: CalendarState; inctence: Calendar }> = (props) => {
   return (
-    <CounterProvider store={props.store}>
+    <CounterProvider store={props.store} inctence={props.inctence}>
       <App />
     </CounterProvider>
   )
@@ -26,11 +26,10 @@ export class Calendar extends CalendarImpl {
   }
 
   render() {
-    const inctence = this
-    render(() => <CalendarRoot store={this.storeManager} inctence={inctence} />, this.targetElement)
+    render(() => <CalendarRoot store={this.storeManager} inctence={this} />, this.targetElement)
     // function hydrate(fn: () => JSX.Element, node: MountableElement): () => void;
   }
   refresh() {
-    //hydrate(() => <CalendarRoot store={this.storeManager} />, this.targetElement)
+    hydrate(() => <CalendarRoot store={this.storeManager} inctence={this} />, this.targetElement)
   }
 }

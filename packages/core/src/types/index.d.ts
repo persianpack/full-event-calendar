@@ -5,14 +5,14 @@ declare global {
 
   type PickTypeFromField<T, K extends keyof T> = T[K]
 
-  interface InputEvent {
+  interface SourceEvent {
     start: Date
     end: Date
     id: any
   }
 
   interface EventCalendarOptions {
-    events: InputEvent[]
+    events: SourceEvent[]
     // timeZone ?: string;
     // dailyGridOptions : dailyGridOptions;
     // calnedarMode : CalnedarMode

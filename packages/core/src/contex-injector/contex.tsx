@@ -10,14 +10,23 @@
 // export function useCounter() {
 //   return useContext(CalendarContext)
 // }
-
+import { Calendar } from '../Calendar'
 import { createContext, useContext } from 'solid-js'
 import type { Context } from 'solid-js'
 
-const ChatContext = createContext() as Context<CalendarState>
+const ChatContext = createContext() as Context<ContextPorvoder>
 
-export const CounterProvider: Component<{ store: CalendarState }> = (props) => {
-  return <ChatContext.Provider value={props.store}>{props.children}</ChatContext.Provider>
+interface ContextPorvoder {
+  store: CalendarState
+  inctence: Calendar
+}
+
+export const CounterProvider: Component<{ store: CalendarState; inctence: Calendar }> = (props) => {
+  const data = {
+    store: props.store,
+    inctence: props.inctence
+  }
+  return <ChatContext.Provider value={data}>{props.children}</ChatContext.Provider>
 }
 
 export function useCounter() {

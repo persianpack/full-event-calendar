@@ -6,7 +6,7 @@ export function App() {
   const data = useCounter()
   return (
     <>
-      <DailyGrid events={data.events} />
+      <DailyGrid events={data.store.events} />
     </>
   )
 }
