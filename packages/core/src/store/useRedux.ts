@@ -45,6 +45,7 @@ export default function useRedux(store: CalendarStore) {
   return { store: state, dispatch: mapDispatch(store) }
 }
 export type UseRedux = typeof useRedux
+
 function mapDispatch(store: CalendarStore) {
   return store.dispatch
 }

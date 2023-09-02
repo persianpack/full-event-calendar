@@ -1,35 +1,20 @@
-import type { DateInput } from './structs'
-import useRedux from '../store/useRedux'
-import reduxStore from '../store/store'
-import { CalendarApi } from './CalendarImpl'
-import chatStore from '../store/store'
-import { For, Show, createEffect, createSignal, getOwner, mergeProps } from 'solid-js'
-
-interface EventCalendarOptions {
-  events: any[]
-  // dailyGridOptions : dailyGridOptions;
-  // calnedarMode : CalnedarMode
+import type { Dispatch } from 'redux'
+export interface CalendarApi {
+  // Current Date
+  // -----------------------------------------------------------------------------------------------------------------
+  storeManager: CalendarState
+  storeDispatch: Dispatch<StoreActions>
+  prevDay(): any
+  nextDay(): any
+  getDate(): any
+  today(): any
+  // checkOverLap(event: Event): booleanc
+  // getEventHeigth(): string
+  // getEventColHeight(): string
 }
-export class CalendarImpl implements CalendarApi {
-  storeManager
-  storeDispatch
-  timeZone
-  //   private dailyGridOptions : PickType<EventCalendarOptions,'dailyGridOptions'>;
-  constructor(eventCalendarOptions: EventCalendarOptions) {
-    const { store, dispatch } = useRedux(chatStore)
-    this.storeManager = store
-    this.storeDispatch = dispatch
-    this.timeZone = createSignal('tehrean')
-  }
-  prevDay(): void {
-    // dispatch to store manager
-  }
-  nextDay(): void {
-    // dispatch to store manager
-  }
-  getDate(): Date {
-    return new Date()
-  }
-
-  today(): void {}
-}
+//   constructor(start: Date, end: Date, name: string,id:any) {
+//     this.startDate = start
+//     this.endDate = end
+//     this.eventName = name
+//     this.id = id
+//   }

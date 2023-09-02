@@ -1,19 +1,19 @@
 import type { Event } from '../api/EventApi'
 
 declare global {
-  interface CalendarState {
-    events: Event[],
-    timeZone: any
+  interface CalendarState extends EventCalendarOptions {
+    timeZone: PickTypeFromField<EventCalendarOptions, 'timeZone'>
+    initialDate: PickTypeFromField<EventCalendarOptions, 'initialDate'>
   }
   interface SetAllChatsAction {
     type: 'SET_ALL_EVENTS'
     events: SourceEvent[]
   }
 
-  interface SetAllChatsAction {
+  interface UpdateEvent {
     type: 'UPDATE_EVENT'
     events: Event
   }
 
-  type Action = SetAllChatsAction
+  type StoreActions = SetAllChatsAction | UpdateEvent
 }

@@ -13,6 +13,8 @@ declare global {
 
   interface EventCalendarOptions {
     events: SourceEvent[]
+    initialDate?: Date
+    timeZone?: string
     // timeZone ?: string;
     // dailyGridOptions : dailyGridOptions;
     // calnedarMode : CalnedarMode

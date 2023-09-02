@@ -1,4 +1,4 @@
-import { CalendarImpl } from './api/CalendarApi.js'
+import { CalendarImpl } from './api/CalendarImpl'
 
 import { CounterProvider } from './contex-injector/contex.jsx'
 import { hydrate, render } from 'solid-js/web'
@@ -33,3 +33,34 @@ export class Calendar extends CalendarImpl {
     hydrate(() => <CalendarRoot store={this.storeManager} inctence={this} />, this.targetElement)
   }
 }
+// maxRows: 10,
+// hideTimeBar: false,
+// scrollIntoCurrentTime: true,
+// hasModal: false,
+// oneHourInPixel: 80,
+// minHeightInMinute: 16,
+// showIsOngoingText: true
+
+// height: {
+//   type: Number,
+//   default: 600
+// },
+// fullCalendarHeight: {
+//   type: Number,
+//   default: 800
+// },
+// locale: {
+//   type: String,
+//   default: 'en-US'
+// },
+// calendar: {
+//   type: String,
+//   default: 'gregory'
+// },
+// timeZone: {
+//   type: String,
+//   default: Intl.DateTimeFormat().resolvedOptions().timeZone
+// },
+// hideTimeLine: {
+//   type: Boolean
+// },

@@ -71,3 +71,15 @@ const EventCalendar = new Calendar(el, {
 
 EventCalendar.render()
 // console.log(Calendar)
+
+// function convertTZ(date, tzString) {
+//   return new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {timeZone: tzString}));
+// }
+
+// // usage: Asia/Jakarta is GMT+7
+
+// // Resulting value is regular Date() object
+// const convertedDate = convertTZ(new Date(), "America/New_York")
+// console.log(convertedDate)
+
+// const x = Intl.supportedValuesOf('timeZone')

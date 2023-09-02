@@ -3,13 +3,14 @@ import { EventImpl } from '../api/EventImpl'
 
 const defaultState: CalendarState = {
   events: [],
-  // timeZone: createSignal("tehran")
+  timeZone: '',
+  initialDate: new Date()
 }
 
-const calendarReducer: Reducer<CalendarState, SetAllChatsAction> = (state = defaultState, action: Action) => {
+const calendarReducer: Reducer<CalendarState, StoreActions> = (state = defaultState, action) => {
   switch (action.type) {
     case 'SET_ALL_EVENTS':
-            const data: EventImpl[] = []
+      const data: EventImpl[] = []
       for (let i = 0; i < action.events.length; i++) {
         data.push(new EventImpl(action.events[i]))
       }

@@ -1,27 +1,24 @@
-export interface CalendarApi {
-  // Current Date
-  // -----------------------------------------------------------------------------------------------------------------
+import useRedux from '../store/useRedux'
+import { CalendarApi } from './CalendarApi'
+import chatStore from '../store/store'
+import { EventApi } from './EventApi'
 
-  prevDay(): void
-  nextDay(): void
-  //  prevYear(): void
-  // nextYear(): void
+export class CalendarImpl implements CalendarApi {
+  storeManager
+  storeDispatch
 
-  today(): void
-  // render(): void
-  // gotoDate(zonedDateInput: DateInput): void
-  //  incrementDate(deltaInput: DurationInput): void
-  getDate(): Date
+  // private dailyGridOptions : PickType<EventCalendarOptions,'dailyGridOptions'>;
+  constructor(eventCalendarOptions: EventCalendarOptions) {
+    const { store, dispatch } = useRedux(chatStore)
+    this.storeManager = store
+    this.storeDispatch = dispatch
+  }
 
-  // formatDate(day: DateInput, calnedar: any, ): string
-  // formatRange(d0: DateInput, d1: DateInput, settings: any): string // TODO: settings type
-  //formatIso(d: DateInput, omitTime?: boolean): string
+  prevDay() {}
+  nextDay() {}
+  getDate() {
+    return new Date()
+  }
 
-  // Public Events API
-  // -----------------------------------------------------------------------------------------------------------------
-
-  // addEvent(eventInput: EventInput, sourceInput?: EventSourceApi | string | boolean): EventApi | null
-  // getEventById(id: string): EventApi | null
-  //getEvents(): EventApi[]
-  //removeAllEvents(): void
+  today() {}
 }
