@@ -8,6 +8,7 @@ declare global {
   interface SourceEvent {
     start: Date
     end: Date
+    name: string
     id: any
   }
 

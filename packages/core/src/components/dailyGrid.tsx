@@ -60,36 +60,47 @@ export const DailyGrid: Component<{ events: EventImpl[] }> = (props) => {
     height: string
     left: string
     top: string
-    min: string | number
-    hour: string | number
+    startMin: string | number
+    startHour: string | number
+    endMin: string | number
+    endHour: string | number
+    duration: number
     item: EventImpl | null
   }
   const [isDragging, setIsDragging] = createSignal(false)
-  const [draggedData, setDraggedData] = createSignal<draggeddData>({
+  const initialDragNode: draggeddData = {
     width: '',
     height: '',
     left: '',
     top: '',
     item: null,
-    min: '',
-    hour: ''
-  })
+    startMin: '',
+    startHour: '',
+    endMin: '',
+    endHour: '',
+    duration: 0
+  }
+  const [draggedData, setDraggedData] = createSignal<draggeddData>(initialDragNode)
 
   const dif = [0, 0]
   const houers = [0, 0]
 
+  function calculateEndTime(StartHour: any, StartMinute: any, duration: any) {
+    // Calculate the total minutes from the start time and duration
+    const totalMinutes = StartHour * 60 + StartMinute + duration
+
+    // Calculate the end hour and minute
+    const endHour = Math.floor(totalMinutes / 60)
+    const endMinute = totalMinutes % 60
+
+    // Return the end time as a formatted string
+    return { endHour, endMinute }
+  }
+
   function itemDragstart(e: EventImpl, d: any) {
     const target = document.getElementById(`event-${e.id}`) as HTMLElement
 
-    let clonedNode: draggeddData = {
-      width: '',
-      height: '',
-      left: '',
-      top: '',
-      min: '',
-      hour: '',
-      item: null
-    }
+    let clonedNode: draggeddData = initialDragNode
     const targetElement = target.getBoundingClientRect()
 
     dif[0] = d.pageX - targetElement.left
@@ -98,9 +109,10 @@ export const DailyGrid: Component<{ events: EventImpl[] }> = (props) => {
     clonedNode.width = target.clientWidth + 3 + 'px'
     clonedNode.height = target.clientHeight + 2 + 'px'
     clonedNode.item = e
+
     clonedNode.left = targetElement.left + 0 + 'px'
     clonedNode.top = targetElement.top + 0 + 'px'
-
+    clonedNode.duration = e.duration
     setDraggedData(clonedNode)
 
     setIsDragging(true)
@@ -120,11 +132,20 @@ export const DailyGrid: Component<{ events: EventImpl[] }> = (props) => {
     const download = document.getElementById(`draging-event-${draggedData().item?.id}`)?.getBoundingClientRect()
     if (download && wrapper) {
       let deff = Math.abs(download.top - wrapper.top) / 80
+      let deff2 = Math.abs(download.bottom - wrapper.top) / 80
+
       const min = Math.floor((Math.floor((deff % 1) * 100) * 60) / 100)
       const hour = Math.floor(deff)
+
       houers[0] = hour
       houers[1] = min
-      setDraggedData({ ...draggedData(), ...{ hour: houers[0], min: houers[1] } })
+      let dragCopy: draggeddData = { ...draggedData() }
+      const { endHour, endMinute } = calculateEndTime(hour, min, dragCopy.duration)
+      dragCopy.startMin = houers[1]
+      dragCopy.startHour = houers[0]
+      dragCopy.endMin = endMinute
+      dragCopy.endHour = endHour
+      setDraggedData(dragCopy)
     }
 
     mouseMove(e)
@@ -161,7 +182,6 @@ export const DailyGrid: Component<{ events: EventImpl[] }> = (props) => {
                           style={item.calculatePositionAndHeight()}
                         >
                           <div> id : {item.id}</div>
-
                           <div>start :{item.start.toString()}</div>
                           <div>end :{item.end.toString()}</div>
                         </div>
@@ -205,8 +225,8 @@ export const DailyGrid: Component<{ events: EventImpl[] }> = (props) => {
               style={draggedData().item?.calculatePositionAndHeight() + getDragingStyle()}
             >
               <div> id : {draggedData().item?.id}</div>
-              <div>start :{draggedData().hour.toString() + ' : ' + draggedData().min.toString()}</div>
-              <div>end :{draggedData().item?.end.toString()}</div>
+              <div>start :{draggedData().startHour.toString() + ' : ' + draggedData().startMin.toString()}</div>
+              <div>end ::{draggedData().endHour.toString() + ' : ' + draggedData().endMin.toString()}</div>
             </div>
           </Show>
         </div>

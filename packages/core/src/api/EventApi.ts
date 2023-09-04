@@ -7,6 +7,7 @@ export interface EventApi {
   end: Date
   name: string
   id: any
+  duration: number
 
   getEventLength(): any
   isAllDay(): any

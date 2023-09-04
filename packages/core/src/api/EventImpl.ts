@@ -5,12 +5,13 @@ export class EventImpl implements EventApi {
   end: Date
   name: string
   id: any
-
-  constructor(eventData: any) {
+  duration: number
+  constructor(eventData: SourceEvent) {
     this.start = eventData.start
     this.end = eventData.end
     this.name = eventData.name
     this.id = eventData.id
+    this.duration = Math.round((eventData.end.getTime() - eventData.start.getTime()) / 60000)
   }
 
   getEventLength(): any {
