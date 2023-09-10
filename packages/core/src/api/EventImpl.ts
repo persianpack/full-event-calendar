@@ -5,12 +5,14 @@ export class EventImpl implements EventApi {
   end: Date
   name: string
   id: any
-  duration: number
+  duration: number // duration is in minuts
+  sourceEvent: SourceEvent
   constructor(eventData: SourceEvent) {
     this.start = eventData.start
     this.end = eventData.end
     this.name = eventData.name
     this.id = eventData.id
+    this.sourceEvent = eventData
     this.duration = Math.round((eventData.end.getTime() - eventData.start.getTime()) / 60000)
   }
 
@@ -31,14 +33,11 @@ export class EventImpl implements EventApi {
     const end1 = event.end
     const start2 = this.start
     const end2 = this.end
-
     return start1 < end2 && end1 > start2
   }
 
   private getEventHeigth() {
-    const minuteCount =
-      this.end.getHours() * 60 + this.end.getMinutes() - (this.start.getHours() * 60 + this.start.getMinutes())
-    const heightInPersentage = (minuteCount / 60) * 100
+    const heightInPersentage = (this.duration / 60) * 100
     return `height:  ${heightInPersentage}%;`
   }
 

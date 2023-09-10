@@ -15,6 +15,11 @@ const calendarReducer: Reducer<CalendarState, StoreActions> = (state = defaultSt
         data.push(new EventImpl(action.events[i]))
       }
       return { ...state, events: data }
+    case 'UPDATE_EVENT':
+      const events = [...state.events]
+      const eventIndex = events.findIndex((item) => item.id === action.id)
+      events[eventIndex] = new EventImpl(action.event)
+      return { ...state, events: events }
     default:
       return state
   }

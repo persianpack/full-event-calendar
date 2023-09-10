@@ -24,6 +24,16 @@
     border: 1px solid white;
     border-radius: 16px;
     padding: 5px;
+    cursor: grab;
+    .resizer {
+      position: absolute;
+      bottom: 0px;
+      height: 10px;
+      width: 100%;
+      left: 0;
+      cursor: row-resize;
+      border-radius: 10px;
+    }
   }
   .time-range {
     // background-color: green;
@@ -36,7 +46,6 @@
     height: 80px;
     position: fixed;
     z-index: 50;
-  
   }
 }
 
@@ -46,9 +55,7 @@
   padding: 0;
   user-select: none;
 }
-.drag-element{
-  cursor: grab;
-}
-.drag-element:active{
+
+.drag-element:active {
   cursor: grabbing;
 }

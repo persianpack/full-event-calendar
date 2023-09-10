@@ -4,6 +4,8 @@ export interface CalendarApi {
   // -----------------------------------------------------------------------------------------------------------------
   storeManager: CalendarState
   storeDispatch: Dispatch<StoreActions>
+  setEventList(events: SourceEvent[]): any
+  updateEvent(id: PickTypeFromField<SourceEvent, 'id'>, event: SourceEvent): void
   prevDay(): any
   nextDay(): any
   getDate(): any

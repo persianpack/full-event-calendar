@@ -1,112 +1,107 @@
-import { createSignal, batch } from "solid-js"
+import { createSignal, batch } from 'solid-js'
 
 import { EventImpl } from '../../api/EventImpl'
 
-interface draggeddData {
+export interface DraggeddData {
   width: string
   height: string
   left: string
   top: string
-  startMin: string | number
-  startHour: string | number
-  endMin: string | number
-  endHour: string | number
   duration: number
   item: EventImpl | null
   animation: string
+  startDate: Date
+  endDate: Date
 }
 
-const initialDragNode: draggeddData = {
+const initialDragNode: DraggeddData = {
   width: '',
   height: '',
   left: '',
   top: '',
   item: null,
-  startMin: '',
-  startHour: '',
-  endMin: '',
-  endHour: '',
   duration: 0,
-  animation: ""
+  startDate: new Date(),
+  endDate: new Date(),
+  animation: ''
 }
-export function userDrager() {
-
-
+export function userDrager(dragEndCallBack: (initialDragNode: DraggeddData) => void) {
   const [isDragging, setIsDragging] = createSignal(false)
-  const [draggedData, setDraggedData] = createSignal<draggeddData>(initialDragNode)
-
+  const [draggedData, setDraggedData] = createSignal<DraggeddData>(initialDragNode)
 
   const dif = [0, 0]
   const houers = [0, 0]
   let mouseDown = false
 
-  function calculateEndTime(StartHour: any, StartMinute: any, duration: any) {
-    // Calculate the total minutes from the start time and duration
-    const totalMinutes = StartHour * 60 + StartMinute + duration
-
-    // Calculate the end hour and minute
-    const endHour = Math.floor(totalMinutes / 60)
-    const endMinute = totalMinutes % 60
-
-    // Return the end time as a formatted string
-    return { endHour, endMinute }
-  }
-
   function itemDragstart(e: EventImpl, d: any) {
+    if (isDragging()) return
     mouseDown = true
     const target = document.getElementById(`event-${e.id}`) as HTMLElement
-    target.style.opacity = "0.7"
-    
-    let clonedNode: draggeddData = initialDragNode
+    target.style.opacity = '0'
     const targetElement = target.getBoundingClientRect()
+
+    let clonedNode: DraggeddData = {
+      width: target.clientWidth + 3 + 'px',
+      height: target.clientHeight + 2 + 'px',
+      item: e,
+      startDate: e.start,
+      endDate: e.end,
+      left: targetElement.left + 0 + 'px',
+      top: targetElement.top + 0 + 'px',
+      duration: e.duration,
+      animation: ''
+    }
 
     dif[0] = d.clientX - targetElement.left
     dif[1] = d.clientY - targetElement.top
-    console.log(targetElement)
-    clonedNode.width = target.clientWidth + 3 + 'px'
-    clonedNode.height = target.clientHeight + 2 + 'px'
-    clonedNode.item = e
-    clonedNode.startHour = e.start.getHours()
-    clonedNode.startMin = e.start.getMinutes()
-    clonedNode.endHour = e.end.getHours()
-    clonedNode.endMin = e.end.getMinutes()
-    clonedNode.left = targetElement.left + 0 + 'px'
-    clonedNode.top = targetElement.top + 0 + 'px'
-    clonedNode.duration = e.duration
 
     batch(() => {
       setDraggedData(clonedNode)
       setIsDragging(true)
     })
-
   }
 
+  let time1: number = 0
+  let time2: number = 0
+
+  function cleanUps() {
+    clearTimeout(time1)
+    clearTimeout(time2)
+  }
 
   document.addEventListener('mouseup', () => {
     mouseDown = false
     if (isDragging()) {
+      cleanUps()
+      dragEndCallBack(draggedData())
       const target = { ...draggedData() }
-      const targets = document.getElementById(`event-${target.item?.id}`)?.getBoundingClientRect();
-      let y = document.getElementById(`event-${target.item?.id}`)
-      if (y) {
-        y.style.opacity = "0.7"
-      }
-      target.left = targets?.left + 'px'
-      target.top = targets?.top + 'px'
-      target.animation = "all 0.5s;"
-      setDraggedData(target)
+      let y = document.getElementById(`event-${target.item?.id}`) as HTMLElement
+      y.style.opacity = '0.0'
 
-      setTimeout(() => {
-        target.animation = ""
+      time1 = setTimeout(() => {
+        const targets = document.getElementById(`event-${target.item?.id}`)?.getBoundingClientRect()
+        let y = document.getElementById(`event-${target.item?.id}`)
+        if (y) {
+          y.style.opacity = '0.0'
+        }
+        target.width = y?.clientWidth + 'px'
+        target.left = targets?.left + 'px'
+        target.top = targets?.top + 'px'
+        target.animation = 'all 0.5s;'
+        setDraggedData(target)
+      }, 0)
+
+      time2 = setTimeout(() => {
+        target.animation = ''
         batch(() => {
           setDraggedData(target)
           setIsDragging(false)
         })
         let y = document.getElementById(`event-${target.item?.id}`)
         if (y) {
-          y.style.opacity = "1"
+          y.style.opacity = '1'
         }
-      }, 500);
+      }, 500)
     }
   })
 
@@ -116,27 +111,28 @@ export function userDrager() {
     const download = document.getElementById(`draging-event-${draggedData().item?.id}`)?.getBoundingClientRect()
     if (download && wrapper) {
       let deff = Math.abs(download.top - wrapper.top) / 80
+      // console.log(deff)
+      const min = ((deff % 1) * 100 * 60) / 100
+      const hour = deff
 
-      const min = Math.round((Math.round((deff % 1) * 100) * 60) / 100)
-      const hour = Math.round(deff)
+      let dragCopy: DraggeddData = { ...draggedData() }
 
-      houers[0] = hour
-      houers[1] = min
-      let dragCopy: draggeddData = { ...draggedData() }
-      const { endHour, endMinute } = calculateEndTime(hour, min, dragCopy.duration)
-      dragCopy.startMin = houers[1]
-      dragCopy.startHour = houers[0]
-      dragCopy.endMin = endMinute
-      dragCopy.endHour = endHour
+      if (!dragCopy.item) return
+      if (!(hour >= 24 && min >= 0)) {
+        const statd = dragCopy.item?.start as Date
+        statd.setHours(hour)
+        statd.setMinutes(min)
+        const ENDd = new Date(statd.getTime() + dragCopy.item?.duration * 60000)
+        dragCopy.startDate = statd
+        dragCopy.endDate = ENDd
+      }
+      // setDraggedData(dragCopy)
+      dragCopy.left = e.clientX - dif[0] + 'px'
+      dragCopy.top = e.clientY - dif[1] + 'px'
+
       setDraggedData(dragCopy)
-      const target = { ...draggedData() }
-      target.left = e.clientX - dif[0] + 'px'
-      target.top = e.clientY - dif[1] + 'px'
-      setDraggedData(target)
     }
-
   })
 
   return { draggedData, isDragging, itemDragstart }
 }
-

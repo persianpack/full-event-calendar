@@ -13,6 +13,13 @@ export class CalendarImpl implements CalendarApi {
     this.storeManager = store
     this.storeDispatch = dispatch
   }
+  setEventList(events: SourceEvent[]) {
+    this.storeDispatch({ type: 'SET_ALL_EVENTS', events })
+  }
+
+  updateEvent(id: PickTypeFromField<SourceEvent, 'id'>, event: SourceEvent): void {
+    this.storeDispatch({ type: 'UPDATE_EVENT', id, event })
+  }
 
   prevDay() {}
   nextDay() {}

@@ -1,14 +1,11 @@
 import { EventImpl } from './EventImpl'
 
-export interface EventApi {
+export interface EventApi extends SourceEvent {
   // Current Date
   // -----------------------------------------------------------------------------------------------------------------
-  start: Date
-  end: Date
-  name: string
-  id: any
-  duration: number
 
+  duration: number
+  sourceEvent: SourceEvent
   getEventLength(): any
   isAllDay(): any
   calculatePositionAndHeight(): string
