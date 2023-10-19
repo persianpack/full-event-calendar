@@ -1,4 +1,4 @@
-import { EventImpl } from './EventImpl'
+import { EventImpl, SourceEvent } from './EventImpl'
 
 export interface EventApi extends SourceEvent {
   // Current Date

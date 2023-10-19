@@ -1,6 +1,6 @@
 import './dailyGrid.scss'
 import { For, Show, createEffect, createSignal, getOwner, mergeProps } from 'solid-js'
-import { EventImpl } from '../api/EventImpl'
+import { EventImpl, SourceEvent } from '../api/EventImpl'
 import { createLinesOfColome } from './coleLine'
 import { userDrager } from './hooks/eventDraging'
 import type { DraggeddData } from './hooks/eventDraging'

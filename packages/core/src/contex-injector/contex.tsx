@@ -13,6 +13,7 @@
 import { Calendar } from '../Calendar'
 import { createContext, useContext } from 'solid-js'
 import type { Context } from 'solid-js'
+import { CalendarState } from '../store/store'
 
 const ChatContext = createContext() as Context<ContextPorvoder>
 

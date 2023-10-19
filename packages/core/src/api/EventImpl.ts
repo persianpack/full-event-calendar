@@ -1,5 +1,12 @@
+import { convertTZ } from '../utils'
 import { EventApi } from './EventApi'
 
+export interface SourceEvent {
+  start: Date
+  end: Date
+  name: string
+  id: any
+}
 export class EventImpl implements EventApi {
   start: Date
   end: Date
@@ -36,6 +43,11 @@ export class EventImpl implements EventApi {
     return start1 < end2 && end1 > start2
   }
 
+  convertDateByTimeZone(tz: string) {
+    this.start = convertTZ(this.start, tz)
+    this.end = convertTZ(this.end, tz)
+  }
+
   private getEventHeigth() {
     const heightInPersentage = (this.duration / 60) * 100
     return `height:  ${heightInPersentage}%;`
@@ -46,3 +58,5 @@ export class EventImpl implements EventApi {
     return `top: ${eventColHeightInPersentage}%`
   }
 }
+
+export type CalendarEvent = typeof EventImpl

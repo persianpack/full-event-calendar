@@ -1,4 +1,6 @@
 import type { Dispatch } from 'redux'
+import { CalendarState, StoreActions } from '../store/store'
+import { SourceEvent } from './EventImpl'
 export interface CalendarApi {
   // Current Date
   // -----------------------------------------------------------------------------------------------------------------

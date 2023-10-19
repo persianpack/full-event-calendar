@@ -78,7 +78,9 @@ const events = [
 ]
 
 const EventCalendar = new Calendar(el, {
-  events: events
+  events: events,
+  timeZone: 'Africa/Abidjan',
+  initialDate: new Date('Thu Aug 10 2023 15:00:0')
 })
 
 EventCalendar.render()
