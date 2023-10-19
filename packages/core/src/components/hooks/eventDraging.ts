@@ -25,18 +25,17 @@ const initialDragNode: DraggeddData = {
   endDate: new Date(),
   animation: ''
 }
-export function userDrager(dragEndCallBack: (initialDragNode: DraggeddData) => void) {
+export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode: DraggeddData) => void) {
   const [isDragging, setIsDragging] = createSignal(false)
   const [draggedData, setDraggedData] = createSignal<DraggeddData>(initialDragNode)
 
   const dif = [0, 0]
-  const houers = [0, 0]
   let mouseDown = false
 
   function itemDragstart(e: EventImpl, d: any) {
     if (isDragging()) return
     mouseDown = true
-    const target = document.getElementById(`event-${e.id}`) as HTMLElement
+    const target = containerRef.current.querySelector(`#event-${e.id}`) as HTMLElement
     target.style.opacity = '0'
     const targetElement = target.getBoundingClientRect()
 
@@ -75,12 +74,12 @@ export function userDrager(dragEndCallBack: (initialDragNode: DraggeddData) => v
       cleanUps()
       dragEndCallBack(draggedData())
       const target = { ...draggedData() }
-      let y = document.getElementById(`event-${target.item?.id}`) as HTMLElement
+      let y = containerRef.current.querySelector(`#event-${target.item?.id}`) as HTMLElement
       y.style.opacity = '0.0'
 
       time1 = setTimeout(() => {
-        const targets = document.getElementById(`event-${target.item?.id}`)?.getBoundingClientRect()
-        let y = document.getElementById(`event-${target.item?.id}`)
+        const targets = containerRef.current.querySelector(`#event-${target.item?.id}`)?.getBoundingClientRect()
+        let y = containerRef.current.querySelector(`#event-${target.item?.id}`)
         if (y) {
           y.style.opacity = '0.0'
         }
@@ -97,7 +96,7 @@ export function userDrager(dragEndCallBack: (initialDragNode: DraggeddData) => v
           setDraggedData(target)
           setIsDragging(false)
         })
-        let y = document.getElementById(`event-${target.item?.id}`)
+        let y = containerRef.current.querySelector(`#event-${target.item?.id}`)
         if (y) {
           y.style.opacity = '1'
         }
@@ -107,8 +106,11 @@ export function userDrager(dragEndCallBack: (initialDragNode: DraggeddData) => v
 
   document.addEventListener('mousemove', (e) => {
     if (!mouseDown) return
-    const wrapper = document.querySelector('.fec-daily-grid')?.getBoundingClientRect()
-    const download = document.getElementById(`draging-event-${draggedData().item?.id}`)?.getBoundingClientRect()
+
+    const wrapper = containerRef.current?.getBoundingClientRect()
+    const download = containerRef.current
+      .querySelector(`#draging-event-${draggedData().item?.id}`)
+      ?.getBoundingClientRect()
     if (download && wrapper) {
       let deff = Math.abs(download.top - wrapper.top) / 80
       // console.log(deff)

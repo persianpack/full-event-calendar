@@ -4,6 +4,7 @@ import { EventImpl, SourceEvent } from '../api/EventImpl'
 import { createLinesOfColome } from './coleLine'
 import { userDrager } from './hooks/eventDraging'
 import type { DraggeddData } from './hooks/eventDraging'
+import { useResize } from './hooks/eventResize'
 
 interface DailyGridProps {
   events: EventImpl[]
@@ -16,8 +17,12 @@ export const DailyGrid: Component<DailyGridProps> = (props) => {
     return Object.values(finalData)
   }
 
+  let containerRef: any = {
+    current: ''
+  }
+
   function dragEnd(a: DraggeddData) {
-    const sourceE = { ...a.item?.sourceEvent } as SourceEvent
+    const sourceE = { ...a.item } as SourceEvent
     // sourceE.start =
     sourceE.start = a.startDate
     sourceE.end = a.endDate
@@ -27,7 +32,13 @@ export const DailyGrid: Component<DailyGridProps> = (props) => {
     }
   }
 
-  const { draggedData, isDragging, itemDragstart } = userDrager(dragEnd)
+  function resizeCb(a: any) {
+    props.onEventUpdate(a)
+  }
+
+  const { onmousedownH } = useResize(containerRef, resizeCb)
+
+  const { draggedData, isDragging, itemDragstart } = userDrager(containerRef, dragEnd)
 
   function getDragingStyle() {
     return `width : ${draggedData().width};height : ${draggedData().height};left:${draggedData().left} ; transition : ${
@@ -35,44 +46,9 @@ export const DailyGrid: Component<DailyGridProps> = (props) => {
     } ;top:${draggedData().top};position:fixed `
   }
 
-  function onmousedownH(item: EventImpl, e: MouseEvent) {
-    e.stopPropagation()
-    const targetEvent = document.getElementById(`event-${item?.id}`) as HTMLElement
-
-    targetEvent.style.zIndex = '10'
-    window.addEventListener('mousemove', mousemove)
-    window.addEventListener('mouseup', mouseup)
-
-    let prevX = e.y
-    const targetRect = targetEvent.getBoundingClientRect()
-    let endDate: any = null
-
-    function mousemove(e: MouseEvent) {
-      let newX = prevX - e.y
-      const height = targetRect.height - newX
-      targetEvent.style.height = height + 'px'
-      let duraction = (height * 60) / 80
-      endDate = new Date(item.start.getTime() + duraction * 60000)
-      const el = document.getElementById(`event-end-${item?.id}`) as HTMLElement
-      el.innerHTML = endDate.toString()
-    }
-
-    function mouseup() {
-      targetEvent.style.zIndex = '1'
-      const sourceE = { ...item?.sourceEvent } as SourceEvent
-
-      if (endDate) {
-        sourceE.end = endDate
-        props.onEventUpdate(sourceE)
-      }
-      window.removeEventListener('mousemove', mousemove)
-      window.removeEventListener('mouseup', mouseup)
-    }
-  }
-
   return (
     <>
-      <div class="fec-daily-grid" style="margin-top:200px;margin-bottom:200px">
+      <div ref={containerRef.current} class="fec-daily-grid" style="margin-top:200px;margin-bottom:200px">
         <div class="time-range">
           0
           <For each={ColList()}>
