@@ -6,25 +6,26 @@ import { SourceEvent } from './EventImpl'
 
 export interface CalendarSourceOptions {
   events: SourceEvent[]
-  initialDate?: Date
+  initialDate?: Date | string
   timeZone?: string
   // timeZone ?: string;
   // dailyGridOptions : dailyGridOptions;
   // calnedarMode : CalnedarMode
 }
 
-export type EventCalendarOptions = {
-  [K in keyof CalendarSourceOptions]-?: CalendarSourceOptions[K]
+export type EventCalendarOptions = { [K in keyof CalendarSourceOptions]-?: CalendarSourceOptions[K] } & {
+  initialDate: string
 }
 export class CalendarImpl implements CalendarApi {
   storeManager
   storeDispatch
 
   // private dailyGridOptions : PickType<EventCalendarOptions,'dailyGridOptions'>;
-  constructor(eventCalendarOptions: CalendarSourceOptions) {
+  constructor(eventCalendarOptions: EventCalendarOptions) {
     const { store, dispatch } = useRedux(chatStore)
     this.storeManager = store
     this.storeDispatch = dispatch
+
     this.resetOptions(eventCalendarOptions)
   }
   setEventList(events: SourceEvent[]) {
@@ -37,7 +38,7 @@ export class CalendarImpl implements CalendarApi {
   changeTimeZone(tz: EventCalendarOptions['timeZone']) {
     this.storeDispatch({ type: 'SET_TIMEZONE', tz })
   }
-  changeInitialDate(date: Date) {
+  changeInitialDate(date: string) {
     this.storeDispatch({ type: 'SET_INITIAL_DATE', date })
   }
 
@@ -46,7 +47,7 @@ export class CalendarImpl implements CalendarApi {
       this.changeTimeZone(options.timeZone)
     }
     if (options.initialDate) {
-      this.changeInitialDate(options.initialDate)
+      this.changeInitialDate(new Date(options.initialDate).toISOString())
     }
     this.setEventList(options.events)
   }
@@ -60,7 +61,7 @@ export class CalendarImpl implements CalendarApi {
       const conditain2 =
         event.end.getFullYear() === targetDate.getFullYear() &&
         event.end.getMonth() === targetDate.getMonth() &&
-        event.end.getDate() === event.start.getDate()
+        event.end.getDate() === targetDate.getDate()
       return conditain1 || conditain2
     })
     return filteredERvents

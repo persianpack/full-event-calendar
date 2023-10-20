@@ -1,0 +1,30 @@
+.daily-header {
+  display: flex;
+  gap: 10px;
+  .go-to-today {
+    background-color: rgb(0, 255, 0);
+    padding: 10px 20px;
+    border-radius: 10px;
+  }
+  .go-some-d {
+    background-color: rgb(0, 255, 0);
+    padding: 10px 20px;
+    border-radius: 10px;
+    position: relative;
+  }
+  .dropdown {
+    background-color: red;
+    border-radius: 12px;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 200%;
+    padding: 10px;
+    div {
+      cursor: pointer;
+      &:hover {
+        background-color: greenyellow;
+      }
+    }
+  }
+}

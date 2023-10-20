@@ -1,21 +1,22 @@
 import './dailyGrid.scss'
-import { For, Show, createEffect, createSignal, getOwner, mergeProps } from 'solid-js'
+import { For, Show, createEffect, createMemo, createSignal, getOwner, mergeProps, onMount } from 'solid-js'
 import { EventImpl, SourceEvent } from '../api/EventImpl'
 import { createLinesOfColome } from './coleLine'
 import { userDrager } from './hooks/eventDraging'
 import type { DraggeddData } from './hooks/eventDraging'
 import { useResize } from './hooks/eventResize'
-
+import { TimeBar } from './TimeBar/TimeBar'
 interface DailyGridProps {
   events: EventImpl[]
   onEventUpdate: (event: SourceEvent) => void
 }
 
 export const DailyGrid: Component<DailyGridProps> = (props) => {
-  const ColList = () => {
+  
+  const ColList =createMemo( () => {
     const finalData = createLinesOfColome(props.events)
     return Object.values(finalData)
-  }
+  })
 
   let containerRef: any = {
     current: ''
@@ -48,9 +49,10 @@ export const DailyGrid: Component<DailyGridProps> = (props) => {
 
   return (
     <>
-      <div ref={containerRef.current} class="fec-daily-grid" style="margin-top:200px;margin-bottom:200px">
+      <div ref={containerRef.current} class="fec-daily-grid" >
+        <TimeBar container={containerRef}/>
         <div class="time-range">
-          0
+          0 AM
           <For each={ColList()}>
             {(key: EventImpl[]) => {
               return (
@@ -80,29 +82,29 @@ export const DailyGrid: Component<DailyGridProps> = (props) => {
           </For>
         </div>
 
-        <div class="time-range">1</div>
-        <div class="time-range">2</div>
-        <div class="time-range">3</div>
-        <div class="time-range">4</div>
-        <div class="time-range">5</div>
-        <div class="time-range">6</div>
-        <div class="time-range">7</div>
-        <div class="time-range">8</div>
-        <div class="time-range">9</div>
-        <div class="time-range">10</div>
-        <div class="time-range">11</div>
-        <div class="time-range">12</div>
-        <div class="time-range">13</div>
-        <div class="time-range">14</div>
-        <div class="time-range">15</div>
-        <div class="time-range">16</div>
-        <div class="time-range">17</div>
-        <div class="time-range">18</div>
-        <div class="time-range">19</div>
-        <div class="time-range">20</div>
-        <div class="time-range">21</div>
-        <div class="time-range">22</div>
-        <div class="time-range">23</div>
+        <div class="time-range">1 AM</div>
+        <div class="time-range">2 AM</div>
+        <div class="time-range">3 AM</div>
+        <div class="time-range">4 AM</div>
+        <div class="time-range">5 AM</div>
+        <div class="time-range">6 AM</div>
+        <div class="time-range">7 AM</div>
+        <div class="time-range">8 AM</div>
+        <div class="time-range">9 AM</div>
+        <div class="time-range">10 AM</div>
+        <div class="time-range">11 AM</div>
+        <div class="time-range">12 PM</div>
+        <div class="time-range">13 PM</div>
+        <div class="time-range">14 PM</div>
+        <div class="time-range">15 PM</div>
+        <div class="time-range">16 PM</div>
+        <div class="time-range">17 PM</div>
+        <div class="time-range">18 PM</div>
+        <div class="time-range">19 PM</div>
+        <div class="time-range">20 PM</div>
+        <div class="time-range">21 PM</div>
+        <div class="time-range">22 PM</div>
+        <div class="time-range">23 PM</div>
         <div class="wrapper-container">
           <Show when={isDragging()}>
             <div

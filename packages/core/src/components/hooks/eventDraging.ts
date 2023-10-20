@@ -98,7 +98,7 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
         })
         let y = containerRef.current.querySelector(`#event-${target.item?.id}`)
         if (y) {
-          y.style.opacity = '1'
+          y.style.opacity = ''
         }
       }, 500)
     }

@@ -5,7 +5,7 @@ import { EventCalendarOptions } from '../api/CalendarImpl'
 const defaultState: CalendarState = {
   events: [],
   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-  initialDate: new Date()
+  initialDate: new Date().toISOString()
 }
 
 interface SetAllChatsAction {
@@ -22,7 +22,7 @@ interface changeTimeZone {
 }
 interface ChaageInitialDate {
   type: 'SET_INITIAL_DATE'
-  date: Date
+  date: string
 }
 interface UpdateEvent {
   type: 'UPDATE_EVENT'
