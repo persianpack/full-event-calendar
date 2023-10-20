@@ -1,0 +1,20 @@
+.daily-header {
+  display: flex;
+  width: fit-content;
+  flex-direction: column;
+  align-items: center;
+  font-size: 18px;
+  .week-day {
+    &:hover {
+      background-color: rgba(136, 136, 255, 0.308);
+    }
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+  }
+}

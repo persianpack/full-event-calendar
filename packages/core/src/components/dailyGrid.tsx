@@ -6,14 +6,14 @@ import { userDrager } from './hooks/eventDraging'
 import type { DraggeddData } from './hooks/eventDraging'
 import { useResize } from './hooks/eventResize'
 import { TimeBar } from './TimeBar/TimeBar'
+
 interface DailyGridProps {
   events: EventImpl[]
   onEventUpdate: (event: SourceEvent) => void
 }
 
 export const DailyGrid: Component<DailyGridProps> = (props) => {
-  
-  const ColList =createMemo( () => {
+  const ColList = createMemo(() => {
     const finalData = createLinesOfColome(props.events)
     return Object.values(finalData)
   })
@@ -49,8 +49,8 @@ export const DailyGrid: Component<DailyGridProps> = (props) => {
 
   return (
     <>
-      <div ref={containerRef.current} class="fec-daily-grid" >
-        <TimeBar container={containerRef}/>
+      <div ref={containerRef.current} class="fec-daily-grid">
+        <TimeBar container={containerRef} />
         <div class="time-range">
           0 AM
           <For each={ColList()}>

@@ -1,4 +1,4 @@
-import { Show, createEffect, createSignal } from 'solid-js'
+import { Show, createEffect, createMemo, createSignal } from 'solid-js'
 import './CalendarHeader.scss'
 
 interface CalendarHeader {
@@ -17,9 +17,9 @@ export const CalendarHeader: Component<CalendarHeader> = (props) => {
     timeZone: props.timeZone
   }
 
-  function formater() {
+  const formater = createMemo(() => {
     return new Intl.DateTimeFormat('en-US', options).format(new Date(props.headerDate))
-  }
+  })
 
   function goBack() {
     const dCopy = props.headerDate
@@ -36,7 +36,7 @@ export const CalendarHeader: Component<CalendarHeader> = (props) => {
   }
 
   return (
-    <div class="daily-header">
+    <div class="calendar-header">
       <div class="go-to-today" onclick={goToday}>
         {' '}
         Today{' '}

@@ -21,7 +21,7 @@ export class CalendarImpl implements CalendarApi {
   storeDispatch
 
   // private dailyGridOptions : PickType<EventCalendarOptions,'dailyGridOptions'>;
-  constructor(eventCalendarOptions: EventCalendarOptions) {
+  constructor(eventCalendarOptions: CalendarSourceOptions) {
     const { store, dispatch } = useRedux(chatStore)
     this.storeManager = store
     this.storeDispatch = dispatch
