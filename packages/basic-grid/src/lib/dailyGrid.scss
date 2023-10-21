@@ -1,0 +1,63 @@
+.fec-daily-grid {
+  // background-color: pink;
+  height: 1920px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  * {
+    box-sizing: border-box;
+  }
+  .event-colom {
+    // background-color: rgb(243, 163, 163);
+    flex: 1;
+    height: 100%;
+    position: relative;
+  }
+  .ec-event {
+    position: absolute;
+    height: 50px;
+    width: 100%;
+    background-color: rgb(255, 74, 165);
+    top: 300%;
+    border: 1px solid white;
+    border-radius: 16px;
+    padding: 5px;
+    opacity: 0.9;
+    cursor: grab;
+    .resizer {
+      position: absolute;
+      bottom: 0px;
+      height: 10px;
+      width: 100%;
+      left: 0;
+      cursor: row-resize;
+      border-radius: 10px;
+    }
+  }
+  .time-range {
+    // background-color: green;
+    outline: 1px solid rgba(0, 0, 0, 0.384);
+    flex: 1;
+    display: flex;
+    width: 100%;
+  }
+  .wrapper-container {
+    height: 80px;
+    position: fixed;
+    z-index: 50;
+  }
+  .drag-element {
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.drag-element:active {
+  cursor: grabbing;
+}

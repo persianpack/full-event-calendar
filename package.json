@@ -11,8 +11,7 @@
   ],
   "scripts": {
     "test": "pnpm --stream -r test",
-    "dev:vue-3": "cd ./packages/vue3-demo && pnpm run dev",
-    "dev:vue-2": "cd ./packages/vue2-demo && pnpm run dev",
+    "dev": "turbo run dev --filter=!./examples/*",
     "install-packages": "cd ./packages/vue-full-event-calendar && npm i && cd .. && cd ./vue3-demo && npm i && cd .. && cd ./vue2-demo && npm i ",
     "format": "prettier --write",
     "build": "pnpm -r build && cd ./packages/vue-full-event-calendar && pnpm pack",
@@ -27,5 +26,10 @@
     "lint-staged": "^13.1.0",
     "prettier": "^2.8.0",
     "pretty-quick": "^3.1.3"
+  },
+  "dependencies": {
+    "tsup": "^7.2.0",
+    "turbo": "^1.10.16",
+    "typescript": "^5.1.3"
   }
 }

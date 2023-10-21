@@ -1,5 +1,19 @@
 import { convertTZ } from '../utils'
-import { EventApi } from './EventApi'
+
+export interface EventApi {}
+interface EventClass {
+  start: Date
+  end: Date
+  name: string
+  id: any
+  duration: number
+  sourceEvent: SourceEvent
+  getEventLength(): any
+  isAllDay(): any
+  calculatePositionAndHeight(): string
+  checkOverLap(event: EventImpl): Boolean
+  convertDateByTimeZone(tz: string): void
+}
 
 export interface SourceEvent {
   start: Date
@@ -7,7 +21,7 @@ export interface SourceEvent {
   name: string
   id: any
 }
-export class EventImpl implements EventApi {
+export class EventImpl implements EventClass {
   start: Date
   end: Date
   name: string

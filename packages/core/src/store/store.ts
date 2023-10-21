@@ -26,7 +26,7 @@ interface ChaageInitialDate {
 }
 interface UpdateEvent {
   type: 'UPDATE_EVENT'
-  id: PickTypeFromField<SourceEvent, 'id'>
+  id: SourceEvent['id']
   event: SourceEvent
 }
 

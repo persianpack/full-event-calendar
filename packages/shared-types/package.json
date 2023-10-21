@@ -1,0 +1,41 @@
+{
+  "name": "@full-event-calendar/shared-ts",
+  "version": "0.0.0",
+  "description": "A grid",
+  "keywords": [],
+  "author": "Amirkian Adl <amircc1200@gmail.com>",
+  "homepage": "https://github.com/ -ui/ -ui#readme",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/s-ui/s-ui.git",
+    "directory": "packages/components/basic-grid"
+  },
+  "bugs": {
+    "url": " "
+  },
+  "devDependencies": {
+    "framer-motion": "^10.16.1",
+    "solid-js": "^1.7.7",
+    "clean-package": "2.2.0"
+  },
+  "scripts": {
+    "build": "tsup src --dts",
+    "build:fast": "tsup src",
+    "dev": "pnpm build:fast -- --watch",
+    "clean": "rimraf dist .turbo",
+    "typecheck": "tsc --noEmit",
+    "prepack": "clean-package",
+    "postpack": "clean-package restore",
+    "typedocs": "tsx ../../../scripts/generate-type-docs.ts"
+  },
+  "clean-package": "../../../clean-package.config.json"
+}
