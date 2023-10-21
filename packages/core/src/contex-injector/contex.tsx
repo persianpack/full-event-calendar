@@ -14,6 +14,7 @@ import { Calendar } from '../Calendar'
 import { createContext, useContext } from 'solid-js'
 import type { Context } from 'solid-js'
 import { CalendarState } from '../store/store'
+import { FComponent } from '@full-event-calendar/shared-ts'
 
 const ChatContext = createContext() as Context<ContextPorvoder>
 
@@ -22,7 +23,7 @@ interface ContextPorvoder {
   inctence: Calendar
 }
 
-export const CounterProvider: Component<{ store: CalendarState; inctence: Calendar }> = (props) => {
+export const CounterProvider: FComponent<{ store: CalendarState; inctence: Calendar }> = (props) => {
   const data = {
     store: props.store,
     inctence: props.inctence

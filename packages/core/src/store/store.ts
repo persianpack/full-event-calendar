@@ -1,6 +1,7 @@
 import { legacy_createStore as createStore, Reducer } from 'redux'
-import { EventImpl, SourceEvent } from '../api/EventImpl'
+import { EventImpl } from '../api/EventImpl'
 import { EventCalendarOptions } from '../api/CalendarImpl'
+import { EventClass, SourceEvent } from '@full-event-calendar/shared-ts'
 
 const defaultState: CalendarState = {
   events: [],
@@ -36,7 +37,7 @@ export type StoreActions = SetAllChatsAction | UpdateEvent | ChangeTimeZoneOnEve
 export interface CalendarState extends EventCalendarOptions {
   // timeZone: PickTypeFromField<EventCalendarOptions, 'timeZone'>
   // initialDate: PickTypeFromField<EventCalendarOptions, 'initialDate'>
-  events: EventImpl[]
+  events: EventClass[]
 }
 
 const calendarReducer: Reducer<CalendarState, StoreActions> = (state = defaultState, action) => {

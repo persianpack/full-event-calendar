@@ -1,5 +1,6 @@
 import { Show, createMemo, createSignal } from 'solid-js'
 import './CalendarHeader.scss'
+import { FComponent } from '@full-event-calendar/shared-ts'
 
 interface CalendarHeader {
   headerDate: Date
@@ -8,7 +9,7 @@ interface CalendarHeader {
   calendar: string
 }
 
-export const CalendarHeader: Component<CalendarHeader> = (props) => {
+export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
   const [showDropDown, SetDropDown] = createSignal(false)
 
   const options: any = {

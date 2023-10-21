@@ -23,6 +23,8 @@
     "vite-plugin-solid": "^2.7.0"
   },
   "dependencies": {
+    "@full-event-calendar/basid-grid": "workspace:*",
+    "@full-event-calendar/shared-ts": "workspace:*",
     "esbuild-sass-plugin": "^2.16.0",
     "redux": "^4.2.1",
     "sass": "^1.64.2",

@@ -1,9 +1,9 @@
-import { DailyGrid } from '../components/dailyGrid.jsx'
+import { DailyGrid } from '@full-event-calendar/basid-grid'
 import { useCounter } from '../contex-injector/contex.jsx'
-import { SourceEvent } from '../api/EventImpl.js'
 import { CalendarHeader } from './CalendarHeader/CalendarHeader.jsx'
 import { createMemo } from 'solid-js'
 import { DailyHeader } from './DailyHeader/DailyHeader.jsx'
+import { SourceEvent } from '@full-event-calendar/shared-ts'
 export function App() {
   const data = useCounter()
 

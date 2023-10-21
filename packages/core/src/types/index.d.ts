@@ -1,7 +1,0 @@
-import type { JSX, Component } from 'solid-js'
-
-declare global {
-  type Component<P = {}> = (props: P & { children?: JSX.Element }) => JSX.Element
-
-  type PickTypeFromField<T, K extends keyof T> = T[K]
-}

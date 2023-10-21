@@ -1,5 +1,6 @@
 import { createMemo } from 'solid-js'
 import './DailyHeader.scss'
+import type { FComponent } from '@full-event-calendar/shared-ts'
 
 interface DailyHeaderProps {
   headerDate: Date
@@ -16,7 +17,7 @@ interface DailyHeaderProps {
 //   'friday'
 // ]
 
-export const DailyHeader: Component<DailyHeaderProps> = (props) => {
+export const DailyHeader: FComponent<DailyHeaderProps> = (props) => {
   function formatWeekDays(date: Date) {
     const D = new Date(date)
     return new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(D)

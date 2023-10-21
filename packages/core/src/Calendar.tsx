@@ -4,8 +4,9 @@ import { CounterProvider } from './contex-injector/contex.jsx'
 import { hydrate, render } from 'solid-js/web'
 import { App } from './lib/App.jsx'
 import { CalendarState } from './store/store.js'
+import { FComponent } from '@full-event-calendar/shared-ts'
 
-const CalendarRoot: Component<{ store: CalendarState; inctence: Calendar }> = (props) => {
+const CalendarRoot: FComponent<{ store: CalendarState; inctence: Calendar }> = (props) => {
   return (
     <CounterProvider store={props.store} inctence={props.inctence}>
       <App />

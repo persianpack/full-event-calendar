@@ -1,7 +1,7 @@
 import useRedux from '../store/useRedux'
 import { CalendarApi } from './CalendarApi'
 import chatStore from '../store/store'
-import { SourceEvent } from './EventImpl'
+import { SourceEvent } from '@full-event-calendar/shared-ts'
 
 export interface CalendarSourceOptions {
   events: SourceEvent[]

@@ -16,11 +16,9 @@ export const DailyGrid: FComponent<DailyGridProps> = (props) => {
     const finalData = createLinesOfColome(props.events)
     return Object.values(finalData)
   })
-
   let containerRef: any = {
     current: ''
   }
-
   function dragEnd(a: DraggeddData) {
     const sourceE = { ...a.item } as SourceEvent
     // sourceE.start =

@@ -1,26 +1,6 @@
+import { EventClass, SourceEvent } from '@full-event-calendar/shared-ts'
 import { convertTZ } from '../utils'
 
-export interface EventApi {}
-interface EventClass {
-  start: Date
-  end: Date
-  name: string
-  id: any
-  duration: number
-  sourceEvent: SourceEvent
-  getEventLength(): any
-  isAllDay(): any
-  calculatePositionAndHeight(): string
-  checkOverLap(event: EventImpl): Boolean
-  convertDateByTimeZone(tz: string): void
-}
-
-export interface SourceEvent {
-  start: Date
-  end: Date
-  name: string
-  id: any
-}
 export class EventImpl implements EventClass {
   start: Date
   end: Date

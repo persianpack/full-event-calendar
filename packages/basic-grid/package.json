@@ -30,7 +30,7 @@
   },
   "scripts": {
     "build": "tsup src/index.ts --dts",
-    "build:fast": "tsup src",
+    "build:fast": "tsup src/index.ts",
     "dev": "pnpm build:fast -- --watch",
     "clean": "rimraf dist .turbo",
     "typecheck": "tsc --noEmit",

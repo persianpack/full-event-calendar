@@ -55,6 +55,12 @@ importers:
 
   packages/core:
     dependencies:
+      '@full-event-calendar/basid-grid':
+        specifier: workspace:*
+        version: link:../basic-grid
+      '@full-event-calendar/shared-ts':
+        specifier: workspace:*
+        version: link:../shared-types
       esbuild-sass-plugin:
         specifier: ^2.16.0
         version: 2.16.0(esbuild@0.19.5)
