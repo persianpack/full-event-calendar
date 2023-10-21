@@ -3,14 +3,11 @@
   "version": "0.0.0",
   "type": "module",
   "files": [
-    "dist",
-    "index.d.ts"
+    "dist"
   ],
   "main": "./dist/counter.umd.cjs",
   "module": "./dist/counter.js",
-  "types": "./index.d.ts",
   "exports": {
-    "types": "./index.d.ts",
     "import": "./dist/counter.js",
     "require": "./dist/counter.umd.cjs"
   },
@@ -26,6 +23,8 @@
   "dependencies": {
     "redux": "^4.2.1",
     "sass": "^1.64.2",
-    "solid-js": "^1.7.7"
+    "solid-js": "^1.7.7",
+    "vite-dts": "^1.0.4",
+    "vite-plugin-dts": "3.0.0"
   }
 }

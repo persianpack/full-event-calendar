@@ -1,4 +1,4 @@
-import { For, Show, createEffect, createSignal, getOwner, mergeProps, onMount } from 'solid-js'
+import { createSignal, onMount } from 'solid-js'
 import './TimeBar.scss'
 
 export const TimeBar: Component<{ container: any }> = (props) => {

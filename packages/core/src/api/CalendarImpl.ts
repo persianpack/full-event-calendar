@@ -1,7 +1,6 @@
 import useRedux from '../store/useRedux'
 import { CalendarApi } from './CalendarApi'
 import chatStore from '../store/store'
-import { EventApi } from './EventApi'
 import { SourceEvent } from './EventImpl'
 
 export interface CalendarSourceOptions {

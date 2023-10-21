@@ -1,4 +1,4 @@
-import { CalendarImpl, CalendarSourceOptions, EventCalendarOptions } from './api/CalendarImpl'
+import { CalendarImpl, CalendarSourceOptions } from './api/CalendarImpl'
 
 import { CounterProvider } from './contex-injector/contex.jsx'
 import { hydrate, render } from 'solid-js/web'

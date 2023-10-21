@@ -2,7 +2,7 @@ import { DailyGrid } from '../components/dailyGrid.jsx'
 import { useCounter } from '../contex-injector/contex.jsx'
 import { SourceEvent } from '../api/EventImpl.js'
 import { CalendarHeader } from './CalendarHeader/CalendarHeader.jsx'
-import { createEffect, createMemo } from 'solid-js'
+import { createMemo } from 'solid-js'
 import { DailyHeader } from './DailyHeader/DailyHeader.jsx'
 export function App() {
   const data = useCounter()
