@@ -2,10 +2,11 @@ import { createMemo } from 'solid-js'
 import './DailyHeader.scss'
 import type { FComponent } from '@full-event-calendar/shared-ts'
 
-interface DailyHeaderProps {
+export interface DailyHeaderProps {
   headerDate: Date
   onDateChange: (d: Date) => void
   calendar: string
+  timeZone: string
 }
 
 // const weekDays =[

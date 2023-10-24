@@ -1,4 +1,4 @@
-import { For, Show, createMemo } from 'solid-js'
+import { For, Show, createMemo, mergeProps } from 'solid-js'
 import type { FComponent, SourceEvent, EventClass } from '@full-event-calendar/shared-ts'
 import { createLinesOfColome } from '../utils/coleLine'
 import { userDrager } from '../hooks/eventDraging'
@@ -6,12 +6,24 @@ import type { DraggeddData } from '../hooks/eventDraging'
 import { useResize } from '../hooks/eventResize'
 import { TimeBar } from './TimeBar/TimeBar'
 import './dailyGrid.scss'
-interface DailyGridProps {
+
+export interface BasicGridProps {
   events: EventClass[]
-  onEventUpdate: (event: SourceEvent) => void
+  onEventUpdate?: (event: SourceEvent) => void
 }
 
-export const DailyGrid: FComponent<DailyGridProps> = (props) => {
+type EventCalendarOptions = { [K in keyof BasicGridProps]-?: BasicGridProps[K] }
+
+const defaultProps: EventCalendarOptions = {
+  events: [],
+  onEventUpdate: (a: any) => {
+    a
+  }
+}
+
+export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
+  const props = mergeProps(defaultProps, propsC)
+
   const ColList = createMemo(() => {
     const finalData = createLinesOfColome(props.events)
     return Object.values(finalData)

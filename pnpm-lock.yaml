@@ -58,6 +58,9 @@ importers:
       '@full-event-calendar/basid-grid':
         specifier: workspace:*
         version: link:../basic-grid
+      '@full-event-calendar/daily-grid':
+        specifier: workspace:*
+        version: link:../daily-grid
       '@full-event-calendar/shared-ts':
         specifier: workspace:*
         version: link:../shared-types
@@ -92,6 +95,28 @@ importers:
       vite-plugin-solid:
         specifier: ^2.7.0
         version: 2.7.0(solid-js@1.7.7)(vite@4.4.0)
+
+  packages/daily-grid:
+    dependencies:
+      '@full-event-calendar/basid-grid':
+        specifier: workspace:*
+        version: link:../basic-grid
+      esbuild-sass-plugin:
+        specifier: ^2.16.0
+        version: 2.16.0(esbuild@0.19.5)
+    devDependencies:
+      '@full-event-calendar/shared-ts':
+        specifier: workspace:*
+        version: link:../shared-types
+      clean-package:
+        specifier: 2.2.0
+        version: 2.2.0
+      framer-motion:
+        specifier: ^10.16.1
+        version: 10.16.4
+      solid-js:
+        specifier: ^1.7.7
+        version: 1.7.7
 
   packages/shared-types:
     devDependencies:

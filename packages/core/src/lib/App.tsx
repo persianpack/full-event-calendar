@@ -1,8 +1,10 @@
-import { DailyGrid } from '@full-event-calendar/basid-grid'
+import { BasicGrid } from '@full-event-calendar/basid-grid'
 import { useCounter } from '../contex-injector/contex.jsx'
 import { CalendarHeader } from './CalendarHeader/CalendarHeader.jsx'
 import { createMemo } from 'solid-js'
-import { DailyHeader } from './DailyHeader/DailyHeader.jsx'
+import { DailyGrid } from '@full-event-calendar/daily-grid'
+
+// import { DailyHeader } from './DailyHeader/DailyHeader.jsx'
 import { SourceEvent } from '@full-event-calendar/shared-ts'
 export function App() {
   const data = useCounter()
@@ -32,12 +34,7 @@ export function App() {
           calendar="persian"
           onDateChange={onDateChange}
         />
-        <DailyHeader
-          calendar="persian"
-          headerDate={new Date(data.store.initialDate)}
-          onDateChange={onHeaderDateClick}
-        />
-        <DailyGrid onEventUpdate={onEventUpdate} events={filteredEvents()} />
+        <DailyGrid events={filteredEvents()} />
       </div>
     </>
   )

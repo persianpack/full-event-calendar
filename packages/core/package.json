@@ -25,6 +25,7 @@
   "dependencies": {
     "@full-event-calendar/basid-grid": "workspace:*",
     "@full-event-calendar/shared-ts": "workspace:*",
+    "@full-event-calendar/daily-grid": "workspace:*",
     "esbuild-sass-plugin": "^2.16.0",
     "redux": "^4.2.1",
     "sass": "^1.64.2",

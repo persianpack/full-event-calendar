@@ -1,6 +1,6 @@
 {
-  "name": "@full-event-calendar/basid-grid",
-  "version": "0.0.1",
+  "name": "@full-event-calendar/daily-grid",
+  "version": "0.0.0",
   "description": "A grid",
   "keywords": [],
   "author": "Amirkian Adl <amircc1200@gmail.com>",
@@ -40,6 +40,7 @@
   },
   "clean-package": "../../../clean-package.config.json",
   "dependencies": {
-    "esbuild-sass-plugin": "^2.16.0"
+    "esbuild-sass-plugin": "^2.16.0",
+    "@full-event-calendar/basid-grid": "workspace:*"
   }
 }
