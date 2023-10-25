@@ -21,9 +21,9 @@ export function App() {
     data.inctence.getEventForAdate(data.store.events, new Date(data.store.initialDate))
   )
 
-  function onHeaderDateClick() {
-    console.log('dayClick')
-  }
+  // function onHeaderDateClick() {
+  //   console.log('dayClick')
+  // }
 
   return (
     <>
