@@ -28,15 +28,25 @@ export function App() {
   return (
     <>
       <div style="margin-top:200px;margin-bottom:200px">
+        <WhyC></WhyC>
         <CalendarHeader
           headerDate={new Date(data.store.initialDate)}
           timeZone={data.store.timeZone}
           calendar="persian"
           onDateChange={onDateChange}
         />
-        <DailyGrid events={filteredEvents()} />
+        <DailyGrid
+          onEventUpdate={onEventUpdate}
+          initialDate={new Date(data.store.initialDate)}
+          events={filteredEvents()}
+        />
       </div>
     </>
   )
 }
-// maybe we need to change the dailygrid name to smy like single grid
+
+function WhyC(props: any) {
+  console.log(props)
+
+  return <div>hiii</div>
+}

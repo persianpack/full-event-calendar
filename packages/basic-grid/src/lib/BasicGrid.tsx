@@ -5,20 +5,16 @@ import { userDrager } from '../hooks/eventDraging'
 import type { DraggeddData } from '../hooks/eventDraging'
 import { useResize } from '../hooks/eventResize'
 import { TimeBar } from './TimeBar/TimeBar'
-import './dailyGrid.scss'
+import './basicGrid.scss'
 
 export interface BasicGridProps {
-  events: EventClass[]
+  events?: EventClass[]
   onEventUpdate?: (event: SourceEvent) => void
 }
 
-type EventCalendarOptions = { [K in keyof BasicGridProps]-?: BasicGridProps[K] }
-
-const defaultProps: EventCalendarOptions = {
+const defaultProps = {
   events: [],
-  onEventUpdate: (a: any) => {
-    a
-  }
+  onEventUpdate: () => {}
 }
 
 export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
@@ -63,24 +59,24 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
         <div class="time-range">
           0 AM
           <For each={ColList()}>
-            {(key: EventClass[]) => {
+            {(colume: EventClass[]) => {
               return (
                 <div class="event-colom">
-                  <For each={key}>
-                    {(item) => {
+                  <For each={colume}>
+                    {(rowItem) => {
                       return (
                         <div
-                          onMouseDown={[itemDragstart, item]}
-                          id={'event-' + item.id}
+                          onMouseDown={[itemDragstart, rowItem]}
+                          id={'event-' + rowItem.id}
                           class={` ec-event`}
-                          style={item.calculatePositionAndHeight()}
+                          style={rowItem.calculatePositionAndHeight()}
                         >
-                          <div> id : {item.id}</div>
-                          <div>start :{item.start.toString()}</div>
+                          <div> id : {rowItem.id}</div>
+                          <div>start :{rowItem.start.toString()}</div>
                           <div>
-                            end :<span id={'event-end-' + item.id}>{item.end.toString()}</span>
+                            end :<span id={'event-end-' + rowItem.id}>{rowItem.end.toString()}</span>
                           </div>
-                          <div onmousedown={[onmousedownH, item]} class="resizer"></div>
+                          <div onmousedown={[onmousedownH, rowItem]} class="resizer"></div>
                         </div>
                       )
                     }}

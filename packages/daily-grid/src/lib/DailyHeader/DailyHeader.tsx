@@ -1,4 +1,4 @@
-import { createMemo } from 'solid-js'
+import { createMemo, mergeProps } from 'solid-js'
 import './DailyHeader.scss'
 import type { FComponent } from '@full-event-calendar/shared-ts'
 
@@ -8,15 +8,6 @@ export interface DailyHeaderProps {
   calendar: string
   timeZone: string
 }
-
-// const weekDays =[
-//   'Sunday',
-//   'Monday',
-//   'tusday',
-//   'wendsday',
-//   'thuersday',
-//   'friday'
-// ]
 
 export const DailyHeader: FComponent<DailyHeaderProps> = (props) => {
   function formatWeekDays(date: Date) {

@@ -1,4 +1,4 @@
-import { createSignal, batch } from 'solid-js'
+import { createSignal, batch, onCleanup } from 'solid-js'
 
 import { EventClass } from '@full-event-calendar/shared-ts'
 
@@ -68,7 +68,7 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
     clearTimeout(time2)
   }
 
-  document.addEventListener('mouseup', () => {
+  function handelMouseUp() {
     mouseDown = false
     if (isDragging()) {
       cleanUps()
@@ -102,9 +102,9 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
         }
       }, 500)
     }
-  })
+  }
 
-  document.addEventListener('mousemove', (e) => {
+  function mouseMove(e: MouseEvent) {
     if (!mouseDown) return
 
     const wrapper = containerRef.current?.getBoundingClientRect()
@@ -134,6 +134,16 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
 
       setDraggedData(dragCopy)
     }
+  }
+
+  document.addEventListener('mouseup', handelMouseUp)
+
+  document.addEventListener('mousemove', mouseMove)
+
+  onCleanup(() => {
+    document.removeEventListener('mouseup', handelMouseUp)
+    document.removeEventListener('mousemove', mouseMove)
+    cleanUps()
   })
 
   return { draggedData, isDragging, itemDragstart }
