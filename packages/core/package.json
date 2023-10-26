@@ -28,6 +28,7 @@
     "@full-event-calendar/daily-grid": "workspace:*",
     "@full-event-calendar/weekly-grid": "workspace:*",
     "@full-event-calendar/group-grid": "workspace:*",
+    "@full-event-calendar/utils": "workspace:*",
     "esbuild-sass-plugin": "^2.16.0",
     "redux": "^4.2.1",
     "sass": "^1.64.2",

@@ -67,6 +67,9 @@ importers:
       '@full-event-calendar/shared-ts':
         specifier: workspace:*
         version: link:../shared-types
+      '@full-event-calendar/utils':
+        specifier: workspace:*
+        version: link:../utils
       '@full-event-calendar/weekly-grid':
         specifier: workspace:*
         version: link:../weekly-grid
@@ -107,6 +110,9 @@ importers:
       '@full-event-calendar/basid-grid':
         specifier: workspace:*
         version: link:../basic-grid
+      '@full-event-calendar/utils':
+        specifier: workspace:*
+        version: link:../utils
       esbuild-sass-plugin:
         specifier: ^2.16.0
         version: 2.16.0(esbuild@0.19.5)
@@ -158,11 +164,30 @@ importers:
         specifier: ^1.7.7
         version: 1.7.7
 
+  packages/utils:
+    dependencies:
+      '@full-event-calendar/shared-ts':
+        specifier: workspace:*
+        version: link:../shared-types
+    devDependencies:
+      clean-package:
+        specifier: 2.2.0
+        version: 2.2.0
+      framer-motion:
+        specifier: ^10.16.1
+        version: 10.16.4
+      solid-js:
+        specifier: ^1.7.7
+        version: 1.7.7
+
   packages/weekly-grid:
     dependencies:
       '@full-event-calendar/group-grid':
         specifier: workspace:*
         version: link:../group-grid
+      '@full-event-calendar/utils':
+        specifier: workspace:*
+        version: link:../utils
       esbuild-sass-plugin:
         specifier: ^2.16.0
         version: 2.16.0(esbuild@0.19.5)

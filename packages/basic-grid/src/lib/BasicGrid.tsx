@@ -10,23 +10,29 @@ import './basicGrid.scss'
 export interface BasicGridProps {
   events?: EventClass[]
   onEventUpdate?: (event: SourceEvent, dragData?: DraggeddData) => void
+  gridDate?: Date
 }
 
 const defaultProps = {
   events: [],
-  onEventUpdate: () => {}
+  onEventUpdate: () => {},
+  gridDate: new Date()
 }
 
 export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
+  let containerRef: any = {
+    current: ''
+  }
   const props = mergeProps(defaultProps, propsC)
+
+  const { onmousedownH } = useResize(containerRef, resizeCb)
+  const { draggedData, isDragging, itemDragstart } = userDrager(containerRef, dragEnd)
 
   const ColList = createMemo(() => {
     const finalData = createLinesOfColome(props.events)
     return Object.values(finalData)
   })
-  let containerRef: any = {
-    current: ''
-  }
+
   function dragEnd(a: DraggeddData) {
     const sourceE = { ...a.item } as SourceEvent
 
@@ -40,10 +46,6 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
   function resizeCb(a: any) {
     props.onEventUpdate(a)
   }
-
-  const { onmousedownH } = useResize(containerRef, resizeCb)
-
-  const { draggedData, isDragging, itemDragstart } = userDrager(containerRef, dragEnd)
 
   function getDragingStyle() {
     return `width : ${draggedData().width};height : ${draggedData().height};left:${draggedData().left} ; transition : ${
@@ -62,15 +64,17 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
               return (
                 <div class="event-colom">
                   <For each={colume}>
-                    {(rowItem) => {
+                    {(rowItem: EventClass) => {
                       return (
                         <div
                           onMouseDown={[itemDragstart, rowItem]}
                           id={'event-' + rowItem.id}
                           class={` ec-event`}
-                          style={
-                            rowItem.calculatePositionAndHeight() + lookworAvalibaleWith(ColList(), rowItem, Ciin() + 1)
-                          }
+                          style={`${
+                            rowItem.doesEventStartOn(props.gridDate) ? rowItem.calculatePositionTop() : 'top:0'
+                          } ${rowItem.calculateHeight(
+                            !rowItem.doesEventStartOn(props.gridDate)
+                          )} ${lookworAvalibaleWith(ColList(), rowItem, Ciin() + 1)}`}
                         >
                           <div> id : {rowItem.id}</div>
                           <div>start :{rowItem.start.toString()}</div>

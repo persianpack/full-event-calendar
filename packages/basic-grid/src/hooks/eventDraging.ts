@@ -19,14 +19,14 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
   const [isDragging, setIsDragging] = createSignal(false)
   const [draggedData, setDraggedData] = createSignal<DraggeddData>(initialDragNode)
 
-  const dif = [0, 0]
+  const xAndYDiff = [0, 0]
   let mouseDown = false
 
   function itemDragstart(e: EventClass, d: any) {
     if (isDragging()) return
     mouseDown = true
     const target = document.querySelector(`#event-${e.id}`) as HTMLElement
-    target.style.opacity = '0'
+    // target.style.opacity = '0'
     const targetElement = target.getBoundingClientRect()
     const fullC = containerRef.current.clientWidth || 0
 
@@ -44,12 +44,11 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
       mouseX: 0
     }
 
-    dif[0] = d.clientX - targetElement.left
-    dif[1] = d.clientY - targetElement.top
+    xAndYDiff[0] = d.clientX - targetElement.left
+    xAndYDiff[1] = d.clientY - targetElement.top
 
     batch(() => {
       setDraggedData(clonedNode)
-      setIsDragging(true)
     })
   }
 
@@ -60,12 +59,51 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
     clearTimeout(time1)
     clearTimeout(time2)
   }
+  function mouseMove(e: MouseEvent) {
+    if (!mouseDown) return
+
+    if (!isDragging()) {
+      setIsDragging(true)
+      const target = document.querySelector(`#event-${draggedData().item?.id}`) as HTMLElement
+      target.style.opacity = '0.3'
+    }
+
+    const containerRect = containerRef.current?.getBoundingClientRect()
+    const eventRect = containerRef.current
+      .querySelector(`#draging-event-${draggedData().item?.id}`)
+      ?.getBoundingClientRect()
+    if (eventRect && containerRect) {
+      let deff = Math.abs(eventRect.top - containerRect.top) / 80
+      // console.log(deff)
+      const min = ((deff % 1) * 100 * 60) / 100
+      const hour = deff
+
+      let dragCopy: DraggeddData = { ...draggedData() }
+      dragCopy.itemRect = eventRect
+      if (!dragCopy.item) return
+      if (!(hour >= 24 && min >= 0)) {
+        const statd = dragCopy.item?.start as Date
+        statd.setHours(hour)
+        statd.setMinutes(min)
+        const ENDd = new Date(statd.getTime() + dragCopy.item?.duration * 60000)
+        dragCopy.dragedStartDate = statd
+        dragCopy.dragedEndDate = ENDd
+      }
+      // setDraggedData(dragCopy)
+      dragCopy.left = e.clientX - xAndYDiff[0] + 'px'
+      dragCopy.top = e.clientY - xAndYDiff[1] + 'px'
+      dragCopy.mouseX = e.pageX
+
+      setDraggedData(dragCopy)
+    }
+  }
 
   function handelMouseUp() {
     mouseDown = false
     if (isDragging()) {
       cleanUps()
       dragEndCallBack(draggedData())
+      //basiclly start the transition animation from the base event to the target element
       const baseEl = { ...draggedData() }
       let y = document.querySelector(`#event-${baseEl.item?.id}`) as HTMLElement
       y.style.opacity = '0.0'
@@ -94,39 +132,6 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
           y.style.opacity = ''
         }
       }, 500)
-    }
-  }
-
-  function mouseMove(e: MouseEvent) {
-    if (!mouseDown) return
-
-    const containerRect = containerRef.current?.getBoundingClientRect()
-    const eventRect = containerRef.current
-      .querySelector(`#draging-event-${draggedData().item?.id}`)
-      ?.getBoundingClientRect()
-    if (eventRect && containerRect) {
-      let deff = Math.abs(eventRect.top - containerRect.top) / 80
-      // console.log(deff)
-      const min = ((deff % 1) * 100 * 60) / 100
-      const hour = deff
-
-      let dragCopy: DraggeddData = { ...draggedData() }
-      dragCopy.itemRect = eventRect
-      if (!dragCopy.item) return
-      if (!(hour >= 24 && min >= 0)) {
-        const statd = dragCopy.item?.start as Date
-        statd.setHours(hour)
-        statd.setMinutes(min)
-        const ENDd = new Date(statd.getTime() + dragCopy.item?.duration * 60000)
-        dragCopy.dragedStartDate = statd
-        dragCopy.dragedEndDate = ENDd
-      }
-      // setDraggedData(dragCopy)
-      dragCopy.left = e.clientX - dif[0] + 'px'
-      dragCopy.top = e.clientY - dif[1] + 'px'
-      dragCopy.mouseX = e.pageX
-
-      setDraggedData(dragCopy)
     }
   }
 

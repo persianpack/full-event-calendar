@@ -1,1 +1,1 @@
-export { GroupGrid } from './lib/GroupGrid.tsx'
+export { GroupGrid } from './GroupGrid.tsx'

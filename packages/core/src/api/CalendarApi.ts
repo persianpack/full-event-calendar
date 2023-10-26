@@ -1,6 +1,6 @@
 import type { Dispatch } from 'redux'
 import { CalendarState, StoreActions } from '../store/store'
-import { SourceEvent } from './EventImpl'
+import { SourceEvent } from '@full-event-calendar/shared-ts'
 export interface CalendarApi {
   // Current Date
   // -----------------------------------------------------------------------------------------------------------------
@@ -12,13 +12,4 @@ export interface CalendarApi {
   nextDay(): any
   getDate(): any
   today(): any
-  // checkOverLap(event: Event): booleanc
-  // getEventHeigth(): string
-  // getEventColHeight(): string
 }
-//   constructor(start: Date, end: Date, name: string,id:any) {
-//     this.startDate = start
-//     this.endDate = end
-//     this.eventName = name
-//     this.id = id
-//   }

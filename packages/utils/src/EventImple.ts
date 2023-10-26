@@ -1,5 +1,5 @@
 import { EventClass, SourceEvent } from '@full-event-calendar/shared-ts'
-import { convertTZ } from '../utils'
+import { convertTZ } from './TimeZone'
 
 export class EventImpl implements EventClass {
   start: Date
@@ -25,8 +25,25 @@ export class EventImpl implements EventClass {
     return ''
   }
 
-  calculatePositionAndHeight() {
-    return `${this.getEventColHeight()};${this.getEventHeigth()};`
+  doesEventStartOn(date: Date) {
+    return (
+      this.start.getFullYear() === date.getFullYear() &&
+      this.start.getMonth() === date.getMonth() &&
+      this.start.getDate() === date.getDate()
+    )
+  }
+
+  calculateHeight(calcFromZero: boolean = false) {
+    let heightInPersentage
+    if (calcFromZero) {
+      heightInPersentage = this.end.getHours() * 60 + this.end.getMinutes()
+    } else {
+      heightInPersentage = (this.duration / 60) * 100
+    }
+    return `;height:  ${heightInPersentage}%;`
+  }
+  calculatePositionTop() {
+    return `${this.getEventTopPositionIng()}`
   }
 
   checkOverLap(event: EventImpl) {
@@ -42,12 +59,7 @@ export class EventImpl implements EventClass {
     this.end = convertTZ(this.end, tz)
   }
 
-  private getEventHeigth() {
-    const heightInPersentage = (this.duration / 60) * 100
-    return `height:  ${heightInPersentage}%;`
-  }
-
-  private getEventColHeight() {
+  private getEventTopPositionIng() {
     const eventColHeightInPersentage = (this.start.getHours() + this.start.getMinutes() / 60) * 100
     return `top: ${eventColHeightInPersentage}%`
   }

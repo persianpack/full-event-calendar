@@ -51,21 +51,6 @@ export class CalendarImpl implements CalendarApi {
     this.setEventList(options.events)
   }
 
-  getEventForAdate(events: typeof this.storeManager.events, targetDate: Date) {
-    const filteredERvents = events.filter((event) => {
-      const conditain1 =
-        event.start.getFullYear() === targetDate.getFullYear() &&
-        event.start.getMonth() === targetDate.getMonth() &&
-        event.start.getDate() === targetDate.getDate()
-      const conditain2 =
-        event.end.getFullYear() === targetDate.getFullYear() &&
-        event.end.getMonth() === targetDate.getMonth() &&
-        event.end.getDate() === targetDate.getDate()
-      return conditain1 || conditain2
-    })
-    return filteredERvents
-  }
-
   prevDay() {}
   nextDay() {}
   getDate() {

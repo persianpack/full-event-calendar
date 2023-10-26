@@ -1,5 +1,5 @@
 import { legacy_createStore as createStore, Reducer } from 'redux'
-import { EventImpl } from '../api/EventImpl'
+import { EventImpl } from '@full-event-calendar/utils'
 import { EventCalendarOptions } from '../api/CalendarImpl'
 import { EventClass, SourceEvent } from '@full-event-calendar/shared-ts'
 

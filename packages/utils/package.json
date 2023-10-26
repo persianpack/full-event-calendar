@@ -1,5 +1,5 @@
 {
-  "name": "@full-event-calendar/daily-grid",
+  "name": "@full-event-calendar/utils",
   "version": "0.0.0",
   "description": "A grid",
   "keywords": [],
@@ -40,8 +40,6 @@
   },
   "clean-package": "../../../clean-package.config.json",
   "dependencies": {
-    "esbuild-sass-plugin": "^2.16.0",
-    "@full-event-calendar/basid-grid": "workspace:*",
-    "@full-event-calendar/utils": "workspace:*"
+    "@full-event-calendar/shared-ts": "workspace:*"
   }
 }

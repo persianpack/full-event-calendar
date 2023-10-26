@@ -1,1 +1,1 @@
-export { WeeklyGrid } from './lib/WeeklyGrid.tsx'
+export { WeeklyGrid } from './WeeklyGrid.tsx'

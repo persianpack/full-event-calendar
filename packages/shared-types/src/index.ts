@@ -11,7 +11,9 @@ export interface EventClass {
   sourceEvent: SourceEvent
   getEventLength(): any
   isAllDay(): any
-  calculatePositionAndHeight(): string
+  doesEventStartOn(date: Date): boolean
+  calculatePositionTop(): string
+  calculateHeight(calcFromZero: boolean): string
   checkOverLap(event: EventClass): Boolean
   convertDateByTimeZone(tz: string): void
 }
