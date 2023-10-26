@@ -40,17 +40,21 @@ function getEventForAdate(events: EventClass[], targetDate: Date) {
 export const DailyGrid: FComponent<DailyGridpProps> = (props) => {
   const mergedPorps = mergeProps(defaultProps, props)
 
+  console.log('render daily')
+
   const filteredEvents = createMemo(() => getEventForAdate(mergedPorps.events, mergedPorps.initialDate))
 
   return (
     <>
-      <DailyHeader
-        headerDate={new Date(mergedPorps.initialDate)}
-        timeZone={mergedPorps.timeZone}
-        calendar={mergedPorps.calendar}
-        onDateChange={mergedPorps.onDateChange}
-      />
-      <BasicGrid events={filteredEvents()} onEventUpdate={mergedPorps.onEventUpdate} />
+      <div style="    flex: 1;">
+        <DailyHeader
+          headerDate={new Date(mergedPorps.initialDate)}
+          timeZone={mergedPorps.timeZone}
+          calendar={mergedPorps.calendar}
+          onDateChange={mergedPorps.onDateChange}
+        />
+        <BasicGrid events={filteredEvents()} onEventUpdate={mergedPorps.onEventUpdate} />
+      </div>
     </>
   )
 }
