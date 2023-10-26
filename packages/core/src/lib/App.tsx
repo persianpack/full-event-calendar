@@ -1,9 +1,10 @@
-import { BasicGrid } from '@full-event-calendar/basid-grid'
 import { useCounter } from '../contex-injector/contex.jsx'
 import { CalendarHeader } from './CalendarHeader/CalendarHeader.jsx'
-import { For, createMemo } from 'solid-js'
-import { DailyGrid } from '@full-event-calendar/daily-grid'
 import { GroupGrid } from '@full-event-calendar/group-grid'
+import { For, createMemo } from 'solid-js'
+import { BasicGrid } from '@full-event-calendar/basid-grid'
+import { DailyGrid } from '@full-event-calendar/daily-grid'
+import { WeeklyGrid } from '@full-event-calendar/weekly-grid'
 // import { DailyHeader } from './DailyHeader/DailyHeader.jsx'
 import { FComponent, SourceEvent } from '@full-event-calendar/shared-ts'
 import { Dynamic } from 'solid-js/web'
@@ -35,41 +36,30 @@ export function App() {
   //              events={filteredEvents()}>
   //         </Dynamic>
   //   )
-
   // })
 
   return (
     <>
       <div style="margin-top:200px;margin-bottom:200px">
-        <div>
-          <CalendarHeader
-            headerDate={new Date(data.store.initialDate)}
-            timeZone={data.store.timeZone}
-            calendar="persian"
-            onDateChange={onDateChange}
-          />
-          <GroupGrid
-            columes={[
-              { events: [] },
-              { events: [] },
-              { events: [] },
-              { events: [] },
-              { events: [] },
-              { events: [] },
-              { events: [] }
-            ]}
-            onEventUpdate={onEventUpdate}
-            initialDate={new Date(data.store.initialDate)}
-            events={filteredEvents()}
-          />
-          {/* {mappedArr} */}
+        <CalendarHeader
+          headerDate={new Date(data.store.initialDate)}
+          timeZone={data.store.timeZone}
+          calendar="persian"
+          onDateChange={onDateChange}
+        />
+        <WeeklyGrid
+          onEventUpdate={onEventUpdate}
+          initialDate={new Date(data.store.initialDate)}
+          events={filteredEvents()}
+        />
+        {/* {mappedArr} */}
 
-          {/* <DailyGrid
+        {/* <DailyGrid
                onEventUpdate={onEventUpdate}
                initialDate={new Date(data.store.initialDate)}
                events={filteredEvents()}
             /> */}
-          {/* <DailyGrid
+        {/* <DailyGrid
            
              initialDate={new Date(data.store.initialDate)}
              events={filteredEvents()}
@@ -79,7 +69,7 @@ export function App() {
           initialDate={new Date(data.store.initialDate)}
           events={filteredEvents()}
         /> */}
-          {/* <DailyGrid
+        {/* <DailyGrid
           onEventUpdate={onEventUpdate}
           initialDate={new Date(data.store.initialDate)}
           events={filteredEvents()}
@@ -89,24 +79,7 @@ export function App() {
           initialDate={new Date(data.store.initialDate)}
           events={filteredEvents()}
         /> */}
-        </div>
       </div>
     </>
   )
-}
-
-const WhyC: FComponent<{ gruops: any }> = (props) => {
-  console.log(props.children)
-
-  // const mapdedGroup = .map(item=>{
-  //   return (
-  //     <Dynamic component={DailyGrid}  onEventUpdate={onEventUpdate}
-  //          initialDate={new Date(data.store.initialDate)}
-  //          events={filteredEvents()}>
-
-  //       </Dynamic>
-  //   )
-  // })
-
-  return <>{/* {props.children} */}</>
 }
