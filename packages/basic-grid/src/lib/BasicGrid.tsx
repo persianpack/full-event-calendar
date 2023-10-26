@@ -29,9 +29,9 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
   }
   function dragEnd(a: DraggeddData) {
     const sourceE = { ...a.item } as SourceEvent
-    // sourceE.start =
-    sourceE.start = a.startDate
-    sourceE.end = a.endDate
+
+    sourceE.start = a.dragedStartDate
+    sourceE.end = a.dragedEndDate
 
     if (a.item) {
       props.onEventUpdate(sourceE)
@@ -118,8 +118,8 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
               style={getDragingStyle()}
             >
               <div> id : {draggedData().item?.id}</div>
-              <div>start :{draggedData().startDate.toString()}</div>
-              <div>end :{draggedData().endDate.toString()}</div>
+              <div>start :{draggedData().dragedStartDate.toString()}</div>
+              <div>end :{draggedData().dragedEndDate.toString()}</div>
             </div>
           </Show>
         </div>

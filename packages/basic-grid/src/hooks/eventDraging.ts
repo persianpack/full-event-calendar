@@ -10,8 +10,9 @@ export interface DraggeddData {
   duration: number
   item: EventClass | null
   animation: string
-  startDate: Date
-  endDate: Date
+  dragedStartDate: Date
+  dragedEndDate: Date
+  itemRect: DOMRect | null
 }
 
 const initialDragNode: DraggeddData = {
@@ -21,9 +22,10 @@ const initialDragNode: DraggeddData = {
   top: '',
   item: null,
   duration: 0,
-  startDate: new Date(),
-  endDate: new Date(),
-  animation: ''
+  dragedStartDate: new Date(),
+  dragedEndDate: new Date(),
+  animation: '',
+  itemRect: null
 }
 export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode: DraggeddData) => void) {
   const [isDragging, setIsDragging] = createSignal(false)
@@ -43,12 +45,13 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
       width: target.clientWidth + 3 + 'px',
       height: target.clientHeight + 2 + 'px',
       item: e,
-      startDate: e.start,
-      endDate: e.end,
+      dragedStartDate: e.start,
+      dragedEndDate: e.end,
       left: targetElement.left + 0 + 'px',
       top: targetElement.top + 0 + 'px',
       duration: e.duration,
-      animation: ''
+      animation: '',
+      itemRect: null
     }
 
     dif[0] = d.clientX - targetElement.left
@@ -107,26 +110,26 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
   function mouseMove(e: MouseEvent) {
     if (!mouseDown) return
 
-    const wrapper = containerRef.current?.getBoundingClientRect()
-    const download = containerRef.current
+    const containerRect = containerRef.current?.getBoundingClientRect()
+    const eventRect = containerRef.current
       .querySelector(`#draging-event-${draggedData().item?.id}`)
       ?.getBoundingClientRect()
-    if (download && wrapper) {
-      let deff = Math.abs(download.top - wrapper.top) / 80
+    if (eventRect && containerRect) {
+      let deff = Math.abs(eventRect.top - containerRect.top) / 80
       // console.log(deff)
       const min = ((deff % 1) * 100 * 60) / 100
       const hour = deff
 
       let dragCopy: DraggeddData = { ...draggedData() }
-
+      dragCopy.itemRect = eventRect
       if (!dragCopy.item) return
       if (!(hour >= 24 && min >= 0)) {
         const statd = dragCopy.item?.start as Date
         statd.setHours(hour)
         statd.setMinutes(min)
         const ENDd = new Date(statd.getTime() + dragCopy.item?.duration * 60000)
-        dragCopy.startDate = statd
-        dragCopy.endDate = ENDd
+        dragCopy.dragedStartDate = statd
+        dragCopy.dragedEndDate = ENDd
       }
       // setDraggedData(dragCopy)
       dragCopy.left = e.clientX - dif[0] + 'px'
