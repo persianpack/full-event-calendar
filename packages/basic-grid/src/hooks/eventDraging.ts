@@ -1,19 +1,6 @@
 import { createSignal, batch, onCleanup } from 'solid-js'
 
-import { EventClass } from '@full-event-calendar/shared-ts'
-
-export interface DraggeddData {
-  width: string
-  height: string
-  left: string
-  top: string
-  duration: number
-  item: EventClass | null
-  animation: string
-  dragedStartDate: Date
-  dragedEndDate: Date
-  itemRect: DOMRect | null
-}
+import { DraggeddData, EventClass } from '@full-event-calendar/shared-ts'
 
 const initialDragNode: DraggeddData = {
   width: '',
@@ -25,7 +12,8 @@ const initialDragNode: DraggeddData = {
   dragedStartDate: new Date(),
   dragedEndDate: new Date(),
   animation: '',
-  itemRect: null
+  itemRect: null,
+  mouseX: 0
 }
 export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode: DraggeddData) => void) {
   const [isDragging, setIsDragging] = createSignal(false)
@@ -37,12 +25,13 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
   function itemDragstart(e: EventClass, d: any) {
     if (isDragging()) return
     mouseDown = true
-    const target = containerRef.current.querySelector(`#event-${e.id}`) as HTMLElement
+    const target = document.querySelector(`#event-${e.id}`) as HTMLElement
     target.style.opacity = '0'
     const targetElement = target.getBoundingClientRect()
+    const fullC = containerRef.current.clientWidth || 0
 
     let clonedNode: DraggeddData = {
-      width: target.clientWidth + 3 + 'px',
+      width: fullC + 'px',
       height: target.clientHeight + 2 + 'px',
       item: e,
       dragedStartDate: e.start,
@@ -51,7 +40,8 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
       top: targetElement.top + 0 + 'px',
       duration: e.duration,
       animation: '',
-      itemRect: null
+      itemRect: null,
+      mouseX: 0
     }
 
     dif[0] = d.clientX - targetElement.left
@@ -76,30 +66,30 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
     if (isDragging()) {
       cleanUps()
       dragEndCallBack(draggedData())
-      const target = { ...draggedData() }
-      let y = containerRef.current.querySelector(`#event-${target.item?.id}`) as HTMLElement
+      const baseEl = { ...draggedData() }
+      let y = document.querySelector(`#event-${baseEl.item?.id}`) as HTMLElement
       y.style.opacity = '0.0'
 
       time1 = setTimeout(() => {
-        const targets = containerRef.current.querySelector(`#event-${target.item?.id}`)?.getBoundingClientRect()
-        let y = containerRef.current.querySelector(`#event-${target.item?.id}`)
-        if (y) {
-          y.style.opacity = '0.0'
+        let targetEl = document.querySelector(`#event-${baseEl.item?.id}`) as HTMLElement
+        const targetElRect = targetEl?.getBoundingClientRect()
+        if (targetEl) {
+          targetEl.style.opacity = '0.0'
         }
-        target.width = y?.clientWidth + 'px'
-        target.left = targets?.left + 'px'
-        target.top = targets?.top + 'px'
-        target.animation = 'all 0.5s;'
-        setDraggedData(target)
+        baseEl.width = targetEl?.clientWidth + 2 + 'px'
+        baseEl.left = targetElRect?.left + 'px'
+        baseEl.top = targetElRect?.top + 'px'
+        baseEl.animation = 'all 0.5s;'
+        setDraggedData(baseEl)
       }, 0)
 
       time2 = setTimeout(() => {
-        target.animation = ''
+        baseEl.animation = ''
         batch(() => {
-          setDraggedData(target)
+          setDraggedData(baseEl)
           setIsDragging(false)
         })
-        let y = containerRef.current.querySelector(`#event-${target.item?.id}`)
+        let y = document.querySelector(`#event-${baseEl.item?.id}`) as HTMLElement
         if (y) {
           y.style.opacity = ''
         }
@@ -134,6 +124,7 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
       // setDraggedData(dragCopy)
       dragCopy.left = e.clientX - dif[0] + 'px'
       dragCopy.top = e.clientY - dif[1] + 'px'
+      dragCopy.mouseX = e.pageX
 
       setDraggedData(dragCopy)
     }
