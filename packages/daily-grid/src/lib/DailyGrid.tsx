@@ -9,15 +9,19 @@ interface DailyGridpProps extends BasicGridProps {
   onDateChange?: (d: Date) => void
   calendar?: string
   timeZone?: string
+  ref: any
+  id: string
 }
 
 const defaultProps = {
   events: [],
+  id: '',
   initialDate: new Date(),
   timeZone: 'asiz/tehran',
   calendar: 'persian',
   onDateChange: () => {},
-  onEventUpdate: () => {}
+  onEventUpdate: () => {},
+  ref: null
 }
 
 // type EventCalendarOptionsss = { [K in keyof DailyGridpProps]-?: DailyGridpProps[K] }
@@ -40,15 +44,15 @@ function getEventForAdate(events: EventClass[], targetDate: Date) {
 export const DailyGrid: FComponent<DailyGridpProps> = (props) => {
   const mergedPorps = mergeProps(defaultProps, props)
 
-  console.log('render daily')
+  console.log('render daily', mergedPorps.initialDate)
 
   const filteredEvents = createMemo(() => getEventForAdate(mergedPorps.events, mergedPorps.initialDate))
 
   return (
     <>
-      <div style="    flex: 1;">
+      <div id={props.id} style="flex: 1;">
         <DailyHeader
-          headerDate={new Date(mergedPorps.initialDate)}
+          headerDate={mergedPorps.initialDate}
           timeZone={mergedPorps.timeZone}
           calendar={mergedPorps.calendar}
           onDateChange={mergedPorps.onDateChange}

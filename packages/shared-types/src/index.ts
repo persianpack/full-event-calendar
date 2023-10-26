@@ -22,3 +22,17 @@ export interface SourceEvent {
   name: string
   id: any
 }
+
+export interface DraggeddData {
+  width: string
+  height: string
+  left: string
+  top: string
+  duration: number
+  item: EventClass | null
+  animation: string
+  dragedStartDate: Date
+  dragedEndDate: Date
+  itemRect: DOMRect | null
+  mouseX: number
+}

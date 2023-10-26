@@ -77,13 +77,16 @@ const events = [
   }
 ]
 
+console.log('page init')
 const EventCalendar = new Calendar(el, {
   events: events,
   timeZone: 'Africa/Abidjan',
   initialDate: new Date('Thu Aug 10 2023 15:00:0')
 })
-
+console.time('rendered in ')
 EventCalendar.render()
+console.timeEnd('rendered in ')
+
 // setTimeout(() => {
 //   console.log("update uvent")
 //   EventCalendar.updateEvent(17, {

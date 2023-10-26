@@ -13,30 +13,13 @@ export function App() {
 
   function onEventUpdate(event: SourceEvent) {
     data.inctence.updateEvent(event.id, event)
+
     // console.log('easujdoiai');
   }
 
   function onDateChange(d: Date) {
     data.inctence.changeInitialDate(d.toISOString())
   }
-
-  const filteredEvents = createMemo(() =>
-    data.inctence.getEventForAdate(data.store.events, new Date(data.store.initialDate))
-  )
-
-  // function onHeaderDateClick() {
-  //   console.log('dayClick')
-  // }
-
-  // const mappedArr = arr.map((it)=>{
-
-  //   return (
-  //         <Dynamic component={DailyGrid}  onEventUpdate={onEventUpdate}
-  //              initialDate={new Date(data.store.initialDate)}
-  //              events={filteredEvents()}>
-  //         </Dynamic>
-  //   )
-  // })
 
   return (
     <>
@@ -50,34 +33,14 @@ export function App() {
         <WeeklyGrid
           onEventUpdate={onEventUpdate}
           initialDate={new Date(data.store.initialDate)}
-          events={filteredEvents()}
+          events={data.store.events}
         />
-        {/* {mappedArr} */}
 
-        {/* <DailyGrid
-               onEventUpdate={onEventUpdate}
-               initialDate={new Date(data.store.initialDate)}
-               events={filteredEvents()}
-            /> */}
-        {/* <DailyGrid
-           
-             initialDate={new Date(data.store.initialDate)}
-             events={filteredEvents()}
-        />
-        <DailyGrid
-          
-          initialDate={new Date(data.store.initialDate)}
-          events={filteredEvents()}
-        /> */}
-        {/* <DailyGrid
-          onEventUpdate={onEventUpdate}
-          initialDate={new Date(data.store.initialDate)}
-          events={filteredEvents()}
-        />
+        {/*          
         <DailyGrid
           onEventUpdate={onEventUpdate}
           initialDate={new Date(data.store.initialDate)}
-          events={filteredEvents()}
+          events={data.store.events}
         /> */}
       </div>
     </>

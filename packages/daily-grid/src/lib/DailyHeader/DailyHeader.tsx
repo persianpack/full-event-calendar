@@ -16,9 +16,10 @@ export const DailyHeader: FComponent<DailyHeaderProps> = (props) => {
   }
 
   const formatDayNumber = createMemo(() => {
-    const dateTimeFormat = Intl.DateTimeFormat('en-US', {
-      calendar: props.calendar
-    })
+    // const dateTimeFormat = Intl.DateTimeFormat('en-US', {
+    //   calendar: props.calendar
+    // })
+    const dateTimeFormat = Intl.DateTimeFormat('en-US')
     const parts = dateTimeFormat.formatToParts(props.headerDate)
     const partValues = parts.filter((p) => p.type === 'day')
     return partValues[0].value

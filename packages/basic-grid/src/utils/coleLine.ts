@@ -63,7 +63,7 @@ export function lookworAvalibaleWith(colList: ColList, event: EventClass, colSta
     const isoK = isEventAvalibelInCol(colume, event)
     if (isoK) {
       finalWith++
-      console.log(`for id : ${event.id}`, index, isoK)
+      // console.log(`for id : ${event.id}`, index, isoK)
     } else {
       break
     }

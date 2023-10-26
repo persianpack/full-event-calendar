@@ -49,11 +49,12 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
 
   createEffect(generateCols)
 
-  function asjdoiasd(a: SourceEvent, b: number, currCol: number) {
+  function asjdoiasd(a: SourceEvent, b: number, currCol: number, isDraged: boolean) {
     const conpt = { ...a }
-
-    conpt.start.setDate(conpt.start.getDate() - (currCol - b))
-    conpt.end.setDate(conpt.end.getDate() - (currCol - b))
+    if (isDraged) {
+      conpt.start.setDate(conpt.start.getDate() - (currCol - b))
+      conpt.end.setDate(conpt.end.getDate() - (currCol - b))
+    }
 
     mergedPorps.onEventUpdate(conpt)
   }
