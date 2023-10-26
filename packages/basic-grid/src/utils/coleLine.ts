@@ -43,3 +43,30 @@ export function createLinesOfColome(eventList: EventClass[]) {
 
   return colList
 }
+
+function isEventAvalibelInCol(colume: EventClass[], event: EventClass) {
+  let isFree = true
+  for (let i = 0; i < colume.length; i++) {
+    if (event.checkOverLap(colume[i])) {
+      isFree = false
+      break
+    }
+  }
+  return isFree
+}
+
+export function lookworAvalibaleWith(colList: ColList, event: EventClass, colStart: number) {
+  const arr = Object.values(colList)
+  let finalWith = 1
+  for (let index = colStart; index < arr.length; index++) {
+    const colume = arr[index]
+    const isoK = isEventAvalibelInCol(colume, event)
+    if (isoK) {
+      finalWith++
+      console.log(`for id : ${event.id}`, index, isoK)
+    } else {
+      break
+    }
+  }
+  return ` ;width : ${finalWith}00%`
+}

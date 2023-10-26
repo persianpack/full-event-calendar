@@ -1,15 +1,15 @@
 import { For, Show, createMemo, mergeProps } from 'solid-js'
-import type { FComponent, SourceEvent, EventClass } from '@full-event-calendar/shared-ts'
+import type { FComponent, SourceEvent, EventClass, DraggeddData } from '@full-event-calendar/shared-ts'
 import { createLinesOfColome } from '../utils/coleLine'
 import { userDrager } from '../hooks/eventDraging'
-import type { DraggeddData } from '../hooks/eventDraging'
 import { useResize } from '../hooks/eventResize'
 import { TimeBar } from './TimeBar/TimeBar'
+import { lookworAvalibaleWith } from '../utils/coleLine'
 import './basicGrid.scss'
 
 export interface BasicGridProps {
   events?: EventClass[]
-  onEventUpdate?: (event: SourceEvent) => void
+  onEventUpdate?: (event: SourceEvent, dragData?: DraggeddData) => void
 }
 
 const defaultProps = {
@@ -32,9 +32,8 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
 
     sourceE.start = a.dragedStartDate
     sourceE.end = a.dragedEndDate
-
     if (a.item) {
-      props.onEventUpdate(sourceE)
+      props.onEventUpdate(sourceE, a)
     }
   }
 
@@ -59,7 +58,7 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
         <div class="time-range">
           0 AM
           <For each={ColList()}>
-            {(colume: EventClass[]) => {
+            {(colume, Ciin) => {
               return (
                 <div class="event-colom">
                   <For each={colume}>
@@ -69,7 +68,9 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
                           onMouseDown={[itemDragstart, rowItem]}
                           id={'event-' + rowItem.id}
                           class={` ec-event`}
-                          style={rowItem.calculatePositionAndHeight()}
+                          style={
+                            rowItem.calculatePositionAndHeight() + lookworAvalibaleWith(ColList(), rowItem, Ciin() + 1)
+                          }
                         >
                           <div> id : {rowItem.id}</div>
                           <div>start :{rowItem.start.toString()}</div>
