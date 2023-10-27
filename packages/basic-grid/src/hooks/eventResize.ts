@@ -11,16 +11,23 @@ export function useResize(container: any, resizeEndCalllBack: (p: SourceEvent) =
 
     let prevX = e.y
     const targetRect = targetEvent.getBoundingClientRect()
+    let FirstBottomY = targetRect.bottom
     let endDate: any = null
 
     function mousemove(e: MouseEvent) {
       let newX = prevX - e.y
       const height = targetRect.height - newX
       targetEvent.style.height = height + 'px'
-      let duraction = (height * 60) / 80
-      endDate = new Date(item.start.getTime() + duraction * 60000)
+
+      const delta = targetEvent.getBoundingClientRect().bottom - FirstBottomY
+
+      const newD = (delta * 60) / 80
+      const finald = new Date(item.end.getTime() + newD * 60000)
+
+      // let duraction = (height * 60) / 80
+      endDate = finald
       const el = container.current.querySelector(`#event-end-${item?.id}`) as HTMLElement
-      el.innerHTML = endDate.toString()
+      el.innerHTML = finald.toString()
     }
 
     function mouseup() {

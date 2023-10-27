@@ -21,12 +21,14 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
 
   const xAndYDiff = [0, 0]
   let mouseDown = false
+  let firstTopPosition = 0
 
   function itemDragstart(e: EventClass, d: any) {
     if (isDragging()) return
     mouseDown = true
     const target = document.querySelector(`#event-${e.id}`) as HTMLElement
     // target.style.opacity = '0'
+    firstTopPosition = target.getBoundingClientRect().top
     const targetElement = target.getBoundingClientRect()
     const fullC = containerRef.current.clientWidth || 0
 
@@ -73,23 +75,19 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
       .querySelector(`#draging-event-${draggedData().item?.id}`)
       ?.getBoundingClientRect()
     if (eventRect && containerRect) {
-      let deff = Math.abs(eventRect.top - containerRect.top) / 80
-      // console.log(deff)
-      const min = ((deff % 1) * 100 * 60) / 100
-      const hour = deff
-
       let dragCopy: DraggeddData = { ...draggedData() }
+
+      const statDate = dragCopy.item?.start as Date
+      const endDate = dragCopy.item?.end as Date
+      const inMin = ((eventRect.top - firstTopPosition) * 60) / 80
+      const delta = inMin * 60000
+      const newS = new Date(statDate.getTime() + delta)
+      const newE = new Date(endDate.getTime() + delta)
+
+      dragCopy.dragedStartDate = newS
+      dragCopy.dragedEndDate = newE
       dragCopy.itemRect = eventRect
-      if (!dragCopy.item) return
-      if (!(hour >= 24 && min >= 0)) {
-        const statd = dragCopy.item?.start as Date
-        statd.setHours(hour)
-        statd.setMinutes(min)
-        const ENDd = new Date(statd.getTime() + dragCopy.item?.duration * 60000)
-        dragCopy.dragedStartDate = statd
-        dragCopy.dragedEndDate = ENDd
-      }
-      // setDraggedData(dragCopy)
+
       dragCopy.left = e.clientX - xAndYDiff[0] + 'px'
       dragCopy.top = e.clientY - xAndYDiff[1] + 'px'
       dragCopy.mouseX = e.pageX

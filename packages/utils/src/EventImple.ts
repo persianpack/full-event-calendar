@@ -36,7 +36,7 @@ export class EventImpl implements EventClass {
   calculateHeight(calcFromZero: boolean = false) {
     let heightInPersentage
     if (calcFromZero) {
-      heightInPersentage = this.end.getHours() * 60 + this.end.getMinutes()
+      heightInPersentage = ((this.end.getHours() * 60 + this.end.getMinutes()) / 60) * 100
     } else {
       heightInPersentage = (this.duration / 60) * 100
     }
