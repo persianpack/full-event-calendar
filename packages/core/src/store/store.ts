@@ -36,6 +36,10 @@ interface UpdateEvent {
   id: SourceEvent['id']
   event: SourceEvent
 }
+interface UpdateCalendar {
+  type: 'UPDATE_CALENDAR'
+  calendar: string
+}
 
 // To Do: use better names for set and update
 
@@ -46,6 +50,7 @@ export type StoreActions =
   | ChaageInitialDate
   | changeTimeZone
   | UpdateLocale
+  | UpdateCalendar
 
 export type EventCalendarOptions = { [K in keyof CalendarSourceOptions]-?: CalendarSourceOptions[K] }
 export interface CalendarState extends EventCalendarOptions {
@@ -54,6 +59,8 @@ export interface CalendarState extends EventCalendarOptions {
 
 const calendarReducer: Reducer<CalendarState, StoreActions> = (state = defaultState, action) => {
   switch (action.type) {
+    case 'UPDATE_CALENDAR':
+      return { ...state, calendar: action.calendar }
     case 'UPDATE_LOCALE':
       return { ...state, locale: action.locale }
     case 'SET_INITIAL_DATE':

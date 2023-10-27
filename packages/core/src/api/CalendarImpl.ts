@@ -41,10 +41,16 @@ export class CalendarImpl implements CalendarApi {
   changeLocale(locale: string) {
     this.storeDispatch({ type: 'UPDATE_LOCALE', locale })
   }
+  changeCalendar(calendar: string) {
+    this.storeDispatch({ type: 'UPDATE_CALENDAR', calendar })
+  }
 
   resetOptions(options: CalendarSourceOptions) {
     if (options.timeZone) {
       this.changeTimeZone(options.timeZone)
+    }
+    if (options.calendar) {
+      this.changeCalendar(options.calendar)
     }
     if (options.initialDate) {
       this.changeInitialDate(new Date(options.initialDate).toISOString())
