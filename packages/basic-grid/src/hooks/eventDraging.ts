@@ -15,6 +15,7 @@ const initialDragNode: DraggeddData = {
   itemRect: null,
   mouseX: 0
 }
+
 export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode: DraggeddData) => void) {
   const [isDragging, setIsDragging] = createSignal(false)
   const [draggedData, setDraggedData] = createSignal<DraggeddData>(initialDragNode)
@@ -22,11 +23,33 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
   const xAndYDiff = [0, 0]
   let mouseDown = false
   let firstTopPosition = 0
+  let shouldDuplicate = false
 
-  function itemDragstart(e: EventClass, d: any) {
+  function getEventNode(id: any) {
+    const target = document.querySelectorAll(`#event-${id}`)
+    const targets = document.querySelector(`#event-${id}`)
+    if (target.length > 1) {
+      if (shouldDuplicate) {
+        return target[1] as HTMLElement
+      }
+      return target[0] as HTMLElement
+    }
+    return targets as HTMLElement
+  }
+  function setOpacityForElemetns(opacity: string, id: any) {
+    //@ts-ignore
+    document.querySelectorAll(`#event-${id}`).forEach((element: HTMLElement) => {
+      element.style.opacity = opacity
+    })
+  }
+
+  function itemDragstart(e: EventClass, d: any, shouldDuplica: boolean) {
+    console.log(shouldDuplica)
     if (isDragging()) return
     mouseDown = true
-    const target = document.querySelector(`#event-${e.id}`) as HTMLElement
+    shouldDuplicate = shouldDuplica
+    // const target = document.querySelector(`#event-${e.id}`) as HTMLElement
+    const target = getEventNode(e.id)
     // target.style.opacity = '0'
     firstTopPosition = target.getBoundingClientRect().top
     const targetElement = target.getBoundingClientRect()
@@ -66,8 +89,9 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
 
     if (!isDragging()) {
       setIsDragging(true)
-      const target = document.querySelector(`#event-${draggedData().item?.id}`) as HTMLElement
-      target.style.opacity = '0.3'
+      //const target = document.querySelector(`#event-${draggedData().item?.id}`) as HTMLElement
+      // const target = getEventNode(draggedData().item?.id)
+      setOpacityForElemetns('0.3', draggedData().item?.id)
     }
 
     const containerRect = containerRef.current?.getBoundingClientRect()
@@ -103,16 +127,14 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
       dragEndCallBack(draggedData())
       //basiclly start the transition animation from the base event to the target element
       const baseEl = { ...draggedData() }
-      let y = document.querySelector(`#event-${baseEl.item?.id}`) as HTMLElement
-      y.style.opacity = '0.0'
 
+      setOpacityForElemetns('0.0', baseEl.item?.id)
       time1 = setTimeout(() => {
-        let targetEl = document.querySelector(`#event-${baseEl.item?.id}`) as HTMLElement
+        let targetEl = getEventNode(baseEl.item?.id)
         const targetElRect = targetEl?.getBoundingClientRect()
-        if (targetEl) {
-          targetEl.style.opacity = '0.0'
-        }
+        setOpacityForElemetns('0.0', baseEl.item?.id)
         baseEl.width = targetEl?.clientWidth + 2 + 'px'
+        baseEl.height = targetEl?.clientHeight + 2 + 'px'
         baseEl.left = targetElRect?.left + 'px'
         baseEl.top = targetElRect?.top + 'px'
         baseEl.animation = 'all 0.5s;'
@@ -125,10 +147,8 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
           setDraggedData(baseEl)
           setIsDragging(false)
         })
-        let y = document.querySelector(`#event-${baseEl.item?.id}`) as HTMLElement
-        if (y) {
-          y.style.opacity = ''
-        }
+        // let y = document.querySelector(`#event-${baseEl.item?.id}`) as HTMLElement
+        setOpacityForElemetns('', baseEl.item?.id)
       }, 500)
     }
   }

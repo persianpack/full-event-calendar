@@ -67,7 +67,9 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
                     {(rowItem: EventClass) => {
                       return (
                         <div
-                          onMouseDown={[itemDragstart, rowItem]}
+                          onMouseDown={(e: MouseEvent) => {
+                            itemDragstart(rowItem, e, !rowItem.doesEventStartOn(props.gridDate))
+                          }}
                           id={'event-' + rowItem.id}
                           class={` ec-event`}
                           style={`${
