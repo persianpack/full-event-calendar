@@ -80,7 +80,8 @@ const events = [
 console.log('page init')
 const EventCalendar = new Calendar(el, {
   events: events,
-  timeZone: 'Africa/Abidjan',
+  // timeZone: 'Africa/Abidjan',
+  locale: 'fa-IR',
   initialDate: new Date('Thu Aug 10 2023 15:00:0')
 })
 console.time('rendered in ')

@@ -16,15 +16,10 @@ const CalendarRoot: FComponent<{ store: CalendarState; inctence: Calendar }> = (
 
 export class Calendar extends CalendarImpl {
   private targetElement: HTMLElement
-  // private calendaerEventList: PickType<EventCalendarOptions, 'events'>
-  // private timeZone : PickType<EventCalendarOptions,'timeZone'>;
-  // private dailyGridOptions : PickType<EventCalendarOptions,'dailyGridOptions'>;
+
   constructor(targetElement: HTMLElement, eventCalendarOptions: CalendarSourceOptions) {
     super(eventCalendarOptions)
     this.targetElement = targetElement
-    // this.storeDispatch({ type: 'SET_ALL_EVENTS', events: eventCalendarOptions.events })
-    // this.dailyGridOptions = eventCalendarOptions.dailyGridOptions
-    // this.timeZone = eventCalendarOptions.timeZone
   }
 
   render() {

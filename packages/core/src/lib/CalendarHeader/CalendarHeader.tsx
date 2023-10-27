@@ -1,6 +1,7 @@
 import { Show, createMemo, createSignal } from 'solid-js'
 import './CalendarHeader.scss'
 import { FComponent } from '@full-event-calendar/shared-ts'
+import { useCounter } from '../../contex-injector/contex'
 
 interface CalendarHeader {
   headerDate: Date
@@ -11,15 +12,17 @@ interface CalendarHeader {
 
 export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
   const [showDropDown, SetDropDown] = createSignal(false)
+  const data = useCounter()
 
   const options: any = {
     dateStyle: 'full',
-    calendar: props.calendar,
-    timeZone: props.timeZone
+    calendar: data.store.calendar,
+    timeZone: data.store.timeZone
   }
 
   const formater = createMemo(() => {
-    return new Intl.DateTimeFormat('en-US', options).format(new Date(props.headerDate))
+    // the dates pass throw here are assumed that is not converted by timezone so we convert it here
+    return new Intl.DateTimeFormat(data.store.locale, options).format(new Date(props.headerDate))
   })
 
   function goBack() {

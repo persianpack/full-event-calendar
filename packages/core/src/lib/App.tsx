@@ -34,6 +34,9 @@ export function App() {
           onEventUpdate={onEventUpdate}
           initialDate={new Date(data.store.initialDate)}
           events={data.store.events}
+          locale={data.store.locale}
+          calendar={data.store.calendar}
+          timeZone={data.store.timeZone}
         />
 
         {/*          

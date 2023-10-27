@@ -7,26 +7,24 @@ export interface CalendarSourceOptions {
   events: SourceEvent[]
   initialDate?: Date | string
   timeZone?: string
+  calendar?: string
+  locale?: string
   // timeZone ?: string;
   // dailyGridOptions : dailyGridOptions;
   // calnedarMode : CalnedarMode
 }
 
-export type EventCalendarOptions = { [K in keyof CalendarSourceOptions]-?: CalendarSourceOptions[K] } & {
-  initialDate: string
-}
 export class CalendarImpl implements CalendarApi {
   storeManager
   storeDispatch
 
-  // private dailyGridOptions : PickType<EventCalendarOptions,'dailyGridOptions'>;
   constructor(eventCalendarOptions: CalendarSourceOptions) {
     const { store, dispatch } = useRedux(chatStore)
     this.storeManager = store
     this.storeDispatch = dispatch
-
     this.resetOptions(eventCalendarOptions)
   }
+
   setEventList(events: SourceEvent[]) {
     this.storeDispatch({ type: 'SET_ALL_EVENTS', events })
   }
@@ -34,11 +32,14 @@ export class CalendarImpl implements CalendarApi {
   updateEvent(id: SourceEvent['id'], event: SourceEvent): void {
     this.storeDispatch({ type: 'UPDATE_EVENT', id, event })
   }
-  changeTimeZone(tz: EventCalendarOptions['timeZone']) {
+  changeTimeZone(tz: string) {
     this.storeDispatch({ type: 'SET_TIMEZONE', tz })
   }
   changeInitialDate(date: string) {
     this.storeDispatch({ type: 'SET_INITIAL_DATE', date })
+  }
+  changeLocale(locale: string) {
+    this.storeDispatch({ type: 'UPDATE_LOCALE', locale })
   }
 
   resetOptions(options: CalendarSourceOptions) {
@@ -47,6 +48,9 @@ export class CalendarImpl implements CalendarApi {
     }
     if (options.initialDate) {
       this.changeInitialDate(new Date(options.initialDate).toISOString())
+    }
+    if (options.locale) {
+      this.changeLocale(options.locale)
     }
     this.setEventList(options.events)
   }

@@ -91,8 +91,7 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
         </div>
         </Show> */}
         <TimeBar container={containerRef} />
-        <div class="time-range">
-          0 AM
+        <div class="holdcontainer">
           <For each={ColList()}>
             {(colume, Ciin) => {
               return (
@@ -126,6 +125,14 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
               )
             }}
           </For>
+        </div>
+
+        <div class="time-range">
+          <div class="time-range-time">{timess[0]}</div>
+          <div class="some-container">
+            <div class="time-rage-up-container"> </div>
+            <div class="time-rage-down-container"> </div>
+          </div>
         </div>
 
         <For each={timess}>

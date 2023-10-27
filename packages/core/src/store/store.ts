@@ -1,12 +1,14 @@
 import { legacy_createStore as createStore, Reducer } from 'redux'
 import { EventImpl } from '@full-event-calendar/utils'
-import { EventCalendarOptions } from '../api/CalendarImpl'
+import { CalendarSourceOptions } from '../api/CalendarImpl'
 import { EventClass, SourceEvent } from '@full-event-calendar/shared-ts'
 
 const defaultState: CalendarState = {
   events: [],
+  initialDate: new Date(),
   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-  initialDate: new Date().toISOString()
+  calendar: 'gregory',
+  locale: 'en-US'
 }
 
 interface SetAllChatsAction {
@@ -25,6 +27,10 @@ interface ChaageInitialDate {
   type: 'SET_INITIAL_DATE'
   date: string
 }
+interface UpdateLocale {
+  type: 'UPDATE_LOCALE'
+  locale: string
+}
 interface UpdateEvent {
   type: 'UPDATE_EVENT'
   id: SourceEvent['id']
@@ -33,15 +39,23 @@ interface UpdateEvent {
 
 // To Do: use better names for set and update
 
-export type StoreActions = SetAllChatsAction | UpdateEvent | ChangeTimeZoneOnEvent | ChaageInitialDate | changeTimeZone
+export type StoreActions =
+  | SetAllChatsAction
+  | UpdateEvent
+  | ChangeTimeZoneOnEvent
+  | ChaageInitialDate
+  | changeTimeZone
+  | UpdateLocale
+
+export type EventCalendarOptions = { [K in keyof CalendarSourceOptions]-?: CalendarSourceOptions[K] }
 export interface CalendarState extends EventCalendarOptions {
-  // timeZone: PickTypeFromField<EventCalendarOptions, 'timeZone'>
-  // initialDate: PickTypeFromField<EventCalendarOptions, 'initialDate'>
   events: EventClass[]
 }
 
 const calendarReducer: Reducer<CalendarState, StoreActions> = (state = defaultState, action) => {
   switch (action.type) {
+    case 'UPDATE_LOCALE':
+      return { ...state, locale: action.locale }
     case 'SET_INITIAL_DATE':
       return { ...state, initialDate: action.date }
 

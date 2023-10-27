@@ -67,6 +67,7 @@
       z-index: -1;
       // background-color: red;
       position: absolute;
+      text-transform: capitalize;
     }
     .some-container {
       display: flex;
@@ -97,4 +98,10 @@
 
 .drag-element:active {
   cursor: grabbing;
+}
+.holdcontainer {
+  height: 80px;
+  position: absolute;
+  width: 100%;
+  display: flex;
 }
