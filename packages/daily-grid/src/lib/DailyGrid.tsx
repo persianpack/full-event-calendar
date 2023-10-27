@@ -11,7 +11,7 @@ interface DailyGridpProps extends BasicGridProps {
   calendar?: string
   timeZone?: string
   locale?: string
-  id: string
+  id?: string
   events: EventClass[]
 }
 
