@@ -1,4 +1,4 @@
-import { Calendar } from './Calendar'
+import { Calendar } from '@full-event-calendar/core'
 
 const el = document.getElementById('app') as HTMLElement
 

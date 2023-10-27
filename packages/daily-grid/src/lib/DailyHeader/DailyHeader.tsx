@@ -1,4 +1,4 @@
-import { createMemo, mergeProps } from 'solid-js'
+import { createMemo } from 'solid-js'
 import './DailyHeader.scss'
 import type { FComponent } from '@full-event-calendar/shared-ts'
 

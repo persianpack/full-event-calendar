@@ -1,13 +1,10 @@
 import { useCounter } from '../contex-injector/contex.jsx'
 import { CalendarHeader } from './CalendarHeader/CalendarHeader.jsx'
-import { GroupGrid } from '@full-event-calendar/group-grid'
-import { For, Switch, Match } from 'solid-js'
-import { BasicGrid } from '@full-event-calendar/basid-grid'
+import { Switch, Match } from 'solid-js'
 import { DailyGrid } from '@full-event-calendar/daily-grid'
 import { WeeklyGrid } from '@full-event-calendar/weekly-grid'
 // import { DailyHeader } from './DailyHeader/DailyHeader.jsx'
-import { FComponent, SourceEvent } from '@full-event-calendar/shared-ts'
-import { Dynamic } from 'solid-js/web'
+import { SourceEvent } from '@full-event-calendar/shared-ts'
 export function App() {
   const data = useCounter()
 

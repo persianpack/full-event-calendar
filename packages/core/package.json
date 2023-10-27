@@ -5,11 +5,13 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/counter.umd.cjs",
-  "module": "./dist/counter.js",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
   "exports": {
-    "import": "./dist/counter.js",
-    "require": "./dist/counter.umd.cjs"
+    "import": {
+      "types": "./dist/index.d.ts",
+      "default": "./src/index.ts"
+    }
   },
   "scripts": {
     "dev": "vite",
@@ -20,20 +22,24 @@
     "tsup": "^7.2.0",
     "typescript": "^5.1.3",
     "vite": "^4.3.9",
-    "vite-plugin-solid": "^2.7.0"
+    "vite-plugin-solid": "^2.7.0",
+    "esbuild-sass-plugin": "^2.16.0",
+    "sass": "^1.64.2",
+    "tsup-preset-solid": "^2.1.0",
+    "vite-dts": "^1.0.4",
+    "vite-plugin-dts": "3.0.0"
   },
   "dependencies": {
     "@full-event-calendar/basid-grid": "workspace:*",
-    "@full-event-calendar/shared-ts": "workspace:*",
     "@full-event-calendar/daily-grid": "workspace:*",
-    "@full-event-calendar/weekly-grid": "workspace:*",
     "@full-event-calendar/group-grid": "workspace:*",
+    "@full-event-calendar/shared-ts": "workspace:*",
     "@full-event-calendar/utils": "workspace:*",
-    "esbuild-sass-plugin": "^2.16.0",
+    "@full-event-calendar/weekly-grid": "workspace:*",
     "redux": "^4.2.1",
-    "sass": "^1.64.2",
-    "solid-js": "^1.7.7",
-    "vite-dts": "^1.0.4",
-    "vite-plugin-dts": "3.0.0"
-  }
+    "solid-js": "^1.7.7"
+  },
+  "types": "./dist/index.d.ts",
+  "browser": {},
+  "typesVersions": {}
 }
