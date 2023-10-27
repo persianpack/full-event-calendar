@@ -50,7 +50,7 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
     // const target = document.querySelector(`#event-${e.id}`) as HTMLElement
     const target = getEventNode(e.id)
     // target.style.opacity = '0'
-    firstTopPosition = target.getBoundingClientRect().top
+    firstTopPosition = target.getBoundingClientRect().top + window.scrollY
     const targetElement = target.getBoundingClientRect()
     const fullC = containerRef.current.clientWidth || 0
 
@@ -95,16 +95,15 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
       setOpacityForElemetns('0.3', draggedData().item?.id)
     }
 
-    const containerRect = containerRef.current?.getBoundingClientRect()
     const eventRect = containerRef.current
       .querySelector(`#draging-event-${draggedData().item?.id}`)
       ?.getBoundingClientRect()
-    if (eventRect && containerRect) {
+    if (eventRect) {
       let dragCopy: DraggeddData = { ...draggedData() }
 
       const statDate = dragCopy.item?.start as Date
       const endDate = dragCopy.item?.end as Date
-      const inMin = ((eventRect.top - firstTopPosition) * 60) / 80
+      const inMin = ((eventRect.top + window.scrollY - firstTopPosition) * 60) / 80
       const delta = inMin * 60000
       const newS = new Date(statDate.getTime() + delta)
       const newE = new Date(endDate.getTime() + delta)
@@ -112,7 +111,6 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
       dragCopy.dragedStartDate = newS
       dragCopy.dragedEndDate = newE
       dragCopy.itemRect = eventRect
-
       dragCopy.left = e.clientX - xAndYDiff[0] + 'px'
       dragCopy.top = e.clientY - xAndYDiff[1] + 'px'
       dragCopy.mouseX = e.pageX
@@ -121,7 +119,9 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
     }
   }
 
-  function handelMouseUp() {
+  function handelMouseUp(e: MouseEvent) {
+    // call mouse move in case of scolling not moving
+    mouseMove(e)
     mouseDown = false
     if (isDragging()) {
       cleanUps()
