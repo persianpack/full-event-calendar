@@ -14,9 +14,9 @@
     }
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "tsup src/index.ts -- --dts",
     "build": "tsc && vite build",
-    "budifl": "tsup src/Calendar.tsx --dts"
+    "budifl": "tsup src/index.ts --dts"
   },
   "devDependencies": {
     "tsup": "^7.2.0",
