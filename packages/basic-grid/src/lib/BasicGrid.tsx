@@ -16,7 +16,8 @@ export interface BasicGridProps {
 const defaultProps = {
   events: [],
   onEventUpdate: () => {},
-  gridDate: new Date()
+  gridDate: new Date(),
+  dummyEvent: null
 }
 
 export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
@@ -50,12 +51,45 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
   function getDragingStyle() {
     return `width : ${draggedData().width};height : ${draggedData().height};left:${draggedData().left} ; transition : ${
       draggedData().animation
-    } ;top:${draggedData().top};position:fixed `
+    } ;top:${draggedData().top};position:fixed;opacity:0.7`
   }
-
+  const timess = [
+    '1 AM',
+    '2 am',
+    '3 AM',
+    '4 am',
+    '5 AM',
+    '6 am',
+    '7 AM',
+    '8 am',
+    '9 AM',
+    '10 am',
+    '11 AM',
+    '12 pm',
+    '13 AM',
+    '14 pm',
+    '15 pm',
+    '16 pm',
+    '17 pm',
+    '18 pm',
+    '19 pm',
+    '20 pm',
+    '21 pm',
+    '22 pm',
+    '23 pm'
+  ]
   return (
     <>
       <div ref={containerRef.current} class="fec-daily-grid">
+        {/* <Show when={props.dummyEvent}>
+          
+        <div class='dummpyEvent' style={`${props.dummyEvent.calculatePositionTop()}`}>
+          <div class='dummy-topLine'> </div>
+          <div class='dummy-rightLine'> </div>
+          <div class='dummy-leftLine'> </div>
+          <div class='dummy-bottomLine'> </div>
+        </div>
+        </Show> */}
         <TimeBar container={containerRef} />
         <div class="time-range">
           0 AM
@@ -94,29 +128,22 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
           </For>
         </div>
 
-        <div class="time-range">1 AM</div>
-        <div class="time-range">2 AM</div>
-        <div class="time-range">3 AM</div>
-        <div class="time-range">4 AM</div>
-        <div class="time-range">5 AM</div>
-        <div class="time-range">6 AM</div>
-        <div class="time-range">7 AM</div>
-        <div class="time-range">8 AM</div>
-        <div class="time-range">9 AM</div>
-        <div class="time-range">10 AM</div>
-        <div class="time-range">11 AM</div>
-        <div class="time-range">12 PM</div>
-        <div class="time-range">13 PM</div>
-        <div class="time-range">14 PM</div>
-        <div class="time-range">15 PM</div>
-        <div class="time-range">16 PM</div>
-        <div class="time-range">17 PM</div>
-        <div class="time-range">18 PM</div>
-        <div class="time-range">19 PM</div>
-        <div class="time-range">20 PM</div>
-        <div class="time-range">21 PM</div>
-        <div class="time-range">22 PM</div>
-        <div class="time-range">23 PM</div>
+        <For each={timess}>
+          {(time) => {
+            return (
+              <>
+                <div class="time-range">
+                  <div class="time-range-time">{time}</div>
+                  <div class="some-container">
+                    <div class="time-rage-up-container"> </div>
+                    <div class="time-rage-down-container"> </div>
+                  </div>
+                </div>
+              </>
+            )
+          }}
+        </For>
+
         <div class="wrapper-container">
           <Show when={isDragging()}>
             <div

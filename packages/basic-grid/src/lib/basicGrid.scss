@@ -1,3 +1,19 @@
+.calendar-draging {
+  .time-rage-up-container {
+    &:hover {
+      border: 2px solid blue;
+    }
+  }
+  .time-rage-down-container {
+    &:hover {
+      border: 2px solid blue;
+    }
+  }
+  .ec-event {
+    pointer-events: none;
+  }
+}
+
 .fec-daily-grid {
   // background-color: pink;
   height: 1920px;
@@ -43,6 +59,23 @@
     flex: 1;
     display: flex;
     width: 100%;
+
+    //  z-index: 3;
+    .time-range-time {
+      // background-color: red;
+      // position: absolute;
+    }
+    .some-container {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .time-rage-up-container {
+      flex: 1;
+    }
+    .time-rage-down-container {
+      flex: 1;
+    }
   }
   .wrapper-container {
     height: 80px;

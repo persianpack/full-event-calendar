@@ -23,7 +23,7 @@ export function App() {
 
   return (
     <>
-      <div style="margin-top:200px;margin-bottom:200px">
+      <div style="margin-top:200px;margin-bottom:200px" id="full-event-calendar-core">
         <CalendarHeader
           headerDate={new Date(data.store.initialDate)}
           timeZone={data.store.timeZone}

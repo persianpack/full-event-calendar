@@ -44,7 +44,6 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
   }
 
   function itemDragstart(e: EventClass, d: any, shouldDuplica: boolean) {
-    console.log(shouldDuplica)
     if (isDragging()) return
     mouseDown = true
     shouldDuplicate = shouldDuplica
@@ -89,6 +88,8 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
 
     if (!isDragging()) {
       setIsDragging(true)
+      document.getElementById('full-event-calendar-core')?.classList.add('calendar-draging')
+
       //const target = document.querySelector(`#event-${draggedData().item?.id}`) as HTMLElement
       // const target = getEventNode(draggedData().item?.id)
       setOpacityForElemetns('0.3', draggedData().item?.id)
@@ -129,6 +130,7 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
       const baseEl = { ...draggedData() }
 
       setOpacityForElemetns('0.0', baseEl.item?.id)
+      document.getElementById('full-event-calendar-core')?.classList.remove('calendar-draging')
       time1 = setTimeout(() => {
         let targetEl = getEventNode(baseEl.item?.id)
         const targetElRect = targetEl?.getBoundingClientRect()
