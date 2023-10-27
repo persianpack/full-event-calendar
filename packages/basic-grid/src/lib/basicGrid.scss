@@ -1,12 +1,14 @@
 .calendar-draging {
-  .time-rage-up-container {
-    &:hover {
-      border: 2px solid blue;
+  .time-range:hover {
+    .time-rage-up-container {
+      &:hover {
+        border: 2px solid blue;
+      }
     }
-  }
-  .time-rage-down-container {
-    &:hover {
-      border: 2px solid blue;
+    .time-rage-down-container {
+      &:hover {
+        border: 2px solid blue;
+      }
     }
   }
   .ec-event {
@@ -62,8 +64,9 @@
 
     //  z-index: 3;
     .time-range-time {
+      z-index: -1;
       // background-color: red;
-      // position: absolute;
+      position: absolute;
     }
     .some-container {
       display: flex;
