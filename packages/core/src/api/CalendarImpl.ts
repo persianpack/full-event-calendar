@@ -9,10 +9,13 @@ export interface CalendarSourceOptions {
   timeZone?: string
   calendar?: string
   locale?: string
+  grid?: GridModes
   // timeZone ?: string;
   // dailyGridOptions : dailyGridOptions;
   // calnedarMode : CalnedarMode
 }
+
+export type GridModes = 'daily' | 'weekly'
 
 export class CalendarImpl implements CalendarApi {
   storeManager
@@ -44,6 +47,9 @@ export class CalendarImpl implements CalendarApi {
   changeCalendar(calendar: string) {
     this.storeDispatch({ type: 'UPDATE_CALENDAR', calendar })
   }
+  changeGrid(grid: GridModes) {
+    this.storeDispatch({ type: 'UPDATE_GRID', grid })
+  }
 
   resetOptions(options: CalendarSourceOptions) {
     if (options.timeZone) {
@@ -51,6 +57,9 @@ export class CalendarImpl implements CalendarApi {
     }
     if (options.calendar) {
       this.changeCalendar(options.calendar)
+    }
+    if (options.grid) {
+      this.changeGrid(options.grid)
     }
     if (options.initialDate) {
       this.changeInitialDate(new Date(options.initialDate).toISOString())

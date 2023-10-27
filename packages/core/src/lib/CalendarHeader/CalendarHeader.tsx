@@ -2,12 +2,10 @@ import { Show, createMemo, createSignal } from 'solid-js'
 import './CalendarHeader.scss'
 import { FComponent } from '@full-event-calendar/shared-ts'
 import { useCounter } from '../../contex-injector/contex'
+import { GridModes } from '../../api/CalendarImpl'
 
 interface CalendarHeader {
-  headerDate: Date
   onDateChange: (d: Date) => void
-  timeZone: string
-  calendar: string
 }
 
 export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
@@ -22,20 +20,34 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
 
   const formater = createMemo(() => {
     // the dates pass throw here are assumed that is not converted by timezone so we convert it here
-    return new Intl.DateTimeFormat(data.store.locale, options).format(new Date(props.headerDate))
+    return new Intl.DateTimeFormat(data.store.locale, options).format(new Date(data.store.initialDate))
   })
 
+  function changeGrid(grid: GridModes) {
+    data.inctence.changeGrid(grid)
+  }
+
   function goBack() {
-    const dCopy = props.headerDate
-    dCopy.setDate(dCopy.getDate() - 1)
+    const dCopy = new Date(data.store.initialDate)
+    const grid = data.store.grid
+    if (grid === 'daily') {
+      dCopy.setDate(dCopy.getDate() - 1)
+    } else if (grid === 'weekly') {
+      dCopy.setDate(dCopy.getDate() - 7)
+    }
     props.onDateChange(dCopy)
   }
   function goToday() {
     props.onDateChange(new Date())
   }
   function goForward() {
-    const dCopy = props.headerDate
-    dCopy.setDate(dCopy.getDate() + 1)
+    const dCopy = new Date(data.store.initialDate)
+    const grid = data.store.grid
+    if (grid === 'daily') {
+      dCopy.setDate(dCopy.getDate() + 1)
+    } else if (grid === 'weekly') {
+      dCopy.setDate(dCopy.getDate() + 7)
+    }
     props.onDateChange(dCopy)
   }
 
@@ -63,6 +75,16 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
               onclick={(e) => {
                 e.stopPropagation()
                 SetDropDown(false)
+                changeGrid('daily')
+              }}
+            >
+              day
+            </div>
+            <div
+              onclick={(e) => {
+                e.stopPropagation()
+                SetDropDown(false)
+                changeGrid('weekly')
               }}
             >
               week

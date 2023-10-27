@@ -1,7 +1,7 @@
 import { useCounter } from '../contex-injector/contex.jsx'
 import { CalendarHeader } from './CalendarHeader/CalendarHeader.jsx'
 import { GroupGrid } from '@full-event-calendar/group-grid'
-import { For, createMemo } from 'solid-js'
+import { For, Switch, Match } from 'solid-js'
 import { BasicGrid } from '@full-event-calendar/basid-grid'
 import { DailyGrid } from '@full-event-calendar/daily-grid'
 import { WeeklyGrid } from '@full-event-calendar/weekly-grid'
@@ -24,27 +24,30 @@ export function App() {
   return (
     <>
       <div style="margin-top:200px;margin-bottom:200px" id="full-event-calendar-core">
-        <CalendarHeader
-          headerDate={new Date(data.store.initialDate)}
-          timeZone={data.store.timeZone}
-          calendar="persian"
-          onDateChange={onDateChange}
-        />
-        <WeeklyGrid
-          onEventUpdate={onEventUpdate}
-          initialDate={new Date(data.store.initialDate)}
-          events={data.store.events}
-          locale={data.store.locale}
-          calendar={data.store.calendar}
-          timeZone={data.store.timeZone}
-        />
+        <CalendarHeader onDateChange={onDateChange} />
 
-        {/*          
-        <DailyGrid
-          onEventUpdate={onEventUpdate}
-          initialDate={new Date(data.store.initialDate)}
-          events={data.store.events}
-        /> */}
+        <Switch>
+          <Match when={data.store.grid === 'daily'}>
+            <DailyGrid
+              onEventUpdate={onEventUpdate}
+              initialDate={new Date(data.store.initialDate)}
+              events={data.store.events}
+              locale={data.store.locale}
+              calendar={data.store.calendar}
+              timeZone={data.store.timeZone}
+            />
+          </Match>
+          <Match when={data.store.grid === 'weekly'}>
+            <WeeklyGrid
+              onEventUpdate={onEventUpdate}
+              initialDate={new Date(data.store.initialDate)}
+              events={data.store.events}
+              locale={data.store.locale}
+              calendar={data.store.calendar}
+              timeZone={data.store.timeZone}
+            />
+          </Match>
+        </Switch>
       </div>
     </>
   )

@@ -1,6 +1,6 @@
 import { legacy_createStore as createStore, Reducer } from 'redux'
 import { EventImpl } from '@full-event-calendar/utils'
-import { CalendarSourceOptions } from '../api/CalendarImpl'
+import { CalendarSourceOptions, GridModes } from '../api/CalendarImpl'
 import { EventClass, SourceEvent } from '@full-event-calendar/shared-ts'
 
 const defaultState: CalendarState = {
@@ -8,7 +8,8 @@ const defaultState: CalendarState = {
   initialDate: new Date(),
   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   calendar: 'gregory',
-  locale: 'en-US'
+  locale: 'en-US',
+  grid: 'daily'
 }
 
 interface SetAllChatsAction {
@@ -40,6 +41,10 @@ interface UpdateCalendar {
   type: 'UPDATE_CALENDAR'
   calendar: string
 }
+interface UpdateGrid {
+  type: 'UPDATE_GRID'
+  grid: GridModes
+}
 
 // To Do: use better names for set and update
 
@@ -51,6 +56,7 @@ export type StoreActions =
   | changeTimeZone
   | UpdateLocale
   | UpdateCalendar
+  | UpdateGrid
 
 export type EventCalendarOptions = { [K in keyof CalendarSourceOptions]-?: CalendarSourceOptions[K] }
 export interface CalendarState extends EventCalendarOptions {
@@ -59,6 +65,8 @@ export interface CalendarState extends EventCalendarOptions {
 
 const calendarReducer: Reducer<CalendarState, StoreActions> = (state = defaultState, action) => {
   switch (action.type) {
+    case 'UPDATE_GRID':
+      return { ...state, grid: action.grid }
     case 'UPDATE_CALENDAR':
       return { ...state, calendar: action.calendar }
     case 'UPDATE_LOCALE':

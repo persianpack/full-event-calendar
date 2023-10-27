@@ -19,7 +19,6 @@ export const DailyHeader: FComponent<DailyHeaderProps> = (props) => {
       timeZone: props.timeZone
     }).format(D)
   }
-
   const formatDayNumber = createMemo(() => {
     const dateTimeFormat = Intl.DateTimeFormat(props.locale, {
       calendar: props.calendar,
