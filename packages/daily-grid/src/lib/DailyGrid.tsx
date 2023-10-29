@@ -4,7 +4,7 @@ import { DailyHeader } from './DailyHeader/DailyHeader'
 import { BasicGrid } from '@full-event-calendar/basid-grid'
 import { BasicGridProps } from '@full-event-calendar/basid-grid'
 import { createMemo, mergeProps } from 'solid-js'
-import { convertTZ, getEventForAdate } from '@full-event-calendar/utils'
+import { convertTZ, getCalendarMonthDays, getEventForAdate } from '@full-event-calendar/utils'
 interface DailyGridpProps extends BasicGridProps {
   initialDate?: Date
   onDateChange?: (d: Date) => void
@@ -32,7 +32,9 @@ export const DailyGrid: FComponent<DailyGridpProps> = (props) => {
   console.log('render daily', mergedPorps.initialDate)
 
   const filteredEvents = createMemo(() => getEventForAdate(mergedPorps.events, mergedPorps.initialDate))
+  const data = getCalendarMonthDays(mergedPorps.initialDate, mergedPorps.calendar)
 
+  console.log(data)
   return (
     <>
       <div id={props.id} style="flex: 1;">
