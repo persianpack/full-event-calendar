@@ -22,7 +22,6 @@ export function App() {
     <>
       <div style="margin-top:200px;margin-bottom:200px" id="full-event-calendar-core">
         <CalendarHeader onDateChange={onDateChange} />
-
         <Switch>
           <Match when={data.store.grid === 'daily'}>
             <DailyGrid

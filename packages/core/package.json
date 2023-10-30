@@ -13,11 +13,7 @@
       "default": "./src/index.ts"
     }
   },
-  "scripts": {
-    "dev": "tsup src/index.ts -- --dts",
-    "build": "tsc && vite build",
-    "budifl": "tsup src/index.ts --dts"
-  },
+  "scripts": {},
   "devDependencies": {
     "tsup": "^7.2.0",
     "typescript": "^5.1.3",

@@ -10,13 +10,13 @@ function getDaysOfMonth(date: Date, calendar: string) {
 }
 
 function extractYMD(parts: Intl.DateTimeFormatPart[]) {
-  let yaer
+  let year
   let month
   let day
-
   for (let i = 0; i < parts.length; i++) {
-    if (parts[i].type === 'year') {
-      yaer = parts[i].value
+    //@ts-ignore
+    if (parts[i].type === 'year' || parts[i].type === 'relatedYear') {
+      year = parts[i].value
     } else if (parts[i].type === 'month') {
       month = parts[i].value
     } else if (parts[i].type === 'day') {
@@ -24,7 +24,7 @@ function extractYMD(parts: Intl.DateTimeFormatPart[]) {
     }
   }
 
-  return { yaer, month, day }
+  return { year, month, day }
 }
 
 function extractMonthsDays(date: Date, calendar: string) {
@@ -75,7 +75,7 @@ export function getCalendarMonthDays(date: Date, calendar: string) {
   const weeek2 = dataeCopy2.getDay()
   for (let i = 0; i < 6 - weeek2; i++) {
     dataeCopy2.setDate(dataeCopy2.getDate() + 1)
-    console.log()
+
     const convertedDate = getDaysOfMonth(dataeCopy2, calendar)
     monthDays.push(convertedDate)
   }

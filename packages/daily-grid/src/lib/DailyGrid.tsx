@@ -32,9 +32,10 @@ export const DailyGrid: FComponent<DailyGridpProps> = (props) => {
   console.log('render daily', mergedPorps.initialDate)
 
   const filteredEvents = createMemo(() => getEventForAdate(mergedPorps.events, mergedPorps.initialDate))
-  const data = getCalendarMonthDays(mergedPorps.initialDate, mergedPorps.calendar)
 
+  const data = getCalendarMonthDays(mergedPorps.initialDate, mergedPorps.calendar)
   console.log(data)
+
   return (
     <>
       <div id={props.id} style="flex: 1;">

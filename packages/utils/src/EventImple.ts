@@ -8,6 +8,7 @@ export class EventImpl implements EventClass {
   id: any
   duration: number // duration is in minuts
   sourceEvent: SourceEvent
+
   constructor(eventData: SourceEvent) {
     this.start = eventData.start
     this.end = eventData.end
@@ -42,6 +43,7 @@ export class EventImpl implements EventClass {
     }
     return `;height:  ${heightInPersentage}%;`
   }
+
   calculatePositionTop() {
     return `${this.getEventTopPositionIng()}`
   }
