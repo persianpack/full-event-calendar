@@ -5,6 +5,7 @@ import { DailyGrid } from '@full-event-calendar/daily-grid'
 import { WeeklyGrid } from '@full-event-calendar/weekly-grid'
 // import { DailyHeader } from './DailyHeader/DailyHeader.jsx'
 import { SourceEvent } from '@full-event-calendar/shared-ts'
+import { convertTZ } from '@full-event-calendar/utils'
 export function App() {
   const data = useCounter()
 
@@ -18,29 +19,31 @@ export function App() {
     data.inctence.changeInitialDate(d.toISOString())
   }
 
+  // data.store.events[0]
+
   return (
     <>
       <div style="margin-top:200px;margin-bottom:200px" id="full-event-calendar-core">
         <CalendarHeader onDateChange={onDateChange} />
+
         <Switch>
           <Match when={data.store.grid === 'daily'}>
             <DailyGrid
               onEventUpdate={onEventUpdate}
-              initialDate={new Date(data.store.initialDate)}
+              initialDate={convertTZ(new Date(data.store.initialDate), data.store.timeZone)}
               events={data.store.events}
               locale={data.store.locale}
               calendar={data.store.calendar}
-              timeZone={data.store.timeZone}
             />
           </Match>
+
           <Match when={data.store.grid === 'weekly'}>
             <WeeklyGrid
               onEventUpdate={onEventUpdate}
-              initialDate={new Date(data.store.initialDate)}
+              initialDate={convertTZ(new Date(data.store.initialDate), data.store.timeZone)}
               events={data.store.events}
               locale={data.store.locale}
               calendar={data.store.calendar}
-              timeZone={data.store.timeZone}
             />
           </Match>
         </Switch>

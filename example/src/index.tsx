@@ -74,13 +74,25 @@ const events = [
     start: new Date('Thu Aug 10 2023 20:00:00'),
     end: new Date('Thu Aug 10 2023 23:05:00'),
     id: 17
+  },
+  {
+    name: 'some name',
+    start: new Date('Thu Aug 10 2023 00:00:00'),
+    end: new Date('Thu Aug 10 2023 23:59:59'),
+    id: 18
+  },
+  {
+    name: 'some name',
+    start: new Date('Thu Aug 10 2023 00:00:00'),
+    end: new Date('Thu Aug 11 2023 15:59:59'),
+    id: 19
   }
 ]
 
 console.log('page init')
 const EventCalendar = new Calendar(el, {
   events: events,
-  timeZone: 'Africa/Abidjan',
+  // timeZone: 'Africa/Abidjan',
   calendar: 'persian',
   locale: 'fa-IR',
   initialDate: new Date('Thu Aug 10 2023 15:00:0')

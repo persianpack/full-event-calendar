@@ -22,8 +22,8 @@ export class EventImpl implements EventClass {
     return ''
   }
 
-  isAllDay(): any {
-    return ''
+  isAllDay(): boolean {
+    return this.duration / 60 >= 24
   }
 
   doesEventStartOn(date: Date) {
