@@ -26,11 +26,29 @@ export class EventImpl implements EventClass {
     return this.duration / 60 >= 24
   }
 
+  countDays(): number {
+    return this.duration / 60 / 24
+  }
+
+  isIncludedInAday(date: Date) {
+    const condition = this.doesEventStartOn(date)
+    const condition2 = this.doesEventEndOn(date)
+    const condition3 = this.start < date && this.end > date
+    return condition3 || condition2 || condition
+  }
+
   doesEventStartOn(date: Date) {
     return (
       this.start.getFullYear() === date.getFullYear() &&
       this.start.getMonth() === date.getMonth() &&
       this.start.getDate() === date.getDate()
+    )
+  }
+  doesEventEndOn(date: Date) {
+    return (
+      this.end.getFullYear() === date.getFullYear() &&
+      this.end.getMonth() === date.getMonth() &&
+      this.end.getDate() === date.getDate()
     )
   }
 
@@ -54,6 +72,16 @@ export class EventImpl implements EventClass {
     const start2 = this.start
     const end2 = this.end
     return start1 < end2 && end1 > start2
+  }
+
+  checkAllDayOverLap(event: EventImpl) {
+    const FloorStart1 = new Date(event.start.setHours(0, 0, 0))
+    const FloorStart2 = new Date(this.start.setHours(0, 0, 0))
+
+    const FloorEnd1 = new Date(event.end.setHours(23, 59, 59))
+    const FloorEnd2 = new Date(this.end.setHours(23, 59, 59))
+
+    return FloorStart1 < FloorEnd2 && FloorEnd1 > FloorStart2
   }
 
   convertDateByTimeZone(tz: string) {
