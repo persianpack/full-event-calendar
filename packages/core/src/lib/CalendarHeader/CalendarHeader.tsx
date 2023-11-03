@@ -89,6 +89,15 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
             >
               week
             </div>
+            <div
+              onclick={(e) => {
+                e.stopPropagation()
+                SetDropDown(false)
+                changeGrid('month')
+              }}
+            >
+              Month
+            </div>
             {/* <div>week</div>
               <div>week</div>
               <div>week</div> */}

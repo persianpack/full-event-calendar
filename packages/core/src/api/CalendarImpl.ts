@@ -15,7 +15,7 @@ export interface CalendarSourceOptions {
   // calnedarMode : CalnedarMode
 }
 
-export type GridModes = 'daily' | 'weekly'
+export type GridModes = 'daily' | 'weekly' | 'month'
 
 export class CalendarImpl implements CalendarApi {
   storeManager
