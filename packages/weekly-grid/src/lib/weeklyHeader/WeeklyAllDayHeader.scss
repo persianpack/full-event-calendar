@@ -1,0 +1,28 @@
+.weekly-allDay {
+  height: 200px;
+  overflow: scroll;
+  display: flex;
+  .week-all-col {
+    height: 100%;
+    flex: 1;
+    border: 1px solid rgb(155, 155, 155);
+  }
+  .week-all-day {
+    margin-top: 3px;
+    background-color: rgb(101, 101, 216);
+    width: 95%;
+    height: 20px;
+  }
+  .week-ad-row {
+    background-color: red;
+    height: 30px;
+    width: 100%;
+    margin-top: 10px;
+    display: inline-block;
+    .week-item {
+      background-color: blue;
+      height: 20px;
+      width: 40px;
+    }
+  }
+}

@@ -42,6 +42,7 @@
   "dependencies": {
     "esbuild-sass-plugin": "^2.16.0",
     "@full-event-calendar/group-grid": "workspace:*",
-    "@full-event-calendar/utils": "workspace:*"
+    "@full-event-calendar/utils": "workspace:*",
+    "@full-event-calendar/daily-grid": "workspace:*"
   }
 }
