@@ -1,6 +1,5 @@
-import { createMemo } from 'solid-js'
-import './DailyHeader.scss'
 import type { FComponent } from '@full-event-calendar/shared-ts'
+import './DailyHeader.scss'
 
 export interface DailyHeaderProps {
   headerDate: Date
@@ -19,7 +18,7 @@ export const DailyHeader: FComponent<DailyHeaderProps> = (props) => {
       timeZone: props.timeZone
     }).format(D)
   }
-  const formatDayNumber = createMemo(() => {
+  const formatDayNumber = () => {
     const dateTimeFormat = Intl.DateTimeFormat(props.locale, {
       calendar: props.calendar,
       timeZone: props.timeZone
@@ -28,7 +27,7 @@ export const DailyHeader: FComponent<DailyHeaderProps> = (props) => {
     const parts = dateTimeFormat.formatToParts(props.headerDate)
     const partValues = parts.filter((p) => p.type === 'day')
     return partValues[0].value
-  })
+  }
 
   return (
     <div class="daily-header">

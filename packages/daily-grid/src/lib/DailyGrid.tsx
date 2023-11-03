@@ -6,16 +6,17 @@ import { DailyAllDay } from './DailyAllDay/DailyAllDay'
 import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
 import { BasicGridProps } from '@full-event-calendar/basid-grid'
 // solid.js
-import { createMemo, mergeProps } from 'solid-js'
+import { Show, createMemo, mergeProps } from 'solid-js'
 // utils
 import { getEventForAdate } from '@full-event-calendar/utils'
-interface DailyGridpProps extends BasicGridProps {
+export interface DailyGridpProps extends BasicGridProps {
   initialDate?: Date
   onDateChange?: (d: Date) => void
   calendar?: string
   timeZone?: string
   locale?: string
   id?: string
+  showAllDay?: boolean
   events: EventClass[]
 }
 
@@ -26,6 +27,7 @@ const defaultProps = {
   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   calendar: 'gregory',
   locale: 'en-US',
+  showAllDay: true,
   onDateChange: () => {},
   onEventUpdate: () => {}
 }
@@ -33,14 +35,8 @@ const defaultProps = {
 export const DailyGrid: FComponent<DailyGridpProps> = (props) => {
   const mergedPorps = mergeProps(defaultProps, props)
 
-  console.log('render daily', mergedPorps.initialDate)
-
   const extractedEvents = createMemo(() => getEventForAdate(mergedPorps.events, mergedPorps.initialDate))
-
-  const filteredEvents2 = createMemo(() => extractedEvents().filter((item) => !item.isAllDay()))
-
-  // const data = getCalendarMonthDays(mergedPorps.initialDate, mergedPorps.calendar)
-  // console.log(data)
+  const filteredOut = createMemo(() => extractedEvents().filter((item) => !item.isAllDay()))
 
   return (
     <>
@@ -52,10 +48,14 @@ export const DailyGrid: FComponent<DailyGridpProps> = (props) => {
           onDateChange={mergedPorps.onDateChange}
           locale={mergedPorps.locale}
         />
-        <DailyAllDay events={extractedEvents()} initialDate={mergedPorps.initialDate}></DailyAllDay>
+
+        <Show when={mergedPorps.showAllDay}>
+          <DailyAllDay events={extractedEvents()} initialDate={mergedPorps.initialDate}></DailyAllDay>
+        </Show>
+
         <BasicGrid
           gridDate={mergedPorps.initialDate}
-          events={filteredEvents2()}
+          events={filteredOut()}
           onEventUpdate={mergedPorps.onEventUpdate}
         />
       </div>
