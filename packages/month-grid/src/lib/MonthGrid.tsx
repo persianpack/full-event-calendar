@@ -115,7 +115,7 @@ function MonthRow(props: any) {
     <div
       class="month-item"
       style={`left:calc(${leftP()}00% + 5px);width:calc(${widthh}00% ${
-        rightArrowClass(props.item, props.dateEnd) ? '- 6  px' : '- 16px'
+        rightArrowClass(props.item, props.dateEnd) ? '- 6px' : '- 16px'
       });${leftArrowClass(props.item, props.date)};${isRighted}`}
     >
       {props.item.id}
