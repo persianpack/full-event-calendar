@@ -13,9 +13,7 @@ export function getMonthRows(res: any, filteredEvents3: any) {
 
   for (let i = 0; i < finalRes.length; i++) {
     const mRow = finalRes[i] as EventClass[]
-    let rooo = {
-      0: []
-    }
+    let rooo = {}
     for (let j = 0; j < mRow.length; j++) {
       const element = mRow[j]
       backRwppaer(rooo, element)

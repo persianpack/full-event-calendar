@@ -9,12 +9,35 @@
     border: 1px solid white;
     flex: 1;
     display: flex;
+    position: relative;
     .month-container {
       background-color: rgb(206, 206, 206);
       flex: 1;
       border: 1px solid white;
     }
+    .month-row-wrapper {
+      position: relative;
+      background-color: rgba(215, 241, 215, 0.308);
+      height: 20px;
+      margin-top: 10px;
+      .month-item {
+        position: absolute;
+        height: 20px;
+        width: 100%;
+        background-color: rgba(101, 101, 238, 0.623);
+        left: 100%;
+        border-radius: 5px;
+      }
+    }
   }
+}
+
+.month-row-container {
+  background-color: red;
+  height: 100%;
+  width: calc(100% / 7);
+  position: absolute;
+  border-bottom: 1px solid white;
 }
 .month-header {
   display: flex;

@@ -30,7 +30,15 @@ interface WeeklyGridProps {
   calendar?: string
   timeZone?: string
 }
-
+interface dateObjects {
+  date: Date
+  year: string | undefined
+  month: string | undefined
+  day: string | undefined
+}
+interface splittted {
+  [key: string]: EventClass[]
+}
 export const MonthGrid: FComponent<WeeklyGridProps> = (props) => {
   const mergedPorps = mergeProps(defaultProps, props)
 
@@ -38,9 +46,9 @@ export const MonthGrid: FComponent<WeeklyGridProps> = (props) => {
 
   const data = getCalendarMonthDays(mergedPorps.initialDate, mergedPorps.calendar)
 
-  const res = ArraysplitIntoChunks(data, 7)
+  const res = ArraysplitIntoChunks(data, 7) as dateObjects[][]
 
-  const x = getMonthRows(res, filteredEvents3())
+  const Mrows = getMonthRows(res, filteredEvents3()) as splittted[]
 
   function formatWeekDays(date: Date) {
     const D = new Date(date)
@@ -51,7 +59,7 @@ export const MonthGrid: FComponent<WeeklyGridProps> = (props) => {
     }).format(D)
   }
 
-  console.log(res)
+  console.log(Mrows[0])
 
   return (
     <>
@@ -66,10 +74,28 @@ export const MonthGrid: FComponent<WeeklyGridProps> = (props) => {
       </div>
       <div class="month-wrapper">
         <For each={res}>
-          {(item) => {
+          {(item1, i) => {
             return (
               <div class="month-row">
-                <For each={item}>{(date) => <div class="month-container">{date.day}</div>}</For>
+                <div class="month-row-container">
+                  <For each={Object.keys(Mrows[i()])}>
+                    {(item) => (
+                      <div class="month-row-wrapper">
+                        <For each={Mrows[i()][item]}>
+                          {(item) => (
+                            // <div class='month-item' style={`left:${getLeftPosition(item,item1[0].date)}00%`}>{item.id}</div>
+                            <MonthRow item={item} dateEnd={item1[6].date} date={item1[0].date} />
+                          )}
+                        </For>
+                      </div>
+                    )}
+                  </For>
+
+                  {/* <div class='month-row-wrapper'>
+                    <div class='month-item'></div>
+                  </div> */}
+                </div>
+                <For each={item1}>{(date) => <div class="month-container"> {date.day}</div>}</For>
               </div>
             )
           }}
@@ -77,4 +103,56 @@ export const MonthGrid: FComponent<WeeklyGridProps> = (props) => {
       </div>
     </>
   )
+}
+
+function MonthRow(props: any) {
+  const leftP = createMemo(() => getLeftPosition(props.item, props.date))
+  const widthh = getendPosition(props.item, props.dateEnd, leftP())
+  const isRighted = rightArrowClass(props.item, props.dateEnd)
+    ? 'border-top-right-radius:0px;border-bottom-right-radius:0px'
+    : ''
+  return (
+    <div
+      class="month-item"
+      style={`left:calc(${leftP()}00% + 5px);width:calc(${widthh}00% ${
+        rightArrowClass(props.item, props.dateEnd) ? '- 6  px' : '- 16px'
+      });${leftArrowClass(props.item, props.date)};${isRighted}`}
+    >
+      {props.item.id}
+    </div>
+  )
+}
+
+function getLeftPosition(event: EventClass, weekStartDate: Date) {
+  const floorWeekStart = new Date(weekStartDate.setHours(0, 0, 0))
+  if (event.start >= floorWeekStart) {
+    return event.start.getDay()
+  }
+  return 0
+}
+
+function getendPosition(event: EventClass, weekendDate: Date, start: number) {
+  const floorWeEend = new Date(weekendDate.setHours(23, 59, 59))
+  if (event.end <= floorWeEend) {
+    return event.end.getDay() - start + 1
+  }
+  return 6 - start + 1
+}
+
+function leftArrowClass(event: EventClass, weekStartDate: Date) {
+  const floorWeekStart = new Date(weekStartDate.setHours(0, 0, 0))
+  if (event.start < floorWeekStart) {
+    return 'border-top-left-radius:0px;border-bottom-left-radius:0px;left:1px'
+  } else {
+    return ''
+  }
+}
+function rightArrowClass(event: EventClass, weekendDate: Date) {
+  const floorWeEend = new Date(weekendDate.setHours(23, 59, 59))
+
+  if (event.end > floorWeEend) {
+    return true
+  } else {
+    return false
+  }
 }
