@@ -12,13 +12,13 @@ interface DraggingEventsDate {
 export function useMonthEventDragging() {
   let draggingOnStartDate: Date | null = null
   let curretnDayre: number | null = null
-  const [draggingEvent, setDraggingEvent] = createSignal<null | DraggingEventsDate>(null)
+  const [draggingEventData, setDraggingEventData] = createSignal<null | DraggingEventsDate>(null)
 
-  function mousenedter(date: Date) {
-    if (!draggingEvent()) return
+  function onMouseEnter(date: Date) {
+    if (!draggingEventData()) return
     if (draggingOnStartDate) {
       let dayssDiff = daysDiffInRange(draggingOnStartDate, date)
-      let dragCopy = { ...draggingEvent() } as DraggingEventsDate
+      let dragCopy = { ...draggingEventData() } as DraggingEventsDate
       if (curretnDayre != dayssDiff) {
         curretnDayre = dayssDiff
         const startCopy = new Date(dragCopy.source.start)
@@ -28,29 +28,29 @@ export function useMonthEventDragging() {
         const copp = new MonthDraggingObject(dragCopy.source.id, startCopy, endCopy, dragCopy.source)
 
         //make obj null first because solid cannot detect Date change !
-        setDraggingEvent(null)
-        setDraggingEvent(copp)
+        setDraggingEventData(null)
+        setDraggingEventData(copp)
       }
     } else {
       draggingOnStartDate = date
     }
   }
 
-  function onEventDrag(event: EventClass, hasStartDate?: Date) {
+  function onDragStart(event: EventClass, hasStartDate?: Date) {
     if (hasStartDate) {
       draggingOnStartDate = hasStartDate
     }
-    if (!draggingEvent()) {
+    if (!draggingEventData()) {
       const draggingEventObject = new MonthDraggingObject(event.id, new Date(event.start), new Date(event.end), event)
-      setDraggingEvent(draggingEventObject)
+      setDraggingEventData(draggingEventObject)
     }
   }
 
-  function dragEnd() {
+  function onDragEnd() {
     draggingOnStartDate = null
-    setDraggingEvent(null)
+    setDraggingEventData(null)
   }
-  return { dragEnd, onEventDrag, mousenedter, draggingEvent }
+  return { onDragEnd, onDragStart, onMouseEnter, draggingEventData }
 }
 
 class MonthDraggingObject {

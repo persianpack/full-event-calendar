@@ -66,7 +66,7 @@ export const MonthGrid: FComponent<WeeklyGridProps> = (props) => {
 
   //move this to utils
 
-  const { dragEnd, onEventDrag, mousenedter, draggingEvent } = useMonthEventDragging()
+  const { onDragEnd, onDragStart, onMouseEnter, draggingEventData } = useMonthEventDragging()
 
   function openModalH(data: MonthDateObject, e: MouseEvent) {
     openModal(data, e, filteredEvents3())
@@ -77,7 +77,7 @@ export const MonthGrid: FComponent<WeeklyGridProps> = (props) => {
   }
 
   function ModalDragStart(draggingOnStartDate: Date, eventDraged: EventClass) {
-    onEventDrag(eventDraged, draggingOnStartDate)
+    onDragStart(eventDraged, draggingOnStartDate)
   }
   return (
     <>
@@ -91,7 +91,7 @@ export const MonthGrid: FComponent<WeeklyGridProps> = (props) => {
         <div>{formateWeekDate(data[6].date)}</div>
       </div>
       <div class="month-wrapper" id="month-wrapper-id">
-        <EventModal onDragEnd={dragEnd} onDragStart={ModalDragStart} />
+        <EventModal onDragEnd={onDragEnd} onDragStart={ModalDragStart} />
 
         <For each={res}>
           {(item1, i) => {
@@ -100,14 +100,14 @@ export const MonthGrid: FComponent<WeeklyGridProps> = (props) => {
                 <div class="dragging-wrapper">
                   <Show
                     when={
-                      !!draggingEvent() &&
-                      isDateIncludedInaRange(draggingEvent() as unknown as EventClass, item1[0].date, item1[6].date)
+                      !!draggingEventData() &&
+                      isDateIncludedInaRange(draggingEventData() as unknown as EventClass, item1[0].date, item1[6].date)
                     }
                   >
                     <MonthEvent
                       onEnd={() => {}}
                       ondrag={() => {}}
-                      item={draggingEvent() as unknown as EventClass}
+                      item={draggingEventData() as unknown as EventClass}
                       dateEnd={item1[6].date}
                       date={item1[0].date}
                     />
@@ -121,8 +121,8 @@ export const MonthGrid: FComponent<WeeklyGridProps> = (props) => {
                           {(item) =>
                             i3() + 1 <= rowLimit ? (
                               <MonthEvent
-                                onEnd={dragEnd}
-                                ondrag={onEventDrag}
+                                onEnd={onDragEnd}
+                                ondrag={onDragStart}
                                 item={item}
                                 dateEnd={item1[6].date}
                                 date={item1[0].date}
@@ -151,7 +151,7 @@ export const MonthGrid: FComponent<WeeklyGridProps> = (props) => {
                 </div>
                 <For each={item1}>
                   {(date) => (
-                    <div class="month-container" onmousemove={(e) => mousenedter(date.date)}>
+                    <div class="month-container" onmousemove={(e) => onMouseEnter(date.date)}>
                       {' '}
                       {date.day}
                     </div>

@@ -16,7 +16,7 @@
   }
   .week-all-day-wrapper {
     position: absolute;
-    width: 100px;
+    width: calc(100% / 7);
     height: 10px;
     // background-color: blue;
   }

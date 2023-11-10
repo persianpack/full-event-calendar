@@ -7,6 +7,7 @@ interface GroupGridpProps {
   initialDate?: Date
   columes?: columeItem[]
   onEventUpdate?: (a: SourceEvent, colNumber: number, currCol: number, isDraged: boolean) => void
+  gridComponent: any
 }
 
 interface columeItem {
@@ -43,7 +44,7 @@ export const GroupGrid: FComponent<GroupGridpProps> = (props) => {
       (item, i) => {
         return (
           <Dynamic
-            component={DailyGrid}
+            component={mergedPorps.gridComponent}
             onEventUpdate={(a: any, b: any) => {
               eventUpdateProxy(a, b, i())
             }}

@@ -59,18 +59,8 @@
     left: 30px;
   }
 }
-.month-item {
-  position: absolute;
-  height: 20px;
-  width: 100%;
-  background-color: rgba(101, 101, 238, 0.623);
-  left: 100%;
-  border-radius: 5px;
-}
+
 .month-is-dragging {
-  .month-item {
-    pointer-events: none;
-  }
   .month-row-container {
     pointer-events: none;
   }

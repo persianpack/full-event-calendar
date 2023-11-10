@@ -1,10 +1,9 @@
 import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
 import { createMemo, createSignal } from 'solid-js'
-
+import './MonthEvent.scss'
 interface EventPropss {
   item: EventClass
   dateEnd: Date
-
   date: Date
   ondrag: (e: EventClass) => void
   onEnd: () => void
