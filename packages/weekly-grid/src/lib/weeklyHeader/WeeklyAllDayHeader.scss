@@ -1,28 +1,23 @@
 .weekly-allDay {
-  height: 200px;
+  height: fit-content;
   overflow: scroll;
   display: flex;
-  .week-all-col {
-    height: 100%;
+  position: relative;
+  .week-allday-container {
     flex: 1;
-    border: 1px solid rgb(155, 155, 155);
+    // position: relative;
+    // background-color: red;
   }
-  .week-all-day {
-    margin-top: 3px;
-    background-color: rgb(101, 101, 216);
-    width: 95%;
+  .alld-con {
+    // background-color: blue;
     height: 20px;
-  }
-  .week-ad-row {
-    background-color: red;
-    height: 30px;
-    width: 100%;
     margin-top: 10px;
-    display: inline-block;
-    .week-item {
-      background-color: blue;
-      height: 20px;
-      width: 40px;
-    }
+    position: relative;
+  }
+  .week-all-day-wrapper {
+    position: absolute;
+    width: 100px;
+    height: 10px;
+    // background-color: blue;
   }
 }

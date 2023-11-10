@@ -11,7 +11,7 @@ interface dateObjects {
 
 export function getMonthRows(res: reslook, filteredEvents3: EventClass[]) {
   const finalRes = []
-  const finsdis = [] 
+  const finsdis = []
 
   for (let i = 0; i < res.length; i++) {
     let renges = filterEventsByDateRange(filteredEvents3, res[i][0].date, res[i][6].date)
@@ -22,16 +22,24 @@ export function getMonthRows(res: reslook, filteredEvents3: EventClass[]) {
   for (let i = 0; i < finalRes.length; i++) {
     const mRow = finalRes[i] as EventClass[]
     let rooo = {}
-    
-    for (let j = 0; j < mRow.length; j++) {
-      const element = mRow[j]
-      backRwppaer(rooo, element)
-    }
-   
+
+    // for (let j = 0; j < mRow.length; j++) {
+    //   const element = mRow[j]
+    //   backRwppaer(rooo, element)
+    // }
+    addEventsToRows(mRow, rooo)
+
     finsdis.push(rooo)
   }
 
   return finsdis
+}
+
+export function addEventsToRows(events: EventClass[], rooo: any) {
+  for (let j = 0; j < events.length; j++) {
+    const element = events[j]
+    backRwppaer(rooo, element)
+  }
 }
 
 function backRwppaer(rows: any, event: EventClass) {

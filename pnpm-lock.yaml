@@ -241,6 +241,9 @@ importers:
       '@full-event-calendar/group-grid':
         specifier: workspace:*
         version: link:../group-grid
+      '@full-event-calendar/month-grid':
+        specifier: workspace:*
+        version: link:../month-grid
       '@full-event-calendar/utils':
         specifier: workspace:*
         version: link:../utils
