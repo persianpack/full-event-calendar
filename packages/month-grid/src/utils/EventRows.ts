@@ -1,9 +1,17 @@
 import { EventClass } from '@full-event-calendar/shared-ts'
 import { filterEventsByDateRange } from '@full-event-calendar/utils'
 
-export function getMonthRows(res: any, filteredEvents3: any) {
+type reslook = dateObjects[][]
+interface dateObjects {
+  date: Date
+  year: string | undefined
+  month: string | undefined
+  day: string | undefined
+}
+
+export function getMonthRows(res: reslook, filteredEvents3: EventClass[]) {
   const finalRes = []
-  const finsdis = []
+  const finsdis = [] 
 
   for (let i = 0; i < res.length; i++) {
     let renges = filterEventsByDateRange(filteredEvents3, res[i][0].date, res[i][6].date)
@@ -14,10 +22,12 @@ export function getMonthRows(res: any, filteredEvents3: any) {
   for (let i = 0; i < finalRes.length; i++) {
     const mRow = finalRes[i] as EventClass[]
     let rooo = {}
+    
     for (let j = 0; j < mRow.length; j++) {
       const element = mRow[j]
       backRwppaer(rooo, element)
     }
+   
     finsdis.push(rooo)
   }
 

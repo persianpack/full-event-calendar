@@ -39,3 +39,21 @@ export const filterEventsByDateRange = (events: EventsProp[], startDate: Date, e
     return condition
   })
 }
+
+export function isDateIncludedInaRange(date: EventClass, rangeStart: Date, rangeEnd: Date) {
+  return date.start < rangeEnd && date.end > rangeStart
+}
+
+export function daysDiffInRange(date1: Date, date2: Date) {
+  const newF = new Date(new Date(date1).setHours(0, 0, 0))
+  const secondF = new Date(new Date(date2).setHours(0, 0, 0))
+  //@ts-ignore
+  return Math.round((secondF - newF) / (1000 * 60 * 60 * 24))
+}
+
+// export  function clickOutside(el:any, accessor:any) {
+//   const onClick = (e:any) => !el.contains(e.target) && accessor()?.();
+//   document.body.addEventListener("click", onClick);
+
+//   onCleanup(() => document.body.removeEventListener("click", onClick));
+// }

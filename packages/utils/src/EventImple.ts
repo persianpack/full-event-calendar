@@ -65,6 +65,9 @@ export class EventImpl implements EventClass {
   calculatePositionTop() {
     return `${this.getEventTopPositionIng()}`
   }
+  isIncludedInaRange(date1: Date, date2: Date) {
+    return this.start < date2 && this.end > date1
+  }
 
   checkOverLap(event: EventImpl) {
     const start1 = event.start

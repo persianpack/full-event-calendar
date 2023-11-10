@@ -14,6 +14,7 @@ export interface EventClass {
   countDays(): number
   isIncludedInAday(date: Date): boolean
   doesEventStartOn(date: Date): boolean
+  isIncludedInaRange(date1: Date, date2: Date): boolean
   calculatePositionTop(): string
   calculateHeight(calcFromZero: boolean): string
   checkOverLap(event: EventClass): Boolean
