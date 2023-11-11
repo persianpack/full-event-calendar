@@ -1,7 +1,6 @@
 import { EventClass } from '@full-event-calendar/shared-ts'
 import { filterEventsByDateRange } from '@full-event-calendar/utils'
 
-type reslook = dateObjects[][]
 interface dateObjects {
   date: Date
   year: string | undefined
@@ -9,40 +8,34 @@ interface dateObjects {
   day: string | undefined
 }
 
-export function getMonthRows(res: reslook, filteredEvents3: EventClass[]) {
-  const finalRes = []
-  const finsdis = []
+export function getMonthRows(res: dateObjects[][], filteredEvents3: EventClass[]) {
+  const rowEvents = []
+  const monthRows = []
 
   for (let i = 0; i < res.length; i++) {
-    let renges = filterEventsByDateRange(filteredEvents3, res[i][0].date, res[i][6].date)
-
-    finalRes.push(renges)
+    const events = filterEventsByDateRange(filteredEvents3, res[i][0].date, res[i][6].date)
+    rowEvents.push(events)
   }
 
-  for (let i = 0; i < finalRes.length; i++) {
-    const mRow = finalRes[i] as EventClass[]
-    let rooo = {}
+  for (let i = 0; i < rowEvents.length; i++) {
+    const mRow = rowEvents[i] as EventClass[]
+    let rowData = {}
+    addEventsToRows(mRow, rowData)
 
-    // for (let j = 0; j < mRow.length; j++) {
-    //   const element = mRow[j]
-    //   backRwppaer(rooo, element)
-    // }
-    addEventsToRows(mRow, rooo)
-
-    finsdis.push(rooo)
+    monthRows.push(rowData)
   }
 
-  return finsdis
+  return monthRows
 }
 
-export function addEventsToRows(events: EventClass[], rooo: any) {
+export function addEventsToRows(events: EventClass[], rowData: any) {
   for (let j = 0; j < events.length; j++) {
     const element = events[j]
-    backRwppaer(rooo, element)
+    backTrackRows(rowData, element)
   }
 }
 
-function backRwppaer(rows: any, event: EventClass) {
+function backTrackRows(rows: any, event: EventClass) {
   let hasFount = false
   function backTrackRow(rows: any, startP: number, event: EventClass) {
     if (hasFount) return
@@ -50,7 +43,7 @@ function backRwppaer(rows: any, event: EventClass) {
       rows[startP] = []
     }
     const arr = rows[startP]
-    if (isAvalibleInRow(arr, event)) {
+    if (isAvailableInRow(arr, event)) {
       hasFount = true
       rows[startP].push(event)
     } else {
@@ -60,14 +53,14 @@ function backRwppaer(rows: any, event: EventClass) {
   backTrackRow(rows, 0, event)
 }
 
-function isAvalibleInRow(Events: EventClass[], Event: EventClass) {
-  let isAvalible = true
+function isAvailableInRow(Events: EventClass[], Event: EventClass) {
+  let isRowAvailable = true
   for (let i = 0; i < Events.length; i++) {
     const element = Events[i]
     if (element.checkAllDayOverLap(Event)) {
-      isAvalible = false
+      isRowAvailable = false
       break
     }
   }
-  return isAvalible
+  return isRowAvailable
 }

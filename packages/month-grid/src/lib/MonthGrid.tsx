@@ -1,30 +1,18 @@
-import { EventClass, FComponent, SourceEvent } from '@full-event-calendar/shared-ts'
-import { createMutable } from 'solid-js/store'
-import { For, Show, batch, createEffect, createMemo, createSignal, mergeProps, onCleanup } from 'solid-js'
-import { GroupGrid } from '@full-event-calendar/group-grid'
-import {
-  ArraysplitIntoChunks,
-  filterEventsByDateRange,
-  formatWeekDays,
-  getCalendarMonthDays,
-  getEventForAdate
-} from '@full-event-calendar/utils'
-import { MonthEvent, getExtraRows } from './MonthEvent/MonthEvent'
-import { getMonthRows } from '../utils/EventRows'
-
+// Solid.js
+import { For, Show, createMemo, mergeProps } from 'solid-js'
+// Types
+import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
+// Styles
 import './MonthGrid.scss'
-import { isDateIncludedInaRange } from '@full-event-calendar/utils/src/filterEvents'
+// Components
 import { EventModal, openModal } from './MonthModal/MonthModal'
+// Utils
+import { ArraySplitIntoChunks, formatWeekDays, getCalendarMonthDays } from '@full-event-calendar/utils'
+import { MonthEvent } from './MonthEvent/MonthEvent'
+import { getMonthRows } from '../utils/EventRows'
+import { isDateIncludedInaRange, sortEventByStart } from '@full-event-calendar/utils/src/filterEvents'
 import { useMonthEventDragging } from '../utils/EventDragging'
-
-const defaultProps = {
-  events: [],
-  initialDate: new Date(),
-  onEventUpdate: () => {},
-  locale: 'en-US',
-  calendar: 'gregory',
-  timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
-}
+import { getExtraRows } from '../utils/EventPosition'
 
 interface WeeklyGridProps {
   events?: EventClass[]
@@ -33,6 +21,7 @@ interface WeeklyGridProps {
   locale?: string
   calendar?: string
   timeZone?: string
+  rowLimit?: number
 }
 export interface MonthDateObject {
   date: Date
@@ -40,92 +29,92 @@ export interface MonthDateObject {
   month: string | undefined
   day: string | undefined
 }
-interface monthGridData {
+interface MonthGridData {
   [key: string]: EventClass[]
 }
 
-const rowLimit = 4
+const defaultProps = {
+  events: [],
+  initialDate: new Date(),
+  onEventUpdate: () => {},
+  locale: 'en-US',
+  calendar: 'gregory',
+  timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+  rowLimit: 4
+}
 
 export const MonthGrid: FComponent<WeeklyGridProps> = (props) => {
-  const mergedPorps = mergeProps(defaultProps, props)
-
-  const filteredEvents3 = createMemo(
-    () =>
-      mergedPorps.events
-        .filter((item) => item.isAllDay())
-        .sort(function (a, b) {
-          return new Date(a.start).valueOf() - new Date(b.start).valueOf()
-        }) as EventClass[]
-  )
-
-  const data = getCalendarMonthDays(mergedPorps.initialDate, mergedPorps.calendar)
-
-  const res = ArraysplitIntoChunks(data, 7) as MonthDateObject[][]
-
-  const Mrows = getMonthRows(res, filteredEvents3()) as monthGridData[]
-
-  //move this to utils
-
+  const mergedProps = mergeProps(defaultProps, props)
   const { onDragEnd, onDragStart, onMouseEnter, draggingEventData } = useMonthEventDragging()
 
-  function openModalH(data: MonthDateObject, e: MouseEvent) {
-    openModal(data, e, filteredEvents3())
+  const filteredEventsByMonth = createMemo(() => sortEventByStart(mergedProps.events.filter((item) => item.isAllDay())))
+  const monthCalendarObject = createMemo(() => getCalendarMonthDays(mergedProps.initialDate, mergedProps.calendar))
+  const monthDateRows = createMemo(() => ArraySplitIntoChunks(monthCalendarObject(), 7) as MonthDateObject[][])
+  const monthRowGridData = createMemo(() => getMonthRows(monthDateRows(), filteredEventsByMonth()) as MonthGridData[])
+
+  function openModalH(monthObject: MonthDateObject, e: MouseEvent) {
+    openModal(monthObject, e, filteredEventsByMonth())
   }
 
   function formateWeekDate(date: Date) {
-    return formatWeekDays(date, mergedPorps.calendar, mergedPorps.timeZone, mergedPorps.locale)
+    return formatWeekDays(date, mergedProps.calendar, mergedProps.timeZone, mergedProps.locale)
   }
 
   function ModalDragStart(draggingOnStartDate: Date, eventDraged: EventClass) {
     onDragStart(eventDraged, draggingOnStartDate)
   }
+
   return (
     <>
       <div class="month-header">
-        <div>{formateWeekDate(data[0].date)}</div>
-        <div>{formateWeekDate(data[1].date)}</div>
-        <div>{formateWeekDate(data[2].date)}</div>
-        <div>{formateWeekDate(data[3].date)}</div>
-        <div>{formateWeekDate(data[4].date)}</div>
-        <div>{formateWeekDate(data[5].date)}</div>
-        <div>{formateWeekDate(data[6].date)}</div>
+        <div>{formateWeekDate(monthCalendarObject()[0].date)}</div>
+        <div>{formateWeekDate(monthCalendarObject()[1].date)}</div>
+        <div>{formateWeekDate(monthCalendarObject()[2].date)}</div>
+        <div>{formateWeekDate(monthCalendarObject()[3].date)}</div>
+        <div>{formateWeekDate(monthCalendarObject()[4].date)}</div>
+        <div>{formateWeekDate(monthCalendarObject()[5].date)}</div>
+        <div>{formateWeekDate(monthCalendarObject()[6].date)}</div>
       </div>
       <div class="month-wrapper" id="month-wrapper-id">
         <EventModal onDragEnd={onDragEnd} onDragStart={ModalDragStart} />
 
-        <For each={res}>
-          {(item1, i) => {
+        <For each={monthDateRows()}>
+          {(monthRowArr, monthRowIndex) => {
             return (
               <div class="month-row">
                 <div class="dragging-wrapper">
                   <Show
                     when={
                       !!draggingEventData() &&
-                      isDateIncludedInaRange(draggingEventData() as unknown as EventClass, item1[0].date, item1[6].date)
+                      isDateIncludedInaRange(
+                        draggingEventData() as unknown as EventClass,
+                        monthRowArr[0].date,
+                        monthRowArr[6].date
+                      )
                     }
                   >
                     <MonthEvent
-                      onEnd={() => {}}
-                      ondrag={() => {}}
+                      onDragEnd={() => {}}
+                      ondragstart={() => {}}
                       item={draggingEventData() as unknown as EventClass}
-                      dateEnd={item1[6].date}
-                      date={item1[0].date}
+                      endDate={monthRowArr[6].date}
+                      startDate={monthRowArr[0].date}
                     />
                   </Show>
                 </div>
                 <div class="month-row-container">
-                  <For each={Object.keys(Mrows[i()])}>
-                    {(item, i3) => (
+                  <For each={Object.keys(monthRowGridData()[monthRowIndex()])}>
+                    {(rowItemKey, rowItemIndex) => (
                       <div class="month-row-wrapper">
-                        <For each={Mrows[i()][item]}>
-                          {(item) =>
-                            i3() + 1 <= rowLimit ? (
+                        <For each={monthRowGridData()[monthRowIndex()][rowItemKey]}>
+                          {(dayObject) =>
+                            rowItemIndex() + 1 <= mergedProps.rowLimit ? (
                               <MonthEvent
-                                onEnd={onDragEnd}
-                                ondrag={onDragStart}
-                                item={item}
-                                dateEnd={item1[6].date}
-                                date={item1[0].date}
+                                onDragEnd={onDragEnd}
+                                ondragstart={onDragStart}
+                                item={dayObject}
+                                endDate={monthRowArr[6].date}
+                                startDate={monthRowArr[0].date}
                               />
                             ) : (
                               <></>
@@ -137,19 +126,26 @@ export const MonthGrid: FComponent<WeeklyGridProps> = (props) => {
                   </For>
                 </div>
                 <div class="month-more-wrapper">
-                  <For each={getExtraRows(Mrows[i()], item1[0].date, item1[6].date, 2)}>
-                    {(item, j) => (
+                  <For
+                    each={getExtraRows(
+                      monthRowGridData()[monthRowIndex()],
+                      monthRowArr[0].date,
+                      monthRowArr[6].date,
+                      2
+                    )}
+                  >
+                    {(extraCount, j) => (
                       <div class="month-more-item">
-                        <Show when={item > 0}>
-                          <div class="month-more-btn" onclick={[openModalH, item1[j()]]}>
-                            {item} +
+                        <Show when={extraCount > 0}>
+                          <div class="month-more-btn" onclick={[openModalH, monthRowArr[j()]]}>
+                            {extraCount} +
                           </div>
                         </Show>
                       </div>
                     )}
                   </For>
                 </div>
-                <For each={item1}>
+                <For each={monthRowArr}>
                   {(date) => (
                     <div class="month-container" onmousemove={(e) => onMouseEnter(date.date)}>
                       {' '}

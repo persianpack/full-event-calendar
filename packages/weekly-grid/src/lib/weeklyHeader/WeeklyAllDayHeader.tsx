@@ -48,11 +48,11 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
         {/* this is a dummy event thats show the preview of the dragging event */}
         <Show when={!!draggingEventData()}>
           <MonthEvent
-            onEnd={() => {}}
-            ondrag={() => {}}
+            onDragEnd={() => {}}
+            ondragstart={() => {}}
             item={draggingEventData() as unknown as EventClass}
-            dateEnd={props.columes[6]}
-            date={props.columes[0]}
+            startDate={props.columes[0]}
+            endDate={props.columes[6]}
           />
         </Show>
       </div>
@@ -66,11 +66,11 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
               <For each={getRowList()[item]}>
                 {(item3) => (
                   <MonthEvent
-                    onEnd={onDragEnd}
-                    ondrag={onDragStart}
+                    onDragEnd={onDragEnd}
+                    ondragstart={onDragStart}
                     item={item3}
-                    date={props.columes[0]}
-                    dateEnd={props.columes[6]}
+                    startDate={props.columes[0]}
+                    endDate={props.columes[6]}
                   />
                 )}
               </For>

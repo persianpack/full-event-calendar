@@ -1,12 +1,23 @@
+// Types
 import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
-import { getEventForAdate } from '@full-event-calendar/utils'
-import { For, Show, createSignal, onCleanup } from 'solid-js'
 import { MonthDateObject } from '../MonthGrid'
+// Utils
+import { getEventForAdate } from '@full-event-calendar/utils'
+// Solid.js
+import { For, Show, createSignal, onCleanup } from 'solid-js'
 
-const [modalData, setModalData] = createSignal({
+interface ModalData {
+  bottom: string
+  left: string
+  events: EventClass[]
+  show: boolean
+  somDate: Date
+}
+
+const [modalData, setModalData] = createSignal<ModalData>({
   bottom: '0px',
   left: '0px',
-  evets: [] as any as EventClass[],
+  events: [],
   show: false,
   somDate: new Date()
 })
@@ -14,14 +25,15 @@ const [modalData, setModalData] = createSignal({
 export function openModal(data: MonthDateObject, e: MouseEvent, events: EventClass[]) {
   const eventsModal = getEventForAdate(events, data.date)
   const target = e.target as HTMLElement
-  const rectt = target.getBoundingClientRect()
-  const coppy = { ...modalData() }
-  coppy.left = rectt.left + 'px'
-  coppy.bottom = rectt.bottom + rectt.height + 'px'
-  coppy.show = true
-  coppy.evets = eventsModal
-  coppy.somDate = data.date
-  setModalData(coppy)
+  const targetRect = target.getBoundingClientRect()
+  const modalDataCopy = { ...modalData() }
+  modalDataCopy.left = targetRect.left + 'px'
+  modalDataCopy.bottom = targetRect.bottom + targetRect.height + 'px'
+  modalDataCopy.show = true
+  modalDataCopy.events = eventsModal
+  modalDataCopy.somDate = data.date
+
+  setModalData(modalDataCopy)
 }
 
 interface ModalProps {
@@ -30,35 +42,29 @@ interface ModalProps {
 }
 
 export const EventModal: FComponent<ModalProps> = (props) => {
-  // console.log(Mrows)
   //move this to utils
-  function clickout(el: any, accessor: any) {
+  //@ts-ignore
+  function ClickOutSide(el: any, accessor: any) {
     const onClick = (e: any) => !el.contains(e.target) && accessor()?.()
     document.body.addEventListener('click', onClick)
-
     onCleanup(() => document.body.removeEventListener('click', onClick))
   }
 
   function modalClickOutSide() {
-    const coppy = { ...modalData() }
-
-    coppy.show = false
-    setModalData(coppy)
+    const modalDataCopy = { ...modalData() }
+    modalDataCopy.show = false
+    setModalData(modalDataCopy)
   }
+
   function handelMouseUp() {
     document.removeEventListener('mouseup', handelMouseUp)
-
     document.getElementById('month-wrapper-id')?.classList.remove('month-is-dragging')
-    console.log('mouseUp')
-    // dragEnd()
     props.onDragEnd()
   }
 
   function modalDragStart(event: EventClass) {
     document.addEventListener('mouseup', handelMouseUp)
     document.getElementById('month-wrapper-id')?.classList.add('month-is-dragging')
-    // draggingOnStartDate = modalData().somDate
-    //  onEventDrag(event)
     props.onDragStart(modalData().somDate, event)
   }
 
@@ -67,11 +73,11 @@ export const EventModal: FComponent<ModalProps> = (props) => {
       {/*
          //@ts-ignore */}
       <div
-        use:clickout={modalClickOutSide}
+        use:ClickOutSide={modalClickOutSide}
         class="modal-event-list"
         style={`left:${modalData().left};bottom:${modalData().bottom}`}
       >
-        <For each={modalData().evets}>
+        <For each={modalData().events}>
           {(item) => (
             <div class="modal-event" onmousedown={[modalDragStart, item]}>
               {item.id}

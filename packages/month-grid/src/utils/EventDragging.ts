@@ -10,21 +10,21 @@ interface DraggingEventsDate {
 }
 
 export function useMonthEventDragging() {
-  let draggingOnStartDate: Date | null = null
-  let curretnDayre: number | null = null
+  let startingDate: Date | null = null
+  let currentDate: number | null = null
   const [draggingEventData, setDraggingEventData] = createSignal<null | DraggingEventsDate>(null)
 
   function onMouseEnter(date: Date) {
     if (!draggingEventData()) return
-    if (draggingOnStartDate) {
-      let dayssDiff = daysDiffInRange(draggingOnStartDate, date)
+    if (startingDate) {
+      let dayDifference = daysDiffInRange(startingDate, date)
       let dragCopy = { ...draggingEventData() } as DraggingEventsDate
-      if (curretnDayre != dayssDiff) {
-        curretnDayre = dayssDiff
+      if (currentDate != dayDifference) {
+        currentDate = dayDifference
         const startCopy = new Date(dragCopy.source.start)
         const endCopy = new Date(dragCopy.source.end)
-        startCopy.setDate(dragCopy.source.start.getDate() + dayssDiff)
-        endCopy.setDate(dragCopy.source.end.getDate() + dayssDiff)
+        startCopy.setDate(dragCopy.source.start.getDate() + dayDifference)
+        endCopy.setDate(dragCopy.source.end.getDate() + dayDifference)
         const copp = new MonthDraggingObject(dragCopy.source.id, startCopy, endCopy, dragCopy.source)
 
         //make obj null first because solid cannot detect Date change !
@@ -32,13 +32,13 @@ export function useMonthEventDragging() {
         setDraggingEventData(copp)
       }
     } else {
-      draggingOnStartDate = date
+      startingDate = date
     }
   }
 
-  function onDragStart(event: EventClass, hasStartDate?: Date) {
-    if (hasStartDate) {
-      draggingOnStartDate = hasStartDate
+  function onDragStart(event: EventClass, startDate?: Date) {
+    if (startDate) {
+      startingDate = startDate
     }
     if (!draggingEventData()) {
       const draggingEventObject = new MonthDraggingObject(event.id, new Date(event.start), new Date(event.end), event)
@@ -47,7 +47,7 @@ export function useMonthEventDragging() {
   }
 
   function onDragEnd() {
-    draggingOnStartDate = null
+    startingDate = null
     setDraggingEventData(null)
   }
   return { onDragEnd, onDragStart, onMouseEnter, draggingEventData }

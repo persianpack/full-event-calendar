@@ -83,7 +83,7 @@ export function getCalendarMonthDays(date: Date, calendar: string) {
   return monthDays
 }
 
-export const ArraysplitIntoChunks = <T extends any[]>(arr: T, chunkSize: number) => {
+export const ArraySplitIntoChunks = <T extends any[]>(arr: T, chunkSize: number) => {
   let res = []
 
   for (let i = 0; i < arr.length; i += chunkSize) {

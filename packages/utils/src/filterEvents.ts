@@ -51,6 +51,12 @@ export function daysDiffInRange(date1: Date, date2: Date) {
   return Math.round((secondF - newF) / (1000 * 60 * 60 * 24))
 }
 
+export function sortEventByStart(events: EventClass[]) {
+  return events.sort(function (a, b) {
+    return new Date(a.start).valueOf() - new Date(b.start).valueOf()
+  })
+}
+
 // export  function clickOutside(el:any, accessor:any) {
 //   const onClick = (e:any) => !el.contains(e.target) && accessor()?.();
 //   document.body.addEventListener("click", onClick);
