@@ -218,6 +218,13 @@ const events = [
     start: new Date(' Aug 11 2023 00:00:00'),
     end: new Date(' Aug 11 2023 23:59:59'),
     id: 17
+  },
+
+  {
+    name: 'some name',
+    start: new Date(' Aug 08 2023 05:00:00'),
+    end: new Date(' Aug 08 2023 07:59:59'),
+    id: 86
   }
 ]
 

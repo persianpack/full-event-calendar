@@ -1,7 +1,7 @@
 import { DraggeddData, EventClass, FComponent, SourceEvent } from '@full-event-calendar/shared-ts'
 import { Dynamic } from 'solid-js/web'
 import { createMemo, createUniqueId, mapArray, mergeProps } from 'solid-js'
-import { DailyGrid } from '@full-event-calendar/daily-grid'
+import { whichColumeWasDropped } from './utils/col'
 
 interface GroupGridpProps {
   initialDate?: Date
@@ -26,15 +26,15 @@ export const GroupGrid: FComponent<GroupGridpProps> = (props) => {
   let groupConatainerRef
   const mergedPorps = mergeProps(defaultProps, props)
   //@ts-ignore
-  let colIds = mergedPorps.columes.map(() => createUniqueId())
+  let colIds = mergedPorps.columes.map(() => createUniqueId()) as string[]
 
-  function eventUpdateProxy(a: SourceEvent, b: DraggeddData, curCol: number) {
-    if (b?.itemRect) {
-      // let dropX = (b.itemRect?.left + b.itemRect?.right) / 2
-      const colNumber = whichColumeWasDropped(colIds, b.mouseX)
-      mergedPorps.onEventUpdate(a, colNumber, curCol, true)
+  function eventUpdateProxy(eventSource: SourceEvent, draggeData: DraggeddData, startingColId: number) {
+    // calculate  which colume the event was dropeed in
+    if (draggeData?.itemRect) {
+      const colNumber = whichColumeWasDropped(colIds, draggeData.mouseX)
+      mergedPorps.onEventUpdate(eventSource, colNumber, startingColId, true)
     } else {
-      mergedPorps.onEventUpdate(a, curCol, curCol, false)
+      mergedPorps.onEventUpdate(eventSource, startingColId, startingColId, false)
     }
   }
 
@@ -64,21 +64,4 @@ export const GroupGrid: FComponent<GroupGridpProps> = (props) => {
       </div>
     </>
   )
-}
-
-function whichColumeWasDropped(containersP: string[], poinyX: number): number {
-  let result = 0
-
-  for (let i = 0; i < containersP.length; i++) {
-    const containerNode = document.getElementById(containersP[i])
-    if (!containerNode) return result
-    const containerRect = containerNode.getBoundingClientRect()
-    const isIwith = containerRect.left < poinyX && containerRect.right > poinyX
-    if (isIwith) {
-      result = i
-      break
-    }
-  }
-
-  return result
 }

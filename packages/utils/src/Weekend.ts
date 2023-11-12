@@ -6,3 +6,14 @@ export function formatWeekDays(date: Date, calendar: string, timeZone: string, l
     timeZone: timeZone
   }).format(D)
 }
+
+export const formatDayNumber = (locale: string, calendar: string, timeZone: string, headerDate: Date) => {
+  const dateTimeFormat = Intl.DateTimeFormat(locale, {
+    calendar: calendar,
+    timeZone: timeZone
+  })
+
+  const parts = dateTimeFormat.formatToParts(headerDate)
+  const partValues = parts.filter((p) => p.type === 'day')
+  return partValues[0].value
+}

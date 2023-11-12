@@ -7,10 +7,10 @@ import './MonthGrid.scss'
 // Components
 import { EventModal, openModal } from './MonthModal/MonthModal'
 // Utils
-import { ArraySplitIntoChunks, formatWeekDays, getCalendarMonthDays } from '@full-event-calendar/utils'
+import { ArraySplitIntoChunks, getCalendarMonthDays } from '@full-event-calendar/utils'
 import { MonthEvent } from './MonthEvent/MonthEvent'
 import { getMonthRows } from '../utils/EventRows'
-import { isDateIncludedInaRange, sortEventByStart } from '@full-event-calendar/utils/src/filterEvents'
+import { isDateIncludedInaRange, sortEventByStart } from '@full-event-calendar/utils'
 import { useMonthEventDragging } from '../utils/EventDragging'
 import { getExtraRows } from '../utils/EventPosition'
 import { MonthHeader } from './MonthHeader/MonthHeader'
@@ -49,7 +49,7 @@ export const MonthGrid: FComponent<WeeklyGridProps> = (props) => {
 
   const { onDragEnd, onDragStart, onMouseEnter, draggingEventData } = useMonthEventDragging()
 
-  const filteredEvents = createMemo(() => sortEventByStart(mergedProps.events.filter((event) => event.isAllDay())))
+  const filteredEvents = createMemo(() => sortEventByStart(mergedProps.events))
 
   const monthCalendarObject = createMemo(() => getCalendarMonthDays(mergedProps.initialDate, mergedProps.calendar))
 

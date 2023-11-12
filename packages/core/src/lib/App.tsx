@@ -1,6 +1,6 @@
 import { useCounter } from '../contex-injector/contex.jsx'
 import { CalendarHeader } from './CalendarHeader/CalendarHeader.jsx'
-import { Switch, Match } from 'solid-js'
+import { Switch, Match, createMemo } from 'solid-js'
 import { DailyGrid } from '@full-event-calendar/daily-grid'
 import { WeeklyGrid } from '@full-event-calendar/weekly-grid'
 // import { DailyHeader } from './DailyHeader/DailyHeader.jsx'
@@ -18,6 +18,9 @@ export function App() {
     data.inctence.changeInitialDate(d.toISOString())
   }
 
+  // We need to unwrapp and cache events for better sorting and performace
+  const unwrappedEvents = createMemo(() => [...data.store.events])
+
   return (
     <>
       <div style="margin-top:200px;margin-bottom:200px" id="full-event-calendar-core">
@@ -28,7 +31,7 @@ export function App() {
             <DailyGrid
               onEventUpdate={onEventUpdate}
               initialDate={convertTZ(new Date(data.store.initialDate), data.store.timeZone)}
-              events={data.store.events}
+              events={unwrappedEvents()}
               locale={data.store.locale}
               calendar={data.store.calendar}
             />
@@ -38,7 +41,7 @@ export function App() {
             <WeeklyGrid
               onEventUpdate={onEventUpdate}
               initialDate={convertTZ(new Date(data.store.initialDate), data.store.timeZone)}
-              events={data.store.events}
+              events={unwrappedEvents()}
               locale={data.store.locale}
               calendar={data.store.calendar}
             />
@@ -46,7 +49,7 @@ export function App() {
           <Match when={data.store.grid === 'month'}>
             <MonthGrid
               initialDate={convertTZ(new Date(data.store.initialDate), data.store.timeZone)}
-              events={data.store.events}
+              events={unwrappedEvents()}
               locale={data.store.locale}
               calendar={data.store.calendar}
             ></MonthGrid>

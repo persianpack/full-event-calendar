@@ -78,11 +78,15 @@ export class EventImpl implements EventClass {
   }
 
   checkAllDayOverLap(event: EventImpl) {
-    const FloorStart1 = new Date(event.start.setHours(0, 0, 0))
-    const FloorStart2 = new Date(this.start.setHours(0, 0, 0))
+    const FloorStart1 = new Date(event.start)
+    const FloorStart2 = new Date(this.start)
+    FloorStart1.setHours(0, 0, 0)
+    FloorStart2.setHours(0, 0, 0)
 
-    const FloorEnd1 = new Date(event.end.setHours(23, 59, 59))
-    const FloorEnd2 = new Date(this.end.setHours(23, 59, 59))
+    const FloorEnd1 = new Date(event.end)
+    const FloorEnd2 = new Date(this.end)
+    FloorEnd1.setHours(23, 59, 59)
+    FloorEnd2.setHours(23, 59, 59)
 
     return FloorStart1 < FloorEnd2 && FloorEnd1 > FloorStart2
   }

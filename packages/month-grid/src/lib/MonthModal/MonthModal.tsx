@@ -84,8 +84,8 @@ export const EventModal: FComponent<ModalProps> = (props) => {
 
   return (
     <Show when={modalData().show}>
-      {/*
-         //@ts-ignore */}
+      {/* 
+      //@ts-ignore */}
       <div
         use:ClickOutSide={modalClickOutSide}
         class="modal-event-list"
