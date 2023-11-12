@@ -32,11 +32,11 @@ export const MonthEvent: FComponent<EventPropss> = (props: EventPropss) => {
     //maybe remove this line it is not needed ?
     document.addEventListener('mousemove', mouseMove)
     document.getElementById('month-wrapper-id')?.classList.add('month-is-dragging')
-    props.ondragstart(props.item)
+    // props.ondragstart(props.item)
   }
 
   function mouseMove() {
-    // props.ondragstart(props.item)
+    props.ondragstart(props.item)
   }
 
   function eventStyles() {

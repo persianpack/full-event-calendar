@@ -1,0 +1,17 @@
+.modal-event-list {
+  position: absolute;
+  z-index: 10;
+  height: 200px;
+  width: 200px;
+  background-color: rgba(255, 255, 255, 0.61);
+  border-radius: 10px;
+  left: 30px;
+  transform: translateY(-104%);
+  .modal-event {
+    background-color: blue;
+    color: white;
+    margin: 10px;
+    height: 25px;
+    border-radius: 7px;
+  }
+}

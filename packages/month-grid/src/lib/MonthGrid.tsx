@@ -13,6 +13,7 @@ import { getMonthRows } from '../utils/EventRows'
 import { isDateIncludedInaRange, sortEventByStart } from '@full-event-calendar/utils/src/filterEvents'
 import { useMonthEventDragging } from '../utils/EventDragging'
 import { getExtraRows } from '../utils/EventPosition'
+import { MonthHeader } from './MonthHeader/MonthHeader'
 
 interface WeeklyGridProps {
   events?: EventClass[]
@@ -45,19 +46,19 @@ const defaultProps = {
 
 export const MonthGrid: FComponent<WeeklyGridProps> = (props) => {
   const mergedProps = mergeProps(defaultProps, props)
+
   const { onDragEnd, onDragStart, onMouseEnter, draggingEventData } = useMonthEventDragging()
 
-  const filteredEventsByMonth = createMemo(() => sortEventByStart(mergedProps.events.filter((item) => item.isAllDay())))
+  const filteredEvents = createMemo(() => sortEventByStart(mergedProps.events.filter((event) => event.isAllDay())))
+
   const monthCalendarObject = createMemo(() => getCalendarMonthDays(mergedProps.initialDate, mergedProps.calendar))
+
   const monthDateRows = createMemo(() => ArraySplitIntoChunks(monthCalendarObject(), 7) as MonthDateObject[][])
-  const monthRowGridData = createMemo(() => getMonthRows(monthDateRows(), filteredEventsByMonth()) as MonthGridData[])
 
-  function openModalH(monthObject: MonthDateObject, e: MouseEvent) {
-    openModal(monthObject, e, filteredEventsByMonth())
-  }
+  const monthRowGridData = createMemo(() => getMonthRows(monthDateRows(), filteredEvents()) as MonthGridData[])
 
-  function formateWeekDate(date: Date) {
-    return formatWeekDays(date, mergedProps.calendar, mergedProps.timeZone, mergedProps.locale)
+  function openModalEvents(monthObject: MonthDateObject, e: MouseEvent) {
+    openModal(monthObject, e, filteredEvents())
   }
 
   function ModalDragStart(draggingOnStartDate: Date, eventDraged: EventClass) {
@@ -66,15 +67,12 @@ export const MonthGrid: FComponent<WeeklyGridProps> = (props) => {
 
   return (
     <>
-      <div class="month-header">
-        <div>{formateWeekDate(monthCalendarObject()[0].date)}</div>
-        <div>{formateWeekDate(monthCalendarObject()[1].date)}</div>
-        <div>{formateWeekDate(monthCalendarObject()[2].date)}</div>
-        <div>{formateWeekDate(monthCalendarObject()[3].date)}</div>
-        <div>{formateWeekDate(monthCalendarObject()[4].date)}</div>
-        <div>{formateWeekDate(monthCalendarObject()[5].date)}</div>
-        <div>{formateWeekDate(monthCalendarObject()[6].date)}</div>
-      </div>
+      <MonthHeader
+        headerData={monthCalendarObject()}
+        locale={mergedProps.locale}
+        timeZone={mergedProps.timeZone}
+        calendar={mergedProps.calendar}
+      ></MonthHeader>
       <div class="month-wrapper" id="month-wrapper-id">
         <EventModal onDragEnd={onDragEnd} onDragStart={ModalDragStart} />
 
@@ -137,7 +135,7 @@ export const MonthGrid: FComponent<WeeklyGridProps> = (props) => {
                     {(extraCount, j) => (
                       <div class="month-more-item">
                         <Show when={extraCount > 0}>
-                          <div class="month-more-btn" onclick={[openModalH, monthRowArr[j()]]}>
+                          <div class="month-more-btn" onclick={[openModalEvents, monthRowArr[j()]]}>
                             {extraCount} +
                           </div>
                         </Show>

@@ -5,6 +5,8 @@ import { MonthDateObject } from '../MonthGrid'
 import { getEventForAdate } from '@full-event-calendar/utils'
 // Solid.js
 import { For, Show, createSignal, onCleanup } from 'solid-js'
+// Styles
+import './MonthModal.scss'
 
 interface ModalData {
   bottom: string
@@ -26,9 +28,11 @@ export function openModal(data: MonthDateObject, e: MouseEvent, events: EventCla
   const eventsModal = getEventForAdate(events, data.date)
   const target = e.target as HTMLElement
   const targetRect = target.getBoundingClientRect()
+  const containerRect = document.getElementById('month-wrapper-id')?.getBoundingClientRect() as DOMRect
   const modalDataCopy = { ...modalData() }
+
   modalDataCopy.left = targetRect.left + 'px'
-  modalDataCopy.bottom = targetRect.bottom + targetRect.height + 'px'
+  modalDataCopy.bottom = targetRect.top - containerRect.top + 'px'
   modalDataCopy.show = true
   modalDataCopy.events = eventsModal
   modalDataCopy.somDate = data.date
@@ -55,17 +59,27 @@ export const EventModal: FComponent<ModalProps> = (props) => {
     modalDataCopy.show = false
     setModalData(modalDataCopy)
   }
+  let draggingEvent: EventClass | null = null
 
   function handelMouseUp() {
     document.removeEventListener('mouseup', handelMouseUp)
+    document.removeEventListener('mousemove', mosueMove)
     document.getElementById('month-wrapper-id')?.classList.remove('month-is-dragging')
     props.onDragEnd()
+    draggingEvent = null
+  }
+
+  function mosueMove() {
+    if (draggingEvent) {
+      props.onDragStart(modalData().somDate, draggingEvent)
+    }
   }
 
   function modalDragStart(event: EventClass) {
+    draggingEvent = event
     document.addEventListener('mouseup', handelMouseUp)
+    document.addEventListener('mousemove', mosueMove)
     document.getElementById('month-wrapper-id')?.classList.add('month-is-dragging')
-    props.onDragStart(modalData().somDate, event)
   }
 
   return (
@@ -75,12 +89,12 @@ export const EventModal: FComponent<ModalProps> = (props) => {
       <div
         use:ClickOutSide={modalClickOutSide}
         class="modal-event-list"
-        style={`left:${modalData().left};bottom:${modalData().bottom}`}
+        style={`left:${modalData().left};top:${modalData().bottom}`}
       >
         <For each={modalData().events}>
-          {(item) => (
-            <div class="modal-event" onmousedown={[modalDragStart, item]}>
-              {item.id}
+          {(event) => (
+            <div class="modal-event" onmousedown={[modalDragStart, event]}>
+              {event.id}
             </div>
           )}
         </For>

@@ -36,24 +36,23 @@ interface eventRows {
 }
 
 export function getExtraRows(eventRows: eventRows, weekStartDate: Date, weekendDate: Date, rowLimit: number) {
-  let rowMatrix = [0, 0, 0, 0, 0, 0, 0]
+  let rowExtrasCount = [0, 0, 0, 0, 0, 0, 0]
   const arr = Object.keys(eventRows).filter((item, i) => {
     return i + 1 > rowLimit
   })
 
   for (let index = 0; index < arr.length; index++) {
-    const element = eventRows[arr[index]]
-    // console.log(element)
-    for (let j = 0; j < element.length; j++) {
-      const event = element[j]
+    const events = eventRows[arr[index]]
+    // console.log(events)
+    for (let j = 0; j < events.length; j++) {
+      const event = events[j]
       const leftP = createMemo(() => getLeftPosition(event, weekStartDate))
       const widthh = getendPosition(event, weekendDate, leftP())
-      // console.log( leftP(),widthh)
       for (let k = leftP(); k < widthh + leftP(); k++) {
-        rowMatrix[k] = rowMatrix[k] + 1
+        rowExtrasCount[k] = rowExtrasCount[k] + 1
       }
     }
   }
 
-  return rowMatrix
+  return rowExtrasCount
 }
