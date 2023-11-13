@@ -24,7 +24,12 @@ export const filterEventsByDateRange = (events: EventsProp[], startDate: Date, e
 }
 
 export function isDateIncludedInaRange(date: EventClass, rangeStart: Date, rangeEnd: Date) {
-  return date.start < rangeEnd && date.end > rangeStart
+  const flooredStart = new Date(rangeStart)
+  const ceilEnd = new Date(rangeEnd)
+  flooredStart.setHours(0, 0, 0)
+  ceilEnd.setHours(23, 59, 59)
+
+  return date.start < ceilEnd && date.end > flooredStart
 }
 
 export function daysDiffInRange(date1: Date, date2: Date) {
