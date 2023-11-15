@@ -1,11 +1,9 @@
 import { EventClass } from '@full-event-calendar/shared-ts'
-import { areDatesInTheSameDate } from '@full-event-calendar/utils'
+import { areDatesInTheSameDate, ceilDate, floorDate } from '@full-event-calendar/utils'
 
 export function isEventRightOrLeftOrNone(event: EventClass, initialDate: Date) {
-  let flOWR = new Date(initialDate)
-  flOWR.setHours(0, 0, 0)
-  let Celi = new Date(initialDate)
-  Celi.setHours(23, 59, 59)
+  let flOWR = floorDate(initialDate)
+  let Celi = ceilDate(initialDate)
   let isEndOver = !areDatesInTheSameDate(event.end, initialDate)
   let isStartOver = !areDatesInTheSameDate(event.start, initialDate)
   if (event.id === 30) {

@@ -81,15 +81,6 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
   return (
     <>
       <div ref={containerRef.current} class="fec-daily-grid">
-        {/* <Show when={props.dummyEvent}>
-          
-        <div class='dummpyEvent' style={`${props.dummyEvent.calculatePositionTop()}`}>
-          <div class='dummy-topLine'> </div>
-          <div class='dummy-rightLine'> </div>
-          <div class='dummy-leftLine'> </div>
-          <div class='dummy-bottomLine'> </div>
-        </div>
-        </Show> */}
         <TimeBar container={containerRef} />
         <div class="holdcontainer">
           <For each={ColList()}>

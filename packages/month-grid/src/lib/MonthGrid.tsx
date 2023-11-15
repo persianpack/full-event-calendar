@@ -1,7 +1,7 @@
 // Solid.js
 import { For, Show, createMemo, mergeProps } from 'solid-js'
 // Types
-import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
+import { EventClass, FComponent, SourceEvent } from '@full-event-calendar/shared-ts'
 // Styles
 import './MonthGrid.scss'
 // Components
@@ -18,7 +18,7 @@ import { MonthHeader } from './MonthHeader/MonthHeader'
 interface WeeklyGridProps {
   events?: EventClass[]
   initialDate?: Date
-  onEventUpdate?: (event: any) => void
+  onEventUpdate?: (event: SourceEvent) => void
   locale?: string
   calendar?: string
   timeZone?: string
@@ -37,7 +37,7 @@ interface MonthGridData {
 const defaultProps = {
   events: [],
   initialDate: new Date(),
-  onEventUpdate: () => {},
+  onEventUpdate: (e: SourceEvent) => {},
   locale: 'en-US',
   calendar: 'gregory',
   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
@@ -65,6 +65,19 @@ export const MonthGrid: FComponent<WeeklyGridProps> = (props) => {
     onDragStart(eventDraged, draggingOnStartDate)
   }
 
+  function dragEnd() {
+    if (!!draggingEventData()) {
+      const sourceE = { ...draggingEventData()?.source } as SourceEvent
+      sourceE.start = draggingEventData()?.start as Date
+      sourceE.end = draggingEventData()?.end as Date
+      if (sourceE) {
+        //@ts-ignore
+        props.onEventUpdate(sourceE)
+      }
+    }
+    onDragEnd()
+  }
+
   return (
     <>
       <MonthHeader
@@ -74,7 +87,7 @@ export const MonthGrid: FComponent<WeeklyGridProps> = (props) => {
         calendar={mergedProps.calendar}
       ></MonthHeader>
       <div class="month-wrapper" id="month-wrapper-id">
-        <EventModal onDragEnd={onDragEnd} onDragStart={ModalDragStart} />
+        <EventModal onDragEnd={dragEnd} onDragStart={ModalDragStart} />
 
         <For each={monthDateRows()}>
           {(monthRowArr, monthRowIndex) => {
@@ -108,7 +121,7 @@ export const MonthGrid: FComponent<WeeklyGridProps> = (props) => {
                           {(dayObject) =>
                             rowItemIndex() + 1 <= mergedProps.rowLimit ? (
                               <MonthEvent
-                                onDragEnd={onDragEnd}
+                                onDragEnd={dragEnd}
                                 ondragstart={onDragStart}
                                 item={dayObject}
                                 endDate={monthRowArr[6].date}

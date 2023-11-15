@@ -4,3 +4,4 @@ export { getEventForAdate, areDatesInTheSameDate, sortEventByStart } from './fil
 export { getCalendarMonthDays, ArraySplitIntoChunks } from './Month'
 export { formatWeekDays, formatDayNumber } from './Weekend'
 export { isDateIncludedInaRange, daysDiffInRange, filterEventsByDateRange } from './range'
+export { floorDate, ceilDate } from './Date'

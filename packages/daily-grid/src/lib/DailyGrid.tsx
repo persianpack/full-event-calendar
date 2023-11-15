@@ -36,6 +36,7 @@ export const DailyGrid: FComponent<DailyGridpProps> = (props) => {
   const mergedPorps = mergeProps(defaultProps, props)
 
   const extractedEvents = createMemo(() => getEventForAdate(mergedPorps.events, mergedPorps.initialDate))
+
   const filteredOut = createMemo(() => extractedEvents().filter((item) => !item.isAllDay()))
 
   return (

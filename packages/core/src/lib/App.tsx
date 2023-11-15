@@ -50,6 +50,7 @@ export function App() {
             <MonthGrid
               initialDate={convertTZ(new Date(data.store.initialDate), data.store.timeZone)}
               events={unwrappedEvents()}
+              onEventUpdate={onEventUpdate}
               locale={data.store.locale}
               calendar={data.store.calendar}
             ></MonthGrid>
