@@ -95,7 +95,7 @@ export class EventImpl implements EventClass {
 
   private getEventTopPositionIng() {
     const eventColHeightInPersentage = (this.start.getHours() + this.start.getMinutes() / 60) * 100
-    return `top: ${eventColHeightInPersentage}%`
+    return `top: ${eventColHeightInPersentage > 2358 ? 2358 : eventColHeightInPersentage}%`
   }
 }
 

@@ -1,5 +1,5 @@
 import { createSignal, batch, onCleanup } from 'solid-js'
-
+import { roundMinutesToMultipleOf5 } from '@full-event-calendar/utils'
 import { DraggeddData, EventClass } from '@full-event-calendar/shared-ts'
 
 const initialDragNode: DraggeddData = {
@@ -20,11 +20,25 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
   const [isDragging, setIsDragging] = createSignal(false)
   const [draggedData, setDraggedData] = createSignal<DraggeddData>(initialDragNode)
 
-  const xAndYDiff = [0, 0]
+  let xAndYDiff = [0, 0]
   let mouseDown = false
   let firstTopPosition = 0
   let shouldDuplicate = false
   let wrapperHeight = 1
+  let hasScrolled = false
+  let isMouseoutsideTheContainer = false
+  let hasMoved = false
+
+  function resetValueToDefalt() {
+    xAndYDiff = [0, 0]
+    mouseDown = false
+    firstTopPosition = 0
+    shouldDuplicate = false
+    wrapperHeight = 1
+    hasScrolled = false
+    isMouseoutsideTheContainer = false
+    hasMoved = false
+  }
 
   function getEventNode(id: any) {
     const target = document.querySelectorAll(`#event-${id}`)
@@ -37,6 +51,7 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
     }
     return targets as HTMLElement
   }
+
   function setOpacityForElemetns(opacity: string, id: any) {
     //@ts-ignore
     document.querySelectorAll(`#event-${id}`).forEach((element: HTMLElement) => {
@@ -44,8 +59,24 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
     })
   }
 
+  function handelScroll() {
+    hasScrolled = true
+  }
+
+  function containerMouseEnter() {
+    isMouseoutsideTheContainer = false
+  }
+  function containerMouseLeave() {
+    isMouseoutsideTheContainer = true
+  }
+
   function itemDragstart(e: EventClass, d: any, shouldDuplica: boolean) {
     if (isDragging()) return
+    document.addEventListener('mousemove', mouseMove)
+    document.addEventListener('mouseup', handelMouseUp)
+    document.addEventListener('scroll', handelScroll)
+    containerRef.current.addEventListener('mouseenter', containerMouseEnter)
+    containerRef.current.addEventListener('mouseleave', containerMouseLeave)
     mouseDown = true
     shouldDuplicate = shouldDuplica
     // const target = document.querySelector(`#event-${e.id}`) as HTMLElement
@@ -75,7 +106,7 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
     batch(() => {
       setDraggedData(clonedNode)
     })
-    wrapperHeight = container.current.querySelector('.time-range')?.clientHeight || 1
+    wrapperHeight = containerRef.current.querySelector('.time-range')?.clientHeight || 1
   }
 
   let time1: number = 0
@@ -87,11 +118,10 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
   }
   function mouseMove(e: MouseEvent) {
     if (!mouseDown) return
-
+    hasMoved = true
     if (!isDragging()) {
       setIsDragging(true)
       document.getElementById('full-event-calendar-core')?.classList.add('calendar-draging')
-
       //const target = document.querySelector(`#event-${draggedData().item?.id}`) as HTMLElement
       // const target = getEventNode(draggedData().item?.id)
       setOpacityForElemetns('0.3', draggedData().item?.id)
@@ -108,9 +138,10 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
       const inMin = ((eventRect.top + window.scrollY - firstTopPosition) * 60) / wrapperHeight
       const delta = inMin * 60000
       const newS = new Date(statDate.getTime() + delta)
+      newS.setSeconds(0, 0)
       const newE = new Date(endDate.getTime() + delta)
 
-      dragCopy.dragedStartDate = newS
+      dragCopy.dragedStartDate = roundMinutesToMultipleOf5(newS)
       dragCopy.dragedEndDate = newE
       dragCopy.itemRect = eventRect
       dragCopy.left = e.clientX - xAndYDiff[0] + 'px'
@@ -123,11 +154,18 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
 
   function handelMouseUp(e: MouseEvent) {
     // call mouse move in case of scolling not moving
-    mouseMove(e)
-    mouseDown = false
+    // mouseMove(e)
+    if (hasScrolled) {
+      mouseMove(e)
+    } else if (!hasMoved) {
+      console.log('eventClicked ')
+    }
+
     if (isDragging()) {
       cleanUps()
-      dragEndCallBack(draggedData())
+      if (!isMouseoutsideTheContainer) {
+        dragEndCallBack(draggedData())
+      }
       //basiclly start the transition animation from the base event to the target element
       const baseEl = { ...draggedData() }
 
@@ -155,15 +193,19 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
         setOpacityForElemetns('', baseEl.item?.id)
       }, 500)
     }
+    removeListenrs()
+    resetValueToDefalt()
   }
-
-  document.addEventListener('mouseup', handelMouseUp)
-
-  document.addEventListener('mousemove', mouseMove)
-
-  onCleanup(() => {
+  function removeListenrs() {
+    containerRef.current.removeEventListener('mouseenter', containerMouseEnter)
+    containerRef.current.removeEventListener('mouseleave', containerMouseLeave)
     document.removeEventListener('mouseup', handelMouseUp)
     document.removeEventListener('mousemove', mouseMove)
+    document.removeEventListener('scroll', handelScroll)
+  }
+
+  onCleanup(() => {
+    removeListenrs()
     cleanUps()
   })
 

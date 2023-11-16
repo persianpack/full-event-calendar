@@ -55,6 +55,9 @@ importers:
 
   packages/basic-grid:
     dependencies:
+      '@full-event-calendar/utils':
+        specifier: workspace:*
+        version: link:../utils
       esbuild-sass-plugin:
         specifier: ^2.16.0
         version: 2.16.0(esbuild@0.19.5)

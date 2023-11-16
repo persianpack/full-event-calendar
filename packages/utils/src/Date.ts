@@ -9,3 +9,10 @@ export function ceilDate(date: Date) {
   newDate.setHours(23, 59, 59)
   return newDate
 }
+
+export function roundMinutesToMultipleOf5(date: Date) {
+  const roundedMinutes = Math.round(date.getMinutes() / 5) * 5
+  const newDate = new Date(date)
+  newDate.setMinutes(roundedMinutes)
+  return newDate
+}
