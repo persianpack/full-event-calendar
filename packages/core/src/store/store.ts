@@ -9,12 +9,17 @@ const defaultState: CalendarState = {
   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   calendar: 'gregory',
   locale: 'en-US',
-  grid: 'daily'
+  grid: 'daily',
+  gridHeight: 1920
 }
 
 interface SetAllChatsAction {
   type: 'SET_ALL_EVENTS'
   events: SourceEvent[]
+}
+interface SetGridHeight {
+  type: 'SET_GRID_HEIGHT'
+  height: CalendarState['gridHeight']
 }
 interface ChangeTimeZoneOnEvent {
   type: 'UPDATE_TIMEZONE'
@@ -57,6 +62,7 @@ export type StoreActions =
   | UpdateLocale
   | UpdateCalendar
   | UpdateGrid
+  | SetGridHeight
 
 export type EventCalendarOptions = { [K in keyof CalendarSourceOptions]-?: CalendarSourceOptions[K] }
 export interface CalendarState extends EventCalendarOptions {
@@ -65,6 +71,8 @@ export interface CalendarState extends EventCalendarOptions {
 
 const calendarReducer: Reducer<CalendarState, StoreActions> = (state = defaultState, action) => {
   switch (action.type) {
+    case 'SET_GRID_HEIGHT':
+      return { ...state, gridHeight: action.height }
     case 'UPDATE_GRID':
       return { ...state, grid: action.grid }
     case 'UPDATE_CALENDAR':

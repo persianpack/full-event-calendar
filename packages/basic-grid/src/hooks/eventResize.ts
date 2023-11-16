@@ -14,6 +14,7 @@ export function useResize(container: any, resizeEndCalllBack: (p: SourceEvent) =
     let FirstBottomY = targetRect.bottom
     let endDate: any = null
 
+    const wrapperHeight = container.current.querySelector('.time-range')?.clientHeight || 1
     function mousemove(e: MouseEvent) {
       let newX = prevX - e.y
       const height = targetRect.height - newX
@@ -21,10 +22,9 @@ export function useResize(container: any, resizeEndCalllBack: (p: SourceEvent) =
 
       const delta = targetEvent.getBoundingClientRect().bottom - FirstBottomY
 
-      const newD = (delta * 60) / 80
+      const newD = (delta * 60) / wrapperHeight
       const finald = new Date(item.end.getTime() + newD * 60000)
 
-      // let duraction = (height * 60) / 80
       endDate = finald
       const el = container.current.querySelector(`#event-end-${item?.id}`) as HTMLElement
       el.innerHTML = finald.toString()

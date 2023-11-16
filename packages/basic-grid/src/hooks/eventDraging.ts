@@ -24,6 +24,7 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
   let mouseDown = false
   let firstTopPosition = 0
   let shouldDuplicate = false
+  let wrapperHeight = 1
 
   function getEventNode(id: any) {
     const target = document.querySelectorAll(`#event-${id}`)
@@ -74,6 +75,7 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
     batch(() => {
       setDraggedData(clonedNode)
     })
+    wrapperHeight = container.current.querySelector('.time-range')?.clientHeight || 1
   }
 
   let time1: number = 0
@@ -103,7 +105,7 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
 
       const statDate = dragCopy.item?.start as Date
       const endDate = dragCopy.item?.end as Date
-      const inMin = ((eventRect.top + window.scrollY - firstTopPosition) * 60) / 80
+      const inMin = ((eventRect.top + window.scrollY - firstTopPosition) * 60) / wrapperHeight
       const delta = inMin * 60000
       const newS = new Date(statDate.getTime() + delta)
       const newE = new Date(endDate.getTime() + delta)

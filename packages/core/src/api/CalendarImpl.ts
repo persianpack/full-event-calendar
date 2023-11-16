@@ -10,9 +10,8 @@ export interface CalendarSourceOptions {
   calendar?: string
   locale?: string
   grid?: GridModes
-  // timeZone ?: string;
+  gridHeight?: number
   // dailyGridOptions : dailyGridOptions;
-  // calnedarMode : CalnedarMode
 }
 
 export type GridModes = 'daily' | 'weekly' | 'month'
@@ -31,7 +30,9 @@ export class CalendarImpl implements CalendarApi {
   setEventList(events: SourceEvent[]) {
     this.storeDispatch({ type: 'SET_ALL_EVENTS', events })
   }
-
+  setGridHeight(height: number) {
+    this.storeDispatch({ type: 'SET_GRID_HEIGHT', height })
+  }
   updateEvent(id: SourceEvent['id'], event: SourceEvent): void {
     this.storeDispatch({ type: 'UPDATE_EVENT', id, event })
   }
@@ -66,6 +67,9 @@ export class CalendarImpl implements CalendarApi {
     }
     if (options.locale) {
       this.changeLocale(options.locale)
+    }
+    if (options.gridHeight) {
+      this.setGridHeight(options.gridHeight)
     }
     this.setEventList(options.events)
   }

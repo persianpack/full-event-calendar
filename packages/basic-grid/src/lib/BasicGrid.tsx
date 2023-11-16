@@ -11,13 +11,15 @@ export interface BasicGridProps {
   events?: EventClass[]
   onEventUpdate?: (event: SourceEvent, dragData?: DraggeddData) => void
   gridDate?: Date
+  gridHeight?: number
 }
 
 const defaultProps = {
   events: [],
   onEventUpdate: () => {},
   gridDate: new Date(),
-  dummyEvent: null
+  dummyEvent: null,
+  gridHeight: 65 * 24
 }
 
 export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
@@ -78,11 +80,15 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
     '22 pm',
     '23 pm'
   ]
+
+  function getWrapperHeight() {
+    return `height:${props.gridHeight / 24}px`
+  }
   return (
     <>
-      <div ref={containerRef.current} class="fec-daily-grid">
+      <div ref={containerRef.current} class="fec-daily-grid" style={`height: ${props.gridHeight}px`}>
         <TimeBar container={containerRef} />
-        <div class="holdcontainer">
+        <div class="holdcontainer" style={getWrapperHeight()}>
           <For each={ColList()}>
             {(colume, Ciin) => {
               return (
@@ -142,7 +148,7 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
           }}
         </For>
 
-        <div class="wrapper-container">
+        <div class="wrapper-container" style={getWrapperHeight()}>
           <Show when={isDragging()}>
             <div
               id={'draging-event-' + draggedData().item?.id}

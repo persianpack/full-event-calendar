@@ -10,15 +10,6 @@ import { DailyGrid } from '@full-event-calendar/daily-grid'
 //utils
 import { WeeklyAllDayHeader } from './lib/weeklyHeader/WeeklyAllDayHeader'
 
-const defaultProps = {
-  events: [],
-  initialDate: new Date(),
-  onEventUpdate: () => {},
-  locale: 'en-US',
-  calendar: 'gregory',
-  timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
-}
-
 interface WeeklyGridProps {
   events?: EventClass[]
   initialDate?: Date
@@ -26,6 +17,17 @@ interface WeeklyGridProps {
   locale?: string
   calendar?: string
   timeZone?: string
+  gridHeight?: number
+}
+
+const defaultProps = {
+  events: [],
+  initialDate: new Date(),
+  onEventUpdate: () => {},
+  locale: 'en-US',
+  calendar: 'gregory',
+  timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+  gridHeight: 65 * 24
 }
 
 interface columeData {
@@ -64,6 +66,7 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
         columeData[dayNumber].props.locale = mergedPorps.locale
         columeData[dayNumber].props.timeZone = mergedPorps.timeZone
         columeData[dayNumber].props.calendar = mergedPorps.calendar
+        columeData[dayNumber].props.gridHeight = mergedPorps.gridHeight
         columeData[dayNumber].props.showAllDay = false
         // INcremint day for the next colume
         iniDay.setDate(iniDay.getDate() + 1)

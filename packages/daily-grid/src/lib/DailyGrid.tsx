@@ -9,6 +9,7 @@ import { BasicGridProps } from '@full-event-calendar/basid-grid'
 import { Show, createMemo, mergeProps } from 'solid-js'
 // utils
 import { getEventForAdate } from '@full-event-calendar/utils'
+// Remove the extend
 export interface DailyGridpProps extends BasicGridProps {
   initialDate?: Date
   onDateChange?: (d: Date) => void
@@ -29,7 +30,8 @@ const defaultProps = {
   locale: 'en-US',
   showAllDay: true,
   onDateChange: () => {},
-  onEventUpdate: () => {}
+  onEventUpdate: () => {},
+  gridHeight: 65 * 24
 }
 
 export const DailyGrid: FComponent<DailyGridpProps> = (props) => {
@@ -58,6 +60,7 @@ export const DailyGrid: FComponent<DailyGridpProps> = (props) => {
           gridDate={mergedPorps.initialDate}
           events={filteredOut()}
           onEventUpdate={mergedPorps.onEventUpdate}
+          gridHeight={mergedPorps.gridHeight}
         />
       </div>
     </>

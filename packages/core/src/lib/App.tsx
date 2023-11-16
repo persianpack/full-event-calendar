@@ -34,6 +34,7 @@ export function App() {
               events={unwrappedEvents()}
               locale={data.store.locale}
               calendar={data.store.calendar}
+              gridHeight={data.store.gridHeight}
             />
           </Match>
 
@@ -44,6 +45,7 @@ export function App() {
               events={unwrappedEvents()}
               locale={data.store.locale}
               calendar={data.store.calendar}
+              gridHeight={data.store.gridHeight}
             />
           </Match>
           <Match when={data.store.grid === 'month'}>

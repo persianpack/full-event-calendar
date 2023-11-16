@@ -17,8 +17,6 @@
 }
 
 .fec-daily-grid {
-  // background-color: pink;
-  height: 1920px;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -83,7 +81,6 @@
     }
   }
   .wrapper-container {
-    height: 80px;
     position: fixed;
     z-index: 50;
   }
@@ -101,7 +98,6 @@
   cursor: grabbing;
 }
 .holdcontainer {
-  height: 80px;
   position: absolute;
   width: 100%;
   display: flex;
