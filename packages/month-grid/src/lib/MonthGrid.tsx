@@ -105,6 +105,8 @@ export const MonthGrid: FComponent<WeeklyGridProps> = (props) => {
                     }
                   >
                     <MonthEvent
+                      isFirstRow={monthRowIndex() === 0}
+                      isLastRow={monthRowIndex() === 4}
                       onDragEnd={() => {}}
                       ondragstart={() => {}}
                       item={draggingEventData() as unknown as EventClass}
@@ -121,6 +123,8 @@ export const MonthGrid: FComponent<WeeklyGridProps> = (props) => {
                           {(dayObject) =>
                             rowItemIndex() + 1 <= mergedProps.rowLimit ? (
                               <MonthEvent
+                                isFirstRow={monthRowIndex() === 0}
+                                isLastRow={monthRowIndex() === 4}
                                 onDragEnd={dragEnd}
                                 ondragstart={onDragStart}
                                 item={dayObject}
@@ -142,7 +146,7 @@ export const MonthGrid: FComponent<WeeklyGridProps> = (props) => {
                       monthRowGridData()[monthRowIndex()],
                       monthRowArr[0].date,
                       monthRowArr[6].date,
-                      2
+                      mergedProps.rowLimit
                     )}
                   >
                     {(extraCount, j) => (

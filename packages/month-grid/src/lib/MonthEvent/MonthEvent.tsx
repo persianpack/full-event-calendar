@@ -8,13 +8,17 @@ interface EventPropss {
   startDate: Date
   ondragstart: (e: EventClass) => void
   onDragEnd: () => void
+  isFirstRow: boolean
+  isLastRow: boolean
 }
 
 export const MonthEvent: FComponent<EventPropss> = (props: EventPropss) => {
   const leftP = createMemo(() => getLeftPosition(props.item, props.startDate))
   const eventWidth = getendPosition(props.item, props.endDate, leftP())
   const isRighted = rightArrowClass(props.item, props.endDate)
-    ? 'border-top-right-radius:0px;border-bottom-right-radius:0px'
+    ? props.isLastRow
+      ? 'clip-path: polygon(0 0, calc(100% - 10px) 0%, 100% 50%, calc(100% - 10px) 100%, 0 100%);'
+      : 'border-top-right-radius:0px;border-bottom-right-radius:0px'
     : ''
   const [eventIsDragging, setEventIsDragging] = createSignal(false)
 
@@ -42,13 +46,19 @@ export const MonthEvent: FComponent<EventPropss> = (props: EventPropss) => {
   function eventStyles() {
     return `${eventIsDragging() ? ';opacity:.7;' : ''};left:calc(${leftP()}00% + 5px);width:calc(${eventWidth}00% ${
       rightArrowClass(props.item, props.endDate) ? '- 6px' : '- 16px'
-    });${leftArrowClass(props.item as unknown as EventClass, props.startDate)};${isRighted}`
+    });${leftArrowClass(props.item as unknown as EventClass, props.startDate, props.isFirstRow)};${isRighted}`
+  }
+  function isNotAllDay() {
+    if (props?.item?.isAllDay) {
+      return !props?.item?.isAllDay() ? 'month-item-no-allday' : ''
+    }
+    return ''
   }
 
   return (
     <div
       onmousedown={[onEventMouseDown, true]}
-      class="month-item"
+      class={`month-item ${isNotAllDay()}`}
       id={`month--item-${props.item.id}`}
       style={eventStyles()}
     >

@@ -18,10 +18,14 @@ export function getendPosition(event: EventClass, weekendDate: Date, start: numb
   return 6 - start + 1
 }
 
-export function leftArrowClass(event: EventClass, weekStartDate: Date) {
+export function leftArrowClass(event: EventClass, weekStartDate: Date,leftArrowClass:boolean) {
   const floorWeekStart = floorDate(weekStartDate)
   if (event.start < floorWeekStart) {
-    return 'border-top-left-radius:0px;border-bottom-left-radius:0px;left:1px'
+    if(leftArrowClass){
+      return 'clip-path: polygon(100% 0, 10px 0, 0px 50%, 10px 100%, 100% 100%);'
+    }else{
+      return 'border-top-left-radius:0px;border-bottom-left-radius:0px;left:1px'
+    }
   } else {
     return ''
   }

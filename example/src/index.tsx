@@ -56,7 +56,7 @@ const events = [
   },
   {
     name: 'some name',
-    start: new Date(' Aug 06 2023 08:00:0'),
+    start: new Date(' Aug 05 2023 08:00:0'),
     end: new Date(' Aug 30 2023 10:00:00'),
     id: 114
   },
