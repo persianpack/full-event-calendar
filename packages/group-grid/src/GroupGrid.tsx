@@ -50,6 +50,7 @@ export const GroupGrid: FComponent<GroupGridpProps> = (props) => {
             }}
             events={item.events}
             id={colIds[i()]}
+            container="group-grid-container"
             {...item.props}
           ></Dynamic>
         )
@@ -59,7 +60,7 @@ export const GroupGrid: FComponent<GroupGridpProps> = (props) => {
 
   return (
     <>
-      <div style="display:flex;" ref={groupConatainerRef}>
+      <div style="display:flex;" id="group-grid-container" ref={groupConatainerRef}>
         {mappedColumes()}
       </div>
     </>

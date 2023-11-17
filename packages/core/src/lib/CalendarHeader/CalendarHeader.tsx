@@ -12,15 +12,23 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
   const [showDropDown, SetDropDown] = createSignal(false)
   const data = useCounter()
 
-  const options: any = {
-    dateStyle: 'full',
-    calendar: data.store.calendar,
-    timeZone: data.store.timeZone
+  function resolveOptions() {
+    const options: any = {
+      month: 'long',
+      year: 'numeric',
+      day: 'numeric',
+      calendar: data.store.calendar,
+      timeZone: data.store.timeZone
+    }
+    if (data.store.grid === 'weekly' || data.store.grid === 'month') {
+      delete options['day']
+    }
+    return options
   }
 
   const formater = createMemo(() => {
     // the dates pass throw here are assumed that is not converted by timezone so we convert it here
-    return new Intl.DateTimeFormat(data.store.locale, options).format(new Date(data.store.initialDate))
+    return new Intl.DateTimeFormat(data.store.locale, resolveOptions()).format(new Date(data.store.initialDate))
   })
 
   function changeGrid(grid: GridModes) {
@@ -34,6 +42,8 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
       dCopy.setDate(dCopy.getDate() - 1)
     } else if (grid === 'weekly') {
       dCopy.setDate(dCopy.getDate() - 7)
+    } else if (grid === 'month') {
+      dCopy.setMonth(dCopy.getMonth() - 1)
     }
     props.onDateChange(dCopy)
   }
@@ -47,6 +57,8 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
       dCopy.setDate(dCopy.getDate() + 1)
     } else if (grid === 'weekly') {
       dCopy.setDate(dCopy.getDate() + 7)
+    } else if (grid === 'month') {
+      dCopy.setMonth(dCopy.getMonth() + 1)
     }
     props.onDateChange(dCopy)
   }

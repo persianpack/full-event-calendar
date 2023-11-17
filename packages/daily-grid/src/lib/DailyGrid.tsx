@@ -18,6 +18,7 @@ export interface DailyGridpProps extends BasicGridProps {
   locale?: string
   id?: string
   showAllDay?: boolean
+  container?: string
   events: EventClass[]
 }
 
@@ -61,6 +62,7 @@ export const DailyGrid: FComponent<DailyGridpProps> = (props) => {
           events={filteredOut()}
           onEventUpdate={mergedPorps.onEventUpdate}
           gridHeight={mergedPorps.gridHeight}
+          container={mergedPorps.container}
         />
       </div>
     </>

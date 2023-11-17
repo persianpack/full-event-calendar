@@ -16,7 +16,11 @@ const initialDragNode: DraggeddData = {
   mouseX: 0
 }
 
-export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode: DraggeddData) => void) {
+export function userDrager(
+  containerRef: any,
+  dragEndCallBack: (initialDragNode: DraggeddData) => void,
+  wrapperContainer: any
+) {
   const [isDragging, setIsDragging] = createSignal(false)
   const [draggedData, setDraggedData] = createSignal<DraggeddData>(initialDragNode)
 
@@ -33,7 +37,7 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
     xAndYDiff = [0, 0]
     mouseDown = false
     firstTopPosition = 0
-    shouldDuplicate = false
+
     wrapperHeight = 1
     hasScrolled = false
     isMouseoutsideTheContainer = false
@@ -43,7 +47,9 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
   function getEventNode(id: any) {
     const target = document.querySelectorAll(`#event-${id}`)
     const targets = document.querySelector(`#event-${id}`)
+
     if (target.length > 1) {
+      console.log(shouldDuplicate)
       if (shouldDuplicate) {
         return target[1] as HTMLElement
       }
@@ -64,9 +70,12 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
   }
 
   function containerMouseEnter() {
+    console.log('mouse endter')
+
     isMouseoutsideTheContainer = false
   }
   function containerMouseLeave() {
+    console.log('mouse leave')
     isMouseoutsideTheContainer = true
   }
 
@@ -75,9 +84,10 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
     document.addEventListener('mousemove', mouseMove)
     document.addEventListener('mouseup', handelMouseUp)
     document.addEventListener('scroll', handelScroll)
-    containerRef.current.addEventListener('mouseenter', containerMouseEnter)
-    containerRef.current.addEventListener('mouseleave', containerMouseLeave)
+    wrapperContainer.current.addEventListener('mouseenter', containerMouseEnter)
+    wrapperContainer.current.addEventListener('mouseleave', containerMouseLeave)
     mouseDown = true
+    console.log(shouldDuplica)
     shouldDuplicate = shouldDuplica
     // const target = document.querySelector(`#event-${e.id}`) as HTMLElement
     const target = getEventNode(e.id)
@@ -197,8 +207,8 @@ export function userDrager(containerRef: any, dragEndCallBack: (initialDragNode:
     resetValueToDefalt()
   }
   function removeListenrs() {
-    containerRef.current.removeEventListener('mouseenter', containerMouseEnter)
-    containerRef.current.removeEventListener('mouseleave', containerMouseLeave)
+    wrapperContainer.current.removeEventListener('mouseenter', containerMouseEnter)
+    wrapperContainer.current.removeEventListener('mouseleave', containerMouseLeave)
     document.removeEventListener('mouseup', handelMouseUp)
     document.removeEventListener('mousemove', mouseMove)
     document.removeEventListener('scroll', handelScroll)

@@ -1,3 +1,5 @@
+import { areDatesInTheSameDate } from '.'
+
 export function floorDate(date: Date) {
   const newDate = new Date(date)
   newDate.setHours(0, 0, 0)
@@ -15,4 +17,8 @@ export function roundMinutesToMultipleOf5(date: Date) {
   const newDate = new Date(date)
   newDate.setMinutes(roundedMinutes)
   return newDate
+}
+
+export function isDateToday(date: Date) {
+  return areDatesInTheSameDate(date, new Date())
 }

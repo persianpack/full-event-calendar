@@ -1,4 +1,4 @@
-import { For, Show, createMemo, mergeProps } from 'solid-js'
+import { For, Show, createMemo, mergeProps, onMount } from 'solid-js'
 import type { FComponent, SourceEvent, EventClass, DraggeddData } from '@full-event-calendar/shared-ts'
 import { createLinesOfColome } from '../utils/coleLine'
 import { userDrager } from '../hooks/eventDraging'
@@ -6,12 +6,14 @@ import { useResize } from '../hooks/eventResize'
 import { TimeBar } from './TimeBar/TimeBar'
 import { lookworAvalibaleWith } from '../utils/coleLine'
 import './basicGrid.scss'
+import { isDateToday } from '@full-event-calendar/utils'
 
 export interface BasicGridProps {
   events?: EventClass[]
   onEventUpdate?: (event: SourceEvent, dragData?: DraggeddData) => void
   gridDate?: Date
   gridHeight?: number
+  container?: string
 }
 
 const defaultProps = {
@@ -26,10 +28,18 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
   let containerRef: any = {
     current: ''
   }
+  let wrapperContainer: any = { curret: '' }
   const props = mergeProps(defaultProps, propsC)
 
   const { onmousedownH } = useResize(containerRef, resizeCb)
-  const { draggedData, isDragging, itemDragstart } = userDrager(containerRef, dragEnd)
+  const { draggedData, isDragging, itemDragstart } = userDrager(containerRef, dragEnd, wrapperContainer)
+  onMount(() => {
+    if (props.container) {
+      wrapperContainer.current = document.getElementById(props.container)
+    } else {
+      wrapperContainer.current = containerRef.current
+    }
+  })
 
   const ColList = createMemo(() => {
     const finalData = createLinesOfColome(props.events)
@@ -87,7 +97,9 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
   return (
     <>
       <div ref={containerRef.current} class="fec-daily-grid" style={`height: ${props.gridHeight}px`}>
-        <TimeBar container={containerRef} />
+        <Show when={isDateToday(props.gridDate)}>
+          <TimeBar container={containerRef} />
+        </Show>
         <div class="holdcontainer" style={getWrapperHeight()}>
           <For each={ColList()}>
             {(colume, Ciin) => {

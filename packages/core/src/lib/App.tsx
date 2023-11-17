@@ -3,10 +3,10 @@ import { CalendarHeader } from './CalendarHeader/CalendarHeader.jsx'
 import { Switch, Match, createMemo } from 'solid-js'
 import { DailyGrid } from '@full-event-calendar/daily-grid'
 import { WeeklyGrid } from '@full-event-calendar/weekly-grid'
-// import { DailyHeader } from './DailyHeader/DailyHeader.jsx'
 import { SourceEvent } from '@full-event-calendar/shared-ts'
 import { convertTZ } from '@full-event-calendar/utils'
 import { MonthGrid } from '@full-event-calendar/month-grid'
+import { GridModes } from '../api/CalendarImpl.js'
 export function App() {
   const data = useCounter()
 
@@ -16,6 +16,10 @@ export function App() {
 
   function onDateChange(d: Date) {
     data.inctence.changeInitialDate(d.toISOString())
+  }
+
+  function onGridChange(grid: GridModes) {
+    data.inctence.changeGrid(grid)
   }
 
   // We need to unwrapp and cache events for better sorting and performace
@@ -46,6 +50,8 @@ export function App() {
               locale={data.store.locale}
               calendar={data.store.calendar}
               gridHeight={data.store.gridHeight}
+              onDateChange={onDateChange}
+              onGridChange={onGridChange}
             />
           </Match>
           <Match when={data.store.grid === 'month'}>

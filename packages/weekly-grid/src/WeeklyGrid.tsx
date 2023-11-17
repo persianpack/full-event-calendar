@@ -14,6 +14,8 @@ interface WeeklyGridProps {
   events?: EventClass[]
   initialDate?: Date
   onEventUpdate?: (event: any) => void
+  onDateChange?: (d: Date) => void
+  onGridChange?: (d: any) => void
   locale?: string
   calendar?: string
   timeZone?: string
@@ -24,6 +26,8 @@ const defaultProps = {
   events: [],
   initialDate: new Date(),
   onEventUpdate: () => {},
+  onDateChange: () => {},
+  onGridChange: () => {},
   locale: 'en-US',
   calendar: 'gregory',
   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
@@ -68,6 +72,7 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
         columeData[dayNumber].props.calendar = mergedPorps.calendar
         columeData[dayNumber].props.gridHeight = mergedPorps.gridHeight
         columeData[dayNumber].props.showAllDay = false
+        columeData[dayNumber].props.onDateChange = onDateChange
         // INcremint day for the next colume
         iniDay.setDate(iniDay.getDate() + 1)
       }
@@ -85,6 +90,10 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
     }
 
     mergedPorps.onEventUpdate(sourceCopy)
+  }
+  function onDateChange(d: Date) {
+    mergedPorps.onDateChange(d)
+    mergedPorps.onGridChange('daily')
   }
 
   return (
