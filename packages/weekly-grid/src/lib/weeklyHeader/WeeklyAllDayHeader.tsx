@@ -1,5 +1,5 @@
 // Types
-import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
+import { EventClass, FComponent, SourceEvent } from '@full-event-calendar/shared-ts'
 // Styles
 import './WeeklyAllDayHeader.scss'
 // Utils
@@ -13,6 +13,7 @@ import { For, Show, createMemo } from 'solid-js'
 interface WeeklyAllDayHeaderProps {
   events: EventClass[]
   columes: Date[]
+  onEventUpdate: (event: any) => void
 }
 interface rowList {
   [key: string]: EventClass[]
@@ -42,12 +43,27 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
   // Use monthly-grid hook for handeling dragging logic
   const { onDragEnd, onDragStart, onMouseEnter, draggingEventData } = useMonthEventDragging()
 
+  function dragEnd() {
+    if (!!draggingEventData()) {
+      const sourceE = { ...draggingEventData()?.source } as SourceEvent
+      sourceE.start = draggingEventData()?.start as Date
+      sourceE.end = draggingEventData()?.end as Date
+      if (sourceE) {
+        //@ts-ignore
+        props.onEventUpdate(sourceE)
+      }
+    }
+    onDragEnd()
+  }
+
   return (
     <div class="weekly-allDay" id="month-wrapper-id">
       <div class="week-all-day-wrapper">
         {/* this is a dummy event thats show the preview of the dragging event */}
         <Show when={!!draggingEventData()}>
           <MonthEvent
+            isFirstRow={true}
+            isLastRow={true}
             onDragEnd={() => {}}
             ondragstart={() => {}}
             item={draggingEventData() as unknown as EventClass}
@@ -66,7 +82,9 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
               <For each={getRowList()[item]}>
                 {(item3) => (
                   <MonthEvent
-                    onDragEnd={onDragEnd}
+                    isFirstRow={true}
+                    isLastRow={true}
+                    onDragEnd={dragEnd}
                     ondragstart={onDragStart}
                     item={item3}
                     startDate={props.columes[0]}

@@ -6,8 +6,7 @@ export function isEventRightOrLeftOrNone(event: EventClass, initialDate: Date) {
   let Celi = ceilDate(initialDate)
   let isEndOver = !areDatesInTheSameDate(event.end, initialDate)
   let isStartOver = !areDatesInTheSameDate(event.start, initialDate)
-  if (event.id === 30) {
-  }
+
   if (event.start < flOWR && event.end > Celi) {
     return 'both-arrow'
   } else if (isEndOver) {

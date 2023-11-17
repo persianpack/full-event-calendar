@@ -2,6 +2,7 @@ import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
 import { createMemo, createSignal } from 'solid-js'
 import './MonthEvent.scss'
 import { getLeftPosition, getendPosition, leftArrowClass, rightArrowClass } from '../../utils/EventPosition'
+import { isEventRightOrLeftOrNoneRange } from '@full-event-calendar/utils/src/Date'
 interface EventPropss {
   item: EventClass
   endDate: Date
@@ -15,11 +16,11 @@ interface EventPropss {
 export const MonthEvent: FComponent<EventPropss> = (props: EventPropss) => {
   const leftP = createMemo(() => getLeftPosition(props.item, props.startDate))
   const eventWidth = getendPosition(props.item, props.endDate, leftP())
-  const isRighted = rightArrowClass(props.item, props.endDate)
-    ? props.isLastRow
-      ? 'clip-path: polygon(0 0, calc(100% - 10px) 0%, 100% 50%, calc(100% - 10px) 100%, 0 100%);'
-      : 'border-top-right-radius:0px;border-bottom-right-radius:0px'
-    : ''
+  // const isRighted = rightArrowClass(props.item, props.endDate)
+  //   ? props.isLastRow
+  //     ? 'clip-path: polygon(0 0, calc(100% - 10px) 0%, 100% 50%, calc(100% - 10px) 100%, 0 100%);'
+  //     : 'border-top-right-radius:0px;border-bottom-right-radius:0px'
+  //   : ''
   const [eventIsDragging, setEventIsDragging] = createSignal(false)
 
   function handelMouseUp() {
@@ -44,9 +45,9 @@ export const MonthEvent: FComponent<EventPropss> = (props: EventPropss) => {
   }
 
   function eventStyles() {
-    return `${eventIsDragging() ? ';opacity:.7;' : ''};left:calc(${leftP()}00% + 5px);width:calc(${eventWidth}00% ${
-      rightArrowClass(props.item, props.endDate) ? '- 6px' : '- 16px'
-    });${leftArrowClass(props.item as unknown as EventClass, props.startDate, props.isFirstRow)};${isRighted}`
+    return `${
+      eventIsDragging() ? ';opacity:.7;' : ''
+    };left:calc(${leftP()}00% + 7px);width:calc(${eventWidth}00% - 14px)`
   }
   function isNotAllDay() {
     if (props?.item?.isAllDay) {
@@ -58,7 +59,7 @@ export const MonthEvent: FComponent<EventPropss> = (props: EventPropss) => {
   return (
     <div
       onmousedown={[onEventMouseDown, true]}
-      class={`month-item ${isNotAllDay()}`}
+      class={`month-item ${isNotAllDay()} ${isEventRightOrLeftOrNoneRange(props.item, props.startDate, props.endDate)}`}
       id={`month--item-${props.item.id}`}
       style={eventStyles()}
     >

@@ -1,5 +1,5 @@
 import { EventClass } from '@full-event-calendar/shared-ts'
-import { ceilDate, floorDate } from '@full-event-calendar/utils'
+import { areDatesInTheSameDate, ceilDate, floorDate } from '@full-event-calendar/utils'
 import { createMemo } from 'solid-js'
 
 export function getLeftPosition(event: EventClass, weekStartDate: Date) {
@@ -18,12 +18,12 @@ export function getendPosition(event: EventClass, weekendDate: Date, start: numb
   return 6 - start + 1
 }
 
-export function leftArrowClass(event: EventClass, weekStartDate: Date,leftArrowClass:boolean) {
+export function leftArrowClass(event: EventClass, weekStartDate: Date, leftArrowClass: boolean) {
   const floorWeekStart = floorDate(weekStartDate)
   if (event.start < floorWeekStart) {
-    if(leftArrowClass){
+    if (leftArrowClass) {
       return 'clip-path: polygon(100% 0, 10px 0, 0px 50%, 10px 100%, 100% 100%);'
-    }else{
+    } else {
       return 'border-top-left-radius:0px;border-bottom-left-radius:0px;left:1px'
     }
   } else {

@@ -98,7 +98,11 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
 
   return (
     <>
-      <WeeklyAllDayHeader events={mergedPorps.events} columes={getEachColDate(columeData)} />
+      <WeeklyAllDayHeader
+        onEventUpdate={mergedPorps.onEventUpdate}
+        events={mergedPorps.events}
+        columes={getEachColDate(columeData)}
+      />
       <GroupGrid
         gridComponent={DailyGrid}
         columes={columeData}

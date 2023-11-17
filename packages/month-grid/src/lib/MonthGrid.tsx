@@ -23,6 +23,8 @@ interface WeeklyGridProps {
   calendar?: string
   timeZone?: string
   rowLimit?: number
+  onDateChange?: (d: Date) => void
+  onGridChange?: (d: any) => void
 }
 export interface MonthDateObject {
   date: Date
@@ -38,6 +40,8 @@ const defaultProps = {
   events: [],
   initialDate: new Date(),
   onEventUpdate: (e: SourceEvent) => {},
+  onDateChange: () => {},
+  onGridChange: () => {},
   locale: 'en-US',
   calendar: 'gregory',
   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
@@ -76,6 +80,11 @@ export const MonthGrid: FComponent<WeeklyGridProps> = (props) => {
       }
     }
     onDragEnd()
+  }
+
+  function darClick(d: Date) {
+    mergedProps.onDateChange(d)
+    mergedProps.onGridChange('daily')
   }
 
   return (
@@ -163,8 +172,9 @@ export const MonthGrid: FComponent<WeeklyGridProps> = (props) => {
                 <For each={monthRowArr}>
                   {(date) => (
                     <div class="month-container" onmousemove={(e) => onMouseEnter(date.date)}>
-                      {' '}
-                      {date.day}
+                      <div class="month-day-wrapper">
+                        <span onclick={() => darClick(date.date)}>{date.day}</span>
+                      </div>
                     </div>
                   )}
                 </For>

@@ -1,7 +1,7 @@
 import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
 import { For, createEffect, createMemo } from 'solid-js'
 import './DailyAllDay.scss'
-import { isEventRightOrLeftOrNone } from '../../utils/format'
+import { isEventRightOrLeftOrNone } from '@full-event-calendar/utils/src/Date'
 
 interface DailyAllDayPorps {
   events: EventClass[]

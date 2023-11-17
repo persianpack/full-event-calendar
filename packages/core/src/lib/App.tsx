@@ -61,6 +61,8 @@ export function App() {
               onEventUpdate={onEventUpdate}
               locale={data.store.locale}
               calendar={data.store.calendar}
+              onDateChange={onDateChange}
+              onGridChange={onGridChange}
             ></MonthGrid>
           </Match>
         </Switch>

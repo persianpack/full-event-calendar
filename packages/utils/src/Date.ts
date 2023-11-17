@@ -1,3 +1,4 @@
+import { EventClass } from '@full-event-calendar/shared-ts'
 import { areDatesInTheSameDate } from '.'
 
 export function floorDate(date: Date) {
@@ -21,4 +22,42 @@ export function roundMinutesToMultipleOf5(date: Date) {
 
 export function isDateToday(date: Date) {
   return areDatesInTheSameDate(date, new Date())
+}
+
+export function isEventRightOrLeftOrNone(event: EventClass, initialDate: Date) {
+  if (!event.isAllDay()) return 'month-item-no-allday'
+
+  let flOWR = floorDate(initialDate)
+  let Celi = ceilDate(initialDate)
+  let isEndOver = !areDatesInTheSameDate(event.end, initialDate)
+  let isStartOver = !areDatesInTheSameDate(event.start, initialDate)
+
+  if (event.start < flOWR && event.end > Celi) {
+    return 'month-both-arrow'
+  } else if (isEndOver) {
+    return 'month-right-arrow'
+  } else if (isStartOver) {
+    return 'month-left-arrow'
+  }
+  return 'month-no-arrow'
+}
+export function isEventRightOrLeftOrNoneRange(event: EventClass, start: Date, end: Date) {
+  if (event.isAllDay) {
+    if (!event.isAllDay()) return 'month-item-no-allday'
+  }
+
+  let flOWR = floorDate(start)
+  let Celi = ceilDate(end)
+
+  let eventflOWR = floorDate(event.start)
+  let eventCeli = ceilDate(event.end)
+
+  if (event.start < flOWR && event.end > Celi) {
+    return 'month-both-arrow'
+  } else if (eventflOWR >= flOWR && eventCeli > Celi) {
+    return 'month-right-arrow'
+  } else if (eventflOWR <= flOWR && eventCeli < Celi) {
+    return 'month-left-arrow'
+  }
+  return 'month-no-arrow'
 }

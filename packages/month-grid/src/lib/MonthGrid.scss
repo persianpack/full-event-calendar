@@ -20,7 +20,7 @@
       position: relative;
       background-color: rgba(215, 241, 215, 0.308);
       height: 20px;
-      margin-top: 10px;
+      margin-top: 5px;
     }
     .month-more-wrapper {
       display: flex;
@@ -67,4 +67,21 @@
   width: calc(100% / 7);
   position: absolute;
   border-bottom: 1px solid white;
+}
+.month-day-wrapper {
+  display: flex;
+  justify-content: center;
+  span {
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 14px;
+    cursor: pointer;
+    &:hover {
+      background-color: pink;
+    }
+  }
 }

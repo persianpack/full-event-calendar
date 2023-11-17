@@ -2,7 +2,7 @@
 import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
 import { MonthDateObject } from '../MonthGrid'
 // Utils
-import { getEventForAdate } from '@full-event-calendar/utils'
+import { getEventForAdate, isEventRightOrLeftOrNone } from '@full-event-calendar/utils'
 // Solid.js
 import { For, Show, createSignal, onCleanup } from 'solid-js'
 // Styles
@@ -93,7 +93,10 @@ export const EventModal: FComponent<ModalProps> = (props) => {
       >
         <For each={modalData().events}>
           {(event) => (
-            <div class="modal-event" onmousedown={[modalDragStart, event]}>
+            <div
+              class={`modal-event ${isEventRightOrLeftOrNone(event, modalData().somDate)}`}
+              onmousedown={[modalDragStart, event]}
+            >
               {event.id}
             </div>
           )}
