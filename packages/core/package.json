@@ -26,7 +26,7 @@
     "vite-plugin-dts": "3.0.0"
   },
   "dependencies": {
-    "@full-event-calendar/basid-grid": "workspace:*",
+    "@full-event-calendar/basic-grid": "workspace:*",
     "@full-event-calendar/daily-grid": "workspace:*",
     "@full-event-calendar/group-grid": "workspace:*",
     "@full-event-calendar/shared-ts": "workspace:*",

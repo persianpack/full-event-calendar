@@ -34,10 +34,10 @@ function extractMonthsDays(date: Date, calendar: string) {
 
   let Month = Number(convertedDate.month)
 
-  const dataeCopy0 = new Date(selectedDate)
+  const dataCopy = new Date(selectedDate)
   for (let i = 40; i > 0; i--) {
-    dataeCopy0.setDate(dataeCopy0.getDate() - 1)
-    const convertedDate = getDaysOfMonth(dataeCopy0, calendar)
+    dataCopy.setDate(dataCopy.getDate() - 1)
+    const convertedDate = getDaysOfMonth(dataCopy, calendar)
     const MonthNumber = Number(convertedDate.month)
     if (Month === MonthNumber) {
       monthDays.unshift(convertedDate)
@@ -46,11 +46,11 @@ function extractMonthsDays(date: Date, calendar: string) {
     }
   }
 
-  const dataeCopy = new Date(selectedDate)
+  const selectedDataCopy = new Date(selectedDate)
 
   for (let i = 0; i < 40; i++) {
-    dataeCopy.setDate(dataeCopy.getDate() + 1)
-    const convertedDate = getDaysOfMonth(dataeCopy, calendar)
+    selectedDataCopy.setDate(selectedDataCopy.getDate() + 1)
+    const convertedDate = getDaysOfMonth(selectedDataCopy, calendar)
     const MonthNumber = Number(convertedDate.month)
     if (Month === MonthNumber) {
       monthDays.push(convertedDate)
@@ -64,32 +64,21 @@ function extractMonthsDays(date: Date, calendar: string) {
 export function getCalendarMonthDays(date: Date, calendar: string) {
   const monthDays = extractMonthsDays(date, calendar)
   const WeekDay = monthDays[0].date.getDay()
-  const dataeCopy = new Date(monthDays[0].date)
+  const selectedDataCopy = new Date(monthDays[0].date)
 
   for (let i = WeekDay; i > 0; i--) {
-    dataeCopy.setDate(dataeCopy.getDate() - 1)
-    const convertedDate = getDaysOfMonth(dataeCopy, calendar)
+    selectedDataCopy.setDate(selectedDataCopy.getDate() - 1)
+    const convertedDate = getDaysOfMonth(selectedDataCopy, calendar)
     monthDays.unshift(convertedDate)
   }
-  const dataeCopy2 = new Date(monthDays[monthDays.length - 1].date)
-  const weeek2 = dataeCopy2.getDay()
-  for (let i = 0; i < 6 - weeek2; i++) {
-    dataeCopy2.setDate(dataeCopy2.getDate() + 1)
+  const dataCopy2 = new Date(monthDays[monthDays.length - 1].date)
+  const weekend = dataCopy2.getDay()
+  for (let i = 0; i < 6 - weekend; i++) {
+    dataCopy2.setDate(dataCopy2.getDate() + 1)
 
-    const convertedDate = getDaysOfMonth(dataeCopy2, calendar)
+    const convertedDate = getDaysOfMonth(dataCopy2, calendar)
     monthDays.push(convertedDate)
   }
 
   return monthDays
-}
-
-export const ArraySplitIntoChunks = <T extends any[]>(arr: T, chunkSize: number) => {
-  let res = []
-
-  for (let i = 0; i < arr.length; i += chunkSize) {
-    const chunk = arr.slice(i, i + chunkSize)
-    // do whatever
-    res.push(chunk)
-  }
-  return res
 }

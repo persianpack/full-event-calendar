@@ -12,12 +12,12 @@ interface EventsProp extends Event {
 
 export const filterEventsByDateRange = (events: EventsProp[], startDate: Date, endDate: Date) => {
   const flooredStartDate = floorDate(startDate)
-  const CeildStartDate = ceilDate(endDate)
+  const CeilStartDate = ceilDate(endDate)
   return events.filter((event) => {
     const condition =
-      (event.start >= flooredStartDate && event.start <= CeildStartDate) ||
-      (event.end >= flooredStartDate && event.end <= CeildStartDate) ||
-      (event.end >= CeildStartDate && event.start <= flooredStartDate)
+      (event.start >= flooredStartDate && event.start <= CeilStartDate) ||
+      (event.end >= flooredStartDate && event.end <= CeilStartDate) ||
+      (event.end >= CeilStartDate && event.start <= flooredStartDate)
     return condition
   })
 }

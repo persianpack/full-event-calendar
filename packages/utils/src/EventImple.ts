@@ -3,11 +3,11 @@ import { convertTZ } from './TimeZone'
 import { ceilDate, floorDate } from '.'
 
 export class EventImpl implements EventClass {
+  id: string | number
   start: Date
   end: Date
   name: string
-  id: any
-  duration: number // duration is in minuts
+  duration: number // duration is in minutes
   sourceEvent: SourceEvent
 
   constructor(eventData: SourceEvent) {
@@ -31,7 +31,7 @@ export class EventImpl implements EventClass {
     return this.duration / 60 / 24
   }
 
-  isIncludedInAday(date: Date) {
+  isIncludedInAllDay(date: Date) {
     const condition = this.doesEventStartOn(date)
     const condition2 = this.doesEventEndOn(date)
     const condition3 = this.start < date && this.end > date
@@ -54,13 +54,13 @@ export class EventImpl implements EventClass {
   }
 
   calculateHeight(calcFromZero: boolean = false) {
-    let heightInPersentage
+    let heightInPercentage
     if (calcFromZero) {
-      heightInPersentage = ((this.end.getHours() * 60 + this.end.getMinutes()) / 60) * 100
+      heightInPercentage = ((this.end.getHours() * 60 + this.end.getMinutes()) / 60) * 100
     } else {
-      heightInPersentage = (this.duration / 60) * 100
+      heightInPercentage = (this.duration / 60) * 100
     }
-    return `;height:  ${heightInPersentage}%;`
+    return `;height:  ${heightInPercentage}%;`
   }
 
   calculatePositionTop() {
@@ -94,8 +94,8 @@ export class EventImpl implements EventClass {
   }
 
   private getEventTopPositionIng() {
-    const eventColHeightInPersentage = (this.start.getHours() + this.start.getMinutes() / 60) * 100
-    return `top: ${eventColHeightInPersentage > 2358 ? 2358 : eventColHeightInPersentage}%`
+    const eventColHeightInPercentage = (this.start.getHours() + this.start.getMinutes() / 60) * 100
+    return `top: ${eventColHeightInPercentage > 2358 ? 2358 : eventColHeightInPercentage}%`
   }
 }
 

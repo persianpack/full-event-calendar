@@ -1,4 +1,4 @@
-import { useCounter } from '../contex-injector/contex.jsx'
+import { useCounter } from '../context-injector/context.jsx'
 import { CalendarHeader } from './CalendarHeader/CalendarHeader.jsx'
 import { Switch, Match, createMemo } from 'solid-js'
 import { DailyGrid } from '@full-event-calendar/daily-grid'
@@ -11,15 +11,15 @@ export function App() {
   const data = useCounter()
 
   function onEventUpdate(event: SourceEvent) {
-    data.inctence.updateEvent(event.id, event)
+    data.instance.updateEvent(event.id, event)
   }
 
   function onDateChange(d: Date) {
-    data.inctence.changeInitialDate(d.toISOString())
+    data.instance.changeInitialDate(d.toISOString())
   }
 
   function onGridChange(grid: GridModes) {
-    data.inctence.changeGrid(grid)
+    data.instance.changeGrid(grid)
   }
 
   // We need to unwrapp and cache events for better sorting and performace

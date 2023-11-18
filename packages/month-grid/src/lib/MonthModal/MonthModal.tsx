@@ -2,7 +2,7 @@
 import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
 import { MonthDateObject } from '../MonthGrid'
 // Utils
-import { getEventForAdate, isEventRightOrLeftOrNone } from '@full-event-calendar/utils'
+import { getEventsInDate, isEventRightOrLeftOrNone } from '@full-event-calendar/utils'
 // Solid.js
 import { For, Show, createSignal, onCleanup } from 'solid-js'
 // Styles
@@ -25,7 +25,7 @@ const [modalData, setModalData] = createSignal<ModalData>({
 })
 
 export function openModal(data: MonthDateObject, e: MouseEvent, events: EventClass[]) {
-  const eventsModal = getEventForAdate(events, data.date)
+  const eventsModal = getEventsInDate(events, data.date)
   const target = e.target as HTMLElement
   const targetRect = target.getBoundingClientRect()
   const containerRect = document.getElementById('month-wrapper-id')?.getBoundingClientRect() as DOMRect
@@ -63,13 +63,13 @@ export const EventModal: FComponent<ModalProps> = (props) => {
 
   function handelMouseUp() {
     document.removeEventListener('mouseup', handelMouseUp)
-    document.removeEventListener('mousemove', mosueMove)
+    document.removeEventListener('mousemove', mouseMove)
     document.getElementById('month-wrapper-id')?.classList.remove('month-is-dragging')
     props.onDragEnd()
     draggingEvent = null
   }
 
-  function mosueMove() {
+  function mouseMove() {
     if (draggingEvent) {
       props.onDragStart(modalData().somDate, draggingEvent)
     }
@@ -78,7 +78,7 @@ export const EventModal: FComponent<ModalProps> = (props) => {
   function modalDragStart(event: EventClass) {
     draggingEvent = event
     document.addEventListener('mouseup', handelMouseUp)
-    document.addEventListener('mousemove', mosueMove)
+    document.addEventListener('mousemove', mouseMove)
     document.getElementById('month-wrapper-id')?.classList.add('month-is-dragging')
   }
 

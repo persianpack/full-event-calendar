@@ -1,9 +1,9 @@
 import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
 import { createMemo, createSignal } from 'solid-js'
 import './MonthEvent.scss'
-import { getLeftPosition, getendPosition, leftArrowClass, rightArrowClass } from '../../utils/EventPosition'
+import { getLeftPosition, getEndPosition } from '../../utils/EventPosition'
 import { isEventRightOrLeftOrNoneRange } from '@full-event-calendar/utils/src/Date'
-interface EventPropss {
+interface EventProps {
   item: EventClass
   endDate: Date
   startDate: Date
@@ -13,14 +13,11 @@ interface EventPropss {
   isLastRow: boolean
 }
 
-export const MonthEvent: FComponent<EventPropss> = (props: EventPropss) => {
+export const MonthEvent: FComponent<EventProps> = (props: EventProps) => {
   const leftP = createMemo(() => getLeftPosition(props.item, props.startDate))
-  const eventWidth = getendPosition(props.item, props.endDate, leftP())
-  // const isRighted = rightArrowClass(props.item, props.endDate)
-  //   ? props.isLastRow
-  //     ? 'clip-path: polygon(0 0, calc(100% - 10px) 0%, 100% 50%, calc(100% - 10px) 100%, 0 100%);'
-  //     : 'border-top-right-radius:0px;border-bottom-right-radius:0px'
-  //   : ''
+
+  const eventWidth = getEndPosition(props.item, props.endDate, leftP())
+
   const [eventIsDragging, setEventIsDragging] = createSignal(false)
 
   function handelMouseUp() {
@@ -31,13 +28,12 @@ export const MonthEvent: FComponent<EventPropss> = (props: EventPropss) => {
     props.onDragEnd()
   }
 
-  function onEventMouseDown(data: boolean, e: MouseEvent) {
+  function onEventMouseDown(data: boolean) {
     setEventIsDragging(data)
     document.addEventListener('mouseup', handelMouseUp)
     //maybe remove this line it is not needed ?
     document.addEventListener('mousemove', mouseMove)
     document.getElementById('month-wrapper-id')?.classList.add('month-is-dragging')
-    // props.ondragstart(props.item)
   }
 
   function mouseMove() {
@@ -51,7 +47,7 @@ export const MonthEvent: FComponent<EventPropss> = (props: EventPropss) => {
   }
   function isNotAllDay() {
     if (props?.item?.isAllDay) {
-      return !props?.item?.isAllDay() ? 'month-item-no-allday' : ''
+      return !props?.item?.isAllDay() ? 'month-item-no-all-day' : ''
     }
     return ''
   }

@@ -1,16 +1,16 @@
 import { For, Show, createMemo, mergeProps, onMount } from 'solid-js'
-import type { FComponent, SourceEvent, EventClass, DraggeddData } from '@full-event-calendar/shared-ts'
-import { createLinesOfColome } from '../utils/coleLine'
-import { userDrager } from '../hooks/eventDraging'
+import type { FComponent, SourceEvent, EventClass, DraggedData } from '@full-event-calendar/shared-ts'
+import { createLinesOfColum } from '../utils/coleLine'
+import { userDragger } from '../hooks/eventDragging'
 import { useResize } from '../hooks/eventResize'
 import { TimeBar } from './TimeBar/TimeBar'
-import { lookworAvalibaleWith } from '../utils/coleLine'
+import { lookForAvailableWith } from '../utils/coleLine'
 import './basicGrid.scss'
 import { isDateToday } from '@full-event-calendar/utils'
 
 export interface BasicGridProps {
   events?: EventClass[]
-  onEventUpdate?: (event: SourceEvent, dragData?: DraggeddData) => void
+  onEventUpdate?: (event: SourceEvent, dragData?: DraggedData) => void
   gridDate?: Date
   gridHeight?: number
   container?: string
@@ -32,7 +32,7 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
   const props = mergeProps(defaultProps, propsC)
 
   const { onmousedownH } = useResize(containerRef, resizeCb)
-  const { draggedData, isDragging, itemDragstart } = userDrager(containerRef, dragEnd, wrapperContainer)
+  const { draggedData, isDragging, itemDragstart } = userDragger(containerRef, dragEnd, wrapperContainer)
   onMount(() => {
     if (props.container) {
       wrapperContainer.current = document.getElementById(props.container)
@@ -42,11 +42,11 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
   })
 
   const ColList = createMemo(() => {
-    const finalData = createLinesOfColome(props.events)
+    const finalData = createLinesOfColum(props.events)
     return Object.values(finalData)
   })
 
-  function dragEnd(a: DraggeddData) {
+  function dragEnd(a: DraggedData) {
     const sourceE = { ...a.item } as SourceEvent
 
     sourceE.start = a.dragedStartDate
@@ -118,7 +118,7 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
                             rowItem.doesEventStartOn(props.gridDate) ? rowItem.calculatePositionTop() : 'top:0'
                           } ${rowItem.calculateHeight(
                             !rowItem.doesEventStartOn(props.gridDate)
-                          )} ${lookworAvalibaleWith(ColList(), rowItem, Ciin() + 1)}`}
+                          )} ${lookForAvailableWith(ColList(), rowItem, Ciin() + 1)}`}
                         >
                           <div> id : {rowItem.id}</div>
                           <div>start :{rowItem.start.toString()}</div>

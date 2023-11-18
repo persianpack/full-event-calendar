@@ -3,12 +3,12 @@ import { For, createEffect, createMemo } from 'solid-js'
 import './DailyAllDay.scss'
 import { isEventRightOrLeftOrNone } from '@full-event-calendar/utils/src/Date'
 
-interface DailyAllDayPorps {
+interface DailyAllDayProps {
   events: EventClass[]
   initialDate: Date
 }
 
-export const DailyAllDay: FComponent<DailyAllDayPorps> = (props) => {
+export const DailyAllDay: FComponent<DailyAllDayProps> = (props) => {
   const filteredEvents = createMemo(() => props.events.filter((item) => item.isAllDay()))
 
   return (

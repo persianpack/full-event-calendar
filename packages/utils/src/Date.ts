@@ -25,14 +25,14 @@ export function isDateToday(date: Date) {
 }
 
 export function isEventRightOrLeftOrNone(event: EventClass, initialDate: Date) {
-  if (!event.isAllDay()) return 'month-item-no-allday'
+  if (!event.isAllDay()) return 'month-item-no-all-day'
 
   let flOWR = floorDate(initialDate)
-  let Celi = ceilDate(initialDate)
+  let Ceil = ceilDate(initialDate)
   let isEndOver = !areDatesInTheSameDate(event.end, initialDate)
   let isStartOver = !areDatesInTheSameDate(event.start, initialDate)
 
-  if (event.start < flOWR && event.end > Celi) {
+  if (event.start < flOWR && event.end > Ceil) {
     return 'month-both-arrow'
   } else if (isEndOver) {
     return 'month-right-arrow'
@@ -41,22 +41,23 @@ export function isEventRightOrLeftOrNone(event: EventClass, initialDate: Date) {
   }
   return 'month-no-arrow'
 }
+
 export function isEventRightOrLeftOrNoneRange(event: EventClass, start: Date, end: Date) {
   if (event.isAllDay) {
-    if (!event.isAllDay()) return 'month-item-no-allday'
+    if (!event.isAllDay()) return 'month-item-no-all-day'
   }
 
   let flOWR = floorDate(start)
-  let Celi = ceilDate(end)
+  let Ceil = ceilDate(end)
 
-  let eventflOWR = floorDate(event.start)
-  let eventCeli = ceilDate(event.end)
+  let floweredEvent = floorDate(event.start)
+  let eventCeil = ceilDate(event.end)
 
-  if (event.start < flOWR && event.end > Celi) {
+  if (event.start < flOWR && event.end > Ceil) {
     return 'month-both-arrow'
-  } else if (eventflOWR >= flOWR && eventCeli > Celi) {
+  } else if (floweredEvent >= flOWR && eventCeil > Ceil) {
     return 'month-right-arrow'
-  } else if (eventflOWR <= flOWR && eventCeli < Celi) {
+  } else if (floweredEvent <= flOWR && eventCeil < Ceil) {
     return 'month-left-arrow'
   }
   return 'month-no-arrow'

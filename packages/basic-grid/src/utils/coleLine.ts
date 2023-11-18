@@ -3,7 +3,7 @@ import { EventClass } from '@full-event-calendar/shared-ts'
 interface ColList {
   [key: number]: EventClass[]
 }
-export function createLinesOfColome(eventList: EventClass[]) {
+export function createLinesOfColum(eventList: EventClass[]) {
   const eventListCopy = [...eventList]
 
   eventListCopy.sort(function (a, b) {
@@ -55,7 +55,7 @@ function isEventAvalibelInCol(colume: EventClass[], event: EventClass) {
   return isFree
 }
 
-export function lookworAvalibaleWith(colList: ColList, event: EventClass, colStart: number) {
+export function lookForAvailableWith(colList: ColList, event: EventClass, colStart: number) {
   const arr = Object.values(colList)
   let finalWith = 1
   for (let index = colStart; index < arr.length; index++) {

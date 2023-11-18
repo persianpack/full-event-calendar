@@ -25,11 +25,11 @@ export function useMonthEventDragging() {
         const endCopy = new Date(dragCopy.source.end)
         startCopy.setDate(dragCopy.source.start.getDate() + dayDifference)
         endCopy.setDate(dragCopy.source.end.getDate() + dayDifference)
-        const copp = new MonthDraggingObject(dragCopy.source.id, startCopy, endCopy, dragCopy.source)
+        const monthDraggingDate = new MonthDraggingObject(dragCopy.source.id, startCopy, endCopy, dragCopy.source)
 
         //make obj null first because solid cannot detect Date change !
         setDraggingEventData(null)
-        setDraggingEventData(copp)
+        setDraggingEventData(monthDraggingDate)
       }
     } else {
       startingDate = date

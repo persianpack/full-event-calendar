@@ -12,7 +12,7 @@ export interface EventClass {
   getEventLength(): any
   isAllDay(): any
   countDays(): number
-  isIncludedInAday(date: Date): boolean
+  isIncludedInAllDay(date: Date): boolean
   doesEventStartOn(date: Date): boolean
   isIncludedInaRange(date1: Date, date2: Date): boolean
   calculatePositionTop(): string
@@ -29,7 +29,7 @@ export interface SourceEvent {
   id: any
 }
 
-export interface DraggeddData {
+export interface DraggedData {
   width: string
   height: string
   left: string

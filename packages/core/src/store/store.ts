@@ -29,7 +29,7 @@ interface changeTimeZone {
   type: 'SET_TIMEZONE'
   tz: CalendarState['timeZone']
 }
-interface ChaageInitialDate {
+interface ChangeInitialDate {
   type: 'SET_INITIAL_DATE'
   date: string
 }
@@ -57,7 +57,7 @@ export type StoreActions =
   | SetAllChatsAction
   | UpdateEvent
   | ChangeTimeZoneOnEvent
-  | ChaageInitialDate
+  | ChangeInitialDate
   | changeTimeZone
   | UpdateLocale
   | UpdateCalendar
@@ -104,11 +104,11 @@ const calendarReducer: Reducer<CalendarState, StoreActions> = (state = defaultSt
       return { ...state, timeZone: action.tz }
 
     case 'UPDATE_TIMEZONE':
-      let Cevents = [...state.events]
-      for (let index = 0; index < Cevents.length; index++) {
-        Cevents[index].convertDateByTimeZone(action.tz)
+      let calendar_events = [...state.events]
+      for (let index = 0; index < calendar_events.length; index++) {
+        calendar_events[index].convertDateByTimeZone(action.tz)
       }
-      return { ...state, timeZone: action.tz, events: Cevents }
+      return { ...state, timeZone: action.tz, events: calendar_events }
 
     default:
       return state

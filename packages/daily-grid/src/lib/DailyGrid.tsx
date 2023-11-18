@@ -1,16 +1,16 @@
 // Components
-import { BasicGrid } from '@full-event-calendar/basid-grid'
+import { BasicGrid } from '@full-event-calendar/basic-grid'
 import { DailyHeader } from './DailyHeader/DailyHeader'
 import { DailyAllDay } from './DailyAllDay/DailyAllDay'
 // Types
 import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
-import { BasicGridProps } from '@full-event-calendar/basid-grid'
+import { BasicGridProps } from '@full-event-calendar/basic-grid'
 // solid.js
 import { Show, createMemo, mergeProps } from 'solid-js'
 // utils
-import { getEventForAdate } from '@full-event-calendar/utils'
+import { getEventsInDate } from '@full-event-calendar/utils'
 // Remove the extend
-export interface DailyGridpProps extends BasicGridProps {
+export interface DailyGridProps extends BasicGridProps {
   initialDate?: Date
   onDateChange?: (d: Date) => void
   calendar?: string
@@ -35,10 +35,10 @@ const defaultProps = {
   gridHeight: 65 * 24
 }
 
-export const DailyGrid: FComponent<DailyGridpProps> = (props) => {
-  const mergedPorps = mergeProps(defaultProps, props)
+export const DailyGrid: FComponent<DailyGridProps> = (props) => {
+  const mergedProps = mergeProps(defaultProps, props)
 
-  const extractedEvents = createMemo(() => getEventForAdate(mergedPorps.events, mergedPorps.initialDate))
+  const extractedEvents = createMemo(() => getEventsInDate(mergedProps.events, mergedProps.initialDate))
 
   const filteredOut = createMemo(() => extractedEvents().filter((item) => !item.isAllDay()))
 
@@ -46,23 +46,23 @@ export const DailyGrid: FComponent<DailyGridpProps> = (props) => {
     <>
       <div id={props.id} style="flex: 1;">
         <DailyHeader
-          headerDate={mergedPorps.initialDate}
-          timeZone={mergedPorps.timeZone}
-          calendar={mergedPorps.calendar}
-          onDateChange={mergedPorps.onDateChange}
-          locale={mergedPorps.locale}
+          headerDate={mergedProps.initialDate}
+          timeZone={mergedProps.timeZone}
+          calendar={mergedProps.calendar}
+          onDateChange={mergedProps.onDateChange}
+          locale={mergedProps.locale}
         />
 
-        <Show when={mergedPorps.showAllDay}>
-          <DailyAllDay events={extractedEvents()} initialDate={mergedPorps.initialDate}></DailyAllDay>
+        <Show when={mergedProps.showAllDay}>
+          <DailyAllDay events={extractedEvents()} initialDate={mergedProps.initialDate}></DailyAllDay>
         </Show>
 
         <BasicGrid
-          gridDate={mergedPorps.initialDate}
+          gridDate={mergedProps.initialDate}
           events={filteredOut()}
-          onEventUpdate={mergedPorps.onEventUpdate}
-          gridHeight={mergedPorps.gridHeight}
-          container={mergedPorps.container}
+          onEventUpdate={mergedProps.onEventUpdate}
+          gridHeight={mergedProps.gridHeight}
+          container={mergedProps.container}
         />
       </div>
     </>

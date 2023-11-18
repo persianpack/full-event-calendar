@@ -1,6 +1,6 @@
 import { EventClass } from '@full-event-calendar/shared-ts'
 
-export function getEventForAdate(events: EventClass[], targetDate: Date) {
+export function getEventsInDate(events: EventClass[], targetDate: Date) {
   const filteredERvents = events.filter((event) => {
     return (
       areDatesInTheSameDate(event.start, targetDate) ||

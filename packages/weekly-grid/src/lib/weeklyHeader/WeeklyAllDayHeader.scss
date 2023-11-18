@@ -1,14 +1,14 @@
 .weekly-allDay {
-  height: fit-content;
+  height: 200px;
   overflow: scroll;
   display: flex;
   position: relative;
-  .week-allday-container {
+  .week-all-day-container {
     flex: 1;
     // position: relative;
     // background-color: red;
   }
-  .alld-con {
+  .week-all-day-container {
     // background-color: blue;
     height: 20px;
     margin-top: 5px;

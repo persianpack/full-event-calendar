@@ -77,7 +77,7 @@ importers:
 
   packages/core:
     dependencies:
-      '@full-event-calendar/basid-grid':
+      '@full-event-calendar/basic-grid':
         specifier: workspace:*
         version: link:../basic-grid
       '@full-event-calendar/daily-grid':
@@ -135,7 +135,7 @@ importers:
 
   packages/daily-grid:
     dependencies:
-      '@full-event-calendar/basid-grid':
+      '@full-event-calendar/basic-grid':
         specifier: workspace:*
         version: link:../basic-grid
       '@full-event-calendar/utils':

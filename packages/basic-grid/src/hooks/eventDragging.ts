@@ -1,8 +1,8 @@
 import { createSignal, batch, onCleanup } from 'solid-js'
 import { roundMinutesToMultipleOf5 } from '@full-event-calendar/utils'
-import { DraggeddData, EventClass } from '@full-event-calendar/shared-ts'
+import { DraggedData, EventClass } from '@full-event-calendar/shared-ts'
 
-const initialDragNode: DraggeddData = {
+const initialDragNode: DraggedData = {
   width: '',
   height: '',
   left: '',
@@ -16,13 +16,13 @@ const initialDragNode: DraggeddData = {
   mouseX: 0
 }
 
-export function userDrager(
+export function userDragger(
   containerRef: any,
-  dragEndCallBack: (initialDragNode: DraggeddData) => void,
+  dragEndCallBack: (initialDragNode: DraggedData) => void,
   wrapperContainer: any
 ) {
   const [isDragging, setIsDragging] = createSignal(false)
-  const [draggedData, setDraggedData] = createSignal<DraggeddData>(initialDragNode)
+  const [draggedData, setDraggedData] = createSignal<DraggedData>(initialDragNode)
 
   let xAndYDiff = [0, 0]
   let mouseDown = false
@@ -96,7 +96,7 @@ export function userDrager(
     const targetElement = target.getBoundingClientRect()
     const fullC = containerRef.current.clientWidth || 0
 
-    let clonedNode: DraggeddData = {
+    let clonedNode: DraggedData = {
       width: fullC + 'px',
       height: target.clientHeight + 2 + 'px',
       item: e,
@@ -141,7 +141,7 @@ export function userDrager(
       .querySelector(`#draging-event-${draggedData().item?.id}`)
       ?.getBoundingClientRect()
     if (eventRect) {
-      let dragCopy: DraggeddData = { ...draggedData() }
+      let dragCopy: DraggedData = { ...draggedData() }
 
       const statDate = dragCopy.item?.start as Date
       const endDate = dragCopy.item?.end as Date

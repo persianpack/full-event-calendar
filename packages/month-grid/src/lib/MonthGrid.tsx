@@ -6,14 +6,14 @@ import { EventClass, FComponent, SourceEvent } from '@full-event-calendar/shared
 import './MonthGrid.scss'
 // Components
 import { EventModal, openModal } from './MonthModal/MonthModal'
+import { MonthHeader } from './MonthHeader/MonthHeader'
+import { MonthEvent } from './MonthEvent/MonthEvent'
 // Utils
 import { ArraySplitIntoChunks, getCalendarMonthDays } from '@full-event-calendar/utils'
-import { MonthEvent } from './MonthEvent/MonthEvent'
 import { getMonthRows } from '../utils/EventRows'
 import { isDateIncludedInaRange, sortEventByStart } from '@full-event-calendar/utils'
 import { useMonthEventDragging } from '../utils/EventDragging'
 import { getExtraRows } from '../utils/EventPosition'
-import { MonthHeader } from './MonthHeader/MonthHeader'
 
 interface WeeklyGridProps {
   events?: EventClass[]
@@ -39,7 +39,7 @@ interface MonthGridData {
 const defaultProps = {
   events: [],
   initialDate: new Date(),
-  onEventUpdate: (e: SourceEvent) => {},
+  onEventUpdate: (_: SourceEvent) => {},
   onDateChange: () => {},
   onGridChange: () => {},
   locale: 'en-US',
@@ -65,8 +65,8 @@ export const MonthGrid: FComponent<WeeklyGridProps> = (props) => {
     openModal(monthObject, e, filteredEvents())
   }
 
-  function ModalDragStart(draggingOnStartDate: Date, eventDraged: EventClass) {
-    onDragStart(eventDraged, draggingOnStartDate)
+  function ModalDragStart(draggingOnStartDate: Date, dragendEvent: EventClass) {
+    onDragStart(dragendEvent, draggingOnStartDate)
   }
 
   function dragEnd() {
@@ -171,7 +171,7 @@ export const MonthGrid: FComponent<WeeklyGridProps> = (props) => {
                 </div>
                 <For each={monthRowArr}>
                   {(date) => (
-                    <div class="month-container" onmousemove={(e) => onMouseEnter(date.date)}>
+                    <div class="month-container" onmousemove={() => onMouseEnter(date.date)}>
                       <div class="month-day-wrapper">
                         <span onclick={() => darClick(date.date)}>{date.day}</span>
                       </div>

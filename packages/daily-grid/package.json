@@ -41,7 +41,7 @@
   "clean-package": "../../../clean-package.config.json",
   "dependencies": {
     "esbuild-sass-plugin": "^2.16.0",
-    "@full-event-calendar/basid-grid": "workspace:*",
+    "@full-event-calendar/basic-grid": "workspace:*",
     "@full-event-calendar/utils": "workspace:*"
   }
 }

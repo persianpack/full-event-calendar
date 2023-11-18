@@ -1,7 +1,7 @@
 import { Show, createMemo, createSignal } from 'solid-js'
 import './CalendarHeader.scss'
 import { FComponent } from '@full-event-calendar/shared-ts'
-import { useCounter } from '../../contex-injector/contex'
+import { useCounter } from '../../context-injector/context'
 import { GridModes } from '../../api/CalendarImpl'
 
 interface CalendarHeader {
@@ -26,13 +26,13 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
     return options
   }
 
-  const formater = createMemo(() => {
+  const formatter = createMemo(() => {
     // the dates pass throw here are assumed that is not converted by timezone so we convert it here
     return new Intl.DateTimeFormat(data.store.locale, resolveOptions()).format(new Date(data.store.initialDate))
   })
 
   function changeGrid(grid: GridModes) {
-    data.inctence.changeGrid(grid)
+    data.instance.changeGrid(grid)
   }
 
   function goBack() {
@@ -76,7 +76,7 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
       <div class="go-some-d" onclick={goForward}>
         go Forward
       </div>
-      {formater()}
+      {formatter()}
       <div style="flex:1"></div>
 
       <div class="go-some-d" onclick={() => SetDropDown(!showDropDown())}>
