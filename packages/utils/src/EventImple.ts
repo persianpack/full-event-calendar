@@ -31,13 +31,6 @@ export class EventImpl implements EventClass {
     return this.duration / 60 / 24
   }
 
-  isIncludedInAllDay(date: Date) {
-    const condition = this.doesEventStartOn(date)
-    const condition2 = this.doesEventEndOn(date)
-    const condition3 = this.start < date && this.end > date
-    return condition3 || condition2 || condition
-  }
-
   doesEventStartOn(date: Date) {
     return (
       this.start.getFullYear() === date.getFullYear() &&
@@ -45,6 +38,7 @@ export class EventImpl implements EventClass {
       this.start.getDate() === date.getDate()
     )
   }
+
   doesEventEndOn(date: Date) {
     return (
       this.end.getFullYear() === date.getFullYear() &&
@@ -54,18 +48,20 @@ export class EventImpl implements EventClass {
   }
 
   calculateHeight(calcFromZero: boolean = false) {
+    // this is actually event in hours times 100
     let heightInPercentage
     if (calcFromZero) {
       heightInPercentage = ((this.end.getHours() * 60 + this.end.getMinutes()) / 60) * 100
     } else {
       heightInPercentage = (this.duration / 60) * 100
     }
-    return `;height:  ${heightInPercentage}%;`
+    return `;height:${heightInPercentage}%;`
   }
 
   calculatePositionTop() {
     return `${this.getEventTopPositionIng()}`
   }
+
   isIncludedInaRange(date1: Date, date2: Date) {
     return this.start < date2 && this.end > date1
   }
@@ -79,6 +75,7 @@ export class EventImpl implements EventClass {
   }
 
   checkAllDayOverLap(event: EventImpl) {
+    // this is for monthly .. to check if events overlap in full width of container
     const FloorStart1 = floorDate(event.start)
     const FloorStart2 = floorDate(this.start)
 
@@ -89,13 +86,13 @@ export class EventImpl implements EventClass {
   }
 
   convertDateByTimeZone(tz: string) {
-    this.start = convertTZ(this.start, tz)
-    this.end = convertTZ(this.end, tz)
+    this.start = convertTZ(this.sourceEvent.start, tz)
+    this.end = convertTZ(this.sourceEvent.end, tz)
   }
 
   private getEventTopPositionIng() {
     const eventColHeightInPercentage = (this.start.getHours() + this.start.getMinutes() / 60) * 100
-    return `top: ${eventColHeightInPercentage > 2358 ? 2358 : eventColHeightInPercentage}%`
+    return `;top:${eventColHeightInPercentage > 2358 ? 2358 : eventColHeightInPercentage}%`
   }
 }
 

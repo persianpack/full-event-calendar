@@ -25,6 +25,7 @@ export function isDateToday(date: Date) {
 }
 
 export function isEventRightOrLeftOrNone(event: EventClass, initialDate: Date) {
+  /// in case the event is a dragging object
   if (!event.isAllDay()) return 'month-item-no-all-day'
 
   let flOWR = floorDate(initialDate)

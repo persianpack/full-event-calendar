@@ -34,7 +34,7 @@ export function App() {
           <Match when={data.store.grid === 'daily'}>
             <DailyGrid
               onEventUpdate={onEventUpdate}
-              initialDate={convertTZ(new Date(data.store.initialDate), data.store.timeZone)}
+              initialDate={new Date(data.store.initialDate)}
               events={unwrappedEvents()}
               locale={data.store.locale}
               calendar={data.store.calendar}
@@ -45,7 +45,7 @@ export function App() {
           <Match when={data.store.grid === 'weekly'}>
             <WeeklyGrid
               onEventUpdate={onEventUpdate}
-              initialDate={convertTZ(new Date(data.store.initialDate), data.store.timeZone)}
+              initialDate={new Date(data.store.initialDate)}
               events={unwrappedEvents()}
               locale={data.store.locale}
               calendar={data.store.calendar}
@@ -56,7 +56,7 @@ export function App() {
           </Match>
           <Match when={data.store.grid === 'month'}>
             <MonthGrid
-              initialDate={convertTZ(new Date(data.store.initialDate), data.store.timeZone)}
+              initialDate={new Date(data.store.initialDate)}
               events={unwrappedEvents()}
               onEventUpdate={onEventUpdate}
               locale={data.store.locale}
