@@ -20,7 +20,6 @@ const defaultProps = {
   events: [],
   onEventUpdate: () => {},
   gridDate: new Date(),
-  dummyEvent: null,
   gridHeight: 65 * 24
 }
 

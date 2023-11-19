@@ -11,6 +11,8 @@
   ],
   "scripts": {
     "test": "pnpm --stream -r test",
+    "test-root": "vitest",
+    "test-root-ui": "vitest --ui",
     "dev": "turbo run dev --filter=!./examples/*",
     "install-packages": "cd ./packages/vue-full-event-calendar && npm i && cd .. && cd ./vue3-demo && npm i && cd .. && cd ./vue2-demo && npm i ",
     "format": "prettier --write",
@@ -21,6 +23,8 @@
   "author": "Amirkian adl",
   "license": "MIT",
   "devDependencies": {
+    "@solidjs/testing-library": "^0.8.4",
+    "@vitest/ui": "^0.34.6",
     "eslint": "^8.32.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.1.0",
