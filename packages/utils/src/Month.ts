@@ -61,7 +61,7 @@ function extractMonthsDays(date: Date, calendar: string) {
   return monthDays
 }
 
-export function getCalendarMonthDays(date: Date, calendar: string) {
+export function getCalendarMonthDays(date: Date, calendar: string = 'gregory') {
   const monthDays = extractMonthsDays(date, calendar)
   const WeekDay = monthDays[0].date.getDay()
   const selectedDataCopy = new Date(monthDays[0].date)

@@ -57,6 +57,8 @@ export const MonthGrid: FComponent<WeeklyGridProps> = (props) => {
 
   const monthCalendarObject = createMemo(() => getCalendarMonthDays(mergedProps.initialDate, mergedProps.calendar))
 
+  console.log(monthCalendarObject())
+
   const monthDateRows = createMemo(() => ArraySplitIntoChunks(monthCalendarObject(), 7) as MonthDateObject[][])
 
   const monthRowGridData = createMemo(() => getMonthRows(monthDateRows(), filteredEvents()) as MonthGridData[])

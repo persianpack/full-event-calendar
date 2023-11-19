@@ -7,13 +7,13 @@ export function formatWeekDays(date: Date, calendar: string, timeZone: string, l
   }).format(D)
 }
 
-export const formatDayNumber = (locale: string, calendar: string, timeZone: string, headerDate: Date) => {
+export const formatDayNumber = (locale: string, calendar: string, timeZone: string, date: Date) => {
   const dateTimeFormat = Intl.DateTimeFormat(locale, {
     calendar: calendar,
     timeZone: timeZone
   })
 
-  const parts = dateTimeFormat.formatToParts(headerDate)
+  const parts = dateTimeFormat.formatToParts(date)
   const partValues = parts.filter((p) => p.type === 'day')
   return partValues[0].value
 }
