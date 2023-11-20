@@ -1,2 +1,2 @@
-export { BasicGrid } from './lib/BasicGrid.tsx'
-export type { BasicGridProps } from './lib/BasicGrid.tsx'
+export { BasicGrid, createHello, Hello } from './lib/BasicGrid'
+export type { BasicGridProps } from './lib/BasicGrid'

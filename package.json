@@ -10,8 +10,8 @@
     "calendarview"
   ],
   "scripts": {
-    "test": "pnpm --stream -r test",
-    "test-root": "vitest",
+    "test": "turbo run test --filter=!./examples/*",
+    "test-root": "vitest ",
     "test-root-ui": "vitest --ui",
     "dev": "turbo run dev --filter=!./examples/*",
     "install-packages": "cd ./packages/vue-full-event-calendar && npm i && cd .. && cd ./vue3-demo && npm i && cd .. && cd ./vue2-demo && npm i ",
@@ -25,6 +25,7 @@
   "devDependencies": {
     "@solidjs/testing-library": "^0.8.4",
     "@vitest/ui": "^0.34.6",
+    "concurrently": "^8.2.2",
     "eslint": "^8.32.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.1.0",
@@ -33,8 +34,10 @@
     "vitest": "^0.34.6"
   },
   "dependencies": {
+    "jsdom": "^22.1.0",
     "tsup": "^7.2.0",
     "turbo": "^1.10.16",
-    "typescript": "^5.1.3"
+    "typescript": "^5.1.3",
+    "vite-plugin-solid": "^2.7.0"
   }
 }

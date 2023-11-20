@@ -29,7 +29,8 @@
     "solid-js": "^1.7.7"
   },
   "scripts": {
-    "test": "vitest ",
+    "test": "concurrently pnpm:test:*",
+    "test:client": "vitest -c ../../vitest.config.ts",
     "build": "tsup src/index.ts --dts",
     "build:fast": "tsup src/index.ts",
     "dev": "pnpm build:fast -- --watch",

@@ -21,7 +21,7 @@ node_modules
 dist
 dist-ssr
 *.local
-
+.turbo
 .vscode/*
 !.vscode/extensions.json
 .idea

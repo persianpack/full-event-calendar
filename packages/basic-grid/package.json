@@ -11,6 +11,7 @@
     "dist"
   ],
   "sideEffects": false,
+  "type": "module",
   "publishConfig": {
     "access": "public"
   },
@@ -36,7 +37,9 @@
     "typecheck": "tsc --noEmit",
     "prepack": "clean-package",
     "postpack": "clean-package restore",
-    "typedocs": "tsx ../../../scripts/generate-type-docs.ts"
+    "typedocs": "tsx ../../../scripts/generate-type-docs.ts",
+    "test": "concurrently pnpm:test:*",
+    "test:client": "vitest -c ../../vitest.config.ts"
   },
   "clean-package": "../../../clean-package.config.json",
   "dependencies": {
