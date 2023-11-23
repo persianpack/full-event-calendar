@@ -4,7 +4,9 @@
     "target": "ESNext",
     "module": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "moduleResolution": "node",
+    // "moduleResolution": "node",
+    "moduleResolution": "bundler",
+
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "noEmit": true,
@@ -17,7 +19,11 @@
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
     "types": [],
-    "baseUrl": "."
+    "baseUrl": ".",
+
+    "useDefineForClassFields": true,
+    "allowImportingTsExtensions": true
   },
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

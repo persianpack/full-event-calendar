@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="Mocha Tests" time="9.227" tests="1" failures="1">
-  <testsuite name="Root Suite" timestamp="2023-11-23T09:28:36" tests="0" file="cypress\e2e\1-getting-started\basic-grid.cy.js" time="0.000" failures="0">
+<testsuites name="Mocha Tests" time="84.147" tests="11" failures="0">
+  <testsuite name="Root Suite" timestamp="2023-11-23T22:01:36" tests="0" file="cypress\e2e\1-getting-started\basic-grid.cy.js" time="0.000" failures="0">
   </testsuite>
-  <testsuite name="example to-do app" timestamp="2023-11-23T09:28:36" tests="1" time="9.157" failures="1">
-    <testcase name="example to-do app week drag-n drop event" time="0.000" classname="week drag-n drop event">
-      <failure message="`cy.click()` can only be called on a single element. Your subject contained 3 elements. Pass `{ multiple: true }` if you want to serially click each element.
-
-https://on.cypress.io/click" type="CypressError"><![CDATA[CypressError: `cy.click()` can only be called on a single element. Your subject contained 3 elements. Pass `{ multiple: true }` if you want to serially click each element.
-
-https://on.cypress.io/click
-    at mouseAction (http://127.0.0.1:5173/__cypress/runner/cypress_runner.js:111522:68)
-    at Context.click (http://127.0.0.1:5173/__cypress/runner/cypress_runner.js:111686:14)
-    at wrapped (http://127.0.0.1:5173/__cypress/runner/cypress_runner.js:138671:19)
-From Your Spec Code:
-    at Context.eval (webpack://@calendarview/root/./cypress/e2e/1-getting-started/basic-grid.cy.js:20:25)]]></failure>
+  <testsuite name="example to-do app" timestamp="2023-11-23T22:01:36" tests="11" time="83.992" failures="0">
+    <testcase name="example to-do app monthly check" time="15.432" classname="monthly check">
+    </testcase>
+    <testcase name="example to-do app week drag-n drop event" time="9.137" classname="week drag-n drop event">
+    </testcase>
+    <testcase name="example to-do app week drag-n drop event" time="6.462" classname="week drag-n drop event">
+    </testcase>
+    <testcase name="example to-do app resize event" time="4.042" classname="resize event">
+    </testcase>
+    <testcase name="example to-do app mous drop" time="3.980" classname="mous drop">
+    </testcase>
+    <testcase name="example to-do app all day header" time="4.362" classname="all day header">
+    </testcase>
+    <testcase name="example to-do app grid col-1 tests" time="5.447" classname="grid col-1 tests">
+    </testcase>
+    <testcase name="example to-do app grid col-2 tests" time="4.782" classname="grid col-2 tests">
+    </testcase>
+    <testcase name="example to-do app grid col-3 tests" time="3.029" classname="grid col-3 tests">
+    </testcase>
+    <testcase name="example to-do app grid col-4 tests" time="3.681" classname="grid col-4 tests">
+    </testcase>
+    <testcase name="example to-do app grid col-5 tests" time="5.489" classname="grid col-5 tests">
     </testcase>
   </testsuite>
 </testsuites>

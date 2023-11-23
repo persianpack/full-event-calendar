@@ -1,16 +1,5 @@
 /// <reference types="cypress" />
 
-// Welcome to Cypress!
-//
-// This spec file contains a variety of sample tests
-// for a todo list app that are designed to demonstrate
-// the power of writing tests in Cypress.
-//
-// To learn more about how Cypress works and
-// what makes it such an awesome testing tool,
-// please read our getting started guide:
-// https://on.cypress.io/introduction-to-cypress
-
 describe('example to-do app', () => {
   beforeEach(() => {
     cy.visit('http://127.0.0.1:5173/')
@@ -38,6 +27,7 @@ describe('example to-do app', () => {
 
     cy.get('[data-test-id-month-row=3] [data-test-id-row-wrapper=0]').children().should('have.length', 1)
   })
+
   it('week drag-n drop event', () => {
     cy.get('[data-test-id-dropdown=1]').click().get('[data-test-id-drop=1]').click()
     cy.get('[data-test-event-id=6]').trigger('mouseover').trigger('mousedown')
