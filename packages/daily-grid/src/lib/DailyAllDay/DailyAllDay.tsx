@@ -16,7 +16,7 @@ export const DailyAllDay: FComponent<DailyAllDayProps> = (props) => {
       <For each={filteredEvents()}>
         {(item) => {
           return (
-            <div class={`all-day-wrapper ${isEventRightOrLeftOrNone(item, props.initialDate)}`}>
+            <div data-testid={item.id} class={`all-day-wrapper ${isEventRightOrLeftOrNone(item, props.initialDate)}`}>
               {`${item.start.toString()} - ${item.end.toString()} `}
             </div>
           )

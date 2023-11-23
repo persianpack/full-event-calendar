@@ -103,28 +103,31 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
           <For each={ColList()}>
             {(colume, Ciin) => {
               return (
-                <div class="event-colom">
+                <div class="event-colom" data-test-col-id={Ciin()}>
                   <For each={colume}>
-                    {(rowItem: EventClass) => {
+                    {(event: EventClass) => {
                       return (
                         <div
                           onMouseDown={(e: MouseEvent) => {
-                            itemDragstart(rowItem, e, !rowItem.doesEventStartOn(props.gridDate))
+                            itemDragstart(event, e, !event.doesEventStartOn(props.gridDate))
                           }}
-                          id={'event-' + rowItem.id}
-                          class={` ec-event`}
+                          id={'event-' + event.id}
+                          class="ec-event"
+                          data-test-event-id={event.id}
                           style={`${
-                            rowItem.doesEventStartOn(props.gridDate) ? rowItem.calculatePositionTop() : 'top:0'
-                          } ${rowItem.calculateHeight(
-                            !rowItem.doesEventStartOn(props.gridDate)
-                          )} ${lookForAvailableWith(ColList(), rowItem, Ciin() + 1)}`}
+                            event.doesEventStartOn(props.gridDate) ? event.calculatePositionTop() : 'top:0'
+                          } ${event.calculateHeight(!event.doesEventStartOn(props.gridDate))} ${lookForAvailableWith(
+                            ColList(),
+                            event,
+                            Ciin() + 1
+                          )}`}
                         >
-                          <div> id : {rowItem.id}</div>
-                          <div>start :{rowItem.start.toString()}</div>
+                          <div> id : {event.id}</div>
+                          <div>start :{event.start.toString()}</div>
                           <div>
-                            end :<span id={'event-end-' + rowItem.id}>{rowItem.end.toString()}</span>
+                            end :<span id={'event-end-' + event.id}>{event.end.toString()}</span>
                           </div>
-                          <div onmousedown={[onmousedownH, rowItem]} class="resizer"></div>
+                          <div onmousedown={[onmousedownH, event]} class="resizer"></div>
                         </div>
                       )
                     }}
@@ -144,10 +147,10 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
         </div>
 
         <For each={timess}>
-          {(time) => {
+          {(time, i) => {
             return (
               <>
-                <div class="time-range">
+                <div data-test-time-range-id={i() + 1} class="time-range">
                   <div class="time-range-time">{time}</div>
                   <div class="some-container">
                     <div class="time-rage-up-container"> </div>

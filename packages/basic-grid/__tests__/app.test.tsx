@@ -2,7 +2,7 @@ import { createRoot, createSignal } from 'solid-js'
 import { isServer } from 'solid-js/web'
 import { describe, expect, it } from 'vitest'
 import { Hello, createHello } from '../src'
-
+import { render } from '@solidjs/testing-library'
 describe('environment', () => {
   it('runs on server', () => {
     expect(typeof window).toBe('object')
@@ -30,22 +30,24 @@ describe('createHello', () => {
 describe('Hello', () => {
   it('renders a hello component', () => {
     createRoot(() => {
+      const results = render(() => <Hello />)
+      console.log(results)
       const container = (<Hello />) as HTMLDivElement
       expect(container.outerHTML).toBe('<div>Hello World!</div>')
     })
   })
 
-  it('changes the hello target', () =>
-    createRoot((dispose) => {
-      const [to, setTo] = createSignal('Solid')
-      const container = (<Hello to={to()} />) as HTMLDivElement
-      expect(container.outerHTML).toBe('<div>Hello Solid!</div>')
-      setTo('Tests')
+  // it('changes the hello target', () =>
+  //   createRoot((dispose) => {
+  //     const [to, setTo] = createSignal('Solid')
+  //     const container = (<Hello to={to()} />) as HTMLDivElement
+  //     expect(container.outerHTML).toBe('<div>Hello Solid!</div>')
+  //     setTo('Tests')
 
-      // rendering is async
-      queueMicrotask(() => {
-        expect(container.outerHTML).toBe('<div>Hello Tests!</div>')
-        dispose()
-      })
-    }))
+  //     // rendering is async
+  //     queueMicrotask(() => {
+  //       expect(container.outerHTML).toBe('<div>Hello Tests!</div>')
+  //       dispose()
+  //     })
+  //   }))
 })

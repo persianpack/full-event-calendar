@@ -50,6 +50,7 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
       sourceE.end = draggingEventData()?.end as Date
       if (sourceE) {
         //@ts-ignore
+        console.log(sourceE)
         props.onEventUpdate(sourceE)
       }
     }
@@ -73,7 +74,7 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
         </Show>
       </div>
       {/* each colum box has a mouse move for handling drag  */}
-      <div class="week-all-day-container" onmousemove={() => onMouseEnter(props.cols[0])}>
+      <div class="week-all-day-container123" onmousemove={() => onMouseEnter(props.cols[0])}>
         {/* loop on each row list */}
         <For each={Object.keys(getRowList())}>
           {(item) => (
@@ -96,12 +97,12 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
           )}
         </For>
       </div>
-      <div class="week-all-day-container" onmousemove={() => onMouseEnter(props.cols[1])}></div>
-      <div class="week-all-day-container" onmousemove={() => onMouseEnter(props.cols[2])}></div>
-      <div class="week-all-day-container" onmousemove={() => onMouseEnter(props.cols[3])}></div>
-      <div class="week-all-day-container" onmousemove={() => onMouseEnter(props.cols[4])}></div>
-      <div class="week-all-day-container" onmousemove={() => onMouseEnter(props.cols[5])}></div>
-      <div class="week-all-day-container" onmousemove={() => onMouseEnter(props.cols[6])}></div>
+      <div class="week-all-day-container123" onmousemove={() => onMouseEnter(props.cols[1])}></div>
+      <div class="week-all-day-container123" onmousemove={() => onMouseEnter(props.cols[2])}></div>
+      <div class="week-all-day-container123" onmousemove={() => onMouseEnter(props.cols[3])}></div>
+      <div class="week-all-day-container123" onmousemove={() => onMouseEnter(props.cols[4])}></div>
+      <div class="week-all-day-container123" onmousemove={() => onMouseEnter(props.cols[5])}></div>
+      <div class="week-all-day-container123" onmousemove={() => onMouseEnter(props.cols[6])}></div>
     </div>
   )
 }

@@ -38,7 +38,7 @@
     "prepack": "clean-package",
     "postpack": "clean-package restore",
     "typedocs": "tsx ../../../scripts/generate-type-docs.ts",
-    "test": "concurrently pnpm:test:*",
+    "test": "vitest",
     "test:client": "vitest -c ../../vitest.config.ts"
   },
   "clean-package": "../../../clean-package.config.json",

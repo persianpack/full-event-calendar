@@ -3,6 +3,7 @@
   "name": "@calendarview/root",
   "description": "Full-event calendar with drag and drop in JavaScript",
   "version": "0.0.0",
+  "type": "module",
   "keywords": [
     "calendar",
     "event",
@@ -11,6 +12,7 @@
   ],
   "scripts": {
     "test": "turbo run test --filter=!./examples/*",
+    "cypresst": "node ./scripts/test.js",
     "test-root": "vitest ",
     "test-root-ui": "vitest --ui",
     "dev": "turbo run dev --filter=!./examples/*",
@@ -26,7 +28,9 @@
     "@solidjs/testing-library": "^0.8.4",
     "@vitest/ui": "^0.34.6",
     "concurrently": "^8.2.2",
+    "cypress": "^13.6.0",
     "eslint": "^8.32.0",
+    "glob": "^10.3.10",
     "husky": "^8.0.3",
     "lint-staged": "^13.1.0",
     "prettier": "^2.8.0",

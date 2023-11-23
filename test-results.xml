@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="26.578" tests="1" failures="1">
+  <testsuite name="Root Suite" timestamp="2023-11-22T08:50:27" tests="0" file="cypress\e2e\1-getting-started\basic-grid.cy.js" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="example to-do app" timestamp="2023-11-22T08:50:27" tests="1" time="26.555" failures="1">
+    <testcase name="example to-do app displays two todo items by default" time="0.000" classname="displays two todo items by default">
+      <failure message="Timed out retrying after 4000ms: expected &apos;&lt;div.all-day-wrapper.month-no-arrow&gt;&apos; to have class &apos;month-both-arrow&apos;" type="AssertionError"><![CDATA[AssertionError: Timed out retrying after 4000ms: expected '<div.all-day-wrapper.month-no-arrow>' to have class 'month-both-arrow'
+    at Context.eval (webpack://@calendarview/root/./cypress/e2e/1-getting-started/basic-grid.cy.js:37:64)]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>
