@@ -1,29 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="Mocha Tests" time="84.147" tests="11" failures="0">
-  <testsuite name="Root Suite" timestamp="2023-11-23T22:01:36" tests="0" file="cypress\e2e\1-getting-started\basic-grid.cy.js" time="0.000" failures="0">
+<testsuites name="Mocha Tests" time="15.765" tests="1" failures="0">
+  <testsuite name="Root Suite" timestamp="2023-11-23T22:26:38" tests="0" file="packages\month-grid\__tests__\GridMonth.cy.js" time="0.000" failures="0">
   </testsuite>
-  <testsuite name="example to-do app" timestamp="2023-11-23T22:01:36" tests="11" time="83.992" failures="0">
-    <testcase name="example to-do app monthly check" time="15.432" classname="monthly check">
-    </testcase>
-    <testcase name="example to-do app week drag-n drop event" time="9.137" classname="week drag-n drop event">
-    </testcase>
-    <testcase name="example to-do app week drag-n drop event" time="6.462" classname="week drag-n drop event">
-    </testcase>
-    <testcase name="example to-do app resize event" time="4.042" classname="resize event">
-    </testcase>
-    <testcase name="example to-do app mous drop" time="3.980" classname="mous drop">
-    </testcase>
-    <testcase name="example to-do app all day header" time="4.362" classname="all day header">
-    </testcase>
-    <testcase name="example to-do app grid col-1 tests" time="5.447" classname="grid col-1 tests">
-    </testcase>
-    <testcase name="example to-do app grid col-2 tests" time="4.782" classname="grid col-2 tests">
-    </testcase>
-    <testcase name="example to-do app grid col-3 tests" time="3.029" classname="grid col-3 tests">
-    </testcase>
-    <testcase name="example to-do app grid col-4 tests" time="3.681" classname="grid col-4 tests">
-    </testcase>
-    <testcase name="example to-do app grid col-5 tests" time="5.489" classname="grid col-5 tests">
+  <testsuite name="example to-do app" timestamp="2023-11-23T22:26:38" tests="1" time="15.748" failures="0">
+    <testcase name="example to-do app monthly check" time="9.079" classname="monthly check">
     </testcase>
   </testsuite>
 </testsuites>
