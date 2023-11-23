@@ -1,5 +1,5 @@
 export { getExtraRows } from './utils/EventPosition'
 export { MonthGrid } from './lib/MonthGrid'
-export { addEventsToRows } from './utils/EventRows'
+export { addEventsToRows, getMonthRows } from './utils/EventRows'
 export { MonthEvent } from './lib/MonthEvent/MonthEvent'
 export { useMonthEventDragging } from './utils/EventDragging'

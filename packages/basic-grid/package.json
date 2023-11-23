@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "@full-event-calendar/shared-ts": "workspace:*",
+    "@full-event-calendar/test-events": "workspace:*",
     "clean-package": "2.2.0",
     "framer-motion": "^10.16.1",
     "solid-js": "^1.7.7"

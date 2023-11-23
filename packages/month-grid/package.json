@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@full-event-calendar/shared-ts": "workspace:*",
+    "@full-event-calendar/test-events": "workspace:*",
     "clean-package": "2.2.0",
     "framer-motion": "^10.16.1",
     "solid-js": "^1.7.7"
@@ -36,7 +37,8 @@
     "typecheck": "tsc --noEmit",
     "prepack": "clean-package",
     "postpack": "clean-package restore",
-    "typedocs": "tsx ../../../scripts/generate-type-docs.ts"
+    "typedocs": "tsx ../../../scripts/generate-type-docs.ts",
+    "test": "vitest"
   },
   "clean-package": "../../../clean-package.config.json",
   "dependencies": {

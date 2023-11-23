@@ -1,0 +1,25 @@
+{
+  "name": "@full-event-calendar/test-events",
+  "version": "0.0.0",
+  "description": "A grid",
+  "keywords": [],
+  "author": "Amirkian Adl <amircc1200@gmail.com>",
+  "homepage": "https://github.com/ -ui/ -ui#readme",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/s-ui/s-ui.git",
+    "directory": "packages/components/basic-grid"
+  },
+  "bugs": {
+    "url": " "
+  }
+}
