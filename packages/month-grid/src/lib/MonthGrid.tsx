@@ -126,10 +126,10 @@ export const MonthGrid: FComponent<WeeklyGridProps> = (props) => {
                     />
                   </Show>
                 </div>
-                <div class="month-row-container">
+                <div class="month-row-container" data-test-id-month-row={monthRowIndex()}>
                   <For each={Object.keys(monthRowGridData()[monthRowIndex()])}>
                     {(rowItemKey, rowItemIndex) => (
-                      <div class="month-row-wrapper">
+                      <div class="month-row-wrapper" data-test-id-row-wrapper={rowItemIndex()}>
                         <For each={monthRowGridData()[monthRowIndex()][rowItemKey]}>
                           {(dayObject) =>
                             rowItemIndex() + 1 <= mergedProps.rowLimit ? (

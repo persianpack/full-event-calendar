@@ -79,7 +79,7 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
       {formatter()}
       <div style="flex:1"></div>
 
-      <div class="go-some-d" onclick={() => SetDropDown(!showDropDown())}>
+      <div class="go-some-d" data-test-id-dropdown="1" onclick={() => SetDropDown(!showDropDown())}>
         day
         <Show when={showDropDown()}>
           <div class="dropdown">
@@ -89,10 +89,12 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
                 SetDropDown(false)
                 changeGrid('daily')
               }}
+              data-test-id-drop="0"
             >
               day
             </div>
             <div
+              data-test-id-drop="1"
               onclick={(e) => {
                 e.stopPropagation()
                 SetDropDown(false)
@@ -107,6 +109,7 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
                 SetDropDown(false)
                 changeGrid('month')
               }}
+              data-test-id-drop="2"
             >
               Month
             </div>

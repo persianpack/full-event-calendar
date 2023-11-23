@@ -44,7 +44,7 @@ export const DailyGrid: FComponent<DailyGridProps> = (props) => {
 
   return (
     <>
-      <div id={props.id} style="flex: 1;">
+      <div id={props.id} data-test-id-daily-grid={props.id} style="flex: 1;">
         <DailyHeader
           headerDate={mergedProps.initialDate}
           timeZone={mergedProps.timeZone}

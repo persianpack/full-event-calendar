@@ -29,7 +29,7 @@ export const GroupGrid: FComponent<GroupGridProps> = (props) => {
   let groupContainerRef
   const mergedProps = mergeProps(defaultProps, props)
   //@ts-ignore
-  let colIds = mergedProps.cols.map(() => createUniqueId()) as string[]
+  let colIds = mergedProps.cols.map((_, i) => `cl-${i}`) as string[]
 
   function eventUpdateProxy(eventSource: SourceEvent, draggedData: DraggedData, startingColId: number) {
     // calculate  which colum the event was dropped in

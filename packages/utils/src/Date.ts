@@ -51,9 +51,10 @@ export function isEventRightOrLeftOrNoneRange(event: EventClass, start: Date, en
   let flOWR = floorDate(start)
   let Ceil = ceilDate(end)
 
-  let floweredEvent = floorDate(event.start)
-  let eventCeil = ceilDate(event.end)
-
+  // let floweredEvent = floorDate(event.start)
+  // let eventCeil = ceilDate(event.end)
+  let floweredEvent = event.start
+  let eventCeil = event.end
   if (event.start < flOWR && event.end > Ceil) {
     return 'month-both-arrow'
   } else if (floweredEvent >= flOWR && eventCeil > Ceil) {

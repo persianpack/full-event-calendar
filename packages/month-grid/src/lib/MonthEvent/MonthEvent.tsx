@@ -58,6 +58,7 @@ export const MonthEvent: FComponent<EventProps> = (props: EventProps) => {
       class={`month-item ${isNotAllDay()} ${isEventRightOrLeftOrNoneRange(props.item, props.startDate, props.endDate)}`}
       id={`month--item-${props.item.id}`}
       style={eventStyles()}
+      data-test-id-month-item={props.item.id}
     >
       {props.item.id}
     </div>
