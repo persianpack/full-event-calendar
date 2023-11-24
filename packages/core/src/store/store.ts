@@ -1,6 +1,6 @@
 import { legacy_createStore as createStore, Reducer } from 'redux'
 import { EventImpl } from '@full-event-calendar/utils'
-import { CalendarSourceOptions, GridModes } from '../api/CalendarImpl'
+import { CalendarSourceOptions, GridModes, Plugins } from '../api/CalendarImpl'
 import { EventClass, SourceEvent } from '@full-event-calendar/shared-ts'
 
 const defaultState: CalendarState = {
@@ -10,7 +10,8 @@ const defaultState: CalendarState = {
   calendar: 'gregory',
   locale: 'en-US',
   grid: 'daily',
-  gridHeight: 1920
+  gridHeight: 1920,
+  plugins: []
 }
 
 interface SetAllChatsAction {
@@ -50,6 +51,10 @@ interface UpdateGrid {
   type: 'UPDATE_GRID'
   grid: GridModes
 }
+interface SetPlugins {
+  type: 'SET_PLUGINS'
+  plugins: Array<Plugins>
+}
 
 // To Do: use better names for set and update
 
@@ -63,6 +68,7 @@ export type StoreActions =
   | UpdateCalendar
   | UpdateGrid
   | SetGridHeight
+  | SetPlugins
 
 export type EventCalendarOptions = { [K in keyof CalendarSourceOptions]-?: CalendarSourceOptions[K] }
 export interface CalendarState extends EventCalendarOptions {
@@ -73,6 +79,8 @@ const calendarReducer: Reducer<CalendarState, StoreActions> = (state = defaultSt
   switch (action.type) {
     case 'SET_GRID_HEIGHT':
       return { ...state, gridHeight: action.height }
+    case 'SET_PLUGINS':
+      return { ...state, plugins: action.plugins }
     case 'UPDATE_GRID':
       return { ...state, grid: action.grid }
     case 'UPDATE_CALENDAR':
@@ -85,7 +93,7 @@ const calendarReducer: Reducer<CalendarState, StoreActions> = (state = defaultSt
     case 'SET_ALL_EVENTS':
       const data: EventImpl[] = []
       for (let i = 0; i < action.events.length; i++) {
-        const ev = new EventImpl(action.events[i])
+        const ev = new EventImpl(action.events[i] as SourceEvent)
         ev.convertDateByTimeZone(state.timeZone)
         data.push(ev)
       }
@@ -106,7 +114,7 @@ const calendarReducer: Reducer<CalendarState, StoreActions> = (state = defaultSt
     case 'UPDATE_TIMEZONE':
       let calendar_events = [...state.events]
       for (let index = 0; index < calendar_events.length; index++) {
-        calendar_events[index].convertDateByTimeZone(action.tz)
+        calendar_events[index]?.convertDateByTimeZone(action.tz)
       }
       return { ...state, timeZone: action.tz, events: calendar_events }
 

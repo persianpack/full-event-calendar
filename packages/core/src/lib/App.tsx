@@ -1,12 +1,13 @@
 import { useCounter } from '../context-injector/context.jsx'
 import { CalendarHeader } from './CalendarHeader/CalendarHeader.jsx'
 import { Switch, Match, createMemo } from 'solid-js'
-import { DailyGrid } from '@full-event-calendar/daily-grid'
+import { DailyGrid, DailyGridPlugin } from '@full-event-calendar/daily-grid'
 import { WeeklyGrid } from '@full-event-calendar/weekly-grid'
 import { SourceEvent } from '@full-event-calendar/shared-ts'
 import { convertTZ } from '@full-event-calendar/utils'
 import { MonthGrid } from '@full-event-calendar/month-grid'
 import { GridModes } from '../api/CalendarImpl.js'
+import { Dynamic } from 'solid-js/web'
 export function App() {
   const data = useCounter()
 
@@ -29,8 +30,22 @@ export function App() {
     <>
       <div style="margin-top:200px;margin-bottom:200px" id="full-event-calendar-core">
         <CalendarHeader onDateChange={onDateChange} />
+        {/* Grid plugin goes here */}
+        <Dynamic
+          component={data.instance.getcurrentGridCode()}
+          onEventUpdate={onEventUpdate}
+          initialDate={new Date(data.store.initialDate)}
+          events={unwrappedEvents()}
+          locale={data.store.locale}
+          calendar={data.store.calendar}
+          gridHeight={data.store.gridHeight}
+          onDateChange={onDateChange}
+          onGridChange={onGridChange}
+        >
 
-        <Switch>
+        </Dynamic>
+
+        {/* <Switch>
           <Match when={data.store.grid === 'daily'}>
             <DailyGrid
               onEventUpdate={onEventUpdate}
@@ -65,7 +80,7 @@ export function App() {
               onGridChange={onGridChange}
             ></MonthGrid>
           </Match>
-        </Switch>
+        </Switch> */}
       </div>
     </>
   )

@@ -1,4 +1,7 @@
 import { Calendar } from '@full-event-calendar/core'
+import { DailyGridPlugin } from '@full-event-calendar/daily-grid'
+import { MonthGridPlugin } from '@full-event-calendar/month-grid'
+import { WeeklyGridPlugin } from '@full-event-calendar/weekly-grid'
 
 const el = document.getElementById('app') as HTMLElement
 
@@ -241,6 +244,7 @@ const EventCalendar = new Calendar(el, {
   // calendar: 'persian',
   // locale: 'fa-IR',
   initialDate: new Date('Thu Aug 10 2023 15:00:0'),
+  plugins: [DailyGridPlugin, MonthGridPlugin, WeeklyGridPlugin],
   grid: 'daily'
 })
 console.time('rendered in ')

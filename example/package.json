@@ -10,7 +10,10 @@
   },
   "dependencies": {
     "solid-js": "^1.7.8",
-    "@full-event-calendar/core": "workspace:*"
+    "@full-event-calendar/core": "workspace:*",
+    "@full-event-calendar/daily-grid": "workspace:*",
+    "@full-event-calendar/weekly-grid": "workspace:*",
+    "@full-event-calendar/month-grid": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.0.2",

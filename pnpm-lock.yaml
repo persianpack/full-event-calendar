@@ -63,6 +63,15 @@ importers:
       '@full-event-calendar/core':
         specifier: workspace:*
         version: link:../packages/core
+      '@full-event-calendar/daily-grid':
+        specifier: workspace:*
+        version: link:../packages/daily-grid
+      '@full-event-calendar/month-grid':
+        specifier: workspace:*
+        version: link:../packages/month-grid
+      '@full-event-calendar/weekly-grid':
+        specifier: workspace:*
+        version: link:../packages/weekly-grid
       solid-js:
         specifier: ^1.7.8
         version: 1.7.8

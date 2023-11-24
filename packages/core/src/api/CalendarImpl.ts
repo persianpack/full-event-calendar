@@ -11,7 +11,14 @@ export interface CalendarSourceOptions {
   locale?: string
   grid?: GridModes
   gridHeight?: number
+  plugins: Plugins[]
   // dailyGridOptions : dailyGridOptions;
+}
+
+export interface Plugins {
+  type: 'grid'
+  name: string
+  code: any
 }
 
 export type GridModes = 'daily' | 'weekly' | 'month'
@@ -29,6 +36,9 @@ export class CalendarImpl implements CalendarApi {
 
   setEventList(events: SourceEvent[]) {
     this.storeDispatch({ type: 'SET_ALL_EVENTS', events })
+  }
+  setPlugins(plugins: Plugins[]) {
+    this.storeDispatch({ type: 'SET_PLUGINS', plugins })
   }
   setGridHeight(height: number) {
     this.storeDispatch({ type: 'SET_GRID_HEIGHT', height })
@@ -71,14 +81,31 @@ export class CalendarImpl implements CalendarApi {
     if (options.gridHeight) {
       this.setGridHeight(options.gridHeight)
     }
+    if (options.plugins.length > 0) {
+      this.setPlugins(options.plugins)
+    }
     this.setEventList(options.events)
   }
 
   prevDay() {}
+
   nextDay() {}
+
   getDate() {
     return new Date()
   }
 
   today() {}
+
+  getcurrentGridCode() {
+    let res = null
+    const plugins = this.storeManager.plugins
+    for (let index = 0; index < plugins.length; index++) {
+      const plugin = plugins[index]
+      if (plugin?.type === 'grid' && plugin.name === this.storeManager.grid) {
+        res = plugin.code
+      }
+    }
+    return res
+  }
 }

@@ -27,10 +27,10 @@
   },
   "dependencies": {
     "@full-event-calendar/basic-grid": "workspace:*",
-    "@full-event-calendar/daily-grid": "workspace:*",
     "@full-event-calendar/group-grid": "workspace:*",
     "@full-event-calendar/shared-ts": "workspace:*",
     "@full-event-calendar/utils": "workspace:*",
+    "@full-event-calendar/daily-grid": "workspace:*",
     "@full-event-calendar/weekly-grid": "workspace:*",
     "@full-event-calendar/month-grid": "workspace:*",
     "redux": "^4.2.1",

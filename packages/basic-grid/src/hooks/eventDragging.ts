@@ -49,7 +49,6 @@ export function userDragger(
     const targets = document.querySelector(`#event-${id}`)
 
     if (target.length > 1) {
-      console.log(shouldDuplicate)
       if (shouldDuplicate) {
         return target[1] as HTMLElement
       }
@@ -70,12 +69,9 @@ export function userDragger(
   }
 
   function containerMouseEnter() {
-    console.log('mouse endter')
-
     isMouseoutsideTheContainer = false
   }
   function containerMouseLeave() {
-    console.log('mouse leave')
     isMouseoutsideTheContainer = true
   }
 
@@ -87,7 +83,6 @@ export function userDragger(
     wrapperContainer.current.addEventListener('mouseenter', containerMouseEnter)
     wrapperContainer.current.addEventListener('mouseleave', containerMouseLeave)
     mouseDown = true
-    console.log(shouldDuplica)
     shouldDuplicate = shouldDuplica
     // const target = document.querySelector(`#event-${e.id}`) as HTMLElement
     const target = getEventNode(e.id)
@@ -119,8 +114,8 @@ export function userDragger(
     wrapperHeight = containerRef.current.querySelector('.time-range')?.clientHeight || 1
   }
 
-  let time1: number = 0
-  let time2: number = 0
+  let time1: any = 0
+  let time2: any = 0
 
   function cleanUps() {
     clearTimeout(time1)
