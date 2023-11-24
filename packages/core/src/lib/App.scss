@@ -1,0 +1,57 @@
+.full-event-calendar-core {
+  position: relative;
+  overflow: hidden;
+}
+
+.cloned-calendar {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+}
+
+.not-cloned {
+  position: relative;
+  z-index: 123;
+}
+
+.grid-wrapper {
+  background-color: rgb(48, 46, 46);
+}
+
+.grid-animate-forward {
+  animation-name: example;
+  animation-duration: 0.25s;
+}
+
+.grid-animate-backward {
+  animation-name: backward;
+  animation-duration: 0.25s;
+}
+
+@keyframes example {
+  0% {
+    left: 40px;
+    opacity: 0;
+  }
+
+  100% {
+    left: 0px;
+    opacity: 1;
+  }
+}
+
+@keyframes backward {
+  0% {
+    left: -40px;
+    opacity: 0;
+  }
+
+  100% {
+    left: 0px;
+    opacity: 1;
+  }
+}
+body {
+  background-color: rgb(48, 46, 46);
+}
