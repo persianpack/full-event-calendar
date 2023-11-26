@@ -6,6 +6,7 @@
   "author": "Amirkian Adl <amircc1200@gmail.com>",
   "homepage": "https://github.com/ -ui/ -ui#readme",
   "license": "MIT",
+  "type": "module",
   "main": "src/index.ts",
   "files": [
     "dist"
@@ -25,8 +26,7 @@
   "devDependencies": {
     "@full-event-calendar/shared-ts": "workspace:*",
     "clean-package": "2.2.0",
-    "framer-motion": "^10.16.1",
-    "solid-js": "^1.7.7"
+    "framer-motion": "^10.16.1"
   },
   "scripts": {
     "build": "tsup src/index.ts --dts",
@@ -44,6 +44,7 @@
     "@full-event-calendar/group-grid": "workspace:*",
     "@full-event-calendar/utils": "workspace:*",
     "@full-event-calendar/daily-grid": "workspace:*",
-    "@full-event-calendar/month-grid": "workspace:*"
+    "@full-event-calendar/month-grid": "workspace:*",
+    "solid-js": "^1.7.7"
   }
 }

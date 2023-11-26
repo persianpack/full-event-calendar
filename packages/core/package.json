@@ -8,7 +8,8 @@
   "main": "./src/index.ts",
   "scripts": {
     "build": "tsup src/index.ts --dts",
-    "build:fast": "tsup src/index.ts"
+    "build:fast": "tsup src/index.ts",
+    "dev": "pnpm build:fast -- --watch"
   },
   "devDependencies": {
     "tsup": "^7.2.0",

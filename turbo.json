@@ -17,6 +17,16 @@
     "typecheck": {
       "cache": false,
       "dependsOn": ["^typecheck"]
+    },
+    "@full-event-calendar/weekly-grid#dev": {
+      "dependsOn": ["@full-event-calendar/group-grid#dev"]
+    },
+    "vue3#dev": {
+      "dependsOn": [
+        "@full-event-calendar/weekly-grid#dev",
+        "@full-event-calendar/core#dev",
+        "@full-event-calendar/daily-grid#dev"
+      ]
     }
   },
   "globalDependencies": ["tsconfig.json"]

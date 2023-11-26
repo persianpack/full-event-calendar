@@ -2,7 +2,7 @@
 import { DraggedData, EventClass, FComponent, SourceEvent } from '@full-event-calendar/shared-ts'
 // Solid.js
 import { Dynamic } from 'solid-js/web'
-import { createMemo, createUniqueId, mapArray, mergeProps } from 'solid-js'
+import { createMemo, mapArray, mergeProps } from 'solid-js'
 // Utils
 import { whichColumWasDropped } from './utils/col'
 

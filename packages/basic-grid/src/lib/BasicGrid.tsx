@@ -1,4 +1,4 @@
-import { For, Show, createEffect, createMemo, mergeProps, onMount } from 'solid-js'
+import { For, Show, createMemo, mergeProps, onMount } from 'solid-js'
 import type { FComponent, SourceEvent, EventClass, DraggedData } from '@full-event-calendar/shared-ts'
 import { createLinesOfColum } from '../utils/coleLine'
 import { userDragger } from '../hooks/eventDragging'
@@ -24,9 +24,6 @@ const defaultProps = {
 }
 
 export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
-  createEffect(() => {
-    console.log(propsC.events)
-  })
   let containerRef: any = {
     current: ''
   }
@@ -38,7 +35,6 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
   onMount(() => {
     setTimeout(() => {
       // containerRef.current = document.getElementById('some-random-shit')
-      console.log(wrapperContainer, props.container, containerRef.current)
       if (props.container) {
         wrapperContainer.current = document.getElementById(props.container)
       } else {

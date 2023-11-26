@@ -6,6 +6,7 @@
   "author": "Amirkian Adl <amircc1200@gmail.com>",
   "homepage": "https://github.com/ -ui/ -ui#readme",
   "license": "MIT",
+  "type": "module",
   "main": "src/index.ts",
   "files": [
     "dist"
@@ -16,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/s-ui/s-ui.git",
+    "url": "git+https://github.com/s-ui/s-u i.git",
     "directory": "packages/components/basic-grid"
   },
   "bugs": {
@@ -25,8 +26,7 @@
   "devDependencies": {
     "@full-event-calendar/shared-ts": "workspace:*",
     "clean-package": "2.2.0",
-    "framer-motion": "^10.16.1",
-    "solid-js": "^1.7.7"
+    "framer-motion": "^10.16.1"
   },
   "scripts": {
     "build": "tsup src/index.ts --dts",
@@ -41,6 +41,7 @@
   "clean-package": "../../../clean-package.config.json",
   "dependencies": {
     "esbuild-sass-plugin": "^2.16.0",
-    "@full-event-calendar/daily-grid": "workspace:*"
+    "@full-event-calendar/daily-grid": "workspace:*",
+    "solid-js": "^1.7.7"
   }
 }

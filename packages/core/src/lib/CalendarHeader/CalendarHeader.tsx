@@ -1,4 +1,4 @@
-import { Show, createMemo, createSignal } from 'solid-js'
+import { For, Show, createMemo, createSignal } from 'solid-js'
 import './CalendarHeader.scss'
 import { FComponent } from '@full-event-calendar/shared-ts'
 import { useCounter } from '../../context-injector/context'
@@ -63,6 +63,14 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
     props.onDateChange(dCopy)
   }
 
+  function getOptions() {
+    return data.instance.storeManager.plugins.map((item) => {
+      if (item.type === 'grid') {
+        return item.name
+      }
+    })
+  }
+
   return (
     <div class="calendar-header">
       <div class="go-to-today" onclick={goToday}>
@@ -83,17 +91,21 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
         day
         <Show when={showDropDown()}>
           <div class="dropdown">
-            <div
-              onclick={(e) => {
-                e.stopPropagation()
-                SetDropDown(false)
-                changeGrid('daily')
-              }}
-              data-test-id-drop="0"
-            >
-              day
-            </div>
-            <div
+            <For each={getOptions()}>
+              {(item: any) => (
+                <div
+                  onclick={(e) => {
+                    e.stopPropagation()
+                    SetDropDown(false)
+                    changeGrid(item)
+                  }}
+                  data-test-id-drop="0"
+                >
+                  {item}
+                </div>
+              )}
+            </For>
+            {/* <div
               data-test-id-drop="1"
               onclick={(e) => {
                 e.stopPropagation()
@@ -112,7 +124,7 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
               data-test-id-drop="2"
             >
               Month
-            </div>
+            </div> */}
             {/* <div>week</div>
               <div>week</div>
               <div>week</div> */}

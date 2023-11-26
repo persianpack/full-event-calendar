@@ -7,12 +7,13 @@ import '@full-event-css-daily'
 import '@full-event-css-basic'
 import '@full-event-css-core'
 import '@full-event-css-month'
+import '@full-event-css-week'
 
 import { DailyGridPlugin } from '@full-event-calendar/daily-grid'
 import { MonthGridPlugin } from '@full-event-calendar/month-grid'
 import { WeeklyGridPlugin } from '@full-event-calendar/weekly-grid'
 import { events } from '@full-event-calendar/test-events'
-console.log(DailyGridPlugin)
+
 const FullEventCalendar = defineComponent({
   props: {
     options: Object as PropType<any>
@@ -52,7 +53,7 @@ const FullEventCalendar = defineComponent({
       // locale: 'fa-IR',
       initialDate: new Date('Thu Aug 10 2023 15:00:0'),
       //@ts-ignore
-      plugins: [DailyGridPlugin],
+      plugins: [DailyGridPlugin, WeeklyGridPlugin, MonthGridPlugin],
       grid: 'daily'
     })
     console.time('rendered in vue')

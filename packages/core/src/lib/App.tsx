@@ -13,7 +13,7 @@ export function App() {
   const data = useCounter()
 
   function onEventUpdate(event: SourceEvent) {
-    console.log('update', event)
+    // console.log('update', event)
     data.instance.updateEvent(event.id, event)
   }
 
@@ -27,9 +27,6 @@ export function App() {
 
   // We need to unwrapp and cache events for better sorting and performace
   const unwrappedEvents = createMemo(() => [...data.store.events])
-  createEffect(() => {
-    console.log('updated events : ', unwrappedEvents())
-  })
 
   let isGoing = false
   let clonedCalendar = document.getElementById('full-event-calendar-wrapper')?.cloneNode(true) as HTMLElement
