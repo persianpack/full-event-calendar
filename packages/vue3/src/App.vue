@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+// import HelloWorld from './components/HelloWorld.vue'
+import FullEventCalendar from './components/FullEventCalendat'
+// import
 </script>
 
 <template>
@@ -11,7 +13,9 @@ import HelloWorld from './components/HelloWorld.vue'
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
     </a>
   </div>
-  <HelloWorld msg="Vite + Vue" />
+  <FullEventCalendar>
+    <template #testslot="data"> this is a test {{ data }} </template>
+  </FullEventCalendar>
 </template>
 
 <style scoped>

@@ -6,14 +6,10 @@
     "dist"
   ],
   "main": "./src/index.ts",
-  "module": "./src/index.ts",
-  "exports": {
-    "import": {
-      "types": "./dist/index.d.ts",
-      "default": "./src/index.ts"
-    }
+  "scripts": {
+    "build": "tsup src/index.ts --dts",
+    "build:fast": "tsup src/index.ts"
   },
-  "scripts": {},
   "devDependencies": {
     "tsup": "^7.2.0",
     "typescript": "^5.1.3",

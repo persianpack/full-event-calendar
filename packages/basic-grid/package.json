@@ -6,12 +6,12 @@
   "author": "Amirkian Adl <amircc1200@gmail.com>",
   "homepage": "https://github.com/ -ui/ -ui#readme",
   "license": "MIT",
+  "type": "module",
   "main": "src/index.ts",
   "files": [
     "dist"
   ],
   "sideEffects": false,
-  "type": "module",
   "publishConfig": {
     "access": "public"
   },
@@ -31,6 +31,8 @@
     "solid-js": "^1.7.7"
   },
   "scripts": {
+    "build1": "tsc && vite build",
+
     "build": "tsup src/index.ts --dts",
     "build:fast": "tsup src/index.ts",
     "dev": "pnpm build:fast -- --watch",

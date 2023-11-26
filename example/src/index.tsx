@@ -244,6 +244,7 @@ const EventCalendar = new Calendar(el, {
   // calendar: 'persian',
   // locale: 'fa-IR',
   initialDate: new Date('Thu Aug 10 2023 15:00:0'),
+  //@ts-ignore
   plugins: [DailyGridPlugin, MonthGridPlugin, WeeklyGridPlugin],
   grid: 'daily'
 })

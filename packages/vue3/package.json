@@ -2,14 +2,19 @@
   "name": "vue3",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.3.8"
+    "vue": "^3.3.8",
+    "solid-js": "^1.7.8",
+    "@full-event-calendar/core": "workspace:*",
+    "@full-event-calendar/daily-grid": "workspace:*",
+    "@full-event-calendar/weekly-grid": "workspace:*",
+    "@full-event-calendar/month-grid": "workspace:*",
+    "@full-event-calendar/test-events": "workspace:*"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.5.0",

@@ -6,14 +6,11 @@
   "author": "Amirkian Adl <amircc1200@gmail.com>",
   "homepage": "https://github.com/ -ui/ -ui#readme",
   "license": "MIT",
+  "type": "module",
   "main": "src/index.ts",
   "files": [
     "dist"
   ],
-  "sideEffects": false,
-  "publishConfig": {
-    "access": "public"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/s-ui/s-ui.git",
@@ -22,6 +19,7 @@
   "bugs": {
     "url": " "
   },
+  "types": "./dist/index.d.ts",
   "devDependencies": {
     "@full-event-calendar/shared-ts": "workspace:*",
     "clean-package": "2.2.0",
@@ -29,6 +27,7 @@
     "solid-js": "^1.7.7"
   },
   "scripts": {
+    "build1": "tsc && vite build",
     "build": "tsup src/index.ts --dts",
     "build:fast": "tsup src/index.ts",
     "dev": "pnpm build:fast -- --watch",

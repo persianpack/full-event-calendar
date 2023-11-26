@@ -15,7 +15,7 @@ import { isDateIncludedInaRange, sortEventByStart } from '@full-event-calendar/u
 import { useMonthEventDragging } from '../utils/EventDragging'
 import { getExtraRows } from '../utils/EventPosition'
 
-interface WeeklyGridProps {
+export interface MonthGridProps {
   events?: EventClass[]
   initialDate?: Date
   onEventUpdate?: (event: SourceEvent) => void
@@ -48,7 +48,7 @@ const defaultProps = {
   rowLimit: 4
 }
 
-export const MonthGrid: FComponent<WeeklyGridProps> = (props) => {
+export const MonthGrid: FComponent<MonthGridProps> = (props) => {
   const mergedProps = mergeProps(defaultProps, props)
 
   const { onDragEnd, onDragStart, onMouseEnter, draggingEventData } = useMonthEventDragging()

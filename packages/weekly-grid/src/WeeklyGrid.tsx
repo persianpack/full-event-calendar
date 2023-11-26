@@ -9,7 +9,7 @@ import { DailyGrid } from '@full-event-calendar/daily-grid'
 //utils
 import { WeeklyAllDayHeader } from './lib/weeklyHeader/WeeklyAllDayHeader'
 
-interface WeeklyGridProps {
+export interface WeeklyGridProps {
   events?: EventClass[]
   initialDate?: Date
   onEventUpdate?: (event: any) => void

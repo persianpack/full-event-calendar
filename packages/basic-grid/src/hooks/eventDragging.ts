@@ -77,11 +77,12 @@ export function userDragger(
 
   function itemDragstart(e: EventClass, d: any, shouldDuplica: boolean) {
     if (isDragging()) return
+    console.log(wrapperContainer)
     document.addEventListener('mousemove', mouseMove)
     document.addEventListener('mouseup', handelMouseUp)
     document.addEventListener('scroll', handelScroll)
-    wrapperContainer.current.addEventListener('mouseenter', containerMouseEnter)
-    wrapperContainer.current.addEventListener('mouseleave', containerMouseLeave)
+    wrapperContainer?.current?.addEventListener('mouseenter', containerMouseEnter)
+    wrapperContainer?.current?.addEventListener('mouseleave', containerMouseLeave)
     mouseDown = true
     shouldDuplicate = shouldDuplica
     // const target = document.querySelector(`#event-${e.id}`) as HTMLElement
@@ -167,8 +168,10 @@ export function userDragger(
     }
 
     if (isDragging()) {
+      console.log(draggedData())
       cleanUps()
       if (!isMouseoutsideTheContainer) {
+        console.log('send back')
         dragEndCallBack(draggedData())
       }
       //basiclly start the transition animation from the base event to the target element
@@ -202,8 +205,8 @@ export function userDragger(
     resetValueToDefalt()
   }
   function removeListenrs() {
-    wrapperContainer.current.removeEventListener('mouseenter', containerMouseEnter)
-    wrapperContainer.current.removeEventListener('mouseleave', containerMouseLeave)
+    wrapperContainer?.current?.removeEventListener('mouseenter', containerMouseEnter)
+    wrapperContainer?.current?.removeEventListener('mouseleave', containerMouseLeave)
     document.removeEventListener('mouseup', handelMouseUp)
     document.removeEventListener('mousemove', mouseMove)
     document.removeEventListener('scroll', handelScroll)

@@ -10,7 +10,7 @@ const preset_options: preset.PresetOptions = {
     }
   ],
   // Set to `true` to remove all `console.*` calls and `debugger` statements in prod builds
-  drop_console: true,
+  drop_console: false,
   cjs: true,
   esbuild_plugins: [sassPlugin()]
 }
@@ -23,12 +23,12 @@ export default defineConfig((config) => {
   if (!watching) {
     const package_fields = preset.generatePackageExports(parsed_data)
 
-    console.log(`\npackage.json: \n${JSON.stringify(package_fields, null, 2)}\n\n`)
+    // console.log(`\npackage.json: \n${JSON.stringify(package_fields, null, 2)}\n\n`)
 
     /*
           will update ./package.json with the correct export fields
       */
-    preset.writePackageJson(package_fields)
+    // preset.writePackageJson(package_fields)
   }
 
   return preset.generateTsupOptions(parsed_data)
