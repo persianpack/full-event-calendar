@@ -28,11 +28,10 @@
     "@full-event-calendar/test-events": "workspace:*",
     "clean-package": "2.2.0",
     "framer-motion": "^10.16.1",
-    "solid-js": "^1.7.7"
+    "esbuild-sass-plugin": "^2.16.0"
   },
   "scripts": {
     "build1": "tsc && vite build",
-
     "build": "tsup src/index.ts --dts",
     "build:fast": "tsup src/index.ts",
     "dev": "pnpm build:fast -- --watch",
@@ -46,7 +45,7 @@
   },
   "clean-package": "../../../clean-package.config.json",
   "dependencies": {
-    "esbuild-sass-plugin": "^2.16.0",
-    "@full-event-calendar/utils": "workspace:*"
+    "@full-event-calendar/utils": "workspace:*",
+    "solid-js": "^1.7.7"
   }
 }

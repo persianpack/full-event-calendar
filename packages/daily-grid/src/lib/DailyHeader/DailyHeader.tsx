@@ -1,7 +1,6 @@
 import type { FComponent } from '@full-event-calendar/shared-ts'
 import './DailyHeader.scss'
 import { formatDayNumber, formatWeekDays, isDateToday } from '@full-event-calendar/utils'
-import { createEffect } from 'solid-js'
 
 export interface DailyHeaderProps {
   headerDate: Date

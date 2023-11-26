@@ -9,6 +9,7 @@ const preset_options: preset.PresetOptions = {
       entry: 'src/index.ts'
     }
   ],
+
   // Set to `true` to remove all `console.*` calls and `debugger` statements in prod builds
   drop_console: true,
   cjs: true,

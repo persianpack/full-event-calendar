@@ -1,5 +1,5 @@
 import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
-import { For, createEffect, createMemo } from 'solid-js'
+import { For, createMemo } from 'solid-js'
 import './DailyAllDay.scss'
 import { isEventRightOrLeftOrNone } from '@full-event-calendar/utils/src/Date'
 
