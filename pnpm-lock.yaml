@@ -322,9 +322,6 @@ importers:
       '@full-event-calendar/weekly-grid':
         specifier: workspace:*
         version: link:../weekly-grid
-      solid-js:
-        specifier: ^1.7.8
-        version: 1.7.8
       vue:
         specifier: ^3.3.8
         version: 3.3.8(typescript@5.2.2)

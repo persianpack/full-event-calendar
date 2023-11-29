@@ -68,19 +68,19 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
     } ;top:${draggedData().top};position:fixed;opacity:0.7`
   }
   const timess = [
-    '1 AM',
+    '1 am',
     '2 am',
-    '3 AM',
+    '3 am',
     '4 am',
-    '5 AM',
+    '5 am',
     '6 am',
-    '7 AM',
+    '7 am',
     '8 am',
-    '9 AM',
+    '9 am',
     '10 am',
-    '11 AM',
+    '11 am',
     '12 pm',
-    '13 AM',
+    '13 pm',
     '14 pm',
     '15 pm',
     '16 pm',
@@ -126,7 +126,9 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
                           )}`}
                         >
                           <div> id : {event.id}</div>
-                          <div>start :{event.start.toString()}</div>
+                          <div class="tooltip-multiline " data-tooltip={event.start.toString()}>
+                            start :{event.start.toString()}
+                          </div>
                           <div>
                             end :<span id={'event-end-' + event.id}>{event.end.toString()}</span>
                           </div>
