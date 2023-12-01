@@ -11,12 +11,12 @@ export function App() {
 
   function onEventUpdate(event: SourceEvent) {
     if (data.store.autoUpdateEventOnChange) {
-      const prev = event as EventClass
+      const prev = data.instance.getEventById(event.id) as EventClass
       data.instance.updateEvent(event.id, event)
       const next = data.instance.getEventById(event.id) as EventClass
       data.instance.emitEvent('eventUpdate', {
-        prev: prev.sourceEvent,
-        next: next.sourceEvent
+        prev: prev,
+        next: next
       })
     }
   }

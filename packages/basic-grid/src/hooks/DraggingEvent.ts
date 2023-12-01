@@ -49,7 +49,14 @@ export class DraggingEvent {
   shiftPoistion(X: any, Y: any, e: any) {
     this.left = e.clientX - X + 'px'
     this.top = e.clientY - Y + 'px'
-
     this.mouseX = e.pageX
+  }
+  static setState(draggingEvent: DraggingEvent, target: HTMLElement) {
+    const targetElRect = target?.getBoundingClientRect()
+    draggingEvent.width = target?.clientWidth + 2 + 'px'
+    draggingEvent.height = target?.clientHeight + 2 + 'px'
+    draggingEvent.left = targetElRect?.left + 'px'
+    draggingEvent.top = targetElRect?.top + 'px'
+    draggingEvent.animation = 'all 0.5s;'
   }
 }

@@ -1,9 +1,8 @@
 import { createSignal, batch, onCleanup } from 'solid-js'
-import { roundMinutesToMultipleOf5 } from '@full-event-calendar/utils'
-import { DraggedData, EventClass } from '@full-event-calendar/shared-ts'
+import { EventClass } from '@full-event-calendar/shared-ts'
 import { DraggingEvent } from './DraggingEvent'
-import { DomController } from './position'
-import { PositionController } from './position2'
+import { DomController } from './DomController'
+import { PositionController } from './PositionController'
 
 const initialDragNode: any = {
   width: '',
@@ -30,10 +29,6 @@ export function userDragger(containerRef: any, dragEndCallBack: (initialDragNode
   const [draggedData, setDraggedData] = createSignal<any>(initialDragNode)
 
   let hasMoved = false
-
-  function resetValueToDefalt() {
-    hasMoved = false
-  }
 
   function setOpacityForElemetns(opacity: string, id: any) {
     //@ts-ignore
@@ -76,23 +71,15 @@ export function userDragger(containerRef: any, dragEndCallBack: (initialDragNode
     if (!isDragging()) {
       setIsDragging(true)
       document.getElementById('full-event-calendar-core')?.classList.add('calendar-draging')
-
       setOpacityForElemetns('0.3', draggedData().item?.id)
     }
+
     const targetEl = containerRef.current.querySelector(`#draging-event-${draggedData().item?.id}`)
     const newDelta = positionController.calimeDiff(targetEl)
     draggingEvent.shiftTime(newDelta)
     draggingEvent.shiftPoistion(positionController.Xdiff, positionController.Ydiff, e)
 
-    setDraggedData({
-      top: draggingEvent.top,
-      left: draggingEvent.left,
-      dragedStartDate: draggingEvent.dragedStartDate,
-      dragedEndDate: draggingEvent.dragedEndDate,
-      height: draggingEvent.height,
-      width: draggingEvent.width,
-      animation: draggingEvent.animation
-    })
+    setDraggedData({ ...draggingEvent })
   }
 
   function handelMouseUp(e: MouseEvent) {
@@ -106,25 +93,19 @@ export function userDragger(containerRef: any, dragEndCallBack: (initialDragNode
 
     if (isDragging()) {
       cleanUps()
+
       if (!domController.isMouseoutsideTheContainer) {
         console.log('send back', draggingEvent)
         dragEndCallBack(draggingEvent)
       }
       //basiclly start the transition animation from the base event to the target element
       const baseEl = draggingEvent
-
-      setOpacityForElemetns('0.0', baseEl.item?.id)
-
       document.getElementById('full-event-calendar-core')?.classList.remove('calendar-draging')
+
       time1 = setTimeout(() => {
         let targetEl = domController.getEventNode(baseEl.item?.id)
-        const targetElRect = targetEl?.getBoundingClientRect()
         setOpacityForElemetns('0.0', baseEl.item?.id)
-        baseEl.width = targetEl?.clientWidth + 2 + 'px'
-        baseEl.height = targetEl?.clientHeight + 2 + 'px'
-        baseEl.left = targetElRect?.left + 'px'
-        baseEl.top = targetElRect?.top + 'px'
-        baseEl.animation = 'all 0.5s;'
+        DraggingEvent.setState(baseEl, targetEl)
         setDraggedData(baseEl)
       }, 0)
 
@@ -134,11 +115,12 @@ export function userDragger(containerRef: any, dragEndCallBack: (initialDragNode
           setDraggedData(baseEl)
           setIsDragging(false)
         })
-        // let y = document.querySelector(`#event-${baseEl.item?.id}`) as HTMLElement
+
         setOpacityForElemetns('', baseEl.item?.id)
       }, 500)
     }
-    resetValueToDefalt()
+
+    hasMoved = false
     domController.removeListenrs()
   }
 

@@ -50,17 +50,16 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
   })
 
   function dragEnd(a: DraggedData) {
-    const sourceE = { ...a.item } as SourceEvent
+    const sourceE = { ...a.item?.sourceEvent }
 
-    sourceE.start = a.eventSourceStart
-    sourceE.end = a.eventSourceEnd
+    sourceE.start = a.eventSourceStart as Date
+    sourceE.end = a.eventSourceEnd as Date
     if (a.item) {
-      props.onEventUpdate(sourceE, a)
+      props.onEventUpdate(sourceE as SourceEvent, a)
     }
   }
 
   function resizeCb(a: any) {
-    console.log(a)
     props.onEventUpdate(a)
   }
 

@@ -3,8 +3,10 @@ import { CounterProvider } from './context-injector/context.jsx'
 import { hydrate, render } from 'solid-js/web'
 import { App } from './lib/App.jsx'
 import { CalendarState } from './store/store.js'
-import { EventClass, FComponent, SourceEvent } from '@full-event-calendar/shared-ts'
+import { FComponent } from '@full-event-calendar/shared-ts'
 import EventCollection, { EventPayLoads, EventTypes } from './api/Collection.js'
+
+import './themes/clickDown.scss'
 
 const CalendarRoot: FComponent<{ store: CalendarState; instance: Calendar }> = (props) => {
   return (

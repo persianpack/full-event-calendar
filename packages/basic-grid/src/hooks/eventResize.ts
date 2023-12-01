@@ -31,7 +31,6 @@ export function useResize(container: any, resizeEndCalllBack: (p: SourceEvent) =
       finaSource.setSeconds(0, 0)
       endDate = roundMinutesToMultipleOf5(finald)
       endDateSource = roundMinutesToMultipleOf5(finaSource)
-      console.log(finaSource)
       const el = container.current.querySelector(`#event-end-${item?.id}`) as HTMLElement
       el.innerHTML = endDate.toString()
     }
