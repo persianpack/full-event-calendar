@@ -8,6 +8,7 @@ import { lookForAvailableWith } from '../utils/coleLine'
 import './basicGrid.scss'
 import { isDateToday } from '@full-event-calendar/utils'
 import { Accessor, Component, createComputed, createSignal } from 'solid-js'
+import { EventItem } from './EventItem/EventItem'
 export interface BasicGridProps {
   events?: EventClass[]
   onEventUpdate?: (event: SourceEvent, dragData?: DraggedData) => void
@@ -104,36 +105,43 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
         </Show>
         <div class="holdcontainer" style={getWrapperHeight()}>
           <For each={ColList()}>
-            {(colume, Ciin) => {
+            {(eventList, colNumber) => {
               return (
-                <div class="event-colom" data-test-col-id={Ciin()}>
-                  <For each={colume}>
+                <div class="event-colom" data-test-col-id={colNumber()}>
+                  <For each={eventList}>
                     {(event: EventClass) => {
                       return (
-                        <div
-                          onMouseDown={(e: MouseEvent) => {
-                            itemDragstart(event, e, !event.doesEventStartOn(props.gridDate))
-                          }}
-                          id={'event-' + event.id}
-                          class="ec-event"
-                          data-test-event-id={event.id}
-                          style={`${
-                            event.doesEventStartOn(props.gridDate) ? event.calculatePositionTop() : 'top:0'
-                          } ${event.calculateHeight(!event.doesEventStartOn(props.gridDate))} ${lookForAvailableWith(
-                            ColList(),
-                            event,
-                            Ciin() + 1
-                          )}`}
-                        >
-                          <div> id : {event.id}</div>
-                          <div class="tooltip-multiline " data-tooltip={event.start.toString()}>
-                            start :{event.start.toString()}
-                          </div>
-                          <div>
-                            end :<span id={'event-end-' + event.id}>{event.end.toString()}</span>
-                          </div>
-                          <div onmousedown={[onmousedownH, event]} class="resizer"></div>
-                        </div>
+                        <EventItem
+                          event={event}
+                          gridDate={props.gridDate}
+                          width={lookForAvailableWith(ColList(), event, colNumber() + 1)}
+                          onMouseDown={onmousedownH}
+                          onDragStart={itemDragstart}
+                        ></EventItem>
+                        // <div
+                        //   onMouseDown={(e: MouseEvent) => {
+                        //     itemDragstart(event, e, !event.doesEventStartOn(props.gridDate))
+                        //   }}
+                        //   id={'event-' + event.id}
+                        //   class="ec-event"
+                        //   data-test-event-id={event.id}
+                        //   style={`${
+                        //     event.doesEventStartOn(props.gridDate) ? event.calculatePositionTop() : 'top:0'
+                        //   } ${event.calculateHeight(!event.doesEventStartOn(props.gridDate))} ${lookForAvailableWith(
+                        //     ColList(),
+                        //     event,
+                        //     colNumber() + 1
+                        //   )}`}
+                        // >
+                        //   <div> id : {event.id}</div>
+                        //   <div class="tooltip-multiline " data-tooltip={event.start.toString()}>
+                        //     start :{event.start.toString()}
+                        //   </div>
+                        //   <div>
+                        //     end :<span id={'event-end-' + event.id}>{event.end.toString()}</span>
+                        //   </div>
+                        //   <div onmousedown={[onmousedownH, event]} class="resizer"></div>
+                        // </div>
                       )
                     }}
                   </For>

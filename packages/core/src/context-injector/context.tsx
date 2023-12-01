@@ -7,7 +7,7 @@
 //   return <CalendarContext.Provider value={props.store}>{props.children}</CalendarContext.Provider>
 // }
 
-// export function useCounter() {
+// export function useGlobalState() {
 //   return useContext(CalendarContext)
 // }
 import { Calendar } from '../Calendar'
@@ -31,6 +31,6 @@ export const CounterProvider: FComponent<{ store: CalendarState; instance: Calen
   return <ChatContext.Provider value={data}>{props.children}</ChatContext.Provider>
 }
 
-export function useCounter() {
+export function useGlobalState() {
   return useContext(ChatContext)
 }

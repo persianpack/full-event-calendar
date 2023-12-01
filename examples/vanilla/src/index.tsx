@@ -240,6 +240,7 @@ const EventCalendar = new Calendar(el, {
   events: events,
   // @ts-ignore
   gridHeight: 65 * 24,
+  // autoUpdateEventOnChange:false,
   // timeZone: 'Africa/Abidjan',
   // calendar: 'persian',
   // locale: 'fa-IR',

@@ -1,17 +1,31 @@
 import useRedux from '../store/useRedux'
-import { CalendarApi } from './CalendarApi'
 import chatStore from '../store/store'
+import type { Dispatch } from 'redux'
+import { CalendarState, StoreActions } from '../store/store'
 import { SourceEvent } from '@full-event-calendar/shared-ts'
+interface CalendarApi {
+  // Current Date
+  // -----------------------------------------------------------------------------------------------------------------
+  storeManager: CalendarState
+  storeDispatch: Dispatch<StoreActions>
+  setEventList(events: SourceEvent[]): any
+  updateEvent(id: SourceEvent['id'], event: SourceEvent): void
+  prevDay(): any
+  nextDay(): any
+  getDate(): any
+  today(): any
+}
 
 export interface CalendarSourceOptions {
   events: SourceEvent[]
+  plugins: Plugins[]
   initialDate?: Date | string
   timeZone?: string
   calendar?: string
   locale?: string
   grid?: GridModes
   gridHeight?: number
-  plugins: Plugins[]
+  autoUpdateEventOnChange?: boolean
   // dailyGridOptions : dailyGridOptions;
 }
 
@@ -24,8 +38,8 @@ export interface Plugins {
 export type GridModes = 'daily' | 'weekly' | 'month'
 
 export class CalendarImpl implements CalendarApi {
-  storeManager
-  storeDispatch
+  readonly storeManager
+  readonly storeDispatch
 
   constructor(eventCalendarOptions: CalendarSourceOptions) {
     const { store, dispatch } = useRedux(chatStore)
@@ -34,35 +48,38 @@ export class CalendarImpl implements CalendarApi {
     this.resetOptions(eventCalendarOptions)
   }
 
-  setEventList(events: SourceEvent[]) {
+  public setEventList(events: SourceEvent[]) {
     this.storeDispatch({ type: 'SET_ALL_EVENTS', events })
   }
-  setPlugins(plugins: Plugins[]) {
+  public setPlugins(plugins: Plugins[]) {
     this.storeDispatch({ type: 'SET_PLUGINS', plugins })
   }
-  setGridHeight(height: number) {
+  public setGridHeight(height: number) {
     this.storeDispatch({ type: 'SET_GRID_HEIGHT', height })
   }
-  updateEvent(id: SourceEvent['id'], event: SourceEvent): void {
+  public updateEvent(id: SourceEvent['id'], event: SourceEvent): void {
     this.storeDispatch({ type: 'UPDATE_EVENT', id, event })
   }
-  changeTimeZone(tz: string) {
+  public changeTimeZone(tz: string) {
     this.storeDispatch({ type: 'SET_TIMEZONE', tz })
   }
-  changeInitialDate(date: string) {
+  public changeInitialDate(date: string) {
     this.storeDispatch({ type: 'SET_INITIAL_DATE', date })
   }
-  changeLocale(locale: string) {
+  public changeLocale(locale: string) {
     this.storeDispatch({ type: 'UPDATE_LOCALE', locale })
   }
-  changeCalendar(calendar: string) {
+  public changeCalendar(calendar: string) {
     this.storeDispatch({ type: 'UPDATE_CALENDAR', calendar })
   }
-  changeGrid(grid: GridModes) {
+  public changeGrid(grid: GridModes) {
     this.storeDispatch({ type: 'UPDATE_GRID', grid })
   }
+  public changeEventAutoUpdate(val: boolean) {
+    this.storeDispatch({ type: 'AUTO_UPADTE_EVENT', val })
+  }
 
-  resetOptions(options: CalendarSourceOptions) {
+  public resetOptions(options: CalendarSourceOptions) {
     if (options.timeZone) {
       this.changeTimeZone(options.timeZone)
     }
@@ -80,6 +97,9 @@ export class CalendarImpl implements CalendarApi {
     }
     if (options.gridHeight) {
       this.setGridHeight(options.gridHeight)
+    }
+    if (options.autoUpdateEventOnChange === false) {
+      this.changeEventAutoUpdate(options.autoUpdateEventOnChange)
     }
     if (options.plugins.length > 0) {
       this.setPlugins(options.plugins)

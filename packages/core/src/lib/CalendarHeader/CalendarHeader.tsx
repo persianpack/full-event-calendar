@@ -1,7 +1,7 @@
 import { For, Show, createMemo, createSignal } from 'solid-js'
 import './CalendarHeader.scss'
 import { FComponent } from '@full-event-calendar/shared-ts'
-import { useCounter } from '../../context-injector/context'
+import { useGlobalState } from '../../context-injector/context'
 import { GridModes } from '../../api/CalendarImpl'
 
 interface CalendarHeader {
@@ -10,7 +10,7 @@ interface CalendarHeader {
 
 export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
   const [showDropDown, SetDropDown] = createSignal(false)
-  const data = useCounter()
+  const data = useGlobalState()
 
   function resolveOptions() {
     const options: any = {
