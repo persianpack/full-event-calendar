@@ -31,9 +31,9 @@ export const GroupGrid: FComponent<GroupGridProps> = (props) => {
   //@ts-ignore
   let colIds = mergedProps.cols.map((_, i) => `cl-${i}`) as string[]
 
-  function eventUpdateProxy(eventSource: SourceEvent, draggedData: DraggedData, startingColId: number) {
+  function eventUpdateProxy(eventSource: SourceEvent, draggedData: any, startingColId: number) {
     // calculate  which colum the event was dropped in
-    if (draggedData?.itemRect) {
+    if (draggedData?.isDragg) {
       const colNumber = whichColumWasDropped(colIds, draggedData.mouseX)
       mergedProps.onEventUpdate(eventSource, colNumber, startingColId, true)
     } else {

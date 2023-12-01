@@ -117,6 +117,10 @@ export class CalendarImpl implements CalendarApi {
 
   today() {}
 
+  public getEventById(id: number | string) {
+    return this.storeManager.events.find((ev) => ev.id === id)
+  }
+
   getcurrentGridCode() {
     let res = null
     const plugins = this.storeManager.plugins
@@ -127,5 +131,12 @@ export class CalendarImpl implements CalendarApi {
       }
     }
     return res
+  }
+  getOptions() {
+    return this.storeManager.plugins.map((item) => {
+      if (item.type === 'grid') {
+        return item.name
+      }
+    })
   }
 }

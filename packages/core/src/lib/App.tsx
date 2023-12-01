@@ -1,7 +1,7 @@
 import { useGlobalState } from '../context-injector/context.jsx'
 import { CalendarHeader } from './CalendarHeader/CalendarHeader.jsx'
 import { createMemo, onMount } from 'solid-js'
-import { SourceEvent } from '@full-event-calendar/shared-ts'
+import { EventClass, SourceEvent } from '@full-event-calendar/shared-ts'
 import { GridModes } from '../api/CalendarImpl.js'
 import { Dynamic } from 'solid-js/web'
 import './App.scss'
@@ -11,7 +11,13 @@ export function App() {
 
   function onEventUpdate(event: SourceEvent) {
     if (data.store.autoUpdateEventOnChange) {
+      const prev = event as EventClass
       data.instance.updateEvent(event.id, event)
+      const next = data.instance.getEventById(event.id) as EventClass
+      data.instance.emitEvent('eventUpdate', {
+        prev: prev.sourceEvent,
+        next: next.sourceEvent
+      })
     }
   }
 

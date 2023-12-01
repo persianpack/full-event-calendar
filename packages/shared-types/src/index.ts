@@ -40,4 +40,6 @@ export interface DraggedData {
   dragedEndDate: Date
   itemRect: DOMRect | null
   mouseX: number
+  eventSourceStart: Date
+  eventSourceEnd: Date
 }

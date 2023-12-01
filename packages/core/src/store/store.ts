@@ -113,7 +113,7 @@ const calendarReducer: Reducer<CalendarState, StoreActions> = (state = defaultSt
       const eventIndex = events.findIndex((item) => item.id === action.id)
 
       events[eventIndex] = new EventImpl(action.event)
-
+      events[eventIndex].convertDateByTimeZone(state.timeZone)
       return { ...state, events: events }
 
     case 'SET_TIMEZONE':

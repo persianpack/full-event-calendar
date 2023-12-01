@@ -241,7 +241,7 @@ const EventCalendar = new Calendar(el, {
   // @ts-ignore
   gridHeight: 65 * 24,
   // autoUpdateEventOnChange:false,
-  // timeZone: 'Africa/Abidjan',
+  timeZone: 'Africa/Abidjan',
   // calendar: 'persian',
   // locale: 'fa-IR',
   initialDate: new Date('Thu Aug 10 2023 15:00:0'),
@@ -252,7 +252,10 @@ const EventCalendar = new Calendar(el, {
 console.time('rendered in ')
 EventCalendar.render()
 console.timeEnd('rendered in ')
-
+EventCalendar.on('eventUpdate', (e, r, t) => {
+  console.log('emitted')
+  console.log(e, r, t)
+})
 // setTimeout(() => {
 //   console.log("update uvent")
 //   EventCalendar.updateEvent(17, {

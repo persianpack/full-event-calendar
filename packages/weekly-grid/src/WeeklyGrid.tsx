@@ -82,6 +82,7 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
   function onEventUpdateProxy(updatedSourceEvent: SourceEvent, targetCol: number, baseCol: number, isDragend: boolean) {
     // TargetCol and baseCol are indexes for which colum was event moved in .
     const sourceCopy = { ...updatedSourceEvent }
+    console.log(isDragend, targetCol, baseCol, updatedSourceEvent)
     if (isDragend) {
       sourceCopy.start.setDate(sourceCopy.start.getDate() - (baseCol - targetCol))
       sourceCopy.end.setDate(sourceCopy.end.getDate() - (baseCol - targetCol))

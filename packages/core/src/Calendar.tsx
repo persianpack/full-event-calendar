@@ -3,7 +3,8 @@ import { CounterProvider } from './context-injector/context.jsx'
 import { hydrate, render } from 'solid-js/web'
 import { App } from './lib/App.jsx'
 import { CalendarState } from './store/store.js'
-import { FComponent } from '@full-event-calendar/shared-ts'
+import { EventClass, FComponent, SourceEvent } from '@full-event-calendar/shared-ts'
+import EventCollection, { EventPayLoads, EventTypes } from './api/Collection.js'
 
 const CalendarRoot: FComponent<{ store: CalendarState; instance: Calendar }> = (props) => {
   return (
@@ -15,20 +16,32 @@ const CalendarRoot: FComponent<{ store: CalendarState; instance: Calendar }> = (
 
 export class Calendar extends CalendarImpl {
   private targetElement: HTMLElement
+  private EventListenrsStorage: EventCollection
 
   constructor(targetElement: HTMLElement, eventCalendarOptions: CalendarSourceOptions) {
     super(eventCalendarOptions)
     this.targetElement = targetElement
+    this.EventListenrsStorage = new EventCollection()
+  }
+
+  emitEvent(eventType: EventTypes, payload: EventPayLoads[EventTypes]) {
+    this.EventListenrsStorage[eventType].forEach((f) => f(payload))
+  }
+
+  on(eventType: EventTypes, handler: Function) {
+    this.EventListenrsStorage[eventType].push(handler)
   }
 
   render() {
     render(() => <CalendarRoot store={this.storeManager} instance={this} />, this.targetElement)
     // function hydrate(fn: () => JSX.Element, node: MountableElement): () => void;
   }
+
   refresh() {
     hydrate(() => <CalendarRoot store={this.storeManager} instance={this} />, this.targetElement)
   }
 }
+
 // maxRows: 10,
 // hideTimeBar: false,
 // scrollIntoCurrentTime: true,

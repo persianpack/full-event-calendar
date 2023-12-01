@@ -63,14 +63,6 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
     props.onDateChange(dCopy)
   }
 
-  function getOptions() {
-    return data.instance.storeManager.plugins.map((item) => {
-      if (item.type === 'grid') {
-        return item.name
-      }
-    })
-  }
-
   return (
     <div class="calendar-header">
       <div class="go-to-today" onclick={goToday}>
@@ -91,7 +83,7 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
         day
         <Show when={showDropDown()}>
           <div class="dropdown">
-            <For each={getOptions()}>
+            <For each={data.instance.getOptions()}>
               {(item: any) => (
                 <div
                   onclick={(e) => {

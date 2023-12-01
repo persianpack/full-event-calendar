@@ -1,8 +1,11 @@
 import { createSignal, batch, onCleanup } from 'solid-js'
 import { roundMinutesToMultipleOf5 } from '@full-event-calendar/utils'
 import { DraggedData, EventClass } from '@full-event-calendar/shared-ts'
+import { DraggingEvent } from './DraggingEvent'
+import { DomController } from './position'
+import { PositionController } from './position2'
 
-const initialDragNode: DraggedData = {
+const initialDragNode: any = {
   width: '',
   height: '',
   left: '',
@@ -12,49 +15,24 @@ const initialDragNode: DraggedData = {
   dragedStartDate: new Date(),
   dragedEndDate: new Date(),
   animation: '',
-  itemRect: null,
-  mouseX: 0
+  isDragg: null,
+  mouseX: 0,
+  eventSourceStart: new Date(),
+  eventSourceEnd: new Date()
 }
 
-export function userDragger(
-  containerRef: any,
-  dragEndCallBack: (initialDragNode: DraggedData) => void,
-  wrapperContainer: any
-) {
-  const [isDragging, setIsDragging] = createSignal(false)
-  const [draggedData, setDraggedData] = createSignal<DraggedData>(initialDragNode)
+export function userDragger(containerRef: any, dragEndCallBack: (initialDragNode: any) => void, wrapperContainer: any) {
+  let positionController: PositionController
+  let draggingEvent: DraggingEvent
+  let domController: DomController
 
-  let xAndYDiff = [0, 0]
-  let mouseDown = false
-  let firstTopPosition = 0
-  let shouldDuplicate = false
-  let wrapperHeight = 1
-  let hasScrolled = false
-  let isMouseoutsideTheContainer = false
+  const [isDragging, setIsDragging] = createSignal(false)
+  const [draggedData, setDraggedData] = createSignal<any>(initialDragNode)
+
   let hasMoved = false
 
   function resetValueToDefalt() {
-    xAndYDiff = [0, 0]
-    mouseDown = false
-    firstTopPosition = 0
-
-    wrapperHeight = 1
-    hasScrolled = false
-    isMouseoutsideTheContainer = false
     hasMoved = false
-  }
-
-  function getEventNode(id: any) {
-    const target = document.querySelectorAll(`#event-${id}`)
-    const targets = document.querySelector(`#event-${id}`)
-
-    if (target.length > 1) {
-      if (shouldDuplicate) {
-        return target[1] as HTMLElement
-      }
-      return target[0] as HTMLElement
-    }
-    return targets as HTMLElement
   }
 
   function setOpacityForElemetns(opacity: string, id: any) {
@@ -64,55 +42,24 @@ export function userDragger(
     })
   }
 
-  function handelScroll() {
-    hasScrolled = true
-  }
-
-  function containerMouseEnter() {
-    isMouseoutsideTheContainer = false
-  }
-  function containerMouseLeave() {
-    isMouseoutsideTheContainer = true
-  }
-
   function itemDragstart(e: EventClass, d: any, shouldDuplica: boolean) {
     if (isDragging()) return
-    console.log(wrapperContainer)
-    document.addEventListener('mousemove', mouseMove)
-    document.addEventListener('mouseup', handelMouseUp)
-    document.addEventListener('scroll', handelScroll)
-    wrapperContainer?.current?.addEventListener('mouseenter', containerMouseEnter)
-    wrapperContainer?.current?.addEventListener('mouseleave', containerMouseLeave)
-    mouseDown = true
-    shouldDuplicate = shouldDuplica
-    // const target = document.querySelector(`#event-${e.id}`) as HTMLElement
-    const target = getEventNode(e.id)
+    domController = new DomController(shouldDuplica, wrapperContainer, mouseMove, handelMouseUp)
+    const target = domController.getEventNode(e.id)
     // target.style.opacity = '0'
-    firstTopPosition = target.getBoundingClientRect().top + window.scrollY
-    const targetElement = target.getBoundingClientRect()
-    const fullC = containerRef.current.clientWidth || 0
-
-    let clonedNode: DraggedData = {
-      width: fullC + 'px',
-      height: target.clientHeight + 2 + 'px',
-      item: e,
-      dragedStartDate: e.start,
-      dragedEndDate: e.end,
-      left: targetElement.left + 0 + 'px',
-      top: targetElement.top + 0 + 'px',
-      duration: e.duration,
-      animation: '',
-      itemRect: null,
-      mouseX: 0
-    }
-
-    xAndYDiff[0] = d.clientX - targetElement.left
-    xAndYDiff[1] = d.clientY - targetElement.top
-
+    const targetElementRect = target.getBoundingClientRect()
+    const wrapperHeight = containerRef.current.querySelector('.time-range')?.clientHeight || 1
+    positionController = new PositionController(target, d.clientX, d.clientY, wrapperHeight)
+    draggingEvent = new DraggingEvent(
+      containerRef.current.clientWidth,
+      target.clientHeight,
+      e,
+      targetElementRect.left,
+      targetElementRect.top
+    )
     batch(() => {
-      setDraggedData(clonedNode)
+      setDraggedData(draggingEvent)
     })
-    wrapperHeight = containerRef.current.querySelector('.time-range')?.clientHeight || 1
   }
 
   let time1: any = 0
@@ -122,65 +69,55 @@ export function userDragger(
     clearTimeout(time1)
     clearTimeout(time2)
   }
+
   function mouseMove(e: MouseEvent) {
-    if (!mouseDown) return
+    if (!domController.mouseDown) return
     hasMoved = true
     if (!isDragging()) {
       setIsDragging(true)
       document.getElementById('full-event-calendar-core')?.classList.add('calendar-draging')
-      //const target = document.querySelector(`#event-${draggedData().item?.id}`) as HTMLElement
-      // const target = getEventNode(draggedData().item?.id)
+
       setOpacityForElemetns('0.3', draggedData().item?.id)
     }
+    const targetEl = containerRef.current.querySelector(`#draging-event-${draggedData().item?.id}`)
+    const newDelta = positionController.calimeDiff(targetEl)
+    draggingEvent.shiftTime(newDelta)
+    draggingEvent.shiftPoistion(positionController.Xdiff, positionController.Ydiff, e)
 
-    const eventRect = containerRef.current
-      .querySelector(`#draging-event-${draggedData().item?.id}`)
-      ?.getBoundingClientRect()
-    if (eventRect) {
-      let dragCopy: DraggedData = { ...draggedData() }
-
-      const statDate = dragCopy.item?.start as Date
-      const endDate = dragCopy.item?.end as Date
-      const inMin = ((eventRect.top + window.scrollY - firstTopPosition) * 60) / wrapperHeight
-      const delta = inMin * 60000
-      const newS = new Date(statDate.getTime() + delta)
-      newS.setSeconds(0, 0)
-      const newE = new Date(endDate.getTime() + delta)
-
-      dragCopy.dragedStartDate = roundMinutesToMultipleOf5(newS)
-      dragCopy.dragedEndDate = newE
-      dragCopy.itemRect = eventRect
-      dragCopy.left = e.clientX - xAndYDiff[0] + 'px'
-      dragCopy.top = e.clientY - xAndYDiff[1] + 'px'
-      dragCopy.mouseX = e.pageX
-
-      setDraggedData(dragCopy)
-    }
+    setDraggedData({
+      top: draggingEvent.top,
+      left: draggingEvent.left,
+      dragedStartDate: draggingEvent.dragedStartDate,
+      dragedEndDate: draggingEvent.dragedEndDate,
+      height: draggingEvent.height,
+      width: draggingEvent.width,
+      animation: draggingEvent.animation
+    })
   }
 
   function handelMouseUp(e: MouseEvent) {
     // call mouse move in case of scolling not moving
     // mouseMove(e)
-    if (hasScrolled) {
+    if (domController.hasScrolled) {
       mouseMove(e)
     } else if (!hasMoved) {
       console.log('eventClicked ')
     }
 
     if (isDragging()) {
-      console.log(draggedData())
       cleanUps()
-      if (!isMouseoutsideTheContainer) {
-        console.log('send back')
-        dragEndCallBack(draggedData())
+      if (!domController.isMouseoutsideTheContainer) {
+        console.log('send back', draggingEvent)
+        dragEndCallBack(draggingEvent)
       }
       //basiclly start the transition animation from the base event to the target element
-      const baseEl = { ...draggedData() }
+      const baseEl = draggingEvent
 
       setOpacityForElemetns('0.0', baseEl.item?.id)
+
       document.getElementById('full-event-calendar-core')?.classList.remove('calendar-draging')
       time1 = setTimeout(() => {
-        let targetEl = getEventNode(baseEl.item?.id)
+        let targetEl = domController.getEventNode(baseEl.item?.id)
         const targetElRect = targetEl?.getBoundingClientRect()
         setOpacityForElemetns('0.0', baseEl.item?.id)
         baseEl.width = targetEl?.clientWidth + 2 + 'px'
@@ -201,19 +138,11 @@ export function userDragger(
         setOpacityForElemetns('', baseEl.item?.id)
       }, 500)
     }
-    removeListenrs()
     resetValueToDefalt()
-  }
-  function removeListenrs() {
-    wrapperContainer?.current?.removeEventListener('mouseenter', containerMouseEnter)
-    wrapperContainer?.current?.removeEventListener('mouseleave', containerMouseLeave)
-    document.removeEventListener('mouseup', handelMouseUp)
-    document.removeEventListener('mousemove', mouseMove)
-    document.removeEventListener('scroll', handelScroll)
+    domController.removeListenrs()
   }
 
   onCleanup(() => {
-    removeListenrs()
     cleanUps()
   })
 

@@ -16,7 +16,7 @@ export function ceilDate(date: Date) {
 export function roundMinutesToMultipleOf5(date: Date) {
   const roundedMinutes = Math.round(date.getMinutes() / 5) * 5
   const newDate = new Date(date)
-  newDate.setMinutes(roundedMinutes)
+  newDate.setMinutes(roundedMinutes, 0, 0)
   return newDate
 }
 

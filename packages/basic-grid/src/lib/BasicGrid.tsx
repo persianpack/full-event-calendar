@@ -52,14 +52,15 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
   function dragEnd(a: DraggedData) {
     const sourceE = { ...a.item } as SourceEvent
 
-    sourceE.start = a.dragedStartDate
-    sourceE.end = a.dragedEndDate
+    sourceE.start = a.eventSourceStart
+    sourceE.end = a.eventSourceEnd
     if (a.item) {
       props.onEventUpdate(sourceE, a)
     }
   }
 
   function resizeCb(a: any) {
+    console.log(a)
     props.onEventUpdate(a)
   }
 
@@ -118,30 +119,6 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
                           onMouseDown={onmousedownH}
                           onDragStart={itemDragstart}
                         ></EventItem>
-                        // <div
-                        //   onMouseDown={(e: MouseEvent) => {
-                        //     itemDragstart(event, e, !event.doesEventStartOn(props.gridDate))
-                        //   }}
-                        //   id={'event-' + event.id}
-                        //   class="ec-event"
-                        //   data-test-event-id={event.id}
-                        //   style={`${
-                        //     event.doesEventStartOn(props.gridDate) ? event.calculatePositionTop() : 'top:0'
-                        //   } ${event.calculateHeight(!event.doesEventStartOn(props.gridDate))} ${lookForAvailableWith(
-                        //     ColList(),
-                        //     event,
-                        //     colNumber() + 1
-                        //   )}`}
-                        // >
-                        //   <div> id : {event.id}</div>
-                        //   <div class="tooltip-multiline " data-tooltip={event.start.toString()}>
-                        //     start :{event.start.toString()}
-                        //   </div>
-                        //   <div>
-                        //     end :<span id={'event-end-' + event.id}>{event.end.toString()}</span>
-                        //   </div>
-                        //   <div onmousedown={[onmousedownH, event]} class="resizer"></div>
-                        // </div>
                       )
                     }}
                   </For>
