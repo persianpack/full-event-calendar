@@ -61,7 +61,8 @@
   }
   .time-range {
     // background-color: green;
-    outline: 1px solid rgba(0, 0, 0, 0.384);
+    outline: 1px solid var(--hairline);
+    // outline: 1px solid #ecececb6;
     flex: 1;
     display: flex;
     width: 100%;
@@ -70,8 +71,12 @@
     .time-range-time {
       // z-index: -1;
       // background-color: red;
+      color: rgb(0, 0, 0);
       position: absolute;
-      text-transform: capitalize;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
     }
     .some-container {
       display: flex;
