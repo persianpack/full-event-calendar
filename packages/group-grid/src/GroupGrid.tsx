@@ -63,7 +63,7 @@ export const GroupGrid: FComponent<GroupGridProps> = (props) => {
 
   return (
     <>
-      <div style="display:flex;width:100%" id="group-grid-container" ref={groupContainerRef}>
+      <div style="display:flex;width:100%;flex: 1;" id="group-grid-container" ref={groupContainerRef}>
         {mappedCols()}
       </div>
     </>

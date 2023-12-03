@@ -14,6 +14,7 @@
   background-color: white;
   height: 100%;
   display: flex;
+  flex-direction: column;
 }
 
 .grid-animate-forward {
@@ -25,7 +26,19 @@
   animation-name: backward;
   animation-duration: 0.25s;
 }
+.grid-animate-smooth {
+  animation-name: smooth2ss;
+  animation-duration: 0.25s;
+}
+@keyframes smooth2ss {
+  0% {
+    opacity: 0;
+  }
 
+  100% {
+    opacity: 1;
+  }
+}
 @keyframes example {
   0% {
     left: 40px;

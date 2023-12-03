@@ -1,13 +1,23 @@
+.alld-not-open {
+  .all-day-container {
+    max-height: 111px;
+  }
+}
 .all-day-container {
   height: fit-content;
   padding: 5px 10px;
   // display: flex;
   // flex-direction: column;
   //  background-color: red;
-  height: 99px;
+  position: relative;
+  flex: 1 1 0px;
+  height: fit-content;
+
   overflow: hidden;
-  margin-left: 50px;
+  // margin-left: 50px;
   border-left: 1px solid var(--hairline);
+  transition: all 0.5s ease-in-out;
+
   .all-day-wrapper {
     height: 24px;
     margin: 10px 0px;
@@ -17,13 +27,102 @@
     display: flex;
     align-items: center;
   }
+
   .right-arrow {
     clip-path: polygon(0 0, calc(100% - 10px) 0%, 100% 50%, calc(100% - 10px) 100%, 0 100%);
   }
+
   .left-arrow {
     clip-path: polygon(100% 0, 10px 0, 0px 50%, 10px 100%, 100% 100%);
   }
+
   .both-arrow {
     clip-path: polygon(10px 0, calc(100% - 10px) 0%, 100% 50%, calc(100% - 10px) 100%, 10px 100%, 0 50%);
+  }
+}
+
+.more-btn {
+  position: absolute;
+  background: white;
+  width: 100%;
+  height: 35px;
+  bottom: 0px;
+  left: 0;
+  // border-radius: 8px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  opacity: 1;
+  transition: all 0.3s;
+
+  .more-wrapper {
+    background-color: white;
+    width: 99%;
+    height: 72%;
+    display: flex;
+    transition: all 0.3s;
+
+    align-items: center;
+    padding-left: 8px;
+    padding-top: 3px;
+    border-radius: 8px;
+
+    &:hover {
+      background: #ececec;
+    }
+  }
+
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--on-surface);
+  font-weight: 700;
+}
+
+.alld-open {
+  .more-btn {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .all-collapser {
+    rotate: 0deg !important;
+  }
+}
+
+.all-d-wrapeer-header {
+  display: flex;
+}
+
+.mor-btn-container {
+  width: 50px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+  padding-bottom: 5px;
+
+  .all-collapser {
+    height: 30px;
+    rotate: 180deg;
+    width: 30px;
+    bottom: 10px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+
+    svg {
+      scale: 1.1;
+    }
+
+    cursor: pointer;
+
+    &:hover {
+      background: #ececec;
+    }
   }
 }
