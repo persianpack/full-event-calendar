@@ -101,11 +101,7 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
   }
   return (
     <>
-      <div ref={containerRef.current} class="fec-daily-grid" style={`height: ${props.gridHeight}px`}>
-        <div class="grid-border-left"></div>
-        <Show when={isDateToday(props.gridDate)}>
-          <TimeBar container={containerRef} />
-        </Show>
+      <div ref={containerRef.current}>
         <div class="holdcontainer" style={getWrapperHeight()}>
           <For each={ColList()}>
             {(eventList, colNumber) => {
@@ -129,43 +125,72 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
             }}
           </For>
         </div>
-
-        <div class="time-range">
-          <div class="time-range-time"> </div>
-          <div class="some-container">
-            <div class="time-rage-up-container"> </div>
-            <div class="time-rage-down-container"> </div>
-          </div>
-        </div>
-
-        <For each={timess}>
-          {(time, i) => {
-            return (
-              <>
-                <div data-test-time-range-id={i() + 1} class="time-range">
-                  <div class="time-range-time">{time}</div>
-                  <div class="some-container">
-                    <div class="time-rage-up-container"> </div>
-                    <div class="time-rage-down-container"> </div>
-                  </div>
-                </div>
-              </>
-            )
-          }}
-        </For>
-
-        <div class="wrapper-container" style={getWrapperHeight()}>
-          <Show when={isDragging()}>
-            <div
-              id={'draging-event-' + draggedData().item?.id}
-              class={`drag-element ec-event drag-element-grabbiing`}
-              style={getDragingStyle()}
-            >
-              <div> id : {draggedData().item?.id}</div>
-              <div>start :{draggedData().dragedStartDate.toString()}</div>
-              <div>end :{draggedData().dragedEndDate.toString()}</div>
-            </div>
+        <div class="fec-daily-grid" style={`height: ${props.gridHeight}px`}>
+          <div class="grid-border-left"></div>
+          <Show when={isDateToday(props.gridDate)}>
+            <TimeBar container={containerRef} />
           </Show>
+          {/* <div class="holdcontainer" style={getWrapperHeight()}>
+          <For each={ColList()}>
+            {(eventList, colNumber) => {
+              return (
+                <div class="event-colom" data-test-col-id={colNumber()}>
+                  <For each={eventList}>
+                    {(event: EventClass) => {
+                      return (
+                        <EventItem
+                          event={event}
+                          gridDate={props.gridDate}
+                          width={lookForAvailableWith(ColList(), event, colNumber() + 1)}
+                          onMouseDown={onmousedownH}
+                          onDragStart={itemDragstart}
+                        ></EventItem>
+                      )
+                    }}
+                  </For>
+                </div>
+              )
+            }}
+          </For>
+        </div> */}
+
+          <div class="time-range">
+            <div class="time-range-time"> </div>
+            <div class="some-container">
+              <div class="time-rage-up-container"> </div>
+              <div class="time-rage-down-container"> </div>
+            </div>
+          </div>
+
+          <For each={timess}>
+            {(time, i) => {
+              return (
+                <>
+                  <div data-test-time-range-id={i() + 1} class="time-range">
+                    <div class="time-range-time">{time}</div>
+                    <div class="some-container">
+                      <div class="time-rage-up-container"> </div>
+                      <div class="time-rage-down-container"> </div>
+                    </div>
+                  </div>
+                </>
+              )
+            }}
+          </For>
+
+          <div class="wrapper-container" style={getWrapperHeight()}>
+            <Show when={isDragging()}>
+              <div
+                id={'draging-event-' + draggedData().item?.id}
+                class={`drag-element ec-event drag-element-grabbiing`}
+                style={getDragingStyle()}
+              >
+                <div> id : {draggedData().item?.id}</div>
+                <div>start :{draggedData().dragedStartDate.toString()}</div>
+                <div>end :{draggedData().dragedEndDate.toString()}</div>
+              </div>
+            </Show>
+          </div>
         </div>
       </div>
     </>

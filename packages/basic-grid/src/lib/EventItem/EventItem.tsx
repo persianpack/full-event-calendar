@@ -1,5 +1,6 @@
 import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
 import { lookForAvailableWith } from '../../utils/coleLine'
+import { getEventTimeRange } from '@full-event-calendar/utils'
 
 interface EventItem {
   onDragStart: (event: EventClass, e: MouseEvent, D: boolean) => void
@@ -27,15 +28,13 @@ export const EventItem: FComponent<EventItem> = (props) => {
       data-test-event-id={props.event.id}
       style={`${getPosition()} ${getHeight()} ${props.width}`}
     >
-      <div class="tooltip-multiline " data-tooltip={props.event.start.toString()}>
-        {props.event.name}
-      </div>
-      <div style="position:sticky;top:0px">
-        <span id={'event-end-' + props.event.id}>
-          {props.event.start.getHours()}:{props.event.start.getMinutes()}
-          {' - '}
-          {props.event.end.getHours()}:{props.event.start.getMinutes()}
-        </span>
+      <div style="position:sticky;top:0px;bottom:0">
+        <div class="tooltip-multiline " data-tooltip={props.event.start.toString()}>
+          {props.event.name}
+        </div>
+        <div>
+          <span id={'event-end-' + props.event.id}>{getEventTimeRange(props.event)}</span>
+        </div>
       </div>
       <div onmousedown={[props.onMouseDown, props.event]} class="resizer"></div>
     </div>

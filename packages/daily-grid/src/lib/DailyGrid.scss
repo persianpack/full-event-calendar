@@ -1,8 +1,9 @@
 .scroll-wrapper {
-  overflow: auto;
   flex: 1;
   position: relative;
   border-right: 1px solid var(--hairline);
+  overflow-y: auto;
+  overflow-x: hidden;
   /* width */
   &::-webkit-scrollbar {
     width: 8px;

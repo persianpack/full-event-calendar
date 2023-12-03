@@ -1,5 +1,6 @@
 import { EventClass } from '@full-event-calendar/shared-ts'
 import { areDatesInTheSameDate } from '.'
+import { textChangeRangeIsUnchanged } from 'typescript'
 
 export function floorDate(date: Date) {
   const newDate = new Date(date)
@@ -63,4 +64,14 @@ export function isEventRightOrLeftOrNoneRange(event: EventClass, start: Date, en
     return 'month-left-arrow'
   }
   return 'month-no-arrow'
+}
+
+function addZeroPadd(num: number) {
+  return num < 10 ? `0${num}` : num
+}
+
+export function getEventTimeRange(event: EventClass) {
+  return `${addZeroPadd(event.start.getHours())}:${addZeroPadd(event.start.getMinutes())} - ${addZeroPadd(
+    event.end.getHours()
+  )}:${addZeroPadd(event.end.getMinutes())}`
 }
