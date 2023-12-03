@@ -1,5 +1,5 @@
 import { EventClass, SourceEvent } from '@full-event-calendar/shared-ts'
-import { roundMinutesToMultipleOf5 } from '@full-event-calendar/utils'
+import { getDateTimeRange, roundMinutesToMultipleOf5 } from '@full-event-calendar/utils'
 
 export function useResize(container: any, resizeEndCalllBack: (p: SourceEvent) => void) {
   function onmousedownH(item: EventClass, e: MouseEvent) {
@@ -32,7 +32,7 @@ export function useResize(container: any, resizeEndCalllBack: (p: SourceEvent) =
       endDate = roundMinutesToMultipleOf5(finald)
       endDateSource = roundMinutesToMultipleOf5(finaSource)
       const el = container.current.querySelector(`#event-end-${item?.id}`) as HTMLElement
-      el.innerHTML = endDate.toString()
+      el.innerHTML = getDateTimeRange(item.start, endDate)
     }
 
     function mouseup() {

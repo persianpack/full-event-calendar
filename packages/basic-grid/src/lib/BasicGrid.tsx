@@ -6,7 +6,7 @@ import { useResize } from '../hooks/eventResize'
 import { TimeBar } from './TimeBar/TimeBar'
 import { lookForAvailableWith } from '../utils/coleLine'
 import './basicGrid.scss'
-import { isDateToday } from '@full-event-calendar/utils'
+import { getDateTimeRange, isDateToday } from '@full-event-calendar/utils'
 import { Accessor, Component, createComputed, createSignal } from 'solid-js'
 import { EventItem } from './EventItem/EventItem'
 export interface BasicGridProps {
@@ -68,7 +68,7 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
   function getDragingStyle() {
     return `width : ${draggedData().width};height : ${draggedData().height};left:${draggedData().left} ; transition : ${
       draggedData().animation
-    } ;top:${draggedData().top};position:fixed;opacity:0.7`
+    } ;top:${draggedData().top};position:fixed;opacity:0.7;background-color:${draggedData().item.color}`
   }
   const timess = [
     '1 am',
@@ -185,9 +185,8 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
                 class={`drag-element ec-event drag-element-grabbiing`}
                 style={getDragingStyle()}
               >
-                <div> id : {draggedData().item?.id}</div>
-                <div>start :{draggedData().dragedStartDate.toString()}</div>
-                <div>end :{draggedData().dragedEndDate.toString()}</div>
+                <div> {draggedData().item?.name}</div>
+                <div>{getDateTimeRange(draggedData().dragedStartDate, draggedData().dragedEndDate)}</div>
               </div>
             </Show>
           </div>

@@ -34,16 +34,16 @@ export class DraggingEvent {
   shiftTime(delta: any) {
     const newS = new Date(this.item.start.getTime() + delta)
     newS.setSeconds(0, 0)
-    const newE = new Date(this.item.end.getTime() + delta)
     this.dragedStartDate = roundMinutesToMultipleOf5(newS)
-    this.dragedEndDate = newE
+    const newE = new Date(this.item.end.getTime() + delta)
+    this.dragedEndDate = roundMinutesToMultipleOf5(newE)
     this.shiftSource(delta)
   }
   shiftSource(delta: any) {
     //@ts-ignore
     this.eventSourceStart = roundMinutesToMultipleOf5(new Date(this?.item?.sourceEvent?.start?.getTime() + delta))
     //@ts-ignore
-    this.eventSourceEnd = new Date(this?.item?.sourceEvent?.end?.getTime() + delta)
+    this.eventSourceEnd = roundMinutesToMultipleOf5(new Date(this?.item?.sourceEvent?.end?.getTime() + delta))
   }
 
   shiftPoistion(X: any, Y: any, e: any) {

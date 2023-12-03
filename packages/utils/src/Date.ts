@@ -75,3 +75,8 @@ export function getEventTimeRange(event: EventClass) {
     event.end.getHours()
   )}:${addZeroPadd(event.end.getMinutes())}`
 }
+export function getDateTimeRange(start: Date, end: Date) {
+  return `${addZeroPadd(start.getHours())}:${addZeroPadd(start.getMinutes())} - ${addZeroPadd(
+    end.getHours()
+  )}:${addZeroPadd(end.getMinutes())}`
+}

@@ -43,7 +43,7 @@ export const MonthEvent: FComponent<EventProps> = (props: EventProps) => {
   function eventStyles() {
     return `${
       eventIsDragging() ? ';opacity:.7;' : ''
-    };left:calc(${leftP()}00% + 7px);width:calc(${eventWidth}00% - 14px)`
+    };left:calc(${leftP()}00% + 7px);width:calc(${eventWidth}00% - 14px);background-color:${props.item.color}`
   }
   function isNotAllDay() {
     if (props?.item?.isAllDay) {

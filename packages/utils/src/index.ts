@@ -13,5 +13,6 @@ export {
   isDateToday,
   isEventRightOrLeftOrNone,
   isEventRightOrLeftOrNoneRange,
+  getDateTimeRange,
   getEventTimeRange
 } from './Date'
