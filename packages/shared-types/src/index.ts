@@ -9,6 +9,7 @@ export interface EventClass {
   id: any
   duration: number
   sourceEvent: SourceEvent
+  backGroundColor: string
   getEventLength(): any
   isAllDay(): any
   countDays(): number
@@ -26,6 +27,8 @@ export interface SourceEvent {
   end: Date
   name: string
   id: any
+  backGroundColor?: string
+  groupId?: string
 }
 
 export interface DraggedData {

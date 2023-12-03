@@ -6,7 +6,6 @@ export interface EventPayLoads {
   eventClicked: { event: EventClass }
   eventUpdate: { prev: SourceEvent; next: SourceEvent }
 }
-type listnerFunction = (eventType: EventTypes, eventPayload: EventPayLoads[EventTypes]) => void
 
 export default class EventCollection {
   [key: string]: any[]

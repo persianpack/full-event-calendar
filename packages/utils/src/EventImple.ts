@@ -9,6 +9,7 @@ export class EventImpl implements EventClass {
   name: string
   duration: number // duration is in minutes
   sourceEvent: SourceEvent
+  backGroundColor: string
 
   constructor(eventData: SourceEvent) {
     this.start = eventData.start
@@ -17,6 +18,7 @@ export class EventImpl implements EventClass {
     this.id = eventData.id
     this.sourceEvent = eventData
     this.duration = Math.round((eventData.end.getTime() - eventData.start.getTime()) / 60000)
+    this.backGroundColor = eventData.backGroundColor || '#ff5280'
   }
 
   getEventLength(): any {

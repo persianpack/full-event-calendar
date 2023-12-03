@@ -18,6 +18,10 @@ export const EventItem: FComponent<EventItem> = (props) => {
     return props.event.calculateHeight(!props.event.doesEventStartOn(props.gridDate))
   }
 
+  function getBackGroundColor() {
+    return `;background-color:${props.event.backGroundColor}`
+  }
+
   return (
     <div
       onMouseDown={(e: MouseEvent) => {
@@ -26,7 +30,7 @@ export const EventItem: FComponent<EventItem> = (props) => {
       id={'event-' + props.event.id}
       class="ec-event"
       data-test-event-id={props.event.id}
-      style={`${getPosition()} ${getHeight()} ${props.width}`}
+      style={`${getPosition()} ${getHeight()} ${props.width} ${getBackGroundColor()}`}
     >
       <div style="position:sticky;top:0px;bottom:0">
         <div class="tooltip-multiline " data-tooltip={props.event.start.toString()}>
