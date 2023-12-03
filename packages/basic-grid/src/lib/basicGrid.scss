@@ -2,12 +2,12 @@
   .time-range:hover {
     .time-rage-up-container {
       &:hover {
-        border: 2px solid blue;
+        border: 2px solid #31b5f7;
       }
     }
     .time-rage-down-container {
       &:hover {
-        border: 2px solid blue;
+        border: 2px solid #31b5f7;
       }
     }
   }
@@ -22,8 +22,18 @@
   position: relative;
   box-sizing: border-box;
   overflow: hidden;
+  padding-right: 43px;
+  // border-right:1px solid var(--hairline);
   * {
     box-sizing: border-box;
+  }
+  .grid-border-left {
+    position: absolute;
+    height: 100%;
+    width: 1px;
+    z-index: 123;
+    background-color: var(--hairline);
+    left: 50px;
   }
   .event-colom {
     // background-color: rgb(243, 163, 163);
@@ -38,13 +48,16 @@
     min-height: 20px;
     height: 50px;
     width: 100%;
-    background-color: rgb(255, 74, 165);
+    background-color: #ff5280;
     top: 300%;
     border: 1px solid white;
-    border-radius: 16px;
+    color: #fff;
+    border-radius: 12px;
     padding: 5px;
     max-width: 1100px;
     opacity: 0.9;
+    display: flex;
+    flex-direction: column;
     cursor: grab;
     .resizer {
       position: absolute;
@@ -61,12 +74,13 @@
   }
   .time-range {
     // background-color: green;
-    outline: 1px solid var(--hairline);
+    border-top: 1px solid var(--hairline);
+    margin-left: 39px;
     // outline: 1px solid #ecececb6;
     flex: 1;
     display: flex;
     width: 100%;
-
+    position: relative;
     //  z-index: 3;
     .time-range-time {
       // z-index: -1;
@@ -77,6 +91,8 @@
       font-style: normal;
       font-weight: 500;
       line-height: normal;
+      top: 0;
+      transform: translate(-120%, -50%);
     }
     .some-container {
       display: flex;
@@ -111,6 +127,8 @@
   position: absolute;
   width: 100%;
   display: flex;
+  padding-left: 62px;
+  padding-right: 12px;
 }
 .tooltip .tooltiptext {
   visibility: hidden;

@@ -14,6 +14,8 @@ export class PositionController {
     this.firstTopPosition = target.getBoundingClientRect().top + window.scrollY
   }
   calimeDiff(newTarget: any) {
+    this.firstTopPosition = this.target.getBoundingClientRect().top + window.scrollY
+
     const eventRect = newTarget.getBoundingClientRect()
     return (((eventRect.top + window.scrollY - this.firstTopPosition) * 60) / this.wrapperHeight) * 60000
   }

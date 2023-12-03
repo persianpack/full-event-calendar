@@ -34,7 +34,15 @@ export function App() {
 
   return (
     <>
-      <div style="margin-top:200px;margin-bottom:200px" class="full-event-calendar-core" id="full-event-calendar-core">
+      <div
+        style="    margin-top: 200px;
+    margin-bottom: 200px;
+    height: 1000px;
+    flex-direction: column;
+    display: flex;"
+        class="full-event-calendar-core"
+        id="full-event-calendar-core"
+      >
         <CalendarHeader onDateChange={onDateChange} />
         <SliderWrapper>
           {/* Grid plugin goes here */}

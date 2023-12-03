@@ -1,0 +1,26 @@
+.scroll-wrapper {
+  overflow: auto;
+  flex: 1;
+  position: relative;
+  border-right: 1px solid var(--hairline);
+  /* width */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #d8d6d9;
+    border-radius: 20px;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+}

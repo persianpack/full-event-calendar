@@ -3,6 +3,7 @@ let MU: any
 
 let c1: any
 let c2: any
+let handelScroll: any
 
 export class DomController {
   shouldDuplicate = false
@@ -25,26 +26,28 @@ export class DomController {
     let self = this
     MMM = (e: any) => {
       self.mouseDown = true
+      console.log('mouseM')
       handelMouseMove(e)
     }
     MU = (e: any) => {
-      self.mouseDown = false
       handelMouseUp(e)
+      self.mouseDown = false
     }
 
     c1 = () => {
       self.isMouseoutsideTheContainer = false
-      console.log(false)
     }
     c2 = () => {
-      console.log(true)
       self.isMouseoutsideTheContainer = true
+    }
+    handelScroll = () => {
+      self.hasScrolled = true
     }
 
     document.addEventListener('mousemove', MMM)
     document.addEventListener('mouseup', MU)
-
-    document.addEventListener('scroll', self.handelScroll)
+    document.getElementById('scroll-wrapper')?.addEventListener('scroll', handelScroll)
+    // document.getElementById('scroll-wrapper')?.addEventListener('scrollend',  MMM)
 
     this.wrapperContainer?.current?.addEventListener('mouseenter', c1)
     this.wrapperContainer?.current?.addEventListener('mouseleave', c2)
@@ -68,15 +71,11 @@ export class DomController {
       element.style.opacity = opacity
     })
   }
-  handelScroll() {
-    this.hasScrolled = true
-  }
+
   containerMouseEnter() {
     this.isMouseoutsideTheContainer = false
-    console.log(false)
   }
   containerMouseLeave() {
-    console.log(true)
     this.isMouseoutsideTheContainer = true
   }
   removeListenrs() {
@@ -84,6 +83,7 @@ export class DomController {
     this.wrapperContainer?.current?.removeEventListener('mouseleave', c2)
     document.removeEventListener('mouseup', MU)
     document.removeEventListener('mousemove', MMM)
-    document.removeEventListener('scroll', this.handelScroll)
+    document.getElementById('scroll-wrapper')?.removeEventListener('scroll', handelScroll)
+    // document.getElementById('scroll-wrapper')?.removeEventListener('scrollend', MMM)
   }
 }

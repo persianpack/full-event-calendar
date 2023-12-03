@@ -43,7 +43,9 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
       }
     }, 0)
   })
-
+  // document.addEventListener('scroll',()=>{
+  //   console.log('sdjaoisdj')
+  // })
   const ColList = createMemo(() => {
     const finalData = createLinesOfColum(props.events)
     return Object.values(finalData)
@@ -100,6 +102,7 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
   return (
     <>
       <div ref={containerRef.current} class="fec-daily-grid" style={`height: ${props.gridHeight}px`}>
+        <div class="grid-border-left"></div>
         <Show when={isDateToday(props.gridDate)}>
           <TimeBar container={containerRef} />
         </Show>
@@ -128,7 +131,7 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
         </div>
 
         <div class="time-range">
-          <div class="time-range-time">{timess[0]}</div>
+          <div class="time-range-time"> </div>
           <div class="some-container">
             <div class="time-rage-up-container"> </div>
             <div class="time-rage-down-container"> </div>

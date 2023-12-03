@@ -27,12 +27,15 @@ export const EventItem: FComponent<EventItem> = (props) => {
       data-test-event-id={props.event.id}
       style={`${getPosition()} ${getHeight()} ${props.width}`}
     >
-      <div> id : {props.event.id}</div>
       <div class="tooltip-multiline " data-tooltip={props.event.start.toString()}>
-        start :{props.event.start.toString()}
+        {props.event.name}
       </div>
-      <div>
-        end :<span id={'event-end-' + props.event.id}>{props.event.end.toString()}</span>
+      <div style="position:sticky;top:0px">
+        <span id={'event-end-' + props.event.id}>
+          {props.event.start.getHours()}:{props.event.start.getMinutes()}
+          {' - '}
+          {props.event.end.getHours()}:{props.event.start.getMinutes()}
+        </span>
       </div>
       <div onmousedown={[props.onMouseDown, props.event]} class="resizer"></div>
     </div>

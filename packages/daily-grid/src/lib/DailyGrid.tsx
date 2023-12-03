@@ -9,6 +9,8 @@ import { BasicGridProps } from '@full-event-calendar/basic-grid'
 import { Show, createMemo, mergeProps } from 'solid-js'
 // utils
 import { getEventsInDate } from '@full-event-calendar/utils'
+
+import './DailyGrid.scss'
 // Remove the extend
 export interface DailyGridProps extends BasicGridProps {
   initialDate?: Date
@@ -44,7 +46,11 @@ export const DailyGrid: FComponent<DailyGridProps> = (props) => {
 
   return (
     <>
-      <div id={props.id} data-test-id-daily-grid={props.id} style="flex: 1;">
+      <div
+        id={props.id}
+        data-test-id-daily-grid={props.id}
+        style="flex:1;height: 100%;display:flex;flex-direction: column; "
+      >
         <DailyHeader
           headerDate={mergedProps.initialDate}
           timeZone={mergedProps.timeZone}
@@ -56,14 +62,17 @@ export const DailyGrid: FComponent<DailyGridProps> = (props) => {
         <Show when={mergedProps.showAllDay}>
           <DailyAllDay events={extractedEvents()} initialDate={mergedProps.initialDate}></DailyAllDay>
         </Show>
-
-        <BasicGrid
-          gridDate={mergedProps.initialDate}
-          events={filteredOut()}
-          onEventUpdate={mergedProps.onEventUpdate}
-          gridHeight={mergedProps.gridHeight}
-          container={mergedProps.container}
-        />
+        <div class="scroll-wrapper" id="scroll-wrapper">
+          <div style="position: absolute;width:100%">
+            <BasicGrid
+              gridDate={mergedProps.initialDate}
+              events={filteredOut()}
+              onEventUpdate={mergedProps.onEventUpdate}
+              gridHeight={mergedProps.gridHeight}
+              container={mergedProps.container}
+            />
+          </div>
+        </div>
       </div>
     </>
   )
