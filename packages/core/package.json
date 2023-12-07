@@ -12,26 +12,27 @@
     "dev": "pnpm build:fast -- --watch"
   },
   "devDependencies": {
-    "tsup": "^7.2.0",
-    "typescript": "^5.1.3",
-    "vite": "^4.3.9",
-    "vite-plugin-solid": "^2.7.0",
     "esbuild-sass-plugin": "^2.16.0",
     "sass": "^1.64.2",
+    "tsup": "^7.2.0",
     "tsup-preset-solid": "^2.1.0",
+    "typescript": "^5.1.3",
+    "vite": "^4.3.9",
     "vite-dts": "^1.0.4",
-    "vite-plugin-dts": "3.0.0"
+    "vite-plugin-dts": "3.0.0",
+    "vite-plugin-solid": "^2.7.0"
   },
   "dependencies": {
     "@full-event-calendar/basic-grid": "workspace:*",
+    "@full-event-calendar/daily-grid": "workspace:*",
     "@full-event-calendar/group-grid": "workspace:*",
+    "@full-event-calendar/month-grid": "workspace:*",
     "@full-event-calendar/shared-ts": "workspace:*",
     "@full-event-calendar/utils": "workspace:*",
-    "@full-event-calendar/daily-grid": "workspace:*",
     "@full-event-calendar/weekly-grid": "workspace:*",
-    "@full-event-calendar/month-grid": "workspace:*",
     "redux": "^4.2.1",
-    "solid-js": "^1.7.7"
+    "solid-js": "^1.7.7",
+    "solid-transition-group": "^0.2.3"
   },
   "types": "./dist/index.d.ts",
   "browser": {},

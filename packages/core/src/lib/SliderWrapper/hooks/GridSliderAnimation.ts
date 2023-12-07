@@ -66,12 +66,12 @@ export function useGridSliderAnimation(containers: containers) {
   document.querySelector('.more-wrapper')?.addEventListener('click', () => {
     setTimeout(() => {
       clonedCalendar = containers.containerRef?.cloneNode(true) as HTMLElement
-    }, 300)
+    }, 500)
   })
   document.querySelector('.all-collapser')?.addEventListener('click', () => {
     setTimeout(() => {
       clonedCalendar = containers.containerRef?.cloneNode(true) as HTMLElement
-    }, 300)
+    }, 500)
   })
 
   createEffect(

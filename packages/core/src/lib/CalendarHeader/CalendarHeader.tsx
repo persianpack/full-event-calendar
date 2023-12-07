@@ -1,9 +1,9 @@
-import { For, Show, createMemo, createSignal } from 'solid-js'
+import { For, Show, createMemo, createSignal, onCleanup } from 'solid-js'
 import './CalendarHeader.scss'
 import { FComponent } from '@full-event-calendar/shared-ts'
 import { useGlobalState } from '../../context-injector/context'
 import { GridModes } from '../../api/CalendarImpl'
-
+import { Transition } from "solid-transition-group"
 interface CalendarHeader {
   onDateChange: (d: Date) => void
 }
@@ -11,7 +11,14 @@ interface CalendarHeader {
 export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
   const [showDropDown, SetDropDown] = createSignal(false)
   const data = useGlobalState()
-
+  function ClickOutSide(el: any, accessor: any) {
+    const onClick = (e: any) => !el.contains(e.target) && accessor()?.()
+    document.body.addEventListener('click', onClick)
+    onCleanup(() => document.body.removeEventListener('click', onClick))
+  }
+ function amodalClickOut(){
+  SetDropDown(false)
+  }
   function resolveOptions() {
     const options: any = {
       month: 'long',
@@ -70,22 +77,27 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
         Today{' '}
       </div>
 
-      <div class="go-some-d" onclick={goBack}>
-        go back
+      <div class="go-back-icon" onclick={goBack}>
+         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13.28 10.0333L8.93333 5.68667C8.42 5.17333 7.58 5.17333 7.06667 5.68667L2.72 10.0333" stroke="#7E7E7F" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path></svg>
       </div>
-      <div class="go-some-d" onclick={goForward}>
-        go Forward
-      </div>
+      <div class="header-date">
       {formatter()}
+      </div>
+      <div class="go-forward-icon" onclick={goForward}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13.28 10.0333L8.93333 5.68667C8.42 5.17333 7.58 5.17333 7.06667 5.68667L2.72 10.0333" stroke="#7E7E7F" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </div>
+      
       <div style="flex:1"></div>
 
       <div class="go-some-d" data-test-id-dropdown="1" onclick={() => SetDropDown(!showDropDown())}>
         day
-        <Show when={showDropDown()}>
-          <div class="dropdown">
+        <Transition name="slide-fade">   
+          <Show when={showDropDown()}>
+           <div use:ClickOutSide={amodalClickOut} class="dropdown-calendar">
             <For each={data.instance.getOptions()}>
               {(item: any) => (
                 <div
+                  class='dropdown-calendar-item'
                   onclick={(e) => {
                     e.stopPropagation()
                     SetDropDown(false)
@@ -97,31 +109,10 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
                 </div>
               )}
             </For>
-            {/* <div
-              data-test-id-drop="1"
-              onclick={(e) => {
-                e.stopPropagation()
-                SetDropDown(false)
-                changeGrid('weekly')
-              }}
-            >
-              week
-            </div>
-            <div
-              onclick={(e) => {
-                e.stopPropagation()
-                SetDropDown(false)
-                changeGrid('month')
-              }}
-              data-test-id-drop="2"
-            >
-              Month
-            </div> */}
-            {/* <div>week</div>
-              <div>week</div>
-              <div>week</div> */}
+         
           </div>
-        </Show>
+         </Show> 
+       </Transition>
       </div>
     </div>
   )
