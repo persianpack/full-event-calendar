@@ -37,6 +37,8 @@ export function App() {
       <div
         style="    margin-top: 200px;
     margin-bottom: 200px;
+    margin-left: 50px;
+    margin-right: 50px;
     height: 1000px;
     flex-direction: column;
     display: flex;"

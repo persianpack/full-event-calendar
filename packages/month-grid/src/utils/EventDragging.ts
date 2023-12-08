@@ -5,6 +5,8 @@ import { createSignal } from 'solid-js'
 interface DraggingEventsDate {
   start: Date
   end: Date
+  sourceStart: Date
+  sourceEnd: Date
   id: any
   source: EventClass
 }
@@ -25,7 +27,20 @@ export function useMonthEventDragging() {
         const endCopy = new Date(dragCopy.source.end)
         startCopy.setDate(dragCopy.source.start.getDate() + dayDifference)
         endCopy.setDate(dragCopy.source.end.getDate() + dayDifference)
-        const monthDraggingDate = new MonthDraggingObject(dragCopy.source.id, startCopy, endCopy, dragCopy.source)
+
+        const SstartCopy = new Date(dragCopy.source.sourceEvent.start)
+        const SendCopy = new Date(dragCopy.source.sourceEvent.end)
+        SstartCopy.setDate(dragCopy.source.sourceEvent.start.getDate() + dayDifference)
+        SendCopy.setDate(dragCopy.source.sourceEvent.end.getDate() + dayDifference)
+
+        const monthDraggingDate = new MonthDraggingObject(
+          dragCopy.source.id,
+          startCopy,
+          endCopy,
+          SendCopy,
+          SstartCopy,
+          dragCopy.source
+        )
 
         //make obj null first because solid cannot detect Date change !
         setDraggingEventData(null)
@@ -41,7 +56,15 @@ export function useMonthEventDragging() {
       startingDate = startDate
     }
     if (!draggingEventData()) {
-      const draggingEventObject = new MonthDraggingObject(event.id, new Date(event.start), new Date(event.end), event)
+      const draggingEventObject = new MonthDraggingObject(
+        event.id,
+        new Date(event.start),
+        new Date(event.end),
+        event.sourceEvent.end,
+        event.sourceEvent.start,
+        event
+      )
+
       setDraggingEventData(draggingEventObject)
     }
   }
@@ -59,11 +82,15 @@ class MonthDraggingObject {
   end: Date
   source: EventClass
   color: string
-  constructor(id: string, start: Date, end: Date, source: EventClass) {
+  sourceStart: Date
+  sourceEnd: Date
+  constructor(id: string, start: Date, end: Date, sourceEnd: Date, sourceStart: Date, source: EventClass) {
     this.id = id
     this.start = start
     this.end = end
     this.source = source
     this.color = source.color
+    this.sourceStart = sourceStart
+    this.sourceEnd = sourceEnd
   }
 }

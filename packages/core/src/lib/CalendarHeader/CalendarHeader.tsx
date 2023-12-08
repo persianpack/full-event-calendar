@@ -89,7 +89,6 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
           ></path>
         </svg>
       </div>
-      <div class="header-date">{formatter()}</div>
       <div class="go-forward-icon" onclick={goForward}>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
           <path
@@ -102,6 +101,7 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
           ></path>
         </svg>
       </div>
+      <div class="header-date">{formatter()}</div>
 
       <div style="flex:1"></div>
 

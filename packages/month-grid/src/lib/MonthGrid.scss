@@ -1,3 +1,32 @@
+.month-row:not(:last-child) {
+  border-bottom: 1px solid var(--hairline);
+}
+.month-container:not(:last-child) {
+  border-right: 1px solid var(--hairline);
+}
+.month-day-out {
+  > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #e2e4e9;
+  }
+  .month-name {
+    display: inline;
+    color: #e2e4e9;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    transform: translateX(-10px);
+  }
+}
+.month-day-out-no-name {
+  color: #e2e4e9;
+}
+.month-name {
+  display: none;
+}
 .month-wrapper {
   background-color: rgb(231, 133, 133);
   height: 900px;
@@ -5,20 +34,33 @@
   display: flex;
   flex-direction: column;
   position: relative;
+  // border-right: 1px solid var(--hairline);
+  // border-bottom: 1px solid var(--hairline);
+  outline: 1px solid var(--hairline);
+
   .month-row {
     background-color: blue;
-    border: 1px solid white;
+    // border: 1px solid white;
     flex: 1;
     display: flex;
     position: relative;
     .month-container {
-      background-color: rgb(206, 206, 206);
+      background-color: white;
       flex: 1;
-      border: 1px solid white;
+      // border-bottom: 1px solid var(--hairline);
+      // border-left: 1px solid var(--hairline);
     }
+    .month-container {
+      // border-left: 1px solid var(--hairline);
+      // background-color: red;
+      // border-bottom: 1px solid var(--hairline);
+    }
+    // &:first-child{
+    //   background-color: red;
+    // }
     .month-row-wrapper {
       position: relative;
-      background-color: rgba(215, 241, 215, 0.308);
+      // background-color: rgba(215, 241, 215, 0.308);
       height: 20px;
       margin-top: 5px;
     }
@@ -35,7 +77,7 @@
           border-radius: 5px;
           cursor: pointer;
           &:hover {
-            background-color: rgb(255, 0, 242);
+            background-color: #31b5f7;
           }
         }
       }
@@ -61,27 +103,34 @@
 }
 
 .month-row-container {
-  background-color: red;
+  // background-color: red;
   // height: 100%;
-  margin-top: 30px;
+  margin-top: 40px;
   width: calc(100% / 7);
   position: absolute;
   border-bottom: 1px solid white;
 }
 .month-day-wrapper {
   display: flex;
-  justify-content: center;
+  justify-content: end;
+  > div {
+    margin: 5px;
+  }
   span {
-    width: 25px;
-    height: 25px;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    width: 40px;
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    font-size: 14px;
     cursor: pointer;
+    transition: all 0.3s;
     &:hover {
-      background-color: pink;
+      background-color: #31b5f7;
+      color: white;
     }
   }
 }

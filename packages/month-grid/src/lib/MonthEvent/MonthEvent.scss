@@ -15,6 +15,33 @@
   }
 }
 .month-item-no-all-day {
-  background-color: transparent !important;
-  border: 1px solid white !important;
+  color: rgb(60, 64, 67);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  padding-left: 22px;
+  padding-top: 3px;
+  display: flex;
+  align-items: center;
+  background: transparent !important;
+
+  cursor: pointer;
+  transition: all 0.3s;
+  &:hover {
+    background: #ececec !important;
+  }
+  &:before {
+    content: '';
+    height: 11px;
+    width: 11px;
+    border-radius: 50%;
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    pointer-events: none;
+    user-select: none;
+    background-color: var(--ca-color);
+  }
 }

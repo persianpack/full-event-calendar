@@ -10,7 +10,6 @@ interface EventProps {
   ondragstart: (e: EventClass) => void
   onDragEnd: () => void
   isFirstRow: boolean
-  isLastRow: boolean
 }
 
 export const MonthEvent: FComponent<EventProps> = (props: EventProps) => {
@@ -41,7 +40,7 @@ export const MonthEvent: FComponent<EventProps> = (props: EventProps) => {
   }
 
   function eventStyles() {
-    return `${
+    return `--ca-color:${props.item.color};${
       eventIsDragging() ? ';opacity:.7;' : ''
     };left:calc(${leftP()}00% + 7px);width:calc(${eventWidth}00% - 14px);background-color:${props.item.color}`
   }

@@ -37,7 +37,6 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
     addEventsToRows(filteredEvents(), rowList)
     return rowList
   })
-
   // Get overflowing events count for each colum grid
   const extraRowsData = createMemo(() => getExtraRows(getRowList(), props.cols[0], props.cols[6], 3))
 
@@ -46,9 +45,9 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
 
   function dragEnd() {
     if (!!draggingEventData()) {
-      const sourceE = { ...draggingEventData()?.source } as SourceEvent
-      sourceE.start = draggingEventData()?.start as Date
-      sourceE.end = draggingEventData()?.end as Date
+      const sourceE = { ...draggingEventData()?.source.sourceEvent }
+      sourceE.start = draggingEventData()?.sourceStart as Date
+      sourceE.end = draggingEventData()?.sourceEnd as Date
       if (sourceE) {
         //@ts-ignore
         props.onEventUpdate(sourceE)

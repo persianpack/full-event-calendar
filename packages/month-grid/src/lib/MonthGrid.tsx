@@ -31,6 +31,7 @@ export interface MonthDateObject {
   year: string | undefined
   month: string | undefined
   day: string | undefined
+  isOutCalendarMonth: boolean
 }
 interface MonthGridData {
   [key: string]: EventClass[]
@@ -71,9 +72,9 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
 
   function dragEnd() {
     if (!!draggingEventData()) {
-      const sourceE = { ...draggingEventData()?.source } as SourceEvent
-      sourceE.start = draggingEventData()?.start as Date
-      sourceE.end = draggingEventData()?.end as Date
+      const sourceE = { ...draggingEventData()?.source.sourceEvent }
+      sourceE.start = draggingEventData()?.sourceStart as Date
+      sourceE.end = draggingEventData()?.sourceEnd as Date
       if (sourceE) {
         //@ts-ignore
         props.onEventUpdate(sourceE)
@@ -86,6 +87,8 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
     mergedProps.onDateChange(d)
     mergedProps.onGridChange('daily')
   }
+
+  console.log(monthDateRows())
 
   return (
     <>
@@ -115,7 +118,6 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
                   >
                     <MonthEvent
                       isFirstRow={monthRowIndex() === 0}
-                      isLastRow={monthRowIndex() === 4}
                       onDragEnd={() => {}}
                       ondragstart={() => {}}
                       item={draggingEventData() as unknown as EventClass}
@@ -133,7 +135,6 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
                             rowItemIndex() + 1 <= mergedProps.rowLimit ? (
                               <MonthEvent
                                 isFirstRow={monthRowIndex() === 0}
-                                isLastRow={monthRowIndex() === 4}
                                 onDragEnd={dragEnd}
                                 ondragstart={onDragStart}
                                 item={dayObject}
@@ -170,10 +171,16 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
                   </For>
                 </div>
                 <For each={monthRowArr}>
-                  {(date) => (
+                  {(date, i) => (
                     <div class="month-container" onmousemove={() => onMouseEnter(date.date)}>
-                      <div class="month-day-wrapper">
-                        <span onclick={() => darClick(date.date)}>{date.day}</span>
+                      <div class={`month-day-wrapper ${isDateOne(date, i(), monthRowIndex(), monthRowArr)}`}>
+                        <div onclick={() => darClick(date.date)}>
+                          <span>{date.day}</span>
+
+                          <div class="month-name">
+                            {getMonthName(mergedProps.calendar, date.date, mergedProps.locale)}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   )}
@@ -185,4 +192,21 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
       </div>
     </>
   )
+}
+function getMonthName(calendar: string, date: Date, locale: string) {
+  return new Intl.DateTimeFormat(locale, {
+    month: 'short',
+    calendar: calendar
+  }).format(date)
+}
+
+function isDateOne(date: MonthDateObject, index: number, monthRowIndex: number, monthRowArr: MonthDateObject[]) {
+  if (date.isOutCalendarMonth) {
+    if (monthRowIndex === 0) {
+      return date.month != monthRowArr[index + 1]?.month ? 'month-day-out' : 'month-day-out-no-name'
+    } else if (date.isOutCalendarMonth) {
+      return date.month != monthRowArr[index - 1]?.month ? 'month-day-out' : 'month-day-out-no-name'
+    }
+  }
+  return ''
 }

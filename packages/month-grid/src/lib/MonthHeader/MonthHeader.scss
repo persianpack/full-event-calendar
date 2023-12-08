@@ -1,8 +1,20 @@
 .month-header {
   display: flex;
+  height: 40px;
+  // border-left:  1px solid var(--hairline);
+  // border-right:  1px solid var(--hairline);
   > div {
     flex: 1;
     display: flex;
     justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    font-size: 20px;
+    font-weight: 500;
+  }
+  > div:not(:first-child) {
+    border-left: 1px solid var(--hairline);
   }
 }
