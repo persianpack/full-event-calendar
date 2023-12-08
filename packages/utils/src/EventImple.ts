@@ -61,7 +61,8 @@ export class EventImpl implements EventClass {
   }
 
   calculatePositionTop() {
-    return `${this.getEventTopPositionIng()}`
+    return `;top:${this.getEventTopPositionIng()}%`
+    // return `;top:${eventColHeightInPercentage > 2358 ? 2358 : eventColHeightInPercentage}%`
   }
 
   isIncludedInaRange(date1: Date, date2: Date) {
@@ -92,9 +93,9 @@ export class EventImpl implements EventClass {
     this.end = convertTZ(this.sourceEvent.end, tz)
   }
 
-  private getEventTopPositionIng() {
+  getEventTopPositionIng() {
     const eventColHeightInPercentage = (this.start.getHours() + this.start.getMinutes() / 60) * 100
-    return `;top:${eventColHeightInPercentage > 2358 ? 2358 : eventColHeightInPercentage}%`
+    return eventColHeightInPercentage > 2358 ? 2358 : eventColHeightInPercentage
   }
 }
 

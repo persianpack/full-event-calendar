@@ -8,7 +8,7 @@ import { addEventsToRows, getExtraRows, useMonthEventDragging } from '@full-even
 // Components
 import { MonthEvent } from '@full-event-calendar/month-grid'
 // solid.js
-import { For, Show, createMemo } from 'solid-js'
+import { For, Show, createMemo, createSignal } from 'solid-js'
 
 interface WeeklyAllDayHeaderProps {
   events: EventClass[]
@@ -56,8 +56,34 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
     onDragEnd()
   }
 
+  let allDRef: any
+  const [isOpen, setIsOpen] = createSignal(false)
+  function openAllD() {
+    const el = allDRef as HTMLElement
+    if (!isOpen()) {
+      el.style.height = el.clientHeight + 'px'
+      el.style.maxHeight = 'initial'
+      setTimeout(() => {
+        el.style.height = el.scrollHeight + 'px'
+      }, 0)
+      setTimeout(() => {
+        el.style.height = 'fit-content'
+      }, 500)
+      setIsOpen(true)
+    } else {
+      el.style.height = el.clientHeight + 'px'
+      setTimeout(() => {
+        el.style.height = 55.6 * (filteredEvents().length > 2 ? 2 : filteredEvents().length) + 'px'
+      }, 0)
+      setTimeout(() => {
+        el.style.maxHeight = '111px'
+      }, 500)
+      setIsOpen(false)
+    }
+  }
+
   return (
-    <div class="weekly-allDay" id="month-wrapper-id">
+    <div class="weekly-allDay" id="month-wrapper-id" ref={allDRef}>
       <div class="week-all-day-wrapper">
         {/* this is a dummy event thats show the preview of the dragging event */}
         <Show when={!!draggingEventData()}>

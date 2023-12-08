@@ -14,7 +14,13 @@ export const EventItem: FComponent<EventItem> = (props) => {
     return props.event.doesEventStartOn(props.gridDate) ? props.event.calculatePositionTop() : 'top:0'
   }
   function getHeight() {
-    return props.event.calculateHeight(!props.event.doesEventStartOn(props.gridDate))
+    //return   props.event.calculateHeight(!props.event.doesEventStartOn(props.gridDate))
+    return props.event.doesEventEndOn(props.gridDate)
+      ? props.event.calculateHeight(!props.event.doesEventStartOn(props.gridDate))
+      : `height:${2400 - props.event.getEventTopPositionIng()}%`
+  }
+  if (!props.event.doesEventEndOn(props.gridDate)) {
+    console.log(getHeight(), props.event.getEventTopPositionIng())
   }
 
   function getBackGroundColor() {
@@ -29,7 +35,7 @@ export const EventItem: FComponent<EventItem> = (props) => {
       id={'event-' + props.event.id}
       class="ec-event"
       data-test-event-id={props.event.id}
-      style={`${getPosition()} ${getHeight()} ${props.width} ${getBackGroundColor()}`}
+      style={`${getPosition()} ;${getHeight()} ;${props.width} ${getBackGroundColor()}`}
     >
       <div
         style="position:sticky;top:0px;bottom:0"
