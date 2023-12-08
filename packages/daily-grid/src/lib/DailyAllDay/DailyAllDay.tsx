@@ -37,6 +37,23 @@ export const DailyAllDay: FComponent<DailyAllDayProps> = (props) => {
       setIsOpen(false)
     }
   }
+  createEffect(
+    on(
+      () => props.initialDate,
+      () => {
+        const el = allDRef as HTMLElement
+
+        // el.style.height = el.clientHeight + 'px'
+        setTimeout(() => {
+          el.style.height = 'fit-content'
+        }, 0)
+        setTimeout(() => {
+          el.style.maxHeight = '111px'
+        }, 500)
+        setIsOpen(false)
+      }
+    )
+  )
 
   return (
     <>
