@@ -1,4 +1,4 @@
-import { createEffect, on, onMount } from 'solid-js'
+import { createEffect, on, onCleanup, onMount } from 'solid-js'
 import { useGlobalState } from '../../../context-injector/context'
 
 interface containers {
@@ -11,6 +11,7 @@ export function useGridSliderAnimation(containers: containers) {
 
   let isGoing = false
   let clonedCalendar: any
+  let scrollTop = 0
   let prevInitDate = data.store.initialDate
 
   function startAnimation(hasAnimation: boolean = false) {
@@ -19,6 +20,14 @@ export function useGridSliderAnimation(containers: containers) {
     isGoing = true
     clonedCalendar.classList.add('cloned-calendar')
     clonedCalendar.classList.remove('not-cloned')
+    containers.calendarContainerRef?.insertAdjacentElement('beforeend', clonedCalendar)
+
+    const scroller = clonedCalendar.querySelector('.scroll-wrapper')
+    // const scroller2 = containers.containerRef.querySelector('.scroll-wrapper')
+    if (scroller) {
+      scroller.scrollTop = scrollTop
+    }
+
     const baseEl = containers.containerRef
     if (hasAnimation) {
       baseEl?.classList.add('grid-animate-smooth')
@@ -31,13 +40,6 @@ export function useGridSliderAnimation(containers: containers) {
     }
 
     prevInitDate = data.store.initialDate
-    containers.calendarContainerRef?.insertAdjacentElement('beforeend', clonedCalendar)
-
-    const scroller = clonedCalendar.querySelector('.scroll-wrapper')
-    const scroller2 = containers.containerRef.querySelector('.scroll-wrapper')
-    if (scroller && scroller2) {
-      scroller.scrollTop = scroller2.scrollTop
-    }
 
     setTimeout(() => {
       // End Animation
@@ -45,7 +47,8 @@ export function useGridSliderAnimation(containers: containers) {
       baseEl?.classList.remove('grid-animate-forward')
       baseEl?.classList.remove('grid-animate-backward')
       baseEl?.classList.remove('grid-animate-smooth')
-      clonedCalendar = baseEl?.cloneNode(true) as HTMLElement
+      makeAclone()
+      addListenr()
       isGoing = false
     }, 250)
   }
@@ -54,25 +57,52 @@ export function useGridSliderAnimation(containers: containers) {
     on(
       () => data.store.initialDate,
       () => {
+        // makeAclone()
         if (!clonedCalendar || isGoing) return
         startAnimation()
-      }
+        setTimeout(() => {}, 300)
+      },
+      { defer: true }
     )
   )
   onMount(() => {
-    clonedCalendar = containers.containerRef?.cloneNode(true) as HTMLElement
+    makeAclone()
+    addListenr()
   })
 
   document.querySelector('.more-wrapper')?.addEventListener('click', () => {
     setTimeout(() => {
-      clonedCalendar = containers.containerRef?.cloneNode(true) as HTMLElement
+      makeAclone()
     }, 500)
   })
   document.querySelector('.all-collapser')?.addEventListener('click', () => {
     setTimeout(() => {
-      clonedCalendar = containers.containerRef?.cloneNode(true) as HTMLElement
+      makeAclone()
     }, 500)
   })
+
+  document.querySelector('.go-some-d')?.addEventListener('click', () => {
+    makeAclone()
+  })
+
+  containers.containerRef.querySelector('.scroll-wrapper').addEventListener('scroll', makeAclone)
+
+  function addListenr() {
+    containers.containerRef.querySelector('.scroll-wrapper')?.removeEventListener('scroll', makeAclone)
+    containers.containerRef.querySelector('.scroll-wrapper')?.addEventListener('scroll', makeAclone)
+  }
+  onCleanup(() => {
+    containers.containerRef.querySelector('.scroll-wrapper')?.removeEventListener('scroll', makeAclone)
+  })
+
+  function makeAclone() {
+    clonedCalendar = containers.containerRef?.cloneNode(true) as HTMLElement
+    const scroller2 = containers.containerRef.querySelector('.scroll-wrapper') as HTMLElement
+    if (scroller2) {
+      scrollTop = scroller2.scrollTop
+    }
+    // console.log(clonedCalendar.scrollTop)
+  }
 
   createEffect(
     on(
