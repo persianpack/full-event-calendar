@@ -142,7 +142,7 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
           </div>
 
           <For each={timess}>
-            {(time, i) => {
+            {(_, i) => {
               return (
                 <>
                   <div data-test-time-range-id={i() + 1} class="time-range">

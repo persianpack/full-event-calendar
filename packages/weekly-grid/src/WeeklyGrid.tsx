@@ -102,16 +102,20 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
     mergedProps.onDateChange(d)
     mergedProps.onGridChange('daily')
   }
-  const headerDates = [0, 1, 2, 3, 4, 5, 6].map((i) => {
-    const y = new Date(mergedProps.initialDate)
-    y.setDate(y.getDate() + i)
-    return y
-  })
+  const headerDates = () => {
+    let iniDay = mergedProps.initialDate
+    iniDay.setDate(iniDay.getDate() - iniDay.getDay())
+    return [0, 1, 2, 3, 4, 5, 6].map((i) => {
+      const y = new Date(iniDay)
+      y.setDate(y.getDate() + i)
+      return y
+    })
+  }
 
   return (
     <>
       <div class="header-dates">
-        <For each={headerDates}>
+        <For each={headerDates()}>
           {(item) => (
             <DailyHeader
               headerDate={item}
@@ -123,13 +127,12 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
           )}
         </For>
       </div>
-      <div>
-        <WeeklyAllDayHeader
-          onEventUpdate={mergedProps.onEventUpdate}
-          events={sortEventByStart(mergedProps.events)}
-          cols={getEachColDate(columData)}
-        />
-      </div>
+
+      <WeeklyAllDayHeader
+        onEventUpdate={mergedProps.onEventUpdate}
+        events={mergedProps.events}
+        cols={getEachColDate(columData)}
+      />
 
       <div style=" position: relative; flex: 1;">
         <div style=" position: absolute;height: 100%;  width: 100%;" class="custome-scroll-bar scroll-wrapper">

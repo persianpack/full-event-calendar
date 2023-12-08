@@ -48,8 +48,11 @@
   padding: 20px 50px;
   align-items: center;
   .header-date {
+    width: 150px;
     display: flex;
+    white-space: nowrap;
     align-items: center;
+    justify-content: center;
     font-size: 24px;
     font-style: normal;
     font-weight: 500;

@@ -57,12 +57,9 @@ export function useGridSliderAnimation(containers: containers) {
     on(
       () => data.store.initialDate,
       () => {
-        // makeAclone()
         if (!clonedCalendar || isGoing) return
         startAnimation()
-        setTimeout(() => {}, 300)
-      },
-      { defer: true }
+      }
     )
   )
   onMount(() => {

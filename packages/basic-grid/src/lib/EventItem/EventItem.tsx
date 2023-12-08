@@ -19,9 +19,6 @@ export const EventItem: FComponent<EventItem> = (props) => {
       ? props.event.calculateHeight(!props.event.doesEventStartOn(props.gridDate))
       : `height:${2400 - props.event.getEventTopPositionIng()}%`
   }
-  if (!props.event.doesEventEndOn(props.gridDate)) {
-    console.log(getHeight(), props.event.getEventTopPositionIng())
-  }
 
   function getBackGroundColor() {
     return `;background-color:${props.event.color}`
