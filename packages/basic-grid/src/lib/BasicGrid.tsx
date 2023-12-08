@@ -15,13 +15,15 @@ export interface BasicGridProps {
   gridDate?: Date
   gridHeight?: number
   container?: string
+  id?: string
 }
 
 const defaultProps = {
   events: [],
   onEventUpdate: () => {},
   gridDate: new Date(),
-  gridHeight: 65 * 24
+  gridHeight: 65 * 24,
+  id: ''
 }
 
 export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
@@ -101,7 +103,7 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
   }
   return (
     <>
-      <div ref={containerRef.current}>
+      <div ref={containerRef.current} id={propsC.id} class="basic-grid">
         <div class="holdcontainer" style={getWrapperHeight()}>
           <For each={ColList()}>
             {(eventList, colNumber) => {
@@ -126,33 +128,10 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
           </For>
         </div>
         <div class="fec-daily-grid" style={`height: ${props.gridHeight}px`}>
-          <div class="grid-border-left"></div>
+          {/* <div class="grid-border-left"></div> */}
           <Show when={isDateToday(props.gridDate)}>
             <TimeBar container={containerRef} />
           </Show>
-          {/* <div class="holdcontainer" style={getWrapperHeight()}>
-          <For each={ColList()}>
-            {(eventList, colNumber) => {
-              return (
-                <div class="event-colom" data-test-col-id={colNumber()}>
-                  <For each={eventList}>
-                    {(event: EventClass) => {
-                      return (
-                        <EventItem
-                          event={event}
-                          gridDate={props.gridDate}
-                          width={lookForAvailableWith(ColList(), event, colNumber() + 1)}
-                          onMouseDown={onmousedownH}
-                          onDragStart={itemDragstart}
-                        ></EventItem>
-                      )
-                    }}
-                  </For>
-                </div>
-              )
-            }}
-          </For>
-        </div> */}
 
           <div class="time-range">
             <div class="time-range-time"> </div>
@@ -167,7 +146,7 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
               return (
                 <>
                   <div data-test-time-range-id={i() + 1} class="time-range">
-                    <div class="time-range-time">{time}</div>
+                    {/* <div class="time-range-time">{time}</div> */}
                     <div class="some-container">
                       <div class="time-rage-up-container"> </div>
                       <div class="time-rage-down-container"> </div>

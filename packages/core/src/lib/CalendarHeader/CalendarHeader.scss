@@ -8,21 +8,55 @@
 }
 .slide-fade-enter {
 }
+
+#group-grid-container {
+  .grid-border-left {
+    display: none;
+  }
+  .time-range {
+    margin: 0;
+  }
+  .holdcontainer {
+    padding-left: 12px;
+  }
+}
+#group-grid-container > div:first-child {
+  .fec-daily-grid {
+    // border-left: none;
+  }
+}
+#group-grid-container {
+  .fec-daily-grid {
+    padding: 0;
+  }
+  .scroll-wrapper {
+    overflow: hidden;
+  }
+  .time-rage-down-container,
+  .time-rage-up-container {
+    margin: 0;
+  }
+
+  .fec-daily-grid {
+    border-left: 1px solid var(--hairline);
+  }
+}
+
 .calendar-header {
   display: flex;
   gap: 10px;
   padding: 20px 50px;
   align-items: center;
-  .header-date{
+  .header-date {
     display: flex;
     align-items: center;
     font-size: 24px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-    
   }
-  .go-back-icon,.go-forward-icon{
+  .go-back-icon,
+  .go-forward-icon {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -31,21 +65,21 @@
     height: 22px;
     border-radius: 50%;
     transition: all 0.3s;
-    background-color:white;
+    background-color: white;
     cursor: pointer;
     &:hover {
       background-color: #ececec;
     }
   }
-  .go-back-icon{
-  rotate :(-90deg);
+  .go-back-icon {
+    rotate: (-90deg);
   }
-  .go-forward-icon{
-  rotate:(90deg);
+  .go-forward-icon {
+    rotate: (90deg);
   }
   .go-to-today {
     border-radius: 4px;
-    background: #FFF;
+    background: #fff;
     box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.08);
     padding: 10px 20px;
     border-radius: 10px;
@@ -54,13 +88,12 @@
   }
   .go-some-d {
     border-radius: 4px;
-    background: #FFF;
+    background: #fff;
     box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.08);
     padding: 10px 20px;
     border-radius: 10px;
     position: relative;
     cursor: pointer;
-
   }
   .dropdown-calendar {
     border-radius: 12px;

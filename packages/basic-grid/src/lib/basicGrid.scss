@@ -26,7 +26,7 @@
   position: relative;
   box-sizing: border-box;
   overflow: hidden;
-  padding-right: 43px;
+  padding-right: 8px;
 }
 // border-right:1px solid var(--hairline);
 * {
@@ -77,10 +77,14 @@
     z-index: 123123123;
   }
 }
+.basic-grid {
+  position: relative;
+  flex: 1;
+}
 .time-range {
   // background-color: green;
   border-top: 1px solid var(--hairline);
-  margin-left: 39px;
+  // margin-left: 39px;
   // outline: 1px solid #ecececb6;
   flex: 1;
   display: flex;
@@ -133,8 +137,8 @@
   position: absolute;
   width: 100%;
   display: flex;
-  padding-left: 62px;
-  padding-right: 12px;
+  padding-left: 10px;
+  padding-right: 10px;
   gap: 2px;
 }
 .tooltip .tooltiptext {

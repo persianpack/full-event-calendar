@@ -344,6 +344,9 @@ importers:
 
   packages/weekly-grid:
     dependencies:
+      '@full-event-calendar/basic-grid':
+        specifier: workspace:*
+        version: link:../basic-grid
       '@full-event-calendar/daily-grid':
         specifier: workspace:*
         version: link:../daily-grid

@@ -26,7 +26,6 @@ export class DomController {
     let self = this
     MMM = (e: any) => {
       self.mouseDown = true
-      console.log('mouseM')
       handelMouseMove(e)
     }
     MU = (e: any) => {
