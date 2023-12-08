@@ -40,7 +40,7 @@ export const DailyAllDay: FComponent<DailyAllDayProps> = (props) => {
 
   return (
     <>
-      <div class={`all-d-wrapeer-header ${isOpen() ? 'alld-open' : 'alld-not-open'}`}>
+      <div class={`all-d-wrapeer-header daosidj ${isOpen() ? 'alld-open' : 'alld-not-open'}`}>
         <div class="mor-btn-container">
           <Show when={filteredEvents().length > 2}>
             <div class="all-collapser" onclick={openAllD}>

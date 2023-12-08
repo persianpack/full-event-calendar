@@ -1,0 +1,27 @@
+.daily-time-ranges {
+  width: 51px;
+  border-right: 1px solid var(--hairline);
+}
+.daily-time-ranges {
+  display: flex;
+  flex-direction: column;
+  > div {
+    flex: 1;
+    position: relative;
+    display: flex;
+    .time-range-time {
+      white-space: nowrap;
+      transform: translateY(-6px);
+      right: 0;
+      font-size: 12px;
+      padding-left: 5px;
+    }
+    .time-range-hairline {
+      position: absolute;
+      width: 12px;
+      height: 10px;
+      right: 0px;
+      border-top: 1px solid var(--hairline);
+    }
+  }
+}

@@ -11,6 +11,7 @@ import { Show, createMemo, mergeProps } from 'solid-js'
 import { getEventsInDate } from '@full-event-calendar/utils'
 
 import './DailyGrid.scss'
+import { DailyTimeRanges } from './DailyTimeRanges/DailyTimeRanges'
 // Remove the extend
 export interface DailyGridProps extends BasicGridProps {
   initialDate?: Date
@@ -62,8 +63,9 @@ export const DailyGrid: FComponent<DailyGridProps> = (props) => {
         <Show when={mergedProps.showAllDay}>
           <DailyAllDay events={extractedEvents()} initialDate={mergedProps.initialDate}></DailyAllDay>
         </Show>
-        <div class="scroll-wrapper" id="scroll-wrapper">
-          <div style="position: absolute;width:100%">
+        <div class="scroll-wrapper " id="scroll-wrapper">
+          <div style="position: absolute;width:100%;display:flex;">
+            <DailyTimeRanges></DailyTimeRanges>
             <BasicGrid
               gridDate={mergedProps.initialDate}
               events={filteredOut()}
