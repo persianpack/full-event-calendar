@@ -1,12 +1,14 @@
 .weekly-allDay {
   // height: 200px;
-  overflow: auto;
+  overflow: hidden;
   display: flex;
   position: relative;
-  overflow: auto;
   display: flex;
   position: relative;
-  width: 100%;
+  width: calc(100% - 50px);
+  margin-left: 50px;
+  border-left: 1px solid var(--hairline);
+  border-right: 1px solid var(--hairline);
   .week-all-day-container123 {
     flex: 1;
     // position: relative;
@@ -24,4 +26,7 @@
     height: 10px;
     // background-color: blue;
   }
+}
+#group-grid-container > div {
+  flex: 1;
 }

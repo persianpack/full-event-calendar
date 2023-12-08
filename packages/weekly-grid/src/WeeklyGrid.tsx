@@ -2,12 +2,16 @@
 import { EventClass, FComponent, SourceEvent } from '@full-event-calendar/shared-ts'
 //solid.js
 import { createMutable } from 'solid-js/store'
-import { batch, createEffect, createMemo, mergeProps } from 'solid-js'
+import { For, batch, createEffect, createMemo, mergeProps } from 'solid-js'
 //components
 import { GroupGrid } from '@full-event-calendar/group-grid'
-import { DailyGrid } from '@full-event-calendar/daily-grid'
+import { DailyHeader, DailyTimeRanges } from '@full-event-calendar/daily-grid'
+import { BasicGrid } from '@full-event-calendar/basic-grid'
 //utils
 import { WeeklyAllDayHeader } from './lib/weeklyHeader/WeeklyAllDayHeader'
+import { getEventsInDate, sortEventByStart } from '@full-event-calendar/utils'
+// Styles
+import './WeekGrid.scss'
 
 export interface WeeklyGridProps {
   events?: EventClass[]
@@ -62,9 +66,14 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
         // Instead of filtering list for each event we pass down the entire event list
         // because the Daily grid component will filter out the event for the given they
         // so we do Not need the filter out here to ... it will be overdo
-        columData[dayNumber].events = mergedProps.events
+        const extractedEvents = getEventsInDate(mergedProps.events, new Date(iniDay))
+
+        columData[dayNumber].events = extractedEvents.filter((item) => !item.isAllDay())
         // set props for each colum that wil be passed to dailyGird package by GroupGrid Package
+
         columData[dayNumber].props.initialDate = new Date(iniDay)
+
+        columData[dayNumber].props.gridDate = new Date(iniDay)
         columData[dayNumber].props.locale = mergedProps.locale
         columData[dayNumber].props.timeZone = mergedProps.timeZone
         columData[dayNumber].props.calendar = mergedProps.calendar
@@ -82,7 +91,6 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
   function onEventUpdateProxy(updatedSourceEvent: SourceEvent, targetCol: number, baseCol: number, isDragend: boolean) {
     // TargetCol and baseCol are indexes for which colum was event moved in .
     const sourceCopy = { ...updatedSourceEvent }
-    console.log(isDragend, targetCol, baseCol, updatedSourceEvent)
     if (isDragend) {
       sourceCopy.start.setDate(sourceCopy.start.getDate() - (baseCol - targetCol))
       sourceCopy.end.setDate(sourceCopy.end.getDate() - (baseCol - targetCol))
@@ -94,20 +102,51 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
     mergedProps.onDateChange(d)
     mergedProps.onGridChange('daily')
   }
+  const headerDates = [0, 1, 2, 3, 4, 5, 6].map((i) => {
+    const y = new Date(mergedProps.initialDate)
+    y.setDate(y.getDate() + i)
+    return y
+  })
 
   return (
     <>
-      <WeeklyAllDayHeader
-        onEventUpdate={mergedProps.onEventUpdate}
-        events={mergedProps.events}
-        cols={getEachColDate(columData)}
-      />
-      <GroupGrid
-        gridComponent={DailyGrid}
-        cols={columData}
-        onEventUpdate={onEventUpdateProxy}
-        initialDate={mergedProps.initialDate}
-      />
+      <div class="header-dates">
+        <For each={headerDates}>
+          {(item) => (
+            <DailyHeader
+              headerDate={item}
+              timeZone={mergedProps.timeZone}
+              calendar={mergedProps.calendar}
+              onDateChange={mergedProps.onDateChange}
+              locale={mergedProps.locale}
+            ></DailyHeader>
+          )}
+        </For>
+      </div>
+      <div>
+        <WeeklyAllDayHeader
+          onEventUpdate={mergedProps.onEventUpdate}
+          events={sortEventByStart(mergedProps.events)}
+          cols={getEachColDate(columData)}
+        />
+      </div>
+
+      <div style=" position: relative; flex: 1;">
+        <div
+          style=" position: absolute;height: 100%;  width: 100%;overflow: scroll;"
+          class="custome-scroll-bar scroll-wrapper"
+        >
+          <div style="display: flex;" class="week-wrapper">
+            <DailyTimeRanges />
+            <GroupGrid
+              gridComponent={BasicGrid}
+              cols={columData}
+              onEventUpdate={onEventUpdateProxy}
+              initialDate={mergedProps.initialDate}
+            />
+          </div>
+        </div>
+      </div>
     </>
   )
 }

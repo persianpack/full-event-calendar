@@ -1,0 +1,16 @@
+.header-dates {
+  display: flex;
+  > div {
+    flex: 1;
+  }
+  .daily-header {
+    margin: 0;
+  }
+}
+
+.week-wrapper {
+  .daily-time-ranges {
+    width: 50px !important;
+    border: none !important;
+  }
+}
