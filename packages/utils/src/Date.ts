@@ -80,3 +80,20 @@ export function getDateTimeRange(start: Date, end: Date) {
     end.getHours()
   )}:${addZeroPadd(end.getMinutes())}`
 }
+
+export function formatToShortTime(date: Date, locale: string) {
+  const shortTime = new Intl.DateTimeFormat(locale, {
+    timeStyle: 'short',
+    hourCycle: 'h24'
+  })
+
+  return shortTime.format(date)
+}
+
+export function formatRange(date1: Date, date2: Date, locale: string) {
+  const fmt1 = new Intl.DateTimeFormat(locale, {
+    hour: 'numeric',
+    minute: 'numeric'
+  })
+  return `${fmt1.format(date1)} - ${fmt1.format(date2)}`
+}

@@ -82,3 +82,10 @@ export function getCalendarMonthDays(date: Date, calendar: string = 'gregory') {
 
   return monthDays
 }
+
+export function getMonthName(calendar: string, date: Date, locale: string) {
+  return new Intl.DateTimeFormat(locale, {
+    month: 'short',
+    calendar: calendar
+  }).format(date)
+}

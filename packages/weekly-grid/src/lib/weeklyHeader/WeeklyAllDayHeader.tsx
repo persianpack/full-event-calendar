@@ -14,6 +14,7 @@ interface WeeklyAllDayHeaderProps {
   events: EventClass[]
   cols: Date[]
   onEventUpdate: (event: any) => void
+  locale:string
 }
 interface rowList {
   [key: string]: EventClass[]
@@ -119,8 +120,8 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
           {/* this is a dummy event thats show the preview of the dragging event */}
           <Show when={!!draggingEventData()}>
             <MonthEvent
+              locale={props.locale}
               isFirstRow={true}
-              isLastRow={true}
               onDragEnd={() => {}}
               ondragstart={() => {}}
               item={draggingEventData() as unknown as EventClass}
@@ -139,8 +140,8 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
                 <For each={getRowList()[item]}>
                   {(item3) => (
                     <MonthEvent
+                      locale={props.locale}
                       isFirstRow={true}
-                      isLastRow={true}
                       onDragEnd={dragEnd}
                       ondragstart={onDragStart}
                       item={item3}
