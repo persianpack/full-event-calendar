@@ -13,8 +13,8 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
   const data = useGlobalState()
   function ClickOutSide(el: any, accessor: any) {
     const onClick = (e: any) => !el.contains(e.target) && accessor()?.()
-    document.body.addEventListener('click', onClick)
-    onCleanup(() => document.body.removeEventListener('click', onClick))
+    document.addEventListener('click', onClick)
+    onCleanup(() => document.removeEventListener('click', onClick))
   }
   function amodalClickOut() {
     SetDropDown(false)
@@ -101,7 +101,9 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
           ></path>
         </svg>
       </div>
-      <div class="header-date">{formatter()}</div>
+      <div class="header-date" dir="auto">
+        {formatter()}
+      </div>
 
       <div style="flex:1"></div>
 

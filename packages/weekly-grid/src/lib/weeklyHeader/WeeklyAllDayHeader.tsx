@@ -3,7 +3,7 @@ import { EventClass, FComponent, SourceEvent } from '@full-event-calendar/shared
 // Styles
 import './WeeklyAllDayHeader.scss'
 // Utils
-import { filterEventsByDateRange } from '@full-event-calendar/utils'
+import { filterEventsByDateRange, formatNumber } from '@full-event-calendar/utils'
 import { addEventsToRows, getExtraRows, useMonthEventDragging } from '@full-event-calendar/month-grid'
 // Components
 import { MonthEvent } from '@full-event-calendar/month-grid'
@@ -14,7 +14,7 @@ interface WeeklyAllDayHeaderProps {
   events: EventClass[]
   cols: Date[]
   onEventUpdate: (event: any) => void
-  locale:string
+  locale: string
 }
 interface rowList {
   [key: string]: EventClass[]
@@ -111,7 +111,7 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
           <For each={extraRowsData()}>
             {(item, i) => (
               <div onclick={openAllD} style={item === 0 ? 'opacity:0;pointer-events: none;' : ''}>
-                {item} more
+                {formatNumber(props.locale, item)} +
               </div>
             )}
           </For>

@@ -132,12 +132,13 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
         onEventUpdate={mergedProps.onEventUpdate}
         events={mergedProps.events}
         cols={getEachColDate(columData)}
+        locale={mergedProps.locale}
       />
 
       <div style=" position: relative; flex: 1;">
         <div style=" position: absolute;height: 100%;  width: 100%;" class="custome-scroll-bar scroll-wrapper">
           <div style="display: flex;" class="week-wrapper">
-            <DailyTimeRanges />
+            <DailyTimeRanges locale={mergedProps.locale} />
             <GroupGrid
               gridComponent={BasicGrid}
               cols={columData}

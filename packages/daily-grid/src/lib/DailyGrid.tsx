@@ -61,14 +61,19 @@ export const DailyGrid: FComponent<DailyGridProps> = (props) => {
         />
 
         <Show when={mergedProps.showAllDay}>
-          <DailyAllDay events={extractedEvents()} initialDate={mergedProps.initialDate}></DailyAllDay>
+          <DailyAllDay
+            locale={mergedProps.locale}
+            events={extractedEvents()}
+            initialDate={mergedProps.initialDate}
+          ></DailyAllDay>
         </Show>
         <div class="scroll-wrapper " id="scroll-wrapper">
           <div style="position: absolute;width:100%;display:flex;">
-            <DailyTimeRanges></DailyTimeRanges>
+            <DailyTimeRanges locale={mergedProps.locale}></DailyTimeRanges>
             <BasicGrid
               gridDate={mergedProps.initialDate}
               events={filteredOut()}
+              locale={mergedProps.locale}
               onEventUpdate={mergedProps.onEventUpdate}
               gridHeight={mergedProps.gridHeight}
               container={mergedProps.container}

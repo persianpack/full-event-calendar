@@ -16,6 +16,7 @@ export interface BasicGridProps {
   gridHeight?: number
   container?: string
   id?: string
+  locale?: string
 }
 
 const defaultProps = {
@@ -23,7 +24,8 @@ const defaultProps = {
   onEventUpdate: () => {},
   gridDate: new Date(),
   gridHeight: 65 * 24,
-  id: ''
+  id: '',
+  locale: 'en'
 }
 
 export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
@@ -113,6 +115,7 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
                     {(event: EventClass) => {
                       return (
                         <EventItem
+                          locale={props.locale}
                           event={event}
                           gridDate={props.gridDate}
                           width={lookForAvailableWith(ColList(), event, colNumber() + 1)}

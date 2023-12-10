@@ -2,11 +2,12 @@ import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
 import { For, Show, createEffect, createMemo, createSignal, on } from 'solid-js'
 import './DailyAllDay.scss'
 import { isEventRightOrLeftOrNone } from '@full-event-calendar/utils/src/Date'
-import { sortEventByStart } from '@full-event-calendar/utils'
+import { formatNumber, sortEventByStart } from '@full-event-calendar/utils'
 
 interface DailyAllDayProps {
   events: EventClass[]
   initialDate: Date
+  locale: string
 }
 
 export const DailyAllDay: FComponent<DailyAllDayProps> = (props) => {
@@ -91,7 +92,7 @@ export const DailyAllDay: FComponent<DailyAllDayProps> = (props) => {
           </For>
           <Show when={filteredEvents().length > 2}>
             <div class="more-btn" onclick={openAllD}>
-              <div class="more-wrapper">{filteredEvents().length - 2} more</div>
+              <div class="more-wrapper">{formatNumber(props.locale, filteredEvents().length - 2)} +</div>
             </div>
           </Show>
         </div>
