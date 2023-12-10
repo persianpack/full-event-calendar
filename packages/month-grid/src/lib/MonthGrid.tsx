@@ -9,7 +9,7 @@ import { EventModal, openModal } from './MonthModal/MonthModal'
 import { MonthHeader } from './MonthHeader/MonthHeader'
 import { MonthEvent } from './MonthEvent/MonthEvent'
 // Utils
-import { ArraySplitIntoChunks, getCalendarMonthDays } from '@full-event-calendar/utils'
+import { ArraySplitIntoChunks, formatNumber, getCalendarMonthDays, getMonthName } from '@full-event-calendar/utils'
 import { getMonthRows } from '../utils/EventRows'
 import { isDateIncludedInaRange, sortEventByStart } from '@full-event-calendar/utils'
 import { useMonthEventDragging } from '../utils/EventDragging'
@@ -88,8 +88,6 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
     mergedProps.onGridChange('daily')
   }
 
-  console.log(monthDateRows())
-
   return (
     <>
       <MonthHeader
@@ -117,6 +115,7 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
                     }
                   >
                     <MonthEvent
+                      locale={mergedProps.locale}
                       isFirstRow={monthRowIndex() === 0}
                       onDragEnd={() => {}}
                       ondragstart={() => {}}
@@ -134,6 +133,7 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
                           {(dayObject) =>
                             rowItemIndex() + 1 <= mergedProps.rowLimit ? (
                               <MonthEvent
+                                locale={mergedProps.locale}
                                 isFirstRow={monthRowIndex() === 0}
                                 onDragEnd={dragEnd}
                                 ondragstart={onDragStart}
@@ -163,7 +163,7 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
                       <div class="month-more-item">
                         <Show when={extraCount > 0}>
                           <div class="month-more-btn" onclick={[openModalEvents, monthRowArr[j()]]}>
-                            {extraCount} +
+                            {formatNumber(mergedProps.locale, extraCount as any)} +
                           </div>
                         </Show>
                       </div>
@@ -175,7 +175,7 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
                     <div class="month-container" onmousemove={() => onMouseEnter(date.date)}>
                       <div class={`month-day-wrapper ${isDateOne(date, i(), monthRowIndex(), monthRowArr)}`}>
                         <div onclick={() => darClick(date.date)}>
-                          <span>{date.day}</span>
+                          <span>{formatNumber(mergedProps.locale, date.day as any)}</span>
 
                           <div class="month-name">
                             {getMonthName(mergedProps.calendar, date.date, mergedProps.locale)}
@@ -192,12 +192,6 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
       </div>
     </>
   )
-}
-function getMonthName(calendar: string, date: Date, locale: string) {
-  return new Intl.DateTimeFormat(locale, {
-    month: 'short',
-    calendar: calendar
-  }).format(date)
 }
 
 function isDateOne(date: MonthDateObject, index: number, monthRowIndex: number, monthRowArr: MonthDateObject[]) {

@@ -7,7 +7,7 @@
 .month-day-out {
   > div {
     display: flex;
-    flex-direction: column;
+    flex-direction: row-reverse;
     align-items: center;
     color: #e2e4e9;
   }
@@ -18,7 +18,6 @@
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-    transform: translateX(-10px);
   }
 }
 .month-day-out-no-name {
@@ -72,17 +71,36 @@
       gap: 12px;
       .month-more-item {
         flex: 1;
+
         .month-more-btn {
-          background-color: yellow;
+          background-color: white;
+
+          transition: all 0.3s;
+
+          align-items: center;
+          padding-left: 8px;
+          padding-top: 3px;
+          border-radius: 8px;
+
+          &:hover {
+            background: #ececec;
+          }
           border-radius: 5px;
           cursor: pointer;
-          &:hover {
-            background-color: #31b5f7;
-          }
         }
       }
     }
   }
+}
+.slide-fade-enter-active,
+.slide-fade-exit-active {
+  transition: opacity 0.3s;
+}
+.slide-fade-enter,
+.slide-fade-exit-to {
+  opacity: 0;
+}
+.slide-fade-enter {
 }
 
 .month-is-dragging {

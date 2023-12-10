@@ -83,6 +83,7 @@ class MonthDraggingObject {
   source: EventClass
   color: string
   sourceStart: Date
+  name: string
   sourceEnd: Date
   constructor(id: string, start: Date, end: Date, sourceEnd: Date, sourceStart: Date, source: EventClass) {
     this.id = id
@@ -92,5 +93,6 @@ class MonthDraggingObject {
     this.color = source.color
     this.sourceStart = sourceStart
     this.sourceEnd = sourceEnd
+    this.name = source.name
   }
 }

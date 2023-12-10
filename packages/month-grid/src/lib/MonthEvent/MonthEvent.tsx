@@ -2,7 +2,7 @@ import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
 import { createMemo, createSignal } from 'solid-js'
 import './MonthEvent.scss'
 import { getLeftPosition, getEndPosition } from '../../utils/EventPosition'
-import { isEventRightOrLeftOrNoneRange } from '@full-event-calendar/utils/src/Date'
+import { formatToShortTime, isEventRightOrLeftOrNoneRange } from '@full-event-calendar/utils/src/Date'
 interface EventProps {
   item: EventClass
   endDate: Date
@@ -10,6 +10,7 @@ interface EventProps {
   ondragstart: (e: EventClass) => void
   onDragEnd: () => void
   isFirstRow: boolean
+  locale: string
 }
 
 export const MonthEvent: FComponent<EventProps> = (props: EventProps) => {
@@ -59,7 +60,9 @@ export const MonthEvent: FComponent<EventProps> = (props: EventProps) => {
       style={eventStyles()}
       data-test-id-month-item={props.item.id}
     >
-      {props.item.id}
+      <div class="event-time-month">{`${isNotAllDay() ? formatToShortTime(props.item.start, props.locale) : ''} `}</div>
+
+      <div class="event-name-month">{isNotAllDay() ? `(${props.item.name})` : props.item.name}</div>
     </div>
   )
 }

@@ -82,22 +82,39 @@ export const EventModal: FComponent<ModalProps> = (props) => {
     document.getElementById('month-wrapper-id')?.classList.add('month-is-dragging')
   }
 
+  function isNotAllDay(event: EventClass) {
+    if (event?.isAllDay) {
+      return !event?.isAllDay() ? 'month-item-no-all-day' : ''
+    }
+    return ''
+  }
+  function formatee(date: Date) {
+    const shortTime = new Intl.DateTimeFormat('en', {
+      timeStyle: 'short'
+    })
+
+    return shortTime.format(date)
+  }
+
   return (
     <Show when={modalData().show}>
       {/* 
       //@ts-ignore */}
       <div
         use:ClickOutSide={modalClickOutSide}
-        class="modal-event-list"
-        style={`left:${modalData().left};top:${modalData().bottom}`}
+        class="modal-event-list custome-scroll-bar "
+        style={`left:${modalData().left};top:${modalData().bottom};`}
       >
         <For each={modalData().events}>
           {(event) => (
             <div
-              class={`modal-event ${isEventRightOrLeftOrNone(event, modalData().somDate)}`}
+              class={`modal-event ${isNotAllDay(event)} ${isEventRightOrLeftOrNone(event, modalData().somDate)}`}
               onmousedown={[modalDragStart, event]}
+              style={`background:${event.color};--ca-color:${event.color}`}
             >
-              {event.id}
+              <div class="event-time-month">{`${isNotAllDay(event) ? formatee(event.start) : ''} `}</div>
+
+              <div class="event-name-month">{isNotAllDay(event) ? `(${event.name})` : event.name}</div>
             </div>
           )}
         </For>
