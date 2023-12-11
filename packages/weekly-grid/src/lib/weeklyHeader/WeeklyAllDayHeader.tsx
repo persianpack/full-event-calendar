@@ -58,11 +58,13 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
   }
 
   let allDRef: any
+  let cachecH = 0
   const [isOpen, setIsOpen] = createSignal(false)
   function openAllD() {
     const el = allDRef as HTMLElement
     if (!isOpen()) {
-      el.style.height = el.clientHeight + 0 + 'px'
+      cachecH = el.clientHeight
+      el.style.height = el.clientHeight + 'px'
       el.style.maxHeight = 'initial'
       setTimeout(() => {
         el.style.height = el.scrollHeight + 5 + 'px'
@@ -73,18 +75,20 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
       setIsOpen(true)
     } else {
       el.style.height = el.clientHeight + 'px'
+
       setTimeout(() => {
-        el.style.height = 55.6 * (filteredEvents().length > 2 ? 2 : filteredEvents().length) + 'px'
+        el.style.height = cachecH + 'px'
       }, 0)
       setTimeout(() => {
-        el.style.maxHeight = '111px'
+        el.style.height = 'fit-content'
+        el.style.maxHeight = '112px'
       }, 500)
       setIsOpen(false)
     }
   }
   onMount(() => {
     const el = allDRef as HTMLElement
-    el.style.height = 55.6 * (filteredEvents().length > 2 ? 2 : filteredEvents().length) + 'px'
+    el.style.height = 'fit-content'
   })
 
   return (

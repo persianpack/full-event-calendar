@@ -83,7 +83,7 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
     onDragEnd()
   }
 
-  function darClick(d: Date) {
+  function dragClick(d: Date) {
     mergedProps.onDateChange(d)
     mergedProps.onGridChange('daily')
   }
@@ -97,7 +97,7 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
         calendar={mergedProps.calendar}
       ></MonthHeader>
       <div class="month-wrapper" id="month-wrapper-id">
-        <EventModal onDragEnd={dragEnd} onDragStart={ModalDragStart} />
+        <EventModal locale={mergedProps.locale} onDragEnd={dragEnd} onDragStart={ModalDragStart} />
 
         <For each={monthDateRows()}>
           {(monthRowArr, monthRowIndex) => {
@@ -174,9 +174,8 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
                   {(date, i) => (
                     <div class="month-container" onmousemove={() => onMouseEnter(date.date)}>
                       <div class={`month-day-wrapper ${isDateOne(date, i(), monthRowIndex(), monthRowArr)}`}>
-                        <div onclick={() => darClick(date.date)}>
+                        <div onclick={() => dragClick(date.date)}>
                           <span>{formatNumber(mergedProps.locale, date.day as any)}</span>
-
                           <div class="month-name">
                             {getMonthName(mergedProps.calendar, date.date, mergedProps.locale)}
                           </div>

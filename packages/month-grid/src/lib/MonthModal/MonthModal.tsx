@@ -2,7 +2,7 @@
 import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
 import { MonthDateObject } from '../MonthGrid'
 // Utils
-import { getEventsInDate, isEventRightOrLeftOrNone } from '@full-event-calendar/utils'
+import { formatToShortTime, getEventsInDate, isEventRightOrLeftOrNone } from '@full-event-calendar/utils'
 // Solid.js
 import { For, Show, createSignal, onCleanup } from 'solid-js'
 // Styles
@@ -43,6 +43,7 @@ export function openModal(data: MonthDateObject, e: MouseEvent, events: EventCla
 interface ModalProps {
   onDragStart: (draggingOnStartDate: Date, event: EventClass) => void
   onDragEnd: () => void
+  locale: string
 }
 
 export const EventModal: FComponent<ModalProps> = (props) => {
@@ -88,13 +89,6 @@ export const EventModal: FComponent<ModalProps> = (props) => {
     }
     return ''
   }
-  function formatee(date: Date) {
-    const shortTime = new Intl.DateTimeFormat('en', {
-      timeStyle: 'short'
-    })
-
-    return shortTime.format(date)
-  }
 
   return (
     <Show when={modalData().show}>
@@ -112,8 +106,9 @@ export const EventModal: FComponent<ModalProps> = (props) => {
               onmousedown={[modalDragStart, event]}
               style={`background:${event.color};--ca-color:${event.color}`}
             >
-              <div class="event-time-month">{`${isNotAllDay(event) ? formatee(event.start) : ''} `}</div>
-
+              <div class="event-time-month">{`${
+                isNotAllDay(event) ? formatToShortTime(event.start, props.locale) : ''
+              } `}</div>
               <div class="event-name-month">{isNotAllDay(event) ? `(${event.name})` : event.name}</div>
             </div>
           )}

@@ -47,8 +47,8 @@ export function useGridSliderAnimation(containers: containers) {
       baseEl?.classList.remove('grid-animate-forward')
       baseEl?.classList.remove('grid-animate-backward')
       baseEl?.classList.remove('grid-animate-smooth')
-      makeAclone()
-      addListenr()
+      makeClone()
+      addListners()
       isGoing = false
     }, 250)
   }
@@ -63,36 +63,36 @@ export function useGridSliderAnimation(containers: containers) {
     )
   )
   onMount(() => {
-    makeAclone()
-    addListenr()
+    makeClone()
+    addListners()
   })
 
   document.querySelector('.more-wrapper')?.addEventListener('click', () => {
     setTimeout(() => {
-      makeAclone()
+      makeClone()
     }, 500)
   })
   document.querySelector('.all-collapser')?.addEventListener('click', () => {
     setTimeout(() => {
-      makeAclone()
+      makeClone()
     }, 500)
   })
 
   document.querySelector('.go-some-d')?.addEventListener('click', () => {
-    makeAclone()
+    makeClone()
   })
 
-  containers.containerRef.querySelector('.scroll-wrapper').addEventListener('scroll', makeAclone)
+  containers.containerRef.querySelector('.scroll-wrapper').addEventListener('scroll', makeClone)
 
-  function addListenr() {
-    containers.containerRef.querySelector('.scroll-wrapper')?.removeEventListener('scroll', makeAclone)
-    containers.containerRef.querySelector('.scroll-wrapper')?.addEventListener('scroll', makeAclone)
+  function addListners() {
+    containers.containerRef.querySelector('.scroll-wrapper')?.removeEventListener('scroll', makeClone)
+    containers.containerRef.querySelector('.scroll-wrapper')?.addEventListener('scroll', makeClone)
   }
   onCleanup(() => {
-    containers.containerRef.querySelector('.scroll-wrapper')?.removeEventListener('scroll', makeAclone)
+    containers.containerRef.querySelector('.scroll-wrapper')?.removeEventListener('scroll', makeClone)
   })
 
-  function makeAclone() {
+  function makeClone() {
     clonedCalendar = containers.containerRef?.cloneNode(true) as HTMLElement
     const scroller2 = containers.containerRef.querySelector('.scroll-wrapper') as HTMLElement
     if (scroller2) {
@@ -107,7 +107,6 @@ export function useGridSliderAnimation(containers: containers) {
       () => {
         if (!clonedCalendar || isGoing) return
         startAnimation(true)
-        // clonedCalendar = containers.containerRef?.cloneNode(true) as HTMLElement
       }
     )
   )

@@ -6,6 +6,7 @@
   display: flex;
   position: relative;
   width: calc(100% - 50px);
+  max-height: 112px;
   // margin-left: 50px;
   border-left: 1px solid var(--hairline);
   padding-bottom: 7px;
