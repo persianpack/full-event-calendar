@@ -121,7 +121,7 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
               headerDate={item}
               timeZone={mergedProps.timeZone}
               calendar={mergedProps.calendar}
-              onDateChange={mergedProps.onDateChange}
+              onDateChange={onDateChange}
               locale={mergedProps.locale}
             ></DailyHeader>
           )}

@@ -91,10 +91,14 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
     el.style.height = 'fit-content'
   })
 
+  function getRowListArr() {
+    return Object.keys(getRowList())
+  }
+
   return (
     <div class={`${isOpen() ? 'weekly-allDay-open' : ''}`} style="display: flex;">
       <div class="mor-btn-container">
-        <Show when={filteredEvents().length > 3}>
+        <Show when={getRowListArr().length > 3}>
           <div class="all-collapser" onclick={openAllD}>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path
@@ -111,15 +115,17 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
       </div>
 
       <div class="weekly-allDay" id="month-wrapper-id" ref={allDRef}>
-        <div class="weeklymores">
-          <For each={extraRowsData()}>
-            {(item, i) => (
-              <div onclick={openAllD} style={item === 0 ? 'opacity:0;pointer-events: none;' : ''}>
-                {formatNumber(props.locale, item)} +
-              </div>
-            )}
-          </For>
-        </div>
+        <Show when={getRowListArr().length > 3}>
+          <div class="weeklymores">
+            <For each={extraRowsData()}>
+              {(item, i) => (
+                <div onclick={openAllD} style={item === 0 ? 'opacity:0;pointer-events: none;' : ''}>
+                  {formatNumber(props.locale, item)} +
+                </div>
+              )}
+            </For>
+          </div>
+        </Show>
         <div class="week-all-day-wrapper">
           {/* this is a dummy event thats show the preview of the dragging event */}
           <Show when={!!draggingEventData()}>
@@ -137,7 +143,7 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
         {/* each colum box has a mouse move for handling drag  */}
         <div class="week-all-day-container123" data-test-id-all-w-c="1" onmousemove={() => onMouseEnter(props.cols[0])}>
           {/* loop on each row list */}
-          <For each={Object.keys(getRowList())}>
+          <For each={getRowListArr()}>
             {(item) => (
               <div class="week-all-day-container">
                 {/* loop on each event in a row list and use monthly grid components for this */}
