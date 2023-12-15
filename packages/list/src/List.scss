@@ -1,0 +1,20 @@
+.event-list {
+  // background:red;
+  border-left: 1px solid var(--hairline);
+  border-right: 1px solid var(--hairline);
+}
+.event-list-item {
+  border-bottom: 1px solid var(--hairline);
+  height: 41px;
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  padding: 0px 20px;
+}
+.event-list-item-time {
+  min-width: 100px;
+}
+.event-list-item-des {
+  display: flex;
+  gap: 100px;
+}

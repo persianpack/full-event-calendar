@@ -2,6 +2,7 @@ import { Calendar } from '@full-event-calendar/core'
 import { DailyGridPlugin } from '@full-event-calendar/daily-grid'
 import { MonthGridPlugin } from '@full-event-calendar/month-grid'
 import { WeeklyGridPlugin } from '@full-event-calendar/weekly-grid'
+import { ListPlugin } from '@full-event-calendar/list'
 import './App.css'
 const el = document.getElementById('app') as HTMLElement
 
@@ -282,7 +283,7 @@ const EventCalendar = new Calendar(el, {
   // locale: 'fa-IR',
   initialDate: new Date('Thu Aug 10 2023 15:00:0'),
   //@ts-ignore
-  plugins: [DailyGridPlugin, MonthGridPlugin, WeeklyGridPlugin],
+  plugins: [DailyGridPlugin, MonthGridPlugin, WeeklyGridPlugin, ListPlugin],
   grid: 'daily'
 })
 console.time('rendered in ')

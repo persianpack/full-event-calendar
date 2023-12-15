@@ -13,7 +13,8 @@
     "@full-event-calendar/core": "workspace:*",
     "@full-event-calendar/daily-grid": "workspace:*",
     "@full-event-calendar/weekly-grid": "workspace:*",
-    "@full-event-calendar/month-grid": "workspace:*"
+    "@full-event-calendar/month-grid": "workspace:*",
+    "@full-event-calendar/list": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.0.2",
