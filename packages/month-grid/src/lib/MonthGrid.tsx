@@ -1,5 +1,5 @@
 // Solid.js
-import { For, Show, createMemo, mergeProps } from 'solid-js'
+import { For, Show, createMemo, createSignal, mergeProps } from 'solid-js'
 // Types
 import { EventClass, FComponent, SourceEvent } from '@full-event-calendar/shared-ts'
 // Styles
@@ -51,6 +51,7 @@ const defaultProps = {
 
 export const MonthGrid: FComponent<MonthGridProps> = (props) => {
   const mergedProps = mergeProps(defaultProps, props)
+  const [rowLimit, setRowLimit] = createSignal(4)
 
   const { onDragEnd, onDragStart, onMouseEnter, draggingEventData } = useMonthEventDragging()
 
@@ -60,7 +61,10 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
 
   const monthDateRows = createMemo(() => ArraySplitIntoChunks(monthCalendarObject(), 7) as MonthDateObject[][])
 
-  const monthRowGridData = createMemo(() => getMonthRows(monthDateRows(), filteredEvents()) as MonthGridData[])
+  const monthRowGridData = createMemo(() => {
+    setRowLimit(monthDateRows().length > 5 ? 3 : 4)
+    return getMonthRows(monthDateRows(), filteredEvents()) as MonthGridData[]
+  })
 
   function openModalEvents(monthObject: MonthDateObject, e: MouseEvent) {
     openModal(monthObject, e, filteredEvents())
@@ -86,6 +90,10 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
   function dragClick(d: Date) {
     mergedProps.onDateChange(d)
     mergedProps.onGridChange('daily')
+  }
+
+  function getRowLimit(arr: any) {
+    return arr.slice(0, rowLimit())
   }
 
   return (
@@ -126,25 +134,21 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
                   </Show>
                 </div>
                 <div class="month-row-container" data-test-id-month-row={monthRowIndex()}>
-                  <For each={Object.keys(monthRowGridData()[monthRowIndex()])}>
+                  <For each={getRowLimit(Object.keys(monthRowGridData()[monthRowIndex()]))}>
                     {(rowItemKey, rowItemIndex) => (
                       <div class="month-row-wrapper" data-test-id-row-wrapper={rowItemIndex()}>
                         <For each={monthRowGridData()[monthRowIndex()][rowItemKey]}>
-                          {(dayObject) =>
-                            rowItemIndex() + 1 <= mergedProps.rowLimit ? (
-                              <MonthEvent
-                                locale={mergedProps.locale}
-                                isFirstRow={monthRowIndex() === 0}
-                                onDragEnd={dragEnd}
-                                ondragstart={onDragStart}
-                                item={dayObject}
-                                endDate={monthRowArr[6].date}
-                                startDate={monthRowArr[0].date}
-                              />
-                            ) : (
-                              <></>
-                            )
-                          }
+                          {(dayObject) => (
+                            <MonthEvent
+                              locale={mergedProps.locale}
+                              isFirstRow={monthRowIndex() === 0}
+                              onDragEnd={dragEnd}
+                              ondragstart={onDragStart}
+                              item={dayObject}
+                              endDate={monthRowArr[6].date}
+                              startDate={monthRowArr[0].date}
+                            />
+                          )}
                         </For>
                       </div>
                     )}
@@ -156,7 +160,7 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
                       monthRowGridData()[monthRowIndex()],
                       monthRowArr[0].date,
                       monthRowArr[6].date,
-                      mergedProps.rowLimit
+                      rowLimit()
                     )}
                   >
                     {(extraCount, j) => (
