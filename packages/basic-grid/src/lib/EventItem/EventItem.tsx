@@ -1,5 +1,5 @@
 import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
-import { formatRange, getEventTimeRange } from '@full-event-calendar/utils'
+import { formatRange, getDateTimeRange, getEventTimeRange } from '@full-event-calendar/utils'
 import './EventItem.scss'
 interface EventItem {
   onDragStart: (event: EventClass, e: MouseEvent, D: boolean) => void
@@ -36,15 +36,13 @@ export const EventItem: FComponent<EventItem> = (props) => {
       style={`${getPosition()} ;${getHeight()} ;${props.width} ${getBackGroundColor()}`}
     >
       <div
-        style="position:sticky;top:0px;bottom:0"
-        class="tooltip-multiline "
+        style="position:sticky;top:0px;bottom:30px"
+        class="tooltip-multiline event-info"
         data-tooltip={`${props.event.name} ${formatRange(props.event.start, props.event.end, props.locale)}`}
       >
         <div class="item-trunctae">{props.event.name}</div>
         <div>
-          <span id={'event-end-' + props.event.id}>
-            {formatRange(props.event.start, props.event.end, props.locale)}
-          </span>
+          <span id={'event-end-' + props.event.id}>{getDateTimeRange(props.event.start, props.event.end)}</span>
         </div>
       </div>
       <div onmousedown={[props.onMouseDown, props.event]} class="resizer"></div>
