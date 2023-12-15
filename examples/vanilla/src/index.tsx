@@ -278,8 +278,8 @@ const EventCalendar = new Calendar(el, {
   gridHeight: 65 * 24,
   // autoUpdateEventOnChange:false,
   timeZone: 'Africa/Abidjan',
-  calendar: 'persian',
-  locale: 'fa-IR',
+  // calendar: 'persian',
+  // locale: 'fa-IR',
   initialDate: new Date('Thu Aug 10 2023 15:00:0'),
   //@ts-ignore
   plugins: [DailyGridPlugin, MonthGridPlugin, WeeklyGridPlugin],
@@ -289,9 +289,12 @@ console.time('rendered in ')
 EventCalendar.render()
 console.timeEnd('rendered in ')
 EventCalendar.on('eventUpdate', (e, r, t) => {
-  console.log('emitted')
   console.log(e, r, t)
 })
+// setTimeout(() => {
+//   EventCalendar.changeCalendar('persian')
+//   EventCalendar.changeLocale('fa-IR')
+// }, 2000);
 // setTimeout(() => {
 //   console.log("update uvent")
 //   EventCalendar.updateEvent(17, {

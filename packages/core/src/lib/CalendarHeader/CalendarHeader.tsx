@@ -108,7 +108,7 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
       <div style="flex:1"></div>
 
       <div class="go-some-d" data-test-id-dropdown="1" onclick={() => SetDropDown(!showDropDown())}>
-        day
+        {data.store.grid}
         <Transition name="slide-fade">
           <Show when={showDropDown()}>
             {/* //@ts-ignore */}
