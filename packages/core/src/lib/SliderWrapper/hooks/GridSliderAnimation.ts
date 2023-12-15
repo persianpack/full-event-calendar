@@ -65,21 +65,17 @@ export function useGridSliderAnimation(containers: containers) {
   onMount(() => {
     makeClone()
     addListners()
-  })
 
-  document.querySelector('.more-wrapper')?.addEventListener('click', () => {
-    setTimeout(() => {
+    const observer = new MutationObserver(() => {
       makeClone()
-    }, 500)
-  })
-  document.querySelector('.all-collapser')?.addEventListener('click', () => {
-    setTimeout(() => {
-      makeClone()
-    }, 500)
-  })
+    })
 
-  document.querySelector('.go-some-d')?.addEventListener('click', () => {
-    makeClone()
+    // call `observe()`, passing it the element to observe, and the options object
+    observer.observe(document.querySelector('#full-event-calendar-wrapper') as HTMLElement, {
+      subtree: true,
+      childList: true,
+      attributes: true
+    })
   })
 
   containers.containerRef.querySelector('.scroll-wrapper').addEventListener('scroll', makeClone)
@@ -88,6 +84,7 @@ export function useGridSliderAnimation(containers: containers) {
     containers.containerRef.querySelector('.scroll-wrapper')?.removeEventListener('scroll', makeClone)
     containers.containerRef.querySelector('.scroll-wrapper')?.addEventListener('scroll', makeClone)
   }
+
   onCleanup(() => {
     containers.containerRef.querySelector('.scroll-wrapper')?.removeEventListener('scroll', makeClone)
   })
