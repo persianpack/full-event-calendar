@@ -101,7 +101,7 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
           ></path>
         </svg>
       </div>
-      <div class="header-date" dir="auto">
+      <div class="header-date" dir="rtl">
         {formatter()}
       </div>
 
