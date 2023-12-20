@@ -57,7 +57,7 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
   ]) as unknown as columData[]
 
   const generateCols = createMemo(() => {
-    let iniDay = mergedProps.initialDate
+    let iniDay = new Date(mergedProps.initialDate)
     iniDay.setDate(iniDay.getDate() - iniDay.getDay())
     // Holds executing downstream computations within the block until the end to prevent unnecessary recalculation
     batch(() => {

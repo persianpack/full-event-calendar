@@ -21,6 +21,7 @@ export interface EventClass {
   checkOverLap(event: EventClass): Boolean
   checkAllDayOverLap(event: EventClass): Boolean
   convertDateByTimeZone(tz: string): void
+  getIncludedDays(): Date[]
 }
 
 export interface SourceEvent {

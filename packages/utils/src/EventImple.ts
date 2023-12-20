@@ -97,6 +97,16 @@ export class EventImpl implements EventClass {
     const eventColHeightInPercentage = (this.start.getHours() + this.start.getMinutes() / 60) * 100
     return eventColHeightInPercentage > 2358 ? 2358 : eventColHeightInPercentage
   }
+
+  getIncludedDays() {
+    let dates = new Date(this.start)
+    let x: any = [new Date(dates)]
+    while (!this.doesEventEndOn(dates)) {
+      dates.setDate(dates.getDate() + 1)
+      x.push(new Date(dates))
+    }
+    return x
+  }
 }
 
 export type CalendarEvent = typeof EventImpl

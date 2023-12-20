@@ -1,5 +1,6 @@
 .header-dates {
   display: flex;
+  padding-left: 50px;
   > div {
     flex: 1;
   }
@@ -9,6 +10,7 @@
 }
 
 .week-wrapper {
+  min-width: 900px;
   .daily-time-ranges {
     width: 50px !important;
     border: none !important;
