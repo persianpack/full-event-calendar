@@ -1,5 +1,5 @@
 import { EventClass } from "@full-event-calendar/shared-ts";
-import { extractMonthDates, formatDDMMYYYY, getWeekDates } from "@full-event-calendar/utils";
+import { EventModeFilter, extractMonthDates, formatDDMMYYYY, getWeekDates } from "@full-event-calendar/utils";
 
 
 type Modes = 'day' | 'week' | 'month'
@@ -59,12 +59,13 @@ class MonthGroup extends CollectionGenerator implements handel {
 
 
 
-export class GroupEventList implements GroupEventListImpl {
+export class GroupEventMap implements GroupEventListImpl {
     private handel: handel
     private initDate: Date
- 
-    constructor(mode: Modes, initDate: Date,calendar:string = 'gregory') {
+    private eventModeFilter :EventModeFilter
+    constructor(mode: Modes, initDate: Date,calendar:string) {
         this.initDate = initDate
+        this.eventModeFilter = new EventModeFilter(mode,initDate,calendar)
         switch (mode) {
             case 'day':
                 this.handel = new DayGroup()
@@ -79,7 +80,7 @@ export class GroupEventList implements GroupEventListImpl {
         }
     }
     group(eventList: EventClass[]) {
-        return this.handel.process(eventList, this.initDate)
+        return this.handel.process(this.eventModeFilter.filter(eventList), this.initDate)
     }
 }
 

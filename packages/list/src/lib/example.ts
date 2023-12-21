@@ -15,7 +15,6 @@ class Daily implements Handle {
 class Weekly implements Handle {
   proccess(eventList: EventClass[], initDate: Date) {
     const weekDates = getWeekDates(initDate)
-    console.log(weekDates)
     return filterEventsByDateRange(eventList, weekDates[0], weekDates[weekDates.length - 1]) as EventClass []
   }
 }
@@ -58,6 +57,3 @@ export class EventModeFilter extends Filter {
     return sortEventByStart(this.handle.proccess(eventList, this.initialDate, this.calendar))
   }
 }
-
-// const listFilterByMode = new eventModeFilter('day')
-// listFilterByMode.filter([],new Date())

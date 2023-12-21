@@ -1,5 +1,5 @@
 // Types
-import { EventClass, FComponent, SourceEvent } from '@full-event-calendar/shared-ts'
+import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
 // Styles
 import './WeeklyAllDayHeader.scss'
 // Utils
