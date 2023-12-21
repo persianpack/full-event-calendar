@@ -2,7 +2,7 @@
 import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
 import { MonthDateObject } from '../MonthGrid'
 // Utils
-import { formatToShortTime, getEventsInDate, isEventRightOrLeftOrNone } from '@full-event-calendar/utils'
+import { formatToShortTime, getEventsInDate, rightOrLeftInDate } from '@full-event-calendar/utils'
 // Solid.js
 import { For, Show, createSignal, onCleanup } from 'solid-js'
 // Styles
@@ -102,7 +102,7 @@ export const EventModal: FComponent<ModalProps> = (props) => {
         <For each={modalData().events}>
           {(event) => (
             <div
-              class={`modal-event ${isNotAllDay(event)} ${isEventRightOrLeftOrNone(event, modalData().somDate)}`}
+              class={`modal-event ${isNotAllDay(event)} ${rightOrLeftInDate(event, modalData().somDate)}`}
               onmousedown={[modalDragStart, event]}
               style={`background:${event.color};--ca-color:${event.color}`}
             >

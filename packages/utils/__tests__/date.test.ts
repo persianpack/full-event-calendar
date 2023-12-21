@@ -3,9 +3,9 @@ import {
   floorDate,
   ceilDate,
   isDateToday,
-  isEventRightOrLeftOrNone,
+  rightOrLeftInDate,
   EventImpl,
-  isEventRightOrLeftOrNoneRange
+  rightOrLeftInDateInRange
 } from '../src'
 
 test('floor a date to 0 am', () => {
@@ -59,11 +59,11 @@ test('all day arrowing in  a Date function utils', () => {
     name: 'noArrowEvent'
   })
 
-  expect(isEventRightOrLeftOrNone(noAllDayEvent, initDate)).toBe('month-item-no-all-day')
-  expect(isEventRightOrLeftOrNone(bothArrowEvent, initDate)).toBe('month-both-arrow')
-  expect(isEventRightOrLeftOrNone(leftArrowEvent, initDate)).toBe('month-left-arrow')
-  expect(isEventRightOrLeftOrNone(rightArrowEvent, initDate)).toBe('month-right-arrow')
-  expect(isEventRightOrLeftOrNone(noArrowEvent, initDate)).toBe('month-no-arrow')
+  expect(rightOrLeftInDate(noAllDayEvent, initDate)).toBe('month-item-no-all-day')
+  expect(rightOrLeftInDate(bothArrowEvent, initDate)).toBe('month-both-arrow')
+  expect(rightOrLeftInDate(leftArrowEvent, initDate)).toBe('month-left-arrow')
+  expect(rightOrLeftInDate(rightArrowEvent, initDate)).toBe('month-right-arrow')
+  expect(rightOrLeftInDate(noArrowEvent, initDate)).toBe('month-no-arrow')
 })
 
 test('all day arrowing in  a Date function utils', () => {
@@ -105,9 +105,9 @@ test('all day arrowing in  a Date function utils', () => {
     name: 'noArrowEvent'
   })
 
-  expect(isEventRightOrLeftOrNoneRange(noAllDayEvent, range1, range2)).toBe('month-item-no-all-day')
-  expect(isEventRightOrLeftOrNoneRange(bothArrowEvent, range1, range2)).toBe('month-both-arrow')
-  expect(isEventRightOrLeftOrNoneRange(leftArrowEvent, range1, range2)).toBe('month-left-arrow')
-  expect(isEventRightOrLeftOrNoneRange(rightArrowEvent, range1, range2)).toBe('month-right-arrow')
-  expect(isEventRightOrLeftOrNoneRange(noArrowEvent, range1, range2)).toBe('month-no-arrow')
+  expect(rightOrLeftInDateInRange(noAllDayEvent, range1, range2)).toBe('month-item-no-all-day')
+  expect(rightOrLeftInDateInRange(bothArrowEvent, range1, range2)).toBe('month-both-arrow')
+  expect(rightOrLeftInDateInRange(leftArrowEvent, range1, range2)).toBe('month-left-arrow')
+  expect(rightOrLeftInDateInRange(rightArrowEvent, range1, range2)).toBe('month-right-arrow')
+  expect(rightOrLeftInDateInRange(noArrowEvent, range1, range2)).toBe('month-no-arrow')
 })

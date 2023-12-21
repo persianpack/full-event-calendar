@@ -9,7 +9,7 @@ import { DailyHeader, DailyTimeRanges } from '@full-event-calendar/daily-grid'
 import { BasicGrid } from '@full-event-calendar/basic-grid'
 //utils
 import { WeeklyAllDayHeader } from './lib/weeklyHeader/WeeklyAllDayHeader'
-import { getEventsInDate, sortEventByStart } from '@full-event-calendar/utils'
+import { getEventsInDate } from '@full-event-calendar/utils'
 // Styles
 import './WeekGrid.scss'
 

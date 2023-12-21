@@ -1,8 +1,9 @@
 import { EventClass } from '@full-event-calendar/shared-ts'
-import { extractMonthsDays, filterEventsByDateRange, getEventsInDate, getWeekDates } from '@full-event-calendar/utils'
+import { extractMonthDates, filterEventsByDateRange, getEventsInDate, getWeekDates, sortEventByStart } from '@full-event-calendar/utils'
+
 
 interface Handle {
-  proccess: (eventList: EventClass[], initDate: Date, calendar?: string) => void
+  proccess: (eventList: EventClass[], initDate: Date, calendar?: string) => EventClass []
 }
 
 class Daily implements Handle {
@@ -14,20 +15,19 @@ class Daily implements Handle {
 class Weekly implements Handle {
   proccess(eventList: EventClass[], initDate: Date) {
     const weekDates = getWeekDates(initDate)
-    const arr = filterEventsByDateRange(eventList, weekDates[0], weekDates[weekDates.length - 1])
-    return arr
+    console.log(weekDates)
+    return filterEventsByDateRange(eventList, weekDates[0], weekDates[weekDates.length - 1]) as EventClass []
   }
 }
 
 class Month implements Handle {
   proccess(eventList: EventClass[], initDate: Date, calendar: string = 'gregory') {
-    const weekDates = extractMonthsDays(initDate, calendar)
-    const arr = filterEventsByDateRange(eventList, weekDates[0].date, weekDates[weekDates.length - 1].date)
-    return arr
+    const monthDates = extractMonthDates(initDate, calendar)
+    return filterEventsByDateRange(eventList, monthDates[0].date, monthDates[monthDates.length - 1].date) as EventClass []
   }
 }
 
-type Modes = 'day' | 'week'
+type Modes = 'day' | 'week' | 'month'
 abstract class Filter {
   protected handle: Handle
   constructor(mode: Modes) {
@@ -35,9 +35,11 @@ abstract class Filter {
       case 'day':
         this.handle = new Daily()
         break
-
       case 'week':
         this.handle = new Weekly()
+        break
+      case 'month':
+        this.handle = new Month()
         break
     }
   }
@@ -52,8 +54,8 @@ export class EventModeFilter extends Filter {
     this.initialDate = initialDate
   }
 
-  filter(eventList: EventClass[]): void {
-    return this.handle.proccess(eventList, this.initialDate, this.calendar)
+  filter(eventList: EventClass[]) :EventClass[]{
+    return sortEventByStart(this.handle.proccess(eventList, this.initialDate, this.calendar))
   }
 }
 

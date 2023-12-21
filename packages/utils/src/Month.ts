@@ -27,7 +27,7 @@ export function extractYMD(parts: Intl.DateTimeFormatPart[]) {
   return { year, month, day }
 }
 
-export function extractMonthsDays(date: Date, calendar: string) {
+export function extractMonthDates(date: Date, calendar: string) {
   let selectedDate = date
   const convertedDate = getDaysOfMonth(selectedDate, calendar)
   const monthDays = [convertedDate]
@@ -62,7 +62,7 @@ export function extractMonthsDays(date: Date, calendar: string) {
 }
 
 export function getCalendarMonthDays(date: Date, calendar: string = 'gregory') {
-  const monthDays = extractMonthsDays(date, calendar)
+  const monthDays = extractMonthDates(date, calendar)
   const WeekDay = monthDays[0].date.getDay()
   const selectedDataCopy = new Date(monthDays[0].date)
 

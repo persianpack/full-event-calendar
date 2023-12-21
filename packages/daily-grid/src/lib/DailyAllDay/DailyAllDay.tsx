@@ -1,7 +1,7 @@
 import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
 import { For, Show, createEffect, createMemo, createSignal, on } from 'solid-js'
 import './DailyAllDay.scss'
-import { isEventRightOrLeftOrNone } from '@full-event-calendar/utils/src/Date'
+import { rightOrLeftInDate } from '@full-event-calendar/utils/src/Date'
 import { formatNumber, sortEventByStart } from '@full-event-calendar/utils'
 
 interface DailyAllDayProps {
@@ -70,7 +70,7 @@ export const DailyAllDay: FComponent<DailyAllDayProps> = (props) => {
                 <div
                   data-testid={item.id}
                   style={`background-color:${item.color}`}
-                  class={`all-day-wrapper ${isEventRightOrLeftOrNone(item, props.initialDate)}`}
+                  class={`all-day-wrapper ${rightOrLeftInDate(item, props.initialDate)}`}
                 >
                   {`${item.name} `}
                 </div>

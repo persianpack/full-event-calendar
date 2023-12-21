@@ -1,25 +1,19 @@
 //types
-import { EventClass, FComponent, SourceEvent } from '@full-event-calendar/shared-ts'
+import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
 //solid.js
-import { createMutable } from 'solid-js/store'
-import { For, batch, createEffect, createMemo, mergeProps } from 'solid-js'
+import { For, createMemo, mergeProps } from 'solid-js'
 
 import {
-  extractMonthsDays,
-  filterEventsByDateRange,
-  formatD,
   formatDD,
   formatDDMMYYYY,
   formatDM,
   formatRange,
-  formatToShortTime,
-  getEventsInDate,
-  getWeekDates,
   sortEventByStart
 } from '@full-event-calendar/utils'
 // Styles
 import './List.scss'
 import { EventModeFilter } from './lib/example'
+import { GroupEventList } from './lib/EventListCollection'
 
 export interface ListGridProps {
   events?: EventClass[]
@@ -31,7 +25,7 @@ export interface ListGridProps {
   calendar?: string
   timeZone?: string
   gridHeight?: number
-  mode: 'day' | 'week'
+  mode: 'day' | 'week' | 'month'
 }
 
 const defaultProps = {
@@ -44,44 +38,20 @@ const defaultProps = {
   calendar: 'gregory',
   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   gridHeight: 65 * 24,
-  mode: 'day'
-}
-
-interface columData {
-  events: EventClass[]
-  props: any
+  mode: 'week'
 }
 
 export const List: FComponent<ListGridProps> = (props) => {
   const mergedProps = mergeProps(defaultProps, props)
-  // let x = event.getIncludedDays()
 
-  const filerses = new EventModeFilter(mergedProps.mode, mergedProps.initialDate, mergedProps.calendar)
-  const ass = filerses.filter(mergedProps.events)
+  const eventModeFilter = new EventModeFilter(mergedProps.mode, mergedProps.initialDate, mergedProps.calendar)
+  const filteredList = eventModeFilter.filter(mergedProps.events)
 
   const generateGroup = createMemo(() => {
-    let collection: { [key: string]: EventClass[] } = {}
-
-    sortEventByStart(ass).forEach((event) => {
-      event.getIncludedDays().forEach((days) => {
-        let foramtedDate = formatDDMMYYYY(days)
-        if (!(foramtedDate in collection)) {
-          collection[foramtedDate] = []
-        }
-
-        collection[foramtedDate].push(event)
-      })
-    })
-    console.log(collection)
-    return collection
+    let groupEventList = new GroupEventList(mergedProps.mode,mergedProps.initialDate,mergedProps.calendar)
+    return groupEventList.group(filteredList)
   })
-
-  let x = extractMonthsDays(mergedProps.initialDate, mergedProps.calendar)
-  let y = getWeekDates(mergedProps.initialDate)
-  let z = filterEventsByDateRange(mergedProps.events, y[y.length - 1], y[y.length - 1])
-  // console.log(z)
-
-  generateGroup()
+ 
   return (
     <>
       <div class="event-list">

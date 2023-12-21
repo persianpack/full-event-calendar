@@ -1,6 +1,5 @@
 import { EventClass } from '@full-event-calendar/shared-ts'
 import { areDatesInTheSameDate } from '.'
-import { textChangeRangeIsUnchanged } from 'typescript'
 
 export function floorDate(date: Date) {
   const newDate = new Date(date)
@@ -25,7 +24,7 @@ export function isDateToday(date: Date) {
   return areDatesInTheSameDate(date, new Date())
 }
 
-export function isEventRightOrLeftOrNone(event: EventClass, initialDate: Date) {
+export function rightOrLeftInDate(event: EventClass, initialDate: Date) {
   /// in case the event is a dragging object
   if (!event.isAllDay()) return 'month-item-no-all-day'
 
@@ -44,7 +43,7 @@ export function isEventRightOrLeftOrNone(event: EventClass, initialDate: Date) {
   return 'month-no-arrow'
 }
 
-export function isEventRightOrLeftOrNoneRange(event: EventClass, start: Date, end: Date) {
+export function rightOrLeftInDateInRange(event: EventClass, start: Date, end: Date) {
   if (event.isAllDay) {
     if (!event.isAllDay()) return 'month-item-no-all-day'
   }

@@ -2,7 +2,7 @@ import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
 import { createMemo, createSignal } from 'solid-js'
 import './MonthEvent.scss'
 import { getLeftPosition, getEndPosition } from '../../utils/EventPosition'
-import { formatToShortTime, isEventRightOrLeftOrNoneRange } from '@full-event-calendar/utils/src/Date'
+import { formatToShortTime, rightOrLeftInDateInRange } from '@full-event-calendar/utils/src/Date'
 interface EventProps {
   item: EventClass
   endDate: Date
@@ -55,7 +55,7 @@ export const MonthEvent: FComponent<EventProps> = (props: EventProps) => {
   return (
     <div
       onmousedown={[onEventMouseDown, true]}
-      class={`month-item ${isNotAllDay()} ${isEventRightOrLeftOrNoneRange(props.item, props.startDate, props.endDate)}`}
+      class={`month-item ${isNotAllDay()} ${rightOrLeftInDateInRange(props.item, props.startDate, props.endDate)}`}
       id={`month--item-${props.item.id}`}
       style={eventStyles()}
       data-test-id-month-item={props.item.id}
