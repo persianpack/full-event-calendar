@@ -49,6 +49,8 @@ export const List: FComponent<ListGridProps> = (props) => {
   return (
     <>
       <div class="event-list">
+        <div class='scroll-wrapper-list'>
+
         <For each={Object.keys(generateGroup())}>
           {(item) => {
             return generateGroup()[item].length === 0 ? <></> :
@@ -75,6 +77,8 @@ export const List: FComponent<ListGridProps> = (props) => {
               )
           }}
         </For>
+
+        </div>
       </div>
     </>
   )

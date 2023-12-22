@@ -2,7 +2,10 @@
   // background:red;
   border: 1px solid var(--hairline);
   flex: 1;
+  position: relative;
+
 }
+
 .event-list-item {
   border-bottom: 1px solid var(--hairline);
   display: flex;
@@ -68,5 +71,17 @@
 
   &:hover {
     background: #ececec;
+  }
+}
+.scroll-wrapper-list{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+}
+.scroll-wrapper-list:first-child{
+  .event-list-item:has(:last-child){
+
+    border-bottom: none
   }
 }

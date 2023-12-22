@@ -3,7 +3,8 @@
   flex: 1;
   position: relative;
   border-right: 1px solid var(--hairline);
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 
   /* width */
   &::-webkit-scrollbar {
