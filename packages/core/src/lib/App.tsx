@@ -35,13 +35,6 @@ export function App() {
   return (
     <>
       <div
-        style="    margin-top: 200px;
-    margin-bottom: 200px;
-    margin-left: 50px;
-    margin-right: 50px;
-    height: 1000px;
-    flex-direction: column;
-    display: flex;"
         class="full-event-calendar-core"
         id="full-event-calendar-core"
       >
@@ -58,6 +51,7 @@ export function App() {
             gridHeight={data.store.gridHeight}
             onDateChange={onDateChange}
             onGridChange={onGridChange}
+            listMode={data.store.listMode}
           ></Dynamic>
         </SliderWrapper>
       </div>

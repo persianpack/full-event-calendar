@@ -1,7 +1,6 @@
 import { EventClass } from "@full-event-calendar/shared-ts";
 import { EventModeFilter, extractMonthDates, formatDDMMYYYY, getWeekDates } from "@full-event-calendar/utils";
 
-
 type Modes = 'day' | 'week' | 'month'
 
 interface handel {
@@ -55,9 +54,6 @@ class MonthGroup extends CollectionGenerator implements handel {
         return this.collection
     }
 }
-
-
-
 
 export class GroupEventMap implements GroupEventListImpl {
     private handel: handel

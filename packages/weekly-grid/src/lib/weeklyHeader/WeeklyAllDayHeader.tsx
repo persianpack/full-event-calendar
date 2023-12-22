@@ -3,7 +3,7 @@ import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
 // Styles
 import './WeeklyAllDayHeader.scss'
 // Utils
-import { filterEventsByDateRange, formatNumber } from '@full-event-calendar/utils'
+import { filterEventsByDateRange, formatNumber, sortEventByStart } from '@full-event-calendar/utils'
 import { addEventsToRows, getExtraRows, useMonthEventDragging } from '@full-event-calendar/month-grid'
 // Components
 import { MonthEvent } from '@full-event-calendar/month-grid'
@@ -23,7 +23,7 @@ interface rowList {
 export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) => {
   //gets events in a week range from SAT to FRI
   const rangedEvents = createMemo(
-    () => filterEventsByDateRange(props.events, props.cols[0], props.cols[6]) as EventClass[]
+    () => sortEventByStart(filterEventsByDateRange(props.events, props.cols[0], props.cols[6]) as EventClass[]) 
   )
   //Get only All day Events
   const filteredEvents = createMemo(() =>

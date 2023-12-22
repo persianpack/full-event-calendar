@@ -26,6 +26,7 @@ export interface CalendarSourceOptions {
   grid?: GridModes
   gridHeight?: number
   autoUpdateEventOnChange?: boolean
+  listMode?: listModeTypes
   // dailyGridOptions : dailyGridOptions;
 }
 
@@ -35,7 +36,8 @@ export interface Plugins {
   code: any
 }
 
-export type GridModes = 'daily' | 'weekly' | 'month'
+export type GridModes = 'daily' | 'weekly' | 'month' | 'list'
+type listModeTypes ='day' | 'month' | 'week'
 
 export class CalendarImpl implements CalendarApi {
   readonly storeManager
@@ -78,6 +80,9 @@ export class CalendarImpl implements CalendarApi {
   public changeEventAutoUpdate(val: boolean) {
     this.storeDispatch({ type: 'AUTO_UPADTE_EVENT', val })
   }
+  public updateListMode(val: listModeTypes) {
+    this.storeDispatch({ type: 'UPDATE_LIST_MODE',val})
+  }
 
   public resetOptions(options: CalendarSourceOptions) {
     if (options.timeZone) {
@@ -103,6 +108,9 @@ export class CalendarImpl implements CalendarApi {
     }
     if (options.plugins.length > 0) {
       this.setPlugins(options.plugins)
+    }
+    if(options.listMode){
+      this.updateListMode(options.listMode)
     }
     this.setEventList(options.events)
   }

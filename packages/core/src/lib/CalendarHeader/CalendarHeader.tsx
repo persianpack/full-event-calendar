@@ -4,6 +4,7 @@ import { FComponent } from '@full-event-calendar/shared-ts'
 import { useGlobalState } from '../../context-injector/context'
 import { GridModes } from '../../api/CalendarImpl'
 import { Transition } from 'solid-transition-group'
+import { HeaderFormat } from './filterRange'
 interface CalendarHeader {
   onDateChange: (d: Date) => void
 }
@@ -33,9 +34,10 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
     return options
   }
 
-  const formatter = createMemo(() => {
-    // the dates pass throw here are assumed that is not converted by timezone so we convert it here
-    return new Intl.DateTimeFormat(data.store.locale, resolveOptions()).format(new Date(data.store.initialDate))
+  const headerDate = createMemo(() => {
+    const rangeFormat = new  HeaderFormat(data.store)
+    console.log( rangeFormat.format())
+    return rangeFormat.format()
   })
 
   function changeGrid(grid: GridModes) {
@@ -70,6 +72,7 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
     props.onDateChange(dCopy)
   }
 
+
   return (
     <div class="calendar-header">
       <div class="go-to-today" onclick={goToday}>
@@ -102,7 +105,7 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
         </svg>
       </div>
       <div class="header-date" dir="rtl">
-        {formatter()}
+        {headerDate()}
       </div>
 
       <div style="flex:1"></div>
@@ -111,7 +114,8 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
         {data.store.grid}
         <Transition name="slide-fade">
           <Show when={showDropDown()}>
-            {/* //@ts-ignore */}
+            {/*
+            //@ts-ignore */}
             <div use:ClickOutSide={amodalClickOut} class="dropdown-calendar">
               <For each={data.instance.getOptions()}>
                 {(item: any) => (

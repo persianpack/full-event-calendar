@@ -22,7 +22,7 @@ export interface ListGridProps {
   calendar?: string
   timeZone?: string
   gridHeight?: number
-  mode: 'day' | 'week' | 'month'
+  listMode: 'day' | 'week' | 'month'
 }
 
 const defaultProps = {
@@ -35,14 +35,14 @@ const defaultProps = {
   calendar: 'gregory',
   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   gridHeight: 65 * 24,
-  mode: 'day'
+  listMode: 'week'
 }
 
 export const List: FComponent<ListGridProps> = (props) => {
   const mergedProps = mergeProps(defaultProps, props)
 
   const generateGroup = createMemo(() => {
-    let groupEventMap = new GroupEventMap(mergedProps.mode, mergedProps.initialDate, mergedProps.calendar)
+    let groupEventMap = new GroupEventMap(mergedProps.listMode, mergedProps.initialDate, mergedProps.calendar)
     return groupEventMap.group(mergedProps.events)
   })
 

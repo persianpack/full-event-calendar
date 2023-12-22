@@ -12,7 +12,8 @@ const defaultState: CalendarState = {
   grid: 'daily',
   gridHeight: 1920,
   plugins: [],
-  autoUpdateEventOnChange: true
+  autoUpdateEventOnChange: true,
+  listMode:'day'
 }
 
 interface SetAllChatsAction {
@@ -60,6 +61,10 @@ interface AutoUpdateEvent {
   type: 'AUTO_UPADTE_EVENT'
   val: boolean
 }
+interface UpdateListMode {
+  type: 'UPDATE_LIST_MODE'
+  val: CalendarState['listMode']
+}
 
 // To Do: use better names for set and update
 
@@ -75,6 +80,7 @@ export type StoreActions =
   | SetGridHeight
   | SetPlugins
   | AutoUpdateEvent
+  | UpdateListMode
 
 export type EventCalendarOptions = { [K in keyof CalendarSourceOptions]-?: CalendarSourceOptions[K] }
 export interface CalendarState extends EventCalendarOptions {
@@ -83,6 +89,8 @@ export interface CalendarState extends EventCalendarOptions {
 
 const calendarReducer: Reducer<CalendarState, StoreActions> = (state = defaultState, action) => {
   switch (action.type) {
+    case 'UPDATE_LIST_MODE':
+      return { ...state, listMode: action.val }
     case 'AUTO_UPADTE_EVENT':
       return { ...state, autoUpdateEventOnChange: action.val }
     case 'SET_GRID_HEIGHT':
