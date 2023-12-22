@@ -285,7 +285,7 @@ const EventCalendar = new Calendar(el, {
   //@ts-ignore
   plugins: [DailyGridPlugin, MonthGridPlugin, WeeklyGridPlugin, ListPlugin],
   grid: 'daily',
-  listMode : 'month'
+  listMode : 'week'
 })
 console.time('rendered in ')
 EventCalendar.render()

@@ -1,6 +1,8 @@
 .event-list {
   // background:red;
-  border: 1px solid var(--hairline);
+  border-left: 1px solid var(--hairline);
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
   flex: 1;
   position: relative;
 
@@ -84,4 +86,12 @@
 
     border-bottom: none
   }
+}
+.no-events-text{
+  color: #B9BFCC;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  font-size: 25px;
 }

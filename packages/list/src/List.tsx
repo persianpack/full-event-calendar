@@ -1,7 +1,7 @@
 //types
 import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
 //solid.js
-import { For, createMemo, mergeProps } from 'solid-js'
+import { For, Show, createMemo, mergeProps } from 'solid-js'
 //utils
 import {
   formatDD,
@@ -46,10 +46,26 @@ export const List: FComponent<ListGridProps> = (props) => {
     return groupEventMap.group(mergedProps.events)
   })
 
+  
+  function isMlistEmpty(){
+    let len = 0
+    Object.keys(generateGroup()).forEach(key=>{
+     len += generateGroup()[key].length
+    })
+    return len === 0
+  }
+
+
   return (
     <>
       <div class="event-list">
-        <div class='scroll-wrapper-list'>
+        <div class='scroll-wrapper-list custome-scroll-bar'>
+     
+          <Show when={isMlistEmpty()}>
+
+
+             <div class='no-events-text'>No events here</div>
+          </Show>
 
         <For each={Object.keys(generateGroup())}>
           {(item) => {

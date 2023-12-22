@@ -20,24 +20,10 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
   function amodalClickOut() {
     SetDropDown(false)
   }
-  function resolveOptions() {
-    const options: any = {
-      month: 'long',
-      year: 'numeric',
-      day: 'numeric',
-      calendar: data.store.calendar,
-      timeZone: data.store.timeZone
-    }
-    if (data.store.grid === 'weekly' || data.store.grid === 'month') {
-      delete options['day']
-    }
-    return options
-  }
+
 
   const headerDate = createMemo(() => {
-    const rangeFormat = new  HeaderFormat(data.store)
-    console.log( rangeFormat.format())
-    return rangeFormat.format()
+    return new HeaderFormat(data.store).format()
   })
 
   function changeGrid(grid: GridModes) {
@@ -53,6 +39,14 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
       dCopy.setDate(dCopy.getDate() - 7)
     } else if (grid === 'month') {
       dCopy.setMonth(dCopy.getMonth() - 1)
+    }else if(grid === 'list'){
+      if(data.store.listMode === 'day'){
+        dCopy.setDate(dCopy.getDate() - 1)
+      }else if(data.store.listMode === 'month'){
+        dCopy.setMonth(dCopy.getMonth() - 1)
+      }else if(data.store.listMode === 'week'){
+        dCopy.setDate(dCopy.getDate() - 7)
+      }
     }
     props.onDateChange(dCopy)
   }
@@ -68,6 +62,14 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
       dCopy.setDate(dCopy.getDate() + 7)
     } else if (grid === 'month') {
       dCopy.setMonth(dCopy.getMonth() + 1)
+    }else if(grid === 'list'){
+      if(data.store.listMode === 'day'){
+        dCopy.setDate(dCopy.getDate() + 1)
+      }else if(data.store.listMode === 'month'){
+        dCopy.setMonth(dCopy.getMonth() + 1)
+      }else if(data.store.listMode === 'week'){
+        dCopy.setDate(dCopy.getDate() + 7)
+      }
     }
     props.onDateChange(dCopy)
   }
