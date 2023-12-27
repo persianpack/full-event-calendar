@@ -11,6 +11,7 @@ interface GroupGridProps {
   cols?: columItem[]
   onEventUpdate?: (a: SourceEvent, colNumber: number, currCol: number, isDragend: boolean) => void
   gridComponent: any
+  hasCrossGridDrag?:boolean
 }
 
 interface columItem {
@@ -22,6 +23,7 @@ const defaultProps = {
   events: [],
   initialDate: new Date(),
   cols: [],
+  hasCrossGridDrag:true,
   onEventUpdate: () => {}
 }
 
@@ -33,10 +35,14 @@ export const GroupGrid: FComponent<GroupGridProps> = (props) => {
 
   function eventUpdateProxy(eventSource: SourceEvent, draggedData: any, startingColId: number) {
     // calculate  which colum the event was dropped in
+    console.log(eventSource)
     if (draggedData?.isDragg) {
+      console.log('this1')
       const colNumber = whichColumWasDropped(colIds, draggedData.mouseX)
+      // mergedProps.onEventUpdate(eventSource, startingColId, startingColId, false)
       mergedProps.onEventUpdate(eventSource, colNumber, startingColId, true)
     } else {
+      console.log('this2')
       mergedProps.onEventUpdate(eventSource, startingColId, startingColId, false)
     }
   }
@@ -53,14 +59,13 @@ export const GroupGrid: FComponent<GroupGridProps> = (props) => {
             }}
             events={item.events}
             id={colIds[i()]}
-            container="group-grid-container"
+            container={mergedProps.hasCrossGridDrag ? "group-grid-container" :""}
             {...item.props}
           ></Dynamic>
         )
       }
     )
   )
-
   return (
     <>
       <div style="display:flex;width:100%;flex: 1;" id="group-grid-container" ref={groupContainerRef}>

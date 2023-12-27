@@ -17,15 +17,15 @@ export interface DailyGridProps extends BasicGridProps {
   initialDate?: Date
   onDateChange?: (d: Date) => void
   calendar?: string
-  timeZone?: string
+  timeZone?: string 
   locale?: string
   id?: string
   showAllDay?: boolean
   container?: string
   events: EventClass[]
-}
+  }
 
-const defaultProps = {
+export const dailyDefaultProps = {
   events: [],
   id: '',
   initialDate: new Date(),
@@ -39,7 +39,7 @@ const defaultProps = {
 }
 
 export const DailyGrid: FComponent<DailyGridProps> = (props) => {
-  const mergedProps = mergeProps(defaultProps, props)
+  const mergedProps = mergeProps(dailyDefaultProps, props)
 
   const extractedEvents = createMemo(() => getEventsInDate(mergedProps.events, mergedProps.initialDate))
 
@@ -52,7 +52,7 @@ export const DailyGrid: FComponent<DailyGridProps> = (props) => {
         data-test-id-daily-grid={props.id}
         style="flex:1;height: 100%;display:flex;flex-direction: column; "
       >
-        <DailyHeader
+        <DailyHeader 
           headerDate={mergedProps.initialDate}
           timeZone={mergedProps.timeZone}
           calendar={mergedProps.calendar}

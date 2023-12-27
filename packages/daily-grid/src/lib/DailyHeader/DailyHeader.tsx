@@ -11,6 +11,8 @@ export interface DailyHeaderProps {
 }
 // the dates pass throw here are assumed that is not converted by timezone so we convert it here
 export const DailyHeader: FComponent<DailyHeaderProps> = (props) => {
+
+  console.log(props)
   return (
     <div
       onClick={() => props.onDateChange(props.headerDate)}

@@ -33,7 +33,7 @@ class WeeklyFormat implements Formater {
         return new Intl.DateTimeFormat(calendarState.locale, listWeekOptions).formatRange(weekends[0], weekends[weekends.length - 1]) as string
     }
 }
-
+ 
 class MonthFormat implements Formater {
     proccess(calendarState: CalendarState) {
         const options: any = {
@@ -49,17 +49,12 @@ class MonthFormat implements Formater {
 
 class ListFormat implements Formater {
     proccess(calendarState: CalendarState) {
-      
         if (calendarState.listMode === 'week') {
             return new WeeklyFormat().proccess(calendarState)
         }
         if (calendarState.listMode === 'month') {
-            // const monthDates = getCalendarMonthDays(new Date(calendarState.initialDate), calendarState.calendar)
-            // //@ts-ignore
-            // return new Intl.DateTimeFormat(calendarState.locale, { month: "short", }).formatRange(monthDates[0].date, monthDates[monthDates.length - 1].date) as string
             return new MonthFormat().proccess(calendarState)
         }
-
         return new DailyFormat().proccess(calendarState)
     }
 }

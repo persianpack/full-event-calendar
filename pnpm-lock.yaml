@@ -205,6 +205,9 @@ importers:
       '@full-event-calendar/basic-grid':
         specifier: workspace:*
         version: link:../basic-grid
+      '@full-event-calendar/group-grid':
+        specifier: workspace:*
+        version: link:../group-grid
       '@full-event-calendar/utils':
         specifier: workspace:*
         version: link:../utils
@@ -230,9 +233,6 @@ importers:
 
   packages/group-grid:
     dependencies:
-      '@full-event-calendar/daily-grid':
-        specifier: workspace:*
-        version: link:../daily-grid
       esbuild-sass-plugin:
         specifier: ^2.16.0
         version: 2.16.0(esbuild@0.19.5)

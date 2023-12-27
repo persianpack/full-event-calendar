@@ -46,11 +46,11 @@ export const List: FComponent<ListGridProps> = (props) => {
     return groupEventMap.group(mergedProps.events)
   })
 
-  
-  function isMlistEmpty(){
+
+  function isMlistEmpty() {
     let len = 0
-    Object.keys(generateGroup()).forEach(key=>{
-     len += generateGroup()[key].length
+    Object.keys(generateGroup()).forEach(key => {
+      len += generateGroup()[key].length
     })
     return len === 0
   }
@@ -60,39 +60,37 @@ export const List: FComponent<ListGridProps> = (props) => {
     <>
       <div class="event-list">
         <div class='scroll-wrapper-list custome-scroll-bar'>
-     
+
           <Show when={isMlistEmpty()}>
-
-
-             <div class='no-events-text'>No events here</div>
+            <div class='no-events-text'>No events here</div>
           </Show>
 
-        <For each={Object.keys(generateGroup())}>
-          {(item) => {
-            return generateGroup()[item].length === 0 ? <></> :
-              (
-                <div class="event-list-item">
-                  <div class="event-list-item-time">
-                    <div class="scchedule-date">{formatDD(new Date(item), mergedProps.calendar)}</div>
-                    <div class="scchedule-dates">{formatDM(new Date(item), mergedProps.calendar)}</div>
-                  </div>
-                  <div class="scheachile-event-wrapper">
-                    <For each={generateGroup()[item]}>
-                      {(item) => (
-                        <div class="event-list-item-des">
-                          <div class="event-date">
-                            <div class="event-dot" style={`background-color:${item.color}`}></div>
-                            {item.isAllDay() ? 'all day' : formatRange(item.start, item.end, mergedProps.locale)}
+          <For each={Object.keys(generateGroup())}>
+            {(item) => {
+              return generateGroup()[item].length === 0 ? <></> :
+                (
+                  <div class="event-list-item">
+                    <div class="event-list-item-time">
+                      <div class="scchedule-date">{formatDD(new Date(item), mergedProps.calendar)}</div>
+                      <div class="scchedule-dates">{formatDM(new Date(item), mergedProps.calendar)}</div>
+                    </div>
+                    <div class="scheachile-event-wrapper">
+                      <For each={generateGroup()[item]}>
+                        {(item) => (
+                          <div class="event-list-item-des">
+                            <div class="event-date">
+                              <div class="event-dot" style={`background-color:${item.color}`}></div>
+                              {item.isAllDay() ? 'all day' : formatRange(item.start, item.end, mergedProps.locale)}
+                            </div>
+                            <div>{item.name}</div>
                           </div>
-                          <div>{item.name}</div>
-                        </div>
-                      )}
-                    </For>
+                        )}
+                      </For>
+                    </div>
                   </div>
-                </div>
-              )
-          }}
-        </For>
+                )
+            }}
+          </For>
 
         </div>
       </div>

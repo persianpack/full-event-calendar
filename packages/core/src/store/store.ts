@@ -13,7 +13,8 @@ const defaultState: CalendarState = {
   gridHeight: 1920,
   plugins: [],
   autoUpdateEventOnChange: true,
-  listMode:'day'
+  listMode:'day',
+  groups :[]
 }
 
 interface SetAllChatsAction {
@@ -65,6 +66,10 @@ interface UpdateListMode {
   type: 'UPDATE_LIST_MODE'
   val: CalendarState['listMode']
 }
+interface UpdateGroups {
+  type: 'UPDATE_GROUPS'
+  groups: CalendarState['groups']
+}
 
 // To Do: use better names for set and update
 
@@ -81,6 +86,7 @@ export type StoreActions =
   | SetPlugins
   | AutoUpdateEvent
   | UpdateListMode
+  | UpdateGroups
 
 export type EventCalendarOptions = { [K in keyof CalendarSourceOptions]-?: CalendarSourceOptions[K] }
 export interface CalendarState extends EventCalendarOptions {
@@ -89,6 +95,8 @@ export interface CalendarState extends EventCalendarOptions {
 
 const calendarReducer: Reducer<CalendarState, StoreActions> = (state = defaultState, action) => {
   switch (action.type) {
+    case 'UPDATE_GROUPS':
+      return { ...state, groups: action.groups }
     case 'UPDATE_LIST_MODE':
       return { ...state, listMode: action.val }
     case 'AUTO_UPADTE_EVENT':

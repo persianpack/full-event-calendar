@@ -31,15 +31,16 @@ export class DraggingEvent {
       (this.eventSourceEnd = new Date(e.sourceEvent.end))
   }
 
-  shiftTime(delta: any) {
-    const newS = new Date(this.item.start.getTime() + delta)
-    newS.setSeconds(0, 0)
-    this.dragedStartDate = roundMinutesToMultipleOf5(newS)
-    const newE = new Date(this.item.end.getTime() + delta)
-    this.dragedEndDate = roundMinutesToMultipleOf5(newE)
-    this.shiftSource(delta)
+  shiftTime(miliSeconds: any) {
+    const newStartDate = new Date(this.item.start.getTime() + miliSeconds)
+    newStartDate.setSeconds(0, 0)
+    this.dragedStartDate = roundMinutesToMultipleOf5(newStartDate)
+    const newEndDate = new Date(this.item.end.getTime() + miliSeconds)
+    this.dragedEndDate = roundMinutesToMultipleOf5(newEndDate)
+    this.shiftSource(miliSeconds)
   }
-  shiftSource(delta: any) {
+  
+  private shiftSource(delta: any) {
     //@ts-ignore
     this.eventSourceStart = roundMinutesToMultipleOf5(new Date(this?.item?.sourceEvent?.start?.getTime() + delta))
     //@ts-ignore

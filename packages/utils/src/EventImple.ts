@@ -2,6 +2,8 @@ import { EventClass, SourceEvent } from '@full-event-calendar/shared-ts'
 import { convertTZ } from './TimeZone'
 import { ceilDate, floorDate } from '.'
 
+let uniqId = 10
+
 export class EventImpl implements EventClass {
   id: string | number
   start: Date
@@ -10,7 +12,8 @@ export class EventImpl implements EventClass {
   duration: number // duration is in minutes
   sourceEvent: SourceEvent
   color: string
-
+  groups: number[]
+  calendarId:string
   constructor(eventData: SourceEvent) {
     this.start = eventData.start
     this.end = eventData.end
@@ -19,6 +22,8 @@ export class EventImpl implements EventClass {
     this.sourceEvent = eventData
     this.duration = Math.round((eventData.end.getTime() - eventData.start.getTime()) / 60000)
     this.color = eventData.color || '#ff5280'
+    this.groups = eventData.groups || [1,2]
+    this.calendarId = 'fec-id-' + uniqId
   }
 
   getEventLength(): any {
@@ -58,7 +63,7 @@ export class EventImpl implements EventClass {
       heightInPercentage = (this.duration / 60) * 100
     }
     return `;height:${heightInPercentage}%;`
-  }
+  } 
 
   calculatePositionTop() {
     return `;top:${this.getEventTopPositionIng()}%`

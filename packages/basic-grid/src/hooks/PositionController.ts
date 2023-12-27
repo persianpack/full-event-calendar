@@ -19,8 +19,5 @@ export class PositionController {
     const eventRect = newTarget.getBoundingClientRect()
     return (((eventRect.top + window.scrollY - this.firstTopPosition) * 60) / this.wrapperHeight) * 60000
   }
-  // calNewXYDiff(mosuseX,mouseY){
-  //   this.Xdiff = mosuseX -
-  //   this.Ydiff = mouseY -
-  // }
+
 }

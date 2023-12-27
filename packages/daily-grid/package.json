@@ -42,6 +42,7 @@
   "dependencies": {
     "@full-event-calendar/basic-grid": "workspace:*",
     "@full-event-calendar/utils": "workspace:*",
+    "@full-event-calendar/group-grid": "workspace:*",
     "solid-js": "^1.7.7"
   }
 }

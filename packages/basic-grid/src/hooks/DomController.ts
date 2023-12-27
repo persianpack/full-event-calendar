@@ -52,24 +52,24 @@ export class DomController {
     this.wrapperContainer?.current?.addEventListener('mouseleave', c2)
   }
 
-  getEventNode(id: any) {
-    const target = document.querySelectorAll(`#event-${id}`)
-    const targets = document.querySelector(`#event-${id}`)
+  // getEventNode(id: any) {
+  //   const target = document.querySelectorAll(`#event-${id}`)
+  //   const targets = document.querySelector(`#event-${id}`)
 
-    if (target.length > 1) {
-      if (this.shouldDuplicate) {
-        return target[1] as HTMLElement
-      }
-      return target[0] as HTMLElement
-    }
-    return targets as HTMLElement
-  }
-  setOpacityForElemetns(opacity: string, id: any) {
-    //@ts-ignore
-    document.querySelectorAll(`#event-${id}`).forEach((element: HTMLElement) => {
-      element.style.opacity = opacity
-    })
-  }
+  //   if (target.length > 1) {
+  //     if (this.shouldDuplicate) {
+  //       return target[1] as HTMLElement
+  //     }
+  //     return target[0] as HTMLElement
+  //   }
+  //   return targets as HTMLElement
+  // }
+  // setOpacityForElemetns(opacity: string, id: any) {
+  //   //@ts-ignore
+  //   document.querySelectorAll(`#event-${id}`).forEach((element: HTMLElement) => {
+  //     element.style.opacity = opacity
+  //   })
+  // }
 
   containerMouseEnter() {
     this.isMouseoutsideTheContainer = false
