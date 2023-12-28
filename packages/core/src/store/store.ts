@@ -108,11 +108,17 @@ const calendarReducer: Reducer<CalendarState, StoreActions> = (state = defaultSt
   switch (action.type) {
     case 'ADD_EVENT':
       const events1 = [...state.events]
-      const eve = new EventImpl(action.event)
+      let eve = new EventImpl(action.event)
+      eve.convertDateByTimeZone(state.timeZone)
       if(action.convertTz){
+      }else{
+        const diff = eve.start.getTime() - action.event.start.getTime()
+        const newStart = new Date(action.event.start.getTime() - diff)
+        const endStart = new Date(action.event.end.getTime() - diff)
+        eve = new EventImpl({...action.event,...{start :newStart,end:endStart}})
         eve.convertDateByTimeZone(state.timeZone)
       }
-     events1.push(eve)
+      events1.push(eve)
       return { ...state, events: events1 }
     case 'UPDATE_GROUPS':
       return { ...state, groups: action.groups }
@@ -148,6 +154,7 @@ const calendarReducer: Reducer<CalendarState, StoreActions> = (state = defaultSt
       const eventIndex = events.findIndex((item) => item.id === action.id)
       events[eventIndex] = new EventImpl(action.event)
       events[eventIndex].convertDateByTimeZone(state.timeZone)
+    
       return { ...state, events: events }
 
     case 'SET_TIMEZONE':

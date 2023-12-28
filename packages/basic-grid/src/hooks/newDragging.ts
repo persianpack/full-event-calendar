@@ -73,6 +73,7 @@ class EventResize extends DraggerHandeler implements Dragger {
         this.rect = this.draggingController?.getEelementReact()!
     }
     mouseMove(e: MouseEvent) {
+        this.hasMouseMoved = true
         const targetRect = this.rect
         const targetEvent = this.draggingController?.getEventNode()!
          targetEvent.style.zIndex = '30'
@@ -82,12 +83,15 @@ class EventResize extends DraggerHandeler implements Dragger {
         const delta = targetEvent.getBoundingClientRect().bottom - this.FirstBottomY
         const newD = (delta * 60) / this.draggingController?.wrapperHeight!
         this.draggingController?.shiftEndTime(newD* 60000)
-        targetEvent.innerHTML = getDateTimeRange(this.draggingController?.dragedStartDate,this.draggingController?.dragedEndDate)
+        targetEvent.innerHTML = getDateTimeRange(this.draggingController?.dragedStartDate!,this.draggingController?.dragedEndDate!)
 
     }
     dragEnd(e: MouseEvent) {
         const targetEvent = this.draggingController?.getEventNode()!
-        targetEvent.style.zIndex = '1'
+        if(targetEvent){
+            targetEvent.style.zIndex = '1'
+        }
+      
     }
     getPreviewNode(){}
 }
@@ -95,9 +99,10 @@ class EventResize extends DraggerHandeler implements Dragger {
 class AddEventWithResize extends DraggerHandeler implements Dragger{
     hasMouseMoved =false
     resizer:EventResize | null= null
+    private event:EventClass
     dragStart(e: MouseEvent, event: EventClass) {
         this.resizer = new EventResize()
-     
+        this.event = event
     }
     mouseMove(e: MouseEvent,event:EventClass) {
         if(!this.hasMouseMoved){
@@ -108,8 +113,10 @@ class AddEventWithResize extends DraggerHandeler implements Dragger{
         }
     }
     dragEnd(e: MouseEvent) {
-     
       this.resizer?.dragEnd.call(this,e)
+      if(!this.hasMouseMoved){
+        this.resizer?.dragStart.call(this,e,this.event)
+      }
     }
     getPreviewNode(){}
 }

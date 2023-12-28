@@ -10,7 +10,7 @@ export interface DraggingController {
     left: string
     top: string
     item: EventClass,
-    duration: 0,
+    duration: number,
     dragedStartDate: Date,
     dragedEndDate: Date,
     animation: string,
@@ -25,19 +25,19 @@ export interface DraggingController {
 
 
 export class NewDraggingController extends NewDomController implements DraggingController {
-  width: any
-  height: any
-  item: any
-  dragedStartDate: any
-  dragedEndDate: any
-  left: any
-  top: any
-  duration: any
-  animation: any
-  isDragg: any
-  mouseX: any
-  eventSourceStart: any
-  eventSourceEnd: any
+  width: string
+  height: string
+  left: string
+  top: string
+  item: EventClass
+  duration: number
+  dragedStartDate: Date
+  dragedEndDate: Date
+  animation: string
+  isDragg: boolean
+  mouseX: number
+  eventSourceStart: Date
+  eventSourceEnd: Date
   Xdiff:any
   Ydiff:any
   
