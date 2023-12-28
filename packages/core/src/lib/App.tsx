@@ -21,6 +21,18 @@ export function App() {
     }
   }
 
+  function onAddEvent(event: SourceEvent,convetTz:boolean) {
+    if (data.store.autoUpdateEventOnChange) {
+      // const prev = data.instance.getEventById(event.id) as EventClass
+      data.instance.addEvent(event,convetTz)
+      // const next = data.instance.getEventById(event.id) as EventClass
+      // data.instance.emitEvent('eventUpdate', {
+      //   prev: prev,
+      //   next: next
+      // })
+    }
+  }
+
   function onDateChange(d: Date) {
     data.instance.changeInitialDate(d.toISOString())
   }
@@ -44,6 +56,7 @@ export function App() {
           <Dynamic
             component={data.instance.getcurrentGridCode()}
             onEventUpdate={onEventUpdate}
+            onAddEvent={onAddEvent}
             initialDate={new Date(data.store.initialDate)}
             events={unwrappedEvents()}
             locale={data.store.locale}

@@ -33,7 +33,7 @@ export const EventItem: FComponent<EventItem> = (props) => {
       id={'event-' + props.event.id}
       class="ec-event"
       data-test-event-id={props.event.id}
-      style={`${getPosition()} ;${getHeight()} ;${props.width} ${getBackGroundColor()}`}
+      style={`${getPosition()} ;${getHeight()} ;${props.width} ;${getBackGroundColor()}`}
     >
       <div
         style="position:sticky;top:0px;bottom:30px"

@@ -1,52 +1,43 @@
 import { EventClass, SourceEvent } from '@full-event-calendar/shared-ts'
 import { getDateTimeRange, roundMinutesToMultipleOf5 } from '@full-event-calendar/utils'
+import { CalendarDragger, drageModes } from './newDragging'
+import { createSignal } from 'solid-js'
 
-export function useResize(container: any, resizeEndCalllBack: (p: SourceEvent) => void) {
+export function useResize(drageMode: drageModes, resizeEndCalllBack: (p: SourceEvent) => void,clickCalllBack?: (p: SourceEvent) => void) {
+ 
+  const [draggedData, setDraggedData] = createSignal<any>()
+ 
   function onmousedownH(item: EventClass, e: MouseEvent) {
-    e.stopPropagation()
-    const targetEvent = container.current.querySelector(`#event-${item?.id}`) as HTMLElement
+  const calendarDragger = new CalendarDragger(drageMode)
 
-    targetEvent.style.zIndex = '10'
+    e.stopPropagation()
+    calendarDragger.dragger.dragStart(e,item)
     window.addEventListener('mousemove', mousemove)
     window.addEventListener('mouseup', mouseup)
 
-    let prevX = e.y
-    const targetRect = targetEvent.getBoundingClientRect()
-    let FirstBottomY = targetRect.bottom
-    let endDate: any = null
-    let endDateSource: any = null
-
-    const wrapperHeight = container.current.querySelector('.time-range')?.clientHeight || 1
+   
     function mousemove(e: MouseEvent) {
-      let newX = prevX - e.y
-      const height = targetRect.height - newX
-      targetEvent.style.height = height + 'px'
-
-      const delta = targetEvent.getBoundingClientRect().bottom - FirstBottomY
-
-      const newD = (delta * 60) / wrapperHeight
-      const finald = new Date(item.end.getTime() + newD * 60000)
-      const finaSource = new Date(item.sourceEvent.end.getTime() + newD * 60000)
-      finald.setSeconds(0, 0)
-      finaSource.setSeconds(0, 0)
-      endDate = roundMinutesToMultipleOf5(finald)
-      endDateSource = roundMinutesToMultipleOf5(finaSource)
-      const el = container.current.querySelector(`#event-end-${item?.id}`) as HTMLElement
-      el.innerHTML = getDateTimeRange(item.start, endDate)
+      calendarDragger.dragger.mouseMove(e,item)
+      setDraggedData(calendarDragger.dragger.draggingController)
     }
 
-    function mouseup() {
-      targetEvent.style.zIndex = '1'
-      const sourceE = { ...item } as SourceEvent
-      if (endDate) {
-        sourceE.end = endDateSource
+    function mouseup(e:MouseEvent) {
+      setDraggedData(null)
+      calendarDragger.dragger.dragEnd(e,item)
+      const sourceE = { ...calendarDragger.dragger.draggingController?.item.sourceEvent } as SourceEvent
+      if (calendarDragger.dragger.hasMouseMoved) {
+        sourceE.end = calendarDragger.dragger.draggingController?.eventSourceEnd
         sourceE.start = new Date(item.sourceEvent.start)
+       
         resizeEndCalllBack(sourceE)
+      }else{
+        console.log('cliked')
       }
+      calendarDragger.dragger.hasMouseMoved
       window.removeEventListener('mousemove', mousemove)
       window.removeEventListener('mouseup', mouseup)
     }
   }
 
-  return { onmousedownH }
+  return { onmousedownH,draggedData }
 }

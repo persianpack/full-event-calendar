@@ -26,7 +26,7 @@ export function userDragger(containerRef: any, dragEndCallBack: (initialDragNode
   
   function itemDragstart(e: EventClass, d: any, shouldDuplica: boolean) {
 
-    calendarDragger = new CalendarDragger('sdsd')
+    calendarDragger = new CalendarDragger('DailyDragDrop')
     calendarDragger.dragger.dragStart(d,e)
     if (isDragging()) return
     domController = new DomController(shouldDuplica, wrapperContainer, mouseMove, handelMouseUp)

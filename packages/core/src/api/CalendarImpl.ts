@@ -2,7 +2,7 @@ import useRedux from '../store/useRedux'
 import chatStore from '../store/store'
 import type { Dispatch } from 'redux'
 import { CalendarState, StoreActions } from '../store/store'
-import { SourceEvent } from '@full-event-calendar/shared-ts'
+import { EventClass, SourceEvent } from '@full-event-calendar/shared-ts'
 interface CalendarApi {
   // Current Date
   // -----------------------------------------------------------------------------------------------------------------
@@ -87,7 +87,9 @@ export class CalendarImpl implements CalendarApi {
   public updateGroups(groups:number[]) {
     this.storeDispatch({ type: 'UPDATE_GROUPS',groups})
   }
-
+  public addEvent(event:EventClass,convertTz:boolean = true) {
+    this.storeDispatch({ type: 'ADD_EVENT',event,convertTz})
+  }
   public resetOptions(options: CalendarSourceOptions) {
     if (options.timeZone) {
       this.changeTimeZone(options.timeZone)

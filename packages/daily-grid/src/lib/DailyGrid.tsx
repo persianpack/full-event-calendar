@@ -3,7 +3,7 @@ import { BasicGrid } from '@full-event-calendar/basic-grid'
 import { DailyHeader } from './DailyHeader/DailyHeader'
 import { DailyAllDay } from './DailyAllDay/DailyAllDay'
 // Types
-import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
+import { EventClass, FComponent, SourceEvent } from '@full-event-calendar/shared-ts'
 import { BasicGridProps } from '@full-event-calendar/basic-grid'
 // solid.js
 import { Show, createMemo, mergeProps } from 'solid-js'
@@ -16,6 +16,8 @@ import { DailyTimeRanges } from './DailyTimeRanges/DailyTimeRanges'
 export interface DailyGridProps extends BasicGridProps {
   initialDate?: Date
   onDateChange?: (d: Date) => void
+  onAddEvent?:(event: SourceEvent) =>void
+
   calendar?: string
   timeZone?: string 
   locale?: string
@@ -35,6 +37,7 @@ export const dailyDefaultProps = {
   showAllDay: true,
   onDateChange: () => {},
   onEventUpdate: () => {},
+  onAddEvent: () => {},
   gridHeight: 65 * 24
 }
 
@@ -75,6 +78,7 @@ export const DailyGrid: FComponent<DailyGridProps> = (props) => {
               events={filteredOut()}
               locale={mergedProps.locale}
               onEventUpdate={mergedProps.onEventUpdate}
+              onAddEvent={mergedProps.onAddEvent}
               gridHeight={mergedProps.gridHeight}
               container={mergedProps.container}
             />

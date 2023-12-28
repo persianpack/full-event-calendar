@@ -111,10 +111,20 @@
   .time-rage-up-container {
     flex: 1;
     margin-left: 12px;
+    display: flex;
+    flex-direction: column;
+    >div{
+      flex: 1;
+    }
   }
   .time-rage-down-container {
     flex: 1;
     margin-left: 12px;
+    display: flex;
+    flex-direction: column;
+    >div{
+      flex: 1;
+    }
   }
 }
 .wrapper-container {

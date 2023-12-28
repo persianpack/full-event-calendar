@@ -21,6 +21,15 @@ interface SetAllChatsAction {
   type: 'SET_ALL_EVENTS'
   events: SourceEvent[]
 }
+interface AddEvent {
+  type: 'ADD_EVENT'
+  event: SourceEvent
+  convertTz?:boolean
+}
+interface DeleteEvent {
+  type: 'DELETE_EVENT'
+  id: number | string
+}
 interface SetGridHeight {
   type: 'SET_GRID_HEIGHT'
   height: CalendarState['gridHeight']
@@ -87,6 +96,8 @@ export type StoreActions =
   | AutoUpdateEvent
   | UpdateListMode
   | UpdateGroups
+  | DeleteEvent
+  | AddEvent
 
 export type EventCalendarOptions = { [K in keyof CalendarSourceOptions]-?: CalendarSourceOptions[K] }
 export interface CalendarState extends EventCalendarOptions {
@@ -95,6 +106,14 @@ export interface CalendarState extends EventCalendarOptions {
 
 const calendarReducer: Reducer<CalendarState, StoreActions> = (state = defaultState, action) => {
   switch (action.type) {
+    case 'ADD_EVENT':
+      const events1 = [...state.events]
+      const eve = new EventImpl(action.event)
+      if(action.convertTz){
+        eve.convertDateByTimeZone(state.timeZone)
+      }
+     events1.push(eve)
+      return { ...state, events: events1 }
     case 'UPDATE_GROUPS':
       return { ...state, groups: action.groups }
     case 'UPDATE_LIST_MODE':
@@ -129,7 +148,6 @@ const calendarReducer: Reducer<CalendarState, StoreActions> = (state = defaultSt
       const eventIndex = events.findIndex((item) => item.id === action.id)
       events[eventIndex] = new EventImpl(action.event)
       events[eventIndex].convertDateByTimeZone(state.timeZone)
-      console.log(events[eventIndex])
       return { ...state, events: events }
 
     case 'SET_TIMEZONE':

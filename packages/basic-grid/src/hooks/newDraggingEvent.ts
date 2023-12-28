@@ -20,7 +20,7 @@ export interface DraggingController {
     eventSourceEnd: Date
     shiftTime :(miliSeconds: number) =>void
     shiftPoistion :(X: number, Y: number, e: MouseEvent) =>void
-
+    shiftEndTime:(miliSeconds: number) =>void
 }
 
 
@@ -72,7 +72,16 @@ constructor(mouseEvent : MouseEvent,event:EventClass){
     this.dragedEndDate = roundMinutesToMultipleOf5(newEndDate)
     this.shiftSource(miliSeconds)
   }
+ public shiftEndTime(miliSeconds: number) {
   
+    const newEndDate = new Date(this.item.end.getTime() + miliSeconds)
+    this.dragedEndDate = roundMinutesToMultipleOf5(newEndDate)
+    this.shiftEndSource(miliSeconds)
+  }
+  private shiftEndSource(miliSeconds: number) {
+    //@ts-ignore
+    this.eventSourceEnd = roundMinutesToMultipleOf5(new Date(this?.item?.sourceEvent?.end?.getTime() + miliSeconds))
+  }
   private shiftSource(miliSeconds: number) {
     //@ts-ignore
     this.eventSourceStart = roundMinutesToMultipleOf5(new Date(this?.item?.sourceEvent?.start?.getTime() + miliSeconds))

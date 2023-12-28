@@ -97,6 +97,8 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
                     gridComponent={DailyGrid}
                     cols={columData2}
                     onEventUpdate={onEventUpdateProxy}
+                     onAddEvent={mergedProps.onAddEvent}
+
                     initialDate={mergedProps.initialDate}
                     hasCrossGridDrag={false}
                 />

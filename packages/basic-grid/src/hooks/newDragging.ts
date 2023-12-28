@@ -2,6 +2,8 @@ import { EventClass } from "@full-event-calendar/shared-ts"
 import { DraggingEvent } from "./DraggingEvent"
 import { NewDraggingController } from "./newDraggingEvent"
 import { NewDomController } from "./newUiController"
+import { Switch } from "solid-js"
+import { getDateTimeRange } from "@full-event-calendar/utils"
 
 
 abstract class DraggerHandeler {
@@ -13,15 +15,16 @@ abstract class DraggerHandeler {
     }
 }
 
-interface Dragger {
-    hasMouseMoved:boolean
-    mouseMove: (e: MouseEvent) => void
+interface Dragger extends DraggerHandeler{
+    mouseMove: (e: MouseEvent, event: EventClass) => void
     dragStart: (e: MouseEvent, event: EventClass) => void
-    dragEnd: () => void
+    dragEnd: (e: MouseEvent, event: EventClass) => void
+    hasMouseMoved:boolean
 }
 
-class DailyGridDragger extends DraggerHandeler {
+class DailyGridDragger extends DraggerHandeler implements Dragger {
     hasMouseMoved = false
+
     dragStart(e: MouseEvent, event: EventClass) {
         
         this.createDraggingObject(e, event)
@@ -45,7 +48,7 @@ class DailyGridDragger extends DraggerHandeler {
 
         this.draggingController.shiftPoistion(e)
     }
-    dragEnd(e: MouseEvent) {
+    dragEnd(e: MouseEvent, event: EventClass) {
         this.isDragging = false
         if (!this.draggingController) return
         document.getElementById('full-event-calendar-core')?.classList.remove('calendar-draging')
@@ -56,10 +59,79 @@ class DailyGridDragger extends DraggerHandeler {
     }
 }
 
+
+
+class EventResize extends DraggerHandeler implements Dragger {
+    hasMouseMoved = false
+    prevX = 0
+    FirstBottomY = 0
+    rect=null as any
+    dragStart(e: MouseEvent, event: EventClass) {
+        this.createDraggingObject(e, event)
+        this.prevX =e.y
+        this.FirstBottomY = this.draggingController?.getEelementReact().bottom!
+        this.rect = this.draggingController?.getEelementReact()!
+    }
+    mouseMove(e: MouseEvent) {
+        const targetRect = this.rect
+        const targetEvent = this.draggingController?.getEventNode()!
+         targetEvent.style.zIndex = '30'
+        let newX = this.prevX - e.y
+        const height = targetRect.height - newX
+        targetEvent.style.height = height + 'px'
+        const delta = targetEvent.getBoundingClientRect().bottom - this.FirstBottomY
+        const newD = (delta * 60) / this.draggingController?.wrapperHeight!
+        this.draggingController?.shiftEndTime(newD* 60000)
+        targetEvent.innerHTML = getDateTimeRange(this.draggingController?.dragedStartDate,this.draggingController?.dragedEndDate)
+
+    }
+    dragEnd(e: MouseEvent) {
+        const targetEvent = this.draggingController?.getEventNode()!
+        targetEvent.style.zIndex = '1'
+    }
+    getPreviewNode(){}
+}
+
+class AddEventWithResize extends DraggerHandeler implements Dragger{
+    hasMouseMoved =false
+    resizer:EventResize | null= null
+    dragStart(e: MouseEvent, event: EventClass) {
+        this.resizer = new EventResize()
+     
+    }
+    mouseMove(e: MouseEvent,event:EventClass) {
+        if(!this.hasMouseMoved){
+            this.resizer?.dragStart.call(this,e,event)
+            this.hasMouseMoved = true
+        }else{
+            this.resizer?.mouseMove.call(this,e)
+        }
+    }
+    dragEnd(e: MouseEvent) {
+     
+      this.resizer?.dragEnd.call(this,e)
+    }
+    getPreviewNode(){}
+}
+
+export type drageModes = 'DailyDragDrop' | 'eventResizer' | 'addEventWithResize'
 export class CalendarDragger {
-    dragger: DailyGridDragger
-    constructor(mode: string) {
-        this.dragger = new DailyGridDragger()
+    dragger: Dragger
+    constructor(mode: drageModes) {
+        switch (mode) {
+            case 'DailyDragDrop':
+                this.dragger = new DailyGridDragger()
+                break;
+            case 'eventResizer':
+                this.dragger = new EventResize()
+                break
+            case 'addEventWithResize':
+                this.dragger = new AddEventWithResize()
+                break
+            default:
+                this.dragger = new DailyGridDragger()
+                break;
+        }
     }
 }
 

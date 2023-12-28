@@ -10,6 +10,7 @@ interface GroupGridProps {
   initialDate?: Date
   cols?: columItem[]
   onEventUpdate?: (a: SourceEvent, colNumber: number, currCol: number, isDragend: boolean) => void
+  onAddEvent?:(event: SourceEvent) =>void
   gridComponent: any
   hasCrossGridDrag?:boolean
 }
@@ -24,7 +25,9 @@ const defaultProps = {
   initialDate: new Date(),
   cols: [],
   hasCrossGridDrag:true,
-  onEventUpdate: () => {}
+  onEventUpdate: () => {},
+  onAddEvent: () => {},
+
 }
 
 export const GroupGrid: FComponent<GroupGridProps> = (props) => {
@@ -57,6 +60,7 @@ export const GroupGrid: FComponent<GroupGridProps> = (props) => {
             onEventUpdate={(a: any, b: any) => {
               eventUpdateProxy(a, b, i())
             }}
+            onAddEvent={mergedProps.onAddEvent}
             events={item.events}
             id={colIds[i()]}
             container={mergedProps.hasCrossGridDrag ? "group-grid-container" :""}
