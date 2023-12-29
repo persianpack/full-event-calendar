@@ -8,7 +8,7 @@ import { BasicGridProps } from '@full-event-calendar/basic-grid'
 // solid.js
 import { Show, createMemo, mergeProps } from 'solid-js'
 // utils
-import { getEventsInDate } from '@full-event-calendar/utils'
+ 
 
 import './DailyGrid.scss'
 import { DailyTimeRanges } from './DailyTimeRanges/DailyTimeRanges'
@@ -43,9 +43,9 @@ export const dailyDefaultProps = {
 export const DailyGrid: FComponent<DailyGridProps> = (props) => {
   const mergedProps = mergeProps(dailyDefaultProps, props)
 
-  const extractedEvents = createMemo(() => getEventsInDate(mergedProps.events, mergedProps.initialDate))
+  // const extractedEvents = createMemo(() => getEventsInDate(mergedProps.events, mergedProps.initialDate))
 
-  const filteredOut = createMemo(() => extractedEvents().filter((item) => !item.isAllDay()))
+  const filteredOut = createMemo(() => mergedProps.events.filter((item) => !item.isAllDay()))
 
   return (
     <>
@@ -54,23 +54,23 @@ export const DailyGrid: FComponent<DailyGridProps> = (props) => {
         data-test-id-daily-grid={props.id}
         style="flex:1;height: 100%;display:flex;flex-direction: column; "
       >
-        <DailyHeader 
+        {/* <DailyHeader 
           headerDate={mergedProps.initialDate}
           timeZone={mergedProps.timeZone}
           calendar={mergedProps.calendar}
           onDateChange={mergedProps.onDateChange}
           locale={mergedProps.locale}
-        />
+        /> */}
 
-        <Show when={mergedProps.showAllDay}>
-          <DailyAllDay
-            locale={mergedProps.locale}
-            events={extractedEvents()}
-            initialDate={mergedProps.initialDate}
-          ></DailyAllDay>
-        </Show>
+          {/* <Show when={mergedProps.showAllDay}>
+            <DailyAllDay
+              locale={mergedProps.locale}
+              events={extractedEvents()}
+              initialDate={mergedProps.initialDate}
+            ></DailyAllDay>
+          </Show> */}
           <div style=" display:flex;">
-            <DailyTimeRanges locale={mergedProps.locale}></DailyTimeRanges>
+        
             <BasicGrid
               gridDate={mergedProps.initialDate}
               events={filteredOut()}

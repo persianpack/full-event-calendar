@@ -1,5 +1,5 @@
 import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
-import { For, Show, createEffect, createMemo, createSignal, on } from 'solid-js'
+import { For, Show, createEffect, createMemo, createSignal, on, onMount } from 'solid-js'
 import './DailyAllDay.scss'
 import { rightOrLeftInDate } from '@full-event-calendar/utils/src/Date'
 import { formatNumber, sortEventByStart } from '@full-event-calendar/utils'
@@ -8,6 +8,8 @@ interface DailyAllDayProps {
   events: EventClass[]
   initialDate: Date
   locale: string
+  isAllDOpen:boolean
+  setIsAllDOpen:any
 }
 
 export const DailyAllDay: FComponent<DailyAllDayProps> = (props) => {
@@ -16,36 +18,55 @@ export const DailyAllDay: FComponent<DailyAllDayProps> = (props) => {
   let allDRef: any
   let cachecH = 0
 
-  const [isOpen, setIsOpen] = createSignal(false)
   function openAllD() {
+    if (!props.isAllDOpen) {
+
+      props.setIsAllDOpen(true)
+    }else{
+
+      
+      props.setIsAllDOpen(false)
+    }
+  }
+  let hasMounted =false
+  createEffect(on(()=>props.isAllDOpen,  ()=>{
+ 
+
     const el = allDRef as HTMLElement
-    if (!isOpen()) {
+    if (props.isAllDOpen) {
       cachecH = el.clientHeight
       el.style.height = el.clientHeight + 'px'
       el.style.maxHeight = 'initial'
+
+      if(!hasMounted) return;
       setTimeout(() => {
         el.style.height = el.scrollHeight + 'px'
       }, 0)
       setTimeout(() => {
         el.style.height = 'fit-content'
       }, 500)
-      setIsOpen(true)
+      // props.setIsAllDOpen(true)
     } else {
       el.style.height = el.clientHeight + 'px'
+
+      if(!hasMounted) return;
       setTimeout(() => {
         el.style.height = cachecH + 'px'
       }, 0)
       setTimeout(() => {
         el.style.height = 'fit-content'
-        el.style.maxHeight = '111px'
+        el.style.maxHeight = '81px'
       }, 500)
-      setIsOpen(false)
+      // props.setIsAllDOpen(false)
     }
-  }
+  }) )
+  onMount(()=>{
+    hasMounted = true
+  })
 
   return (
     <>
-      <div class={`all-d-wrapeer-header daosidj ${isOpen() ? 'alld-open' : 'alld-not-open'}`}>
+      <div class={`all-d-wrapeer-header daosidj ${props.isAllDOpen ? 'alld-open' : 'alld-not-open'}`}>
         <div class="mor-btn-container">
           <Show when={filteredEvents().length > 2}>
             <div class="all-collapser" onclick={openAllD}>

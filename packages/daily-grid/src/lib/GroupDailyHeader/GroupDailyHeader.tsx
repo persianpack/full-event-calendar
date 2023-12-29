@@ -1,15 +1,54 @@
-import { FComponent } from "@full-event-calendar/shared-ts";
+import { EventClass, FComponent, SourceEvent } from '@full-event-calendar/shared-ts'
+import { DailyAllDay } from '../DailyAllDay/DailyAllDay'
+import { For, createSignal, mergeProps } from 'solid-js'
+import { columData } from '../GroupDaily'
 
-
-interface GroupDailyHeaderProps{
-
+import './GroupDailyHeader.scss'
+export interface GroupDailyHeaderProps {
+  initialDate?: Date
+  onDateChange?: (d: Date) => void
+  onAddEvent?: (event: SourceEvent) => void
+  calendar?: string
+  timeZone?: string
+  locale?: string
+  id?: string
+  showAllDay?: boolean
+  container?: string
+  columData: columData[]
 }
 
-export const GroupDailyHeader:FComponent<GroupDailyHeaderProps>=(props)=>{
+export const dailyDefaultProps = {
+  events: [],
+  id: '',
+  initialDate: new Date(),
+  timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+  calendar: 'gregory',
+  locale: 'en-US',
+  showAllDay: true,
+  onDateChange: () => {},
+  onEventUpdate: () => {},
+  onAddEvent: () => {},
+  gridHeight: 65 * 24
+}
 
+export const GroupDailyHeader: FComponent<GroupDailyHeaderProps> = (props) => {
+  const mergedProps = mergeProps(dailyDefaultProps, props)
 
-    return(
-        <></>
-    )
+  const [isAllDOpen,setIsAllDOpen] =createSignal(false)
 
+  return (
+    <div class="alld-main-container">
+      <For each={mergedProps.columData}>
+        {(item) => (
+          <DailyAllDay
+            isAllDOpen={isAllDOpen()}
+            setIsAllDOpen={setIsAllDOpen}
+            locale={mergedProps.locale}
+            events={item.events}
+            initialDate={mergedProps.initialDate}
+          ></DailyAllDay>
+        )}
+      </For>
+    </div>
+  )
 }

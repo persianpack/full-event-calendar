@@ -74,11 +74,12 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
   }
 
   function getDragingStyle() {
+    
     return `width : ${draggedData().width};height : ${draggedData().height};left:${draggedData().left} ; transition : ${
       draggedData().animation
-    } ;top:${draggedData().top};position:fixed;opacity:0.8;background-color:${draggedData().item.color}`
+    };${draggedData().animation ? 'box-shadow: none;opacity:0.9':''} ;top:${draggedData().top};position:fixed;background-color:${draggedData().item.color}`
   }
-  
+
   const timess = [0,1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
 
   function getWrapperHeight() {

@@ -6,17 +6,19 @@ import { DailyGrid, DailyGridProps, dailyDefaultProps } from './DailyGrid'
 import { GroupGrid } from '@full-event-calendar/group-grid'
 
 import './GroupDaily.scss'
-import { DailyHeader } from '..'
+import { DailyHeader, DailyTimeRanges } from '..'
+import { GroupDailyHeader } from './GroupDailyHeader/GroupDailyHeader'
+import { getEventsInDate } from '@full-event-calendar/utils'
 
 export interface GroupDailyProps extends DailyGridProps {
   groups?: number[]
 }
 const defaultProps = {
   ...dailyDefaultProps,
-  groups: [1,2]
+  groups: [1, 2]
 }
 
-interface columData {
+export interface columData {
   events: EventClass[]
   props: any
 }
@@ -46,10 +48,11 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
   }
   getCols()
   function generageCols() {
+    // use Factory here
     // const columData = [] as unknown as columData[]
     if (mergedProps.groups.length > 0) {
       for (let i = 0; i < mergedProps.groups.length; i++) {
-        columData2[i].events = mergedProps.events
+        columData2[i].events = getEventsInDate(mergedProps.events, mergedProps.initialDate)
         columData2[i].props.initialDate = new Date(mergedProps.initialDate)
         columData2[i].props.gridDate = new Date(mergedProps.initialDate)
         columData2[i].props.locale = mergedProps.locale
@@ -60,7 +63,7 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
         columData2[i].props.onDateChange = onDateChange
       }
     } else {
-      columData2[0].events = mergedProps.events
+      columData2[0].events = getEventsInDate(mergedProps.events, mergedProps.initialDate)
       columData2[0].props.initialDate = new Date(mergedProps.initialDate)
       columData2[0].props.gridDate = new Date(mergedProps.initialDate)
       columData2[0].props.locale = mergedProps.locale
@@ -75,7 +78,6 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
   }
 
   generageCols()
- 
 
   function onEventUpdateProxy(updatedSourceEvent: SourceEvent, targetCol: number, baseCol: number, isDragend: boolean) {
     // TargetCol and baseCol are indexes for which colum was event moved in .
@@ -91,25 +93,29 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
 
   return (
     <>
-      <DailyHeader
+      {/* <DailyHeader
         headerDate={mergedProps.initialDate}
         timeZone={mergedProps.timeZone}
         calendar={mergedProps.calendar}
         onDateChange={mergedProps.onDateChange}
         locale={mergedProps.locale}
-      ></DailyHeader>
-        <div class="scroll-wrapper " id="scroll-wrapper">
-          <div style="position: absolute;width:100%;display:flex;">
-      <GroupGrid
-        gridComponent={DailyGrid}
-        cols={columData2}
-        onEventUpdate={onEventUpdateProxy}
-        onAddEvent={mergedProps.onAddEvent}
-        initialDate={mergedProps.initialDate}
-        hasCrossGridDrag={false}
-      />
-            </div>
-          </div>
+      ></DailyHeader> */}
+      <GroupDailyHeader columData={columData2}    locale={mergedProps.locale} initialDate={mergedProps.initialDate}>
+
+      </GroupDailyHeader>
+      <div class="scroll-wrapper " id="scroll-wrapper">
+        <div style="position: absolute;width:100%;display:flex;">
+          <DailyTimeRanges locale={mergedProps.locale}></DailyTimeRanges>
+          <GroupGrid
+            gridComponent={DailyGrid}
+            cols={columData2}
+            onEventUpdate={onEventUpdateProxy}
+            onAddEvent={mergedProps.onAddEvent}
+            initialDate={mergedProps.initialDate}
+            hasCrossGridDrag={false}
+          />
+        </div>
+      </div>
     </>
   )
 }

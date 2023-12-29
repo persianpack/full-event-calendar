@@ -1,6 +1,6 @@
 .alld-not-open {
   .all-day-container {
-    max-height: 111px;
+    max-height: 81px;
   }
 }
 .all-day-container {
@@ -15,12 +15,12 @@
 
   overflow: hidden;
   // margin-left: 50px;
-  border-left: 1px solid var(--hairline);
+  // border-left: 1px solid var(--hairline);
   transition: all 0.5s ease-in-out;
 
   .all-day-wrapper {
-    height: 24px;
-    margin: 10px 0px;
+    height: 20px;
+    margin: 3px 0px;
     border-radius: 7px;
     color: white;
     padding: 0 20px;
@@ -45,7 +45,7 @@
   position: absolute;
   background: white;
   width: 100%;
-  height: 35px;
+  height: 30px;
   bottom: 0px;
   left: 0;
   // border-radius: 8px;
@@ -94,6 +94,7 @@
 .all-d-wrapeer-header {
   display: flex;
   position: relative;
+  border-right: 1px solid var(--hairline);
 }
 
 .mor-btn-container {
