@@ -21,7 +21,7 @@ export class EventImpl implements EventClass {
     this.id = eventData.id
     this.sourceEvent = eventData
     this.duration = Math.round((eventData.end.getTime() - eventData.start.getTime()) / 60000)
-    this.color = eventData.color || '#ff5280'
+    this.color = eventData.color || '#31B5F7'
     this.groups = eventData.groups || [1,2]
     this.calendarId = 'fec-id-' + uniqId
   }

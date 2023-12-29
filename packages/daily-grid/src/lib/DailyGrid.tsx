@@ -17,7 +17,6 @@ export interface DailyGridProps extends BasicGridProps {
   initialDate?: Date
   onDateChange?: (d: Date) => void
   onAddEvent?:(event: SourceEvent) =>void
-
   calendar?: string
   timeZone?: string 
   locale?: string
@@ -25,7 +24,7 @@ export interface DailyGridProps extends BasicGridProps {
   showAllDay?: boolean
   container?: string
   events: EventClass[]
-  }
+}
 
 export const dailyDefaultProps = {
   events: [],
@@ -70,8 +69,7 @@ export const DailyGrid: FComponent<DailyGridProps> = (props) => {
             initialDate={mergedProps.initialDate}
           ></DailyAllDay>
         </Show>
-        <div class="scroll-wrapper " id="scroll-wrapper">
-          <div style="position: absolute;width:100%;display:flex;">
+          <div style=" display:flex;">
             <DailyTimeRanges locale={mergedProps.locale}></DailyTimeRanges>
             <BasicGrid
               gridDate={mergedProps.initialDate}
@@ -81,10 +79,11 @@ export const DailyGrid: FComponent<DailyGridProps> = (props) => {
               onAddEvent={mergedProps.onAddEvent}
               gridHeight={mergedProps.gridHeight}
               container={mergedProps.container}
+              timeZone={mergedProps.timeZone}
             />
-          </div>
         </div>
       </div>
     </>
   )
 }
+

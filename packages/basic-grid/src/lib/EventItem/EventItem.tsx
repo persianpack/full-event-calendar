@@ -8,11 +8,12 @@ interface EventItem {
   gridDate: Date
   width: string
   locale: string
+  top0?:boolean
 }
 
 export const EventItem: FComponent<EventItem> = (props) => {
   function getPosition() {
-    return props.event.doesEventStartOn(props.gridDate) ? props.event.calculatePositionTop() : 'top:0'
+    return props.event.doesEventStartOn(props.gridDate) && !props.top0 ? props.event.calculatePositionTop() : 'top:0'
   }
   function getHeight() {
     //return   props.event.calculateHeight(!props.event.doesEventStartOn(props.gridDate))

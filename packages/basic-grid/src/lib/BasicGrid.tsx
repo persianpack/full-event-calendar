@@ -9,6 +9,7 @@ import './basicGrid.scss'
 import { EventImpl, getDateTimeRange, isDateToday } from '@full-event-calendar/utils'
 import { Accessor, Component, createComputed, createSignal } from 'solid-js'
 import { EventItem } from './EventItem/EventItem'
+import { TimeRange } from './TimeRange/TimeRange'
 export interface BasicGridProps {
   events?: EventClass[]
   onEventUpdate?: (event: SourceEvent, dragData?: DraggedData) => void
@@ -18,6 +19,7 @@ export interface BasicGridProps {
   container?: string
   id?: string
   locale?: string
+  timeZone?:string
 }
 
 const defaultProps = {
@@ -27,32 +29,33 @@ const defaultProps = {
   gridDate: new Date(),
   gridHeight: 65 * 24,
   id: '',
-  locale: 'en'
+  locale: 'en',
+  timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
 }
 
-export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
-  let containerRef: any = {
+export const BasicGrid: FComponent<BasicGridProps> = (props) => {
+  let gridRef: any = {
     current: ''
   }
-  let wrapperContainer: any = { curret: '' }
-  const props = mergeProps(defaultProps, propsC)
-  const [resiserGr, setResizer] = createSignal<EventClass | null>(null)
+  let gridContainer: any = { curret: '' }
+  const mergedProps = mergeProps(defaultProps, props)
+
 
   const { onmousedownH } = useResize('eventResizer', resizeCb)
-  const { draggedData, isDragging, itemDragstart } = userDragger(containerRef, dragEnd, wrapperContainer)
+  const { draggedData, isDragging, itemDragstart } = userDragger(gridRef, dragEnd, gridContainer)
+
   onMount(() => {
     setTimeout(() => {
-      // containerRef.current = document.getElementById('some-random-shit')
-      if (props.container) {
-        wrapperContainer.current = document.getElementById(props.container)
+      if (mergedProps.container) {
+        gridContainer.current = document.getElementById(mergedProps.container)
       } else {
-        wrapperContainer.current = containerRef.current
+        gridContainer.current = gridRef.current
       }
     }, 0)
   })
 
   const ColList = createMemo(() => {
-    const finalData = createLinesOfColum(props.events)
+    const finalData = createLinesOfColum(mergedProps.events)
     return Object.values(finalData)
   })
 
@@ -62,58 +65,31 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
     sourceE.start = a.eventSourceStart as Date
     sourceE.end = a.eventSourceEnd as Date
     if (a.item) {
-      props.onEventUpdate(sourceE as SourceEvent, a)
+      mergedProps.onEventUpdate(sourceE as SourceEvent, a)
     }
   }
 
   function resizeCb(a: any) {
-    console.log('updat')
-    props.onEventUpdate(a)
+    mergedProps.onEventUpdate(a)
   }
 
   function getDragingStyle() {
     return `width : ${draggedData().width};height : ${draggedData().height};left:${draggedData().left} ; transition : ${
       draggedData().animation
-    } ;top:${draggedData().top};position:fixed;opacity:0.7;background-color:${draggedData().item.color}`
+    } ;top:${draggedData().top};position:fixed;opacity:0.8;background-color:${draggedData().item.color}`
   }
-  const timess = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+  
+  const timess = [0,1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
 
   function getWrapperHeight() {
-    return `height:${props.gridHeight / 24}px`
+    return `height:${mergedProps.gridHeight / 24}px`
   }
- 
-  function timeRangeMousedOWN(hour: number, min: number, mouseEvent: MouseEvent) {
-    const { onmousedownH, draggedData } = useResize('addEventWithResize', addCb)
-    function addCb(s) {
-      s.id = createUniqueId()
-   
-      props.onAddEvent(s, false)
-      setResizer(null)
-    }
-    const basdate = new Date(props.gridDate)
-    const endDate = new Date(props.gridDate)
-    basdate.setHours(hour, min)
-    endDate.setHours(hour, min + 15)
 
-    const x = new EventImpl({ start: basdate, end: endDate, name: 'some name', id: 9876 })
-    setResizer(x)
-
-    onmousedownH(x, mouseEvent)
-  }
   return (
     <>
-      <div ref={containerRef.current} id={propsC.id} class="basic-grid">
+      <div ref={gridRef.current} id={mergedProps.id} class="basic-grid">
         <div class="holdcontainer" style={getWrapperHeight()}>
-          <Show when={resiserGr()}>
-            <EventItem
-              locale={props.locale}
-              event={resiserGr()!}
-              gridDate={props.gridDate}
-              width="width:calc(100% - 20px)"
-              onMouseDown={onmousedownH}
-              onDragStart={itemDragstart}
-            ></EventItem>
-          </Show>
+        
           <For each={ColList()}>
             {(eventList, colNumber) => {
               return (
@@ -122,9 +98,9 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
                     {(event: EventClass) => {
                       return (
                         <EventItem
-                          locale={props.locale}
+                          locale={mergedProps.locale}
                           event={event}
-                          gridDate={props.gridDate}
+                          gridDate={mergedProps.gridDate}
                           width={lookForAvailableWith(ColList(), event, colNumber() + 1)}
                           onMouseDown={onmousedownH}
                           onDragStart={itemDragstart}
@@ -138,49 +114,27 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
           </For>
         </div>
 
-        <div class="fec-daily-grid" style={`height: ${props.gridHeight}px`}>
+        <div class="fec-daily-grid" style={`height: ${mergedProps.gridHeight}px`}>
           {/* <div class="grid-border-left"></div> */}
-          <Show when={isDateToday(props.gridDate)}>
-            <TimeBar container={containerRef} />
+          <Show when={isDateToday(mergedProps.gridDate)}>
+            <TimeBar container={gridRef} />
           </Show>
 
-          <div class="time-range">
-            <div class="time-range-time"> </div>
-            <div class="some-container">
-              <div class="time-rage-up-container">
-                <div onmousedown={(e) => timeRangeMousedOWN(0, 0, e)}></div>
-                <div onmousedown={(e) => timeRangeMousedOWN(0, 15, e)}></div>
-              </div>
-              <div class="time-rage-down-container">
-                <div onmousedown={(e) => timeRangeMousedOWN(0, 30, e)}></div>
-                <div onmousedown={(e) => timeRangeMousedOWN(0, 45, e)}></div>
-              </div>
-            </div>
-          </div>
-
           <For each={timess}>
-            {(t, i) => {
+            {(_, i) => {
               return (
-                <>
-                  <div data-test-time-range-id={i() + 1} class="time-range">
-                    {/* <div class="time-range-time">{time}</div> */}
-                    <div class="some-container">
-                      <div class="time-rage-up-container">
-                        <div onmousedown={(e) => timeRangeMousedOWN(t, 0, e)}></div>
-                        <div onmousedown={(e) => timeRangeMousedOWN(t, 15, e)}></div>
-                      </div>
-                      <div class="time-rage-down-container">
-                        <div onmousedown={(e) => timeRangeMousedOWN(t, 30, e)}></div>
-                        <div onmousedown={(e) => timeRangeMousedOWN(t, 45, e)}></div>
-                      </div>
-                    </div>
-                  </div>
-                </>
+                  <TimeRange 
+                    onAddEvent={mergedProps.onAddEvent}
+                    gridDate={mergedProps.gridDate}
+                    locale={mergedProps.locale}
+                    timeZone={mergedProps.timeZone}
+                    houre={i()}
+                  ></TimeRange>
               )
             }}
           </For>
 
-          <div class="wrapper-container" style={getWrapperHeight()}>
+          <div class="wrapper-container dragger-wrapper" style={getWrapperHeight()}>
             <Show when={isDragging()}>
               <div
                 id={'draging-event-' + draggedData().item?.id}
@@ -194,29 +148,6 @@ export const BasicGrid: FComponent<BasicGridProps> = (propsC) => {
           </div>
         </div>
       </div>
-    </>
-  )
-}
-
-export function createHello(): [Accessor<string>, (to: string) => void] {
-  const [hello, setHello] = createSignal('Hello World!')
-
-  return [hello, (to: string) => setHello(`Hello ${to}!`)]
-}
-
-export const Hello: Component<{ to?: string }> = (props) => {
-  const [hello, setHello] = createHello()
-
-  // This will only log during development, console is removed in production
-  console.log('Hello World!')
-
-  createComputed(() => {
-    if (typeof props.to === 'string') setHello(props.to)
-  })
-
-  return (
-    <>
-      <div>{hello()}</div>
     </>
   )
 }

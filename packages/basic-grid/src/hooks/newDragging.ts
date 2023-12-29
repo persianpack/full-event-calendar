@@ -16,22 +16,19 @@ abstract class DraggerHandeler {
 }
 
 interface Dragger extends DraggerHandeler{
-    mouseMove: (e: MouseEvent, event: EventClass) => void
+    mouseMove: (e: MouseEvent) => void
     dragStart: (e: MouseEvent, event: EventClass) => void
-    dragEnd: (e: MouseEvent, event: EventClass) => void
+    dragEnd: (e: MouseEvent) => void
     hasMouseMoved:boolean
 }
 
 class DailyGridDragger extends DraggerHandeler implements Dragger {
-    hasMouseMoved = false
+     hasMouseMoved = false
 
     dragStart(e: MouseEvent, event: EventClass) {
-        
         this.createDraggingObject(e, event)
-        // update dragging on dom
     }
     mouseMove(e: MouseEvent) {
-        // if (!domController.mouseDown) return
         this.hasMouseMoved = true
         if (!this.draggingController) return
         if (!this.isDragging) {
@@ -48,14 +45,13 @@ class DailyGridDragger extends DraggerHandeler implements Dragger {
 
         this.draggingController.shiftPoistion(e)
     }
-    dragEnd(e: MouseEvent, event: EventClass) {
+    dragEnd(e: MouseEvent) {
         this.isDragging = false
         if (!this.draggingController) return
         document.getElementById('full-event-calendar-core')?.classList.remove('calendar-draging')
     }
     getPreviewNode() {
         return document.getElementById(`draging-event-${this.draggingController?.item.id}`) as HTMLElement
-        // draging-event-
     }
 }
 
@@ -81,7 +77,7 @@ class EventResize extends DraggerHandeler implements Dragger {
         const height = targetRect.height - newX
         targetEvent.style.height = height + 'px'
         const delta = targetEvent.getBoundingClientRect().bottom - this.FirstBottomY
-        const newD = (delta * 60) / this.draggingController?.wrapperHeight!
+        const newD = (delta * 60) / this.draggingController?.oneHourInPixelSize!
         this.draggingController?.shiftEndTime(newD* 60000)
         targetEvent.innerHTML = getDateTimeRange(this.draggingController?.dragedStartDate!,this.draggingController?.dragedEndDate!)
 
@@ -99,14 +95,14 @@ class EventResize extends DraggerHandeler implements Dragger {
 class AddEventWithResize extends DraggerHandeler implements Dragger{
     hasMouseMoved =false
     resizer:EventResize | null= null
-    private event:EventClass
+    private event:EventClass | null =null
     dragStart(e: MouseEvent, event: EventClass) {
         this.resizer = new EventResize()
         this.event = event
     }
-    mouseMove(e: MouseEvent,event:EventClass) {
+    mouseMove(e: MouseEvent) {
         if(!this.hasMouseMoved){
-            this.resizer?.dragStart.call(this,e,event)
+            this.resizer?.dragStart.call(this,e,this.event!)
             this.hasMouseMoved = true
         }else{
             this.resizer?.mouseMove.call(this,e)
@@ -115,7 +111,7 @@ class AddEventWithResize extends DraggerHandeler implements Dragger{
     dragEnd(e: MouseEvent) {
       this.resizer?.dragEnd.call(this,e)
       if(!this.hasMouseMoved){
-        this.resizer?.dragStart.call(this,e,this.event)
+        this.resizer?.dragStart.call(this,e,this.event!)
       }
     }
     getPreviewNode(){}
@@ -159,18 +155,3 @@ interface DraggingData {
     eventSourceStart: Date,
     eventSourceEnd: Date
 }
-
-
-// width: '',
-// height: '',
-// left: '',
-// top: '',
-// item: null,
-// duration: 0,
-// dragedStartDate: new Date(),
-// dragedEndDate: new Date(),
-// animation: '',
-// isDragg: null,
-// mouseX: 0,
-// eventSourceStart: new Date(),
-// eventSourceEnd: new Date()

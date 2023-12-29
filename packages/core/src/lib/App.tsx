@@ -65,6 +65,7 @@ export function App() {
             onDateChange={onDateChange}
             onGridChange={onGridChange}
             listMode={data.store.listMode}
+            timeZone={data.store.timeZone}
           ></Dynamic>
         </SliderWrapper>
       </div>
