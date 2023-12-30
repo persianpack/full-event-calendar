@@ -10,6 +10,7 @@ export interface EventClass {
   duration: number
   sourceEvent: SourceEvent
   color: string
+  groups: number[] | string[]
   getEventLength(): any
   isAllDay(): any
   countDays(): number
@@ -24,6 +25,11 @@ export interface EventClass {
   convertDateByTimeZone(tz: string): void
   getIncludedDays(): Date[]
 }
+export interface Group{
+  id:string[] | number[]
+  name :string
+  image?:any
+}
 
 export interface SourceEvent {
   start: Date
@@ -31,7 +37,7 @@ export interface SourceEvent {
   name: string
   id: any
   color?: string
-  groupId?: string
+  groups?: number[] | string[]
 }
 
 export interface DraggedData {

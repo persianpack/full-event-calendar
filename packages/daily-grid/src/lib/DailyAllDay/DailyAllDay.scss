@@ -94,9 +94,12 @@
 .all-d-wrapeer-header {
   display: flex;
   position: relative;
-  border-right: 1px solid var(--hairline);
+   border-left: 1px solid var(--hairline);
 }
+.all-d-wrapeer-header:first-child{
+  // border-right: 1px solid var(--hairline);
 
+}
 .mor-btn-container {
   width: 5۱px;
   position: relative;

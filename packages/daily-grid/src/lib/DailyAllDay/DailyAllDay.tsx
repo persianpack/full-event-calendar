@@ -19,15 +19,9 @@ export const DailyAllDay: FComponent<DailyAllDayProps> = (props) => {
   let cachecH = 0
 
   function openAllD() {
-    if (!props.isAllDOpen) {
-
-      props.setIsAllDOpen(true)
-    }else{
-
-      
-      props.setIsAllDOpen(false)
-    }
+    props.setIsAllDOpen(!props.isAllDOpen)
   }
+
   let hasMounted =false
   createEffect(on(()=>props.isAllDOpen,  ()=>{
  

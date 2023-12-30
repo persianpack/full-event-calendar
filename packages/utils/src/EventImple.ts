@@ -1,4 +1,4 @@
-import { EventClass, SourceEvent } from '@full-event-calendar/shared-ts'
+import { EventClass, Group, SourceEvent } from '@full-event-calendar/shared-ts'
 import { convertTZ } from './TimeZone'
 import { ceilDate, floorDate } from '.'
 
@@ -12,7 +12,7 @@ export class EventImpl implements EventClass {
   duration: number // duration is in minutes
   sourceEvent: SourceEvent
   color: string
-  groups: number[]
+  groups:number[]|string[]
   calendarId:string
   constructor(eventData: SourceEvent) {
     this.start = eventData.start
@@ -22,7 +22,7 @@ export class EventImpl implements EventClass {
     this.sourceEvent = eventData
     this.duration = Math.round((eventData.end.getTime() - eventData.start.getTime()) / 60000)
     this.color = eventData.color || '#31B5F7'
-    this.groups = eventData.groups || [1,2]
+    this.groups = eventData.groups || []
     this.calendarId = 'fec-id-' + uniqId
   }
 

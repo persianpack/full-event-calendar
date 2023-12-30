@@ -1,4 +1,4 @@
-import { EventClass, FComponent, SourceEvent } from '@full-event-calendar/shared-ts'
+import { EventClass, FComponent, Group, SourceEvent } from '@full-event-calendar/shared-ts'
 
 import { createMutable } from 'solid-js/store'
 import { createEffect, mergeProps } from 'solid-js'
@@ -6,16 +6,16 @@ import { DailyGrid, DailyGridProps, dailyDefaultProps } from './DailyGrid'
 import { GroupGrid } from '@full-event-calendar/group-grid'
 
 import './GroupDaily.scss'
-import { DailyHeader, DailyTimeRanges } from '..'
+import { DailyTimeRanges } from '..'
 import { GroupDailyHeader } from './GroupDailyHeader/GroupDailyHeader'
 import { getEventsInDate } from '@full-event-calendar/utils'
 
 export interface GroupDailyProps extends DailyGridProps {
-  groups?: number[]
+  groups?: Group[]
 }
 const defaultProps = {
   ...dailyDefaultProps,
-  groups: [1, 2]
+  groups: []
 }
 
 export interface columData {
@@ -24,6 +24,7 @@ export interface columData {
 }
 
 export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
+
   const mergedProps = mergeProps(defaultProps, props)
 
   function onDateChange(d: Date) {
@@ -49,10 +50,15 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
   getCols()
   function generageCols() {
     // use Factory here
+    console.log(mergedProps.groups)
     // const columData = [] as unknown as columData[]
     if (mergedProps.groups.length > 0) {
-      for (let i = 0; i < mergedProps.groups.length; i++) {
-        columData2[i].events = getEventsInDate(mergedProps.events, mergedProps.initialDate)
+        for (let i = 0; i < mergedProps.groups.length; i++) {
+        const groupId = mergedProps.groups[i].id
+         
+        //@ts-ignore
+        const filterdEvents = mergedProps.events.filter(ev=>ev.groups.includes(groupId))
+        columData2[i].events = getEventsInDate(filterdEvents, mergedProps.initialDate)
         columData2[i].props.initialDate = new Date(mergedProps.initialDate)
         columData2[i].props.gridDate = new Date(mergedProps.initialDate)
         columData2[i].props.locale = mergedProps.locale
@@ -61,6 +67,7 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
         columData2[i].props.gridHeight = mergedProps.gridHeight
         columData2[i].props.showAllDay = true
         columData2[i].props.onDateChange = onDateChange
+        columData2[i].props.group = mergedProps.groups[i]
       }
     } else {
       columData2[0].events = getEventsInDate(mergedProps.events, mergedProps.initialDate)
@@ -74,7 +81,6 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
       columData2[0].props.onDateChange = onDateChange
     }
 
-    // return columData
   }
 
   generageCols()
@@ -91,18 +97,17 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
 
   createEffect(generageCols)
 
+  function addEventProxy(event:SourceEvent,groupId?:number){
+    if(groupId){
+        mergedProps.onAddEvent({...event,...{groups:[groupId]}})
+    }else{
+        mergedProps.onAddEvent(event)
+    }
+  }
+
   return (
     <>
-      {/* <DailyHeader
-        headerDate={mergedProps.initialDate}
-        timeZone={mergedProps.timeZone}
-        calendar={mergedProps.calendar}
-        onDateChange={mergedProps.onDateChange}
-        locale={mergedProps.locale}
-      ></DailyHeader> */}
-      <GroupDailyHeader columData={columData2}    locale={mergedProps.locale} initialDate={mergedProps.initialDate}>
-
-      </GroupDailyHeader>
+      <GroupDailyHeader columData={columData2}    locale={mergedProps.locale} initialDate={mergedProps.initialDate} />
       <div class="scroll-wrapper " id="scroll-wrapper">
         <div style="position: absolute;width:100%;display:flex;">
           <DailyTimeRanges locale={mergedProps.locale}></DailyTimeRanges>
@@ -110,7 +115,7 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
             gridComponent={DailyGrid}
             cols={columData2}
             onEventUpdate={onEventUpdateProxy}
-            onAddEvent={mergedProps.onAddEvent}
+            onAddEvent={addEventProxy}
             initialDate={mergedProps.initialDate}
             hasCrossGridDrag={false}
           />

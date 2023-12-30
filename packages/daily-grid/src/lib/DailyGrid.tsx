@@ -1,29 +1,25 @@
 // Components
 import { BasicGrid } from '@full-event-calendar/basic-grid'
-import { DailyHeader } from './DailyHeader/DailyHeader'
-import { DailyAllDay } from './DailyAllDay/DailyAllDay'
 // Types
-import { EventClass, FComponent, SourceEvent } from '@full-event-calendar/shared-ts'
-import { BasicGridProps } from '@full-event-calendar/basic-grid'
+import { EventClass, FComponent, Group, SourceEvent } from '@full-event-calendar/shared-ts'
 // solid.js
-import { Show, createMemo, mergeProps } from 'solid-js'
+import { createMemo, mergeProps } from 'solid-js'
 // utils
- 
-
 import './DailyGrid.scss'
-import { DailyTimeRanges } from './DailyTimeRanges/DailyTimeRanges'
 // Remove the extend
-export interface DailyGridProps extends BasicGridProps {
+export interface DailyGridProps {
   initialDate?: Date
   onDateChange?: (d: Date) => void
-  onAddEvent?:(event: SourceEvent) =>void
   calendar?: string
+  onAddEvent?:(event: SourceEvent,groupId?:Group['id']) =>void
+  onEventUpdate?:(event: SourceEvent) =>void
   timeZone?: string 
   locale?: string
   id?: string
   showAllDay?: boolean
   container?: string
   events: EventClass[]
+  group:Group
 }
 
 export const dailyDefaultProps = {
@@ -37,7 +33,8 @@ export const dailyDefaultProps = {
   onDateChange: () => {},
   onEventUpdate: () => {},
   onAddEvent: () => {},
-  gridHeight: 65 * 24
+  gridHeight: 65 * 24,
+  group:null
 }
 
 export const DailyGrid: FComponent<DailyGridProps> = (props) => {
@@ -47,6 +44,14 @@ export const DailyGrid: FComponent<DailyGridProps> = (props) => {
 
   const filteredOut = createMemo(() => mergedProps.events.filter((item) => !item.isAllDay()))
 
+  function addEventProxy(event:SourceEvent){
+   if(mergedProps.group){
+    mergedProps.onAddEvent(event,mergedProps.group.id)
+   }else{
+    mergedProps.onAddEvent(event)
+   }
+  }
+
   return (
     <>
       <div
@@ -54,29 +59,13 @@ export const DailyGrid: FComponent<DailyGridProps> = (props) => {
         data-test-id-daily-grid={props.id}
         style="flex:1;height: 100%;display:flex;flex-direction: column; "
       >
-        {/* <DailyHeader 
-          headerDate={mergedProps.initialDate}
-          timeZone={mergedProps.timeZone}
-          calendar={mergedProps.calendar}
-          onDateChange={mergedProps.onDateChange}
-          locale={mergedProps.locale}
-        /> */}
-
-          {/* <Show when={mergedProps.showAllDay}>
-            <DailyAllDay
-              locale={mergedProps.locale}
-              events={extractedEvents()}
-              initialDate={mergedProps.initialDate}
-            ></DailyAllDay>
-          </Show> */}
           <div style=" display:flex;">
-        
             <BasicGrid
               gridDate={mergedProps.initialDate}
               events={filteredOut()}
               locale={mergedProps.locale}
               onEventUpdate={mergedProps.onEventUpdate}
-              onAddEvent={mergedProps.onAddEvent}
+              onAddEvent={addEventProxy}
               gridHeight={mergedProps.gridHeight}
               container={mergedProps.container}
               timeZone={mergedProps.timeZone}

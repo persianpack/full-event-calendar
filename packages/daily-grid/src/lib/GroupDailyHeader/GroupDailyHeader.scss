@@ -7,3 +7,25 @@
     flex: 1;
   }
 }
+.group-item-header{
+    display: flex;
+    padding-right: 8px;
+    flex: 1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding-left: 51px;
+    display: flex;
+    > div {
+        align-items: center;
+        gap: 10px;
+        flex: 1;
+        // border-left: 1px solid var(--hairline);
+        justify-content: end;
+        display: flex;
+        &:first-child{
+            border-right: 1px solid var(--hairline);
+        }
+
+    }
+}

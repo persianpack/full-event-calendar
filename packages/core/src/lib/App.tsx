@@ -21,10 +21,10 @@ export function App() {
     }
   }
 
-  function onAddEvent(event: SourceEvent,convetTz:boolean) {
+  function onAddEvent(event: SourceEvent) {
     if (data.store.autoUpdateEventOnChange) {
       // const prev = data.instance.getEventById(event.id) as EventClass
-      data.instance.addEvent(event,convetTz)
+      data.instance.addEvent(event)
       // const next = data.instance.getEventById(event.id) as EventClass
       // data.instance.emitEvent('eventUpdate', {
       //   prev: prev,
@@ -66,6 +66,7 @@ export function App() {
             onGridChange={onGridChange}
             listMode={data.store.listMode}
             timeZone={data.store.timeZone}
+            groups={data.store.groups}
           ></Dynamic>
         </SliderWrapper>
       </div>

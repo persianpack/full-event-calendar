@@ -2,7 +2,7 @@ import useRedux from '../store/useRedux'
 import chatStore from '../store/store'
 import type { Dispatch } from 'redux'
 import { CalendarState, StoreActions } from '../store/store'
-import { EventClass, SourceEvent } from '@full-event-calendar/shared-ts'
+import { EventClass, Group, SourceEvent } from '@full-event-calendar/shared-ts'
 interface CalendarApi {
   // Current Date
   // -----------------------------------------------------------------------------------------------------------------
@@ -27,7 +27,7 @@ export interface CalendarSourceOptions {
   gridHeight?: number
   autoUpdateEventOnChange?: boolean
   listMode?: listModeTypes
-  groups?:number[]
+  groups?:Group[]
   // dailyGridOptions : dailyGridOptions;
 }
 
@@ -84,11 +84,11 @@ export class CalendarImpl implements CalendarApi {
   public updateListMode(val: listModeTypes) {
     this.storeDispatch({ type: 'UPDATE_LIST_MODE',val})
   }
-  public updateGroups(groups:number[]) {
+  public updateGroups(groups:Group[]) {
     this.storeDispatch({ type: 'UPDATE_GROUPS',groups})
   }
-  public addEvent(event:EventClass,convertTz:boolean = true) {
-    this.storeDispatch({ type: 'ADD_EVENT',event,convertTz})
+  public addEvent(event:EventClass) {
+    this.storeDispatch({ type: 'ADD_EVENT',event})
   }
   public resetOptions(options: CalendarSourceOptions) {
     if (options.timeZone) {

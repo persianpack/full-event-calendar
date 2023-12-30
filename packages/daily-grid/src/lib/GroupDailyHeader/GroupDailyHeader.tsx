@@ -4,6 +4,8 @@ import { For, createSignal, mergeProps } from 'solid-js'
 import { columData } from '../GroupDaily'
 
 import './GroupDailyHeader.scss'
+import { DailyHeader } from '../..'
+import { GroupItemHeader } from './GroupItemHeader/GroupItemHeader'
 export interface GroupDailyHeaderProps {
   initialDate?: Date
   onDateChange?: (d: Date) => void
@@ -34,21 +36,43 @@ export const dailyDefaultProps = {
 export const GroupDailyHeader: FComponent<GroupDailyHeaderProps> = (props) => {
   const mergedProps = mergeProps(dailyDefaultProps, props)
 
-  const [isAllDOpen,setIsAllDOpen] =createSignal(false)
+  const [isAllDOpen, setIsAllDOpen] = createSignal(false)
 
   return (
-    <div class="alld-main-container">
-      <For each={mergedProps.columData}>
-        {(item) => (
-          <DailyAllDay
-            isAllDOpen={isAllDOpen()}
-            setIsAllDOpen={setIsAllDOpen}
+    <>
+      <div style="display:flex;position:relative">
+        <div>
+          <DailyHeader
+            headerDate={mergedProps.initialDate}
+            timeZone={mergedProps.timeZone}
+            calendar={mergedProps.calendar}
+            onDateChange={mergedProps.onDateChange}
             locale={mergedProps.locale}
-            events={item.events}
-            initialDate={mergedProps.initialDate}
-          ></DailyAllDay>
-        )}
+          />
+        </div>
+      <div class='group-item-header'>
+      <For each={mergedProps.columData}>
+          {(item) => (
+
+           <GroupItemHeader group={item.props.group} />
+          )}
       </For>
-    </div>
+      
+      </div>
+      </div>
+      <div class="alld-main-container">
+        <For each={mergedProps.columData}>
+          {(item) => (
+            <DailyAllDay
+              isAllDOpen={isAllDOpen()}
+              setIsAllDOpen={setIsAllDOpen}
+              locale={mergedProps.locale}
+              events={item.events}
+              initialDate={mergedProps.initialDate}
+            ></DailyAllDay>
+          )}
+        </For>
+      </div>
+    </>
   )
 }

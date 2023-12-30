@@ -233,14 +233,16 @@ const events = [
     color: '#BF51F9',
     start: new Date('Thu Aug 10 2023 17:10:00'),
     end: new Date('Thu Aug 10 2023 19:30:00'),
-    id: 14
+    id: 14,
+    groups:[2]
   },
   {
     name: 'some name',
     color: '#31B5F7',
     start: new Date('Thu Aug 10 2023 17:15:00'),
     end: new Date('Thu Aug 10 2023 20:00:00'),
-    id: 15
+    id: 15,
+    groups:[1]
   },
   {
     name: 'some name',
@@ -285,7 +287,8 @@ const EventCalendar = new Calendar(el, {
   //@ts-ignore
   plugins: [DailyGridPlugin, MonthGridPlugin, WeeklyGridPlugin, ListPlugin],
   grid: 'daily',
-  listMode : 'week'
+  listMode : 'week',
+  groups:[{id:2,name:'group2'},{id:1,name:'group1'}]
 })
 console.time('rendered in ')
 EventCalendar.render()
