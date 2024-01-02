@@ -59,10 +59,12 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
   })
 
   function dragEnd(a: DraggedData) {
+    
     const sourceE = { ...a.item?.sourceEvent }
-
     sourceE.start = a.eventSourceStart as Date
     sourceE.end = a.eventSourceEnd as Date
+    
+    // console.log(sourceE.start,sourceE.end)
     if (a.item) {
       mergedProps.onEventUpdate(sourceE as SourceEvent, a)
     }

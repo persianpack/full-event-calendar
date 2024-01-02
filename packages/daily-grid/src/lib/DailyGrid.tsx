@@ -3,7 +3,7 @@ import { BasicGrid } from '@full-event-calendar/basic-grid'
 // Types
 import { EventClass, FComponent, Group, SourceEvent } from '@full-event-calendar/shared-ts'
 // solid.js
-import { createMemo, mergeProps } from 'solid-js'
+import {  createMemo, mergeProps } from 'solid-js'
 // utils
 import './DailyGrid.scss'
 // Remove the extend
@@ -41,10 +41,11 @@ export const DailyGrid: FComponent<DailyGridProps> = (props) => {
   const mergedProps = mergeProps(dailyDefaultProps, props)
 
   // const extractedEvents = createMemo(() => getEventsInDate(mergedProps.events, mergedProps.initialDate))
-
+  
   const filteredOut = createMemo(() => mergedProps.events.filter((item) => !item.isAllDay()))
-
+ 
   function addEventProxy(event:SourceEvent){
+
    if(mergedProps.group){
     mergedProps.onAddEvent(event,mergedProps.group.id)
    }else{

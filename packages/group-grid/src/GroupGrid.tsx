@@ -38,7 +38,7 @@ export const GroupGrid: FComponent<GroupGridProps> = (props) => {
 
   function eventUpdateProxy(eventSource: SourceEvent, draggedData: any, startingColId: number) {
     // calculate  which colum the event was dropped in
-    if (draggedData?.isDragg) {
+        if (draggedData?.isDragg) {
       const colNumber = whichColumWasDropped(colIds, draggedData.mouseX)
       // mergedProps.onEventUpdate(eventSource, startingColId, startingColId, false)
       mergedProps.onEventUpdate(eventSource, colNumber, startingColId, true)

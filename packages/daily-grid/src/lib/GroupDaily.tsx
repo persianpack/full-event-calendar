@@ -47,18 +47,26 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
       }
     }
   }
-  getCols()
   function generageCols() {
+    getCols()
     // use Factory here
-    console.log(mergedProps.groups)
+  
     // const columData = [] as unknown as columData[]
     if (mergedProps.groups.length > 0) {
         for (let i = 0; i < mergedProps.groups.length; i++) {
         const groupId = mergedProps.groups[i].id
-         
+        
         //@ts-ignore
-        const filterdEvents = mergedProps.events.filter(ev=>ev.groups.includes(groupId))
+        const filterdEvents = mergedProps.events.filter(ev=>{
+          if(ev.id===15){
+          //  console.log(groupId,ev.groups.includes(groupId))
+          }
+          //@ts-ignore
+         return ev.groups.includes(groupId)
+        })
         columData2[i].events = getEventsInDate(filterdEvents, mergedProps.initialDate)
+        // console.log(filterdEvents,columData2[i].events, mergedProps.initialDate)
+ 
         columData2[i].props.initialDate = new Date(mergedProps.initialDate)
         columData2[i].props.gridDate = new Date(mergedProps.initialDate)
         columData2[i].props.locale = mergedProps.locale
@@ -81,17 +89,19 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
       columData2[0].props.onDateChange = onDateChange
     }
 
+
   }
 
   generageCols()
 
-  function onEventUpdateProxy(updatedSourceEvent: SourceEvent, targetCol: number, baseCol: number, isDragend: boolean) {
+  function onEventUpdateProxy(updatedSourceEvent: SourceEvent) {
     // TargetCol and baseCol are indexes for which colum was event moved in .
     const sourceCopy = { ...updatedSourceEvent }
-    if (isDragend) {
-      sourceCopy.start.setDate(sourceCopy.start.getDate() - (baseCol - targetCol))
-      sourceCopy.end.setDate(sourceCopy.end.getDate() - (baseCol - targetCol))
-    }
+    // console.log(sourceCopy)
+    // if (isDragend) {
+    //   sourceCopy.start.setDate(sourceCopy.start.getDate() - (baseCol - targetCol))
+    //   sourceCopy.end.setDate(sourceCopy.end.getDate() - (baseCol - targetCol))
+    // }
     mergedProps.onEventUpdate(sourceCopy)
   }
 

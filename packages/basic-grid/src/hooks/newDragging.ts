@@ -40,9 +40,9 @@ class DailyGridDragger extends DraggerHandeler implements Dragger {
         if(previewieNode){
             const diffInSeconds = NewDomController.previewAndEventTimeDiff(this.draggingController.getEventNode(e) as HTMLElement
             , previewieNode)
+       
             this.draggingController.shiftTime(diffInSeconds)
         }
-
         this.draggingController.shiftPoistion(e)
     }
     dragEnd(e: MouseEvent) {

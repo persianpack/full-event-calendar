@@ -23,10 +23,11 @@ export const DailyAllDay: FComponent<DailyAllDayProps> = (props) => {
   }
 
   let hasMounted =false
-  createEffect(on(()=>props.isAllDOpen,  ()=>{
+  const setHeader = ()=>{
  
 
     const el = allDRef as HTMLElement
+    if(!el) return
     if (props.isAllDOpen) {
       cachecH = el.clientHeight
       el.style.height = el.clientHeight + 'px'
@@ -53,13 +54,26 @@ export const DailyAllDay: FComponent<DailyAllDayProps> = (props) => {
       }, 500)
       // props.setIsAllDOpen(false)
     }
-  }) )
+  }
+  createEffect(on(()=>props.isAllDOpen, setHeader ) )
+  createEffect(on(()=>props.events, ()=>{
+    if(filteredEvents().length > 0){
+
+    }else{
+      const el = allDRef as HTMLElement
+    if(!el) return
+
+      el.style.height = 'fit-content'
+    }
+
+  } ) )
   onMount(()=>{
     hasMounted = true
   })
 
   return (
     <>
+    <Show when={filteredEvents().length > 0}>
       <div class={`all-d-wrapeer-header daosidj ${props.isAllDOpen ? 'alld-open' : 'alld-not-open'}`}>
         <div class="mor-btn-container">
           <Show when={filteredEvents().length > 2}>
@@ -99,6 +113,8 @@ export const DailyAllDay: FComponent<DailyAllDayProps> = (props) => {
           </Show>
         </div>
       </div>
+
+    </Show>
     </>
   )
 }

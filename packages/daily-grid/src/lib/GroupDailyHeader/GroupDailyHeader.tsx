@@ -1,6 +1,6 @@
 import { EventClass, FComponent, SourceEvent } from '@full-event-calendar/shared-ts'
 import { DailyAllDay } from '../DailyAllDay/DailyAllDay'
-import { For, createSignal, mergeProps } from 'solid-js'
+import { For, Show, createSignal, mergeProps } from 'solid-js'
 import { columData } from '../GroupDaily'
 
 import './GroupDailyHeader.scss'
@@ -51,15 +51,19 @@ export const GroupDailyHeader: FComponent<GroupDailyHeaderProps> = (props) => {
           />
         </div>
       <div class='group-item-header'>
-      <For each={mergedProps.columData}>
-          {(item) => (
 
-           <GroupItemHeader group={item.props.group} />
+       <For each={mergedProps.columData}>
+          {(item) => (
+            <Show when={item.props.group}>
+              <GroupItemHeader group={item.props.group} />
+
+            </Show>
           )}
-      </For>
+       </For>
       
       </div>
       </div>
+
       <div class="alld-main-container">
         <For each={mergedProps.columData}>
           {(item) => (

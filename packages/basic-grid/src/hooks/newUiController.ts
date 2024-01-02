@@ -1,13 +1,5 @@
 import { EventClass } from "@full-event-calendar/shared-ts"
 
-let MMM: any
-let MU: any
-
-let c1: any
-let c2: any
-let handelScroll: any
-
-
 export interface DomController {
     event: EventClass
     getEventNode: (e?:MouseEvent) => void
@@ -69,8 +61,8 @@ export class NewDomController implements DomController {
    
         const firstTopPosition = eventNode.getBoundingClientRect().top + window.scrollY
         const oneHourInPixelSize = document.querySelector('.time-range')?.clientHeight || 1
-
         const eventRect = previewNode.getBoundingClientRect()
+      
         return (((eventRect.top + window.scrollY - firstTopPosition) * 60) / oneHourInPixelSize) * 60000
     }
   

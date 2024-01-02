@@ -94,21 +94,21 @@
 .all-d-wrapeer-header {
   display: flex;
   position: relative;
-   border-left: 1px solid var(--hairline);
+  //  border-left: 1px solid var(--hairline);
 }
 .all-d-wrapeer-header:first-child{
   // border-right: 1px solid var(--hairline);
 
 }
 .mor-btn-container {
-  width: 5۱px;
+  width: 52px;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: end;
   padding-bottom: 5px;
-
+  border-right: 1px solid var(--hairline);
   .all-collapser {
     height: 30px;
     rotate: 180deg;

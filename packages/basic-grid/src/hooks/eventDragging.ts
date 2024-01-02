@@ -19,6 +19,7 @@ export function userDragger(gridRef: any, dragEndCallBack: (initialDragNode: any
   function itemDragstart(e: EventClass, d: any) {
     calendarDragger = new CalendarDragger('DailyDragDrop')
     calendarDragger.dragger.dragStart(d,e)
+    
     if (isDragging()) return
     domController = new DomController( gridContainer, mouseMove, handelMouseUp)
     batch(() => {
@@ -39,13 +40,14 @@ export function userDragger(gridRef: any, dragEndCallBack: (initialDragNode: any
 
  function handelMouseUp(e: MouseEvent) {
     // call mouse move in case of scolling not moving
+
     if (domController.hasScrolled) {
       mouseMove(e)
     } else if (!calendarDragger.dragger.hasMouseMoved) {
       console.log('eventClicked ')
     }
      calendarDragger.dragger.dragEnd(e)
-
+  
     if (isDragging()) {
     
     
@@ -58,8 +60,8 @@ export function userDragger(gridRef: any, dragEndCallBack: (initialDragNode: any
 
     // hasMoved = false
     domController.removeListenrs()
+
   }
-  
   let time1: any = 0
   let time2: any = 0
 
@@ -78,6 +80,7 @@ export function userDragger(gridRef: any, dragEndCallBack: (initialDragNode: any
       let targetEl =  calendarDragger.dragger.draggingController?.getEventNode(e) as HTMLElement
       NewDraggingController.setState(baseEl, targetEl)
       setDraggedData(baseEl)
+    
     }, 0)
 
     time2 = setTimeout(() => {

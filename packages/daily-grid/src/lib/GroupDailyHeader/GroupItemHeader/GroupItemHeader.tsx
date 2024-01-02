@@ -17,6 +17,9 @@ export const GroupItemHeader:FComponent<GroupDailyHeader> = (props)=>{
             <div class="some-border">
 
             </div>
+            <div class="some-borderw">
+
+            </div>
         </div>
     )
 }

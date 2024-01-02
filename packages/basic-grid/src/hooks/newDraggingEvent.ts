@@ -71,6 +71,7 @@ constructor(mouseEvent : MouseEvent,event:EventClass){
     const newEndDate = new Date(this.item.end.getTime() + miliSeconds)
     this.dragedEndDate = roundMinutesToMultipleOf5(newEndDate)
     this.shiftSource(miliSeconds)
+   
   }
  public shiftEndTime(miliSeconds: number) {
   
@@ -87,6 +88,8 @@ constructor(mouseEvent : MouseEvent,event:EventClass){
     this.eventSourceStart = roundMinutesToMultipleOf5(new Date(this?.item?.sourceEvent?.start?.getTime() + miliSeconds))
     //@ts-ignore
     this.eventSourceEnd = roundMinutesToMultipleOf5(new Date(this?.item?.sourceEvent?.end?.getTime() + miliSeconds))
+
+    // console.log(this.eventSourceEnd,this.eventSourceStart)
   }
 //@ts-ignore
  public shiftPoistion( e: MouseEvent) {
