@@ -288,7 +288,7 @@ const EventCalendar = new Calendar(el, {
   plugins: [DailyGridPlugin, MonthGridPlugin, WeeklyGridPlugin, ListPlugin],
   grid: 'daily',
   listMode : 'week',
-  groups:[{id:2,name:'group2'},{id:1,name:'group1'}]
+  // groups:[]
 })
 console.time('rendered in ')
 EventCalendar.render()
@@ -296,6 +296,13 @@ console.timeEnd('rendered in ')
 EventCalendar.on('eventUpdate', (e, r, t) => {
   console.log(e, r, t)
 })
+let id = 1
+function addGroup(name:string){
+  // EventCalendar.addGroup([{id:2,name:'group2'},{id:1,name:'group1'}])
+  EventCalendar.addGroup({id,name})
+  id++
+}
+window.addGroup = addGroup
 // setTimeout(() => {
 //   EventCalendar.changeCalendar('persian')
 //   EventCalendar.changeLocale('fa-IR')

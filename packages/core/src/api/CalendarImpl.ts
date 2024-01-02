@@ -87,6 +87,9 @@ export class CalendarImpl implements CalendarApi {
   public updateGroups(groups:Group[]) {
     this.storeDispatch({ type: 'UPDATE_GROUPS',groups})
   }
+  public addGroup(group:Group) {
+    this.storeDispatch({ type: 'ADD_GROUP',group})
+  }
   public addEvent(event:EventClass) {
     this.storeDispatch({ type: 'ADD_EVENT',event})
   }

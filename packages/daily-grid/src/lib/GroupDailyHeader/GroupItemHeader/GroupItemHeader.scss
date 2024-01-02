@@ -35,6 +35,9 @@
         .some-border{
             background-color: var(--hairline);
         }
+    }
+    >:first-child{
+
         .some-borderw{
             background-color: var(--hairline);
         }
