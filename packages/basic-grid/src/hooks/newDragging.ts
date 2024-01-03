@@ -62,17 +62,18 @@ class EventResize extends DraggerHandeler implements Dragger {
     prevX = 0
     FirstBottomY = 0
     rect=null as any
-    dragStart(e: MouseEvent, event: EventClass) {
+    dragStart(e: MouseEvent, event: EventClass) { 
         this.createDraggingObject(e, event)
         this.prevX =e.y
-        this.FirstBottomY = this.draggingController?.getEelementReact().bottom!
-        this.rect = this.draggingController?.getEelementReact()!
+        this.FirstBottomY = this.draggingController?.getEelementReact(e).bottom!
+        this.rect = this.draggingController?.getEelementReact(e)!
+        console.log(this.FirstBottomY, this.rect)
     }
     mouseMove(e: MouseEvent) {
         this.hasMouseMoved = true
         const targetRect = this.rect
-        const targetEvent = this.draggingController?.getEventNode()!
-         targetEvent.style.zIndex = '30'
+        const targetEvent = this.draggingController?.getEventNode(e)!
+        targetEvent.style.zIndex = '50'
         let newX = this.prevX - e.y
         const height = targetRect.height - newX
         targetEvent.style.height = height + 'px'
