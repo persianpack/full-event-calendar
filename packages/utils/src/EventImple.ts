@@ -55,16 +55,17 @@ export class EventImpl implements EventClass {
   }
 
   calculateHeight(calcFromZero: boolean = false) {
-    // this is actually event in hours times 100
+    return `;height:${this.calculateHeightPersentage(calcFromZero)}%;`
+  }
+  calculateHeightPersentage(calcFromZero: boolean = false){
     let heightInPercentage
     if (calcFromZero) {
       heightInPercentage = ((this.end.getHours() * 60 + this.end.getMinutes()) / 60) * 100
     } else {
       heightInPercentage = (this.duration / 60) * 100
     }
-    return `;height:${heightInPercentage}%;`
-  } 
-
+    return heightInPercentage
+  }
   calculatePositionTop() {
     return `;top:${this.getEventTopPositionIng()}%`
     // return `;top:${eventColHeightInPercentage > 2358 ? 2358 : eventColHeightInPercentage}%`

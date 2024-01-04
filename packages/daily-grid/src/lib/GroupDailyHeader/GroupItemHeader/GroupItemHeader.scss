@@ -10,15 +10,15 @@
         font-size: 14px;
         font-weight: 400;
     }
-    
+
 }
 .some-border{
     position: absolute;
     width:100%;
     height: 20px;
     bottom: 0px;
-    width: 0.5px;
-    right: -0.5px;
+    width: 5px;
+    right: -1px;
 }
 .some-borderw{
     position: absolute;
@@ -33,13 +33,15 @@
 
     >:not(:last-child){
         .some-border{
-            background-color: var(--hairline);
+            border-right:1px solid var(--hairline);
+            // right: -0.5px;
         }
     }
     >:first-child{
 
         .some-borderw{
-            background-color: var(--hairline);
+            // right: -0.5px;
+            border-right:1px solid var(--hairline);
         }
     }
 }

@@ -117,7 +117,7 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
 
   return (
     <>
-      <GroupDailyHeader columData={columData2}    locale={mergedProps.locale} initialDate={mergedProps.initialDate} />
+      <GroupDailyHeader columData={columData2} locale={mergedProps.locale} initialDate={mergedProps.initialDate} />
       <div class="scroll-wrapper " id="scroll-wrapper">
         <div style="position: absolute;width:100%;display:flex;">
           <DailyTimeRanges locale={mergedProps.locale}></DailyTimeRanges>

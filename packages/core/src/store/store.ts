@@ -155,7 +155,6 @@ const calendarReducer: Reducer<CalendarState, StoreActions> = (state = defaultSt
       events[eventIndex] = new EventImpl({...events[eventIndex],...action.event})
       events[eventIndex].convertDateByTimeZone(state.timeZone)
       
-      console.log( events[eventIndex])
       return { ...state, events: events }
 
     case 'SET_TIMEZONE':

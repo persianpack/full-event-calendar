@@ -3,6 +3,20 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.event-info {
-  // height: 100%;
+.one-line-event {
+  padding: 0 5px;
+  justify-content: center;
+  .event-info{
+
+    flex-direction: row;
+    display: flex !important;
+    gap: 10px;
+  }
+}
+.custom-tooltip{
+  position: fixed;
+  height: fit-content;
+  width: 200px;
+  background-color: red;
+  z-index: 213123;
 }

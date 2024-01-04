@@ -28,7 +28,7 @@ export const TimeRange: FComponent<TimeRangeProps> = (props) => {
     basdate.setHours(hour, min)
     endDate.setHours(hour, min + 15)
 
-    const x = new EventImpl({ start: basdate, end: endDate, name: 'some name', id: 85 })
+    const x = new EventImpl({ start: basdate, end: endDate, name: '(no title)', id: 85 })
     setResizer(x)
     onmousedownH(x, mouseEvent)
   }

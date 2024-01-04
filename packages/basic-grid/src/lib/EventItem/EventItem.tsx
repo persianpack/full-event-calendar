@@ -1,6 +1,7 @@
 import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
 import { formatRange, getDateTimeRange, getEventTimeRange } from '@full-event-calendar/utils'
 import './EventItem.scss'
+import { createMemo } from 'solid-js'
 interface EventItem {
   onDragStart: (event: EventClass, e: MouseEvent, D: boolean) => void
   onMouseDown: any
@@ -15,15 +16,23 @@ export const EventItem: FComponent<EventItem> = (props) => {
   function getPosition() {
     return props.event.doesEventStartOn(props.gridDate) && !props.top0 ? props.event.calculatePositionTop() : 'top:0'
   }
-  function getHeight() {
-    //return   props.event.calculateHeight(!props.event.doesEventStartOn(props.gridDate))
+  const getHeight = createMemo(()=>{
     return props.event.doesEventEndOn(props.gridDate)
-      ? props.event.calculateHeight(!props.event.doesEventStartOn(props.gridDate))
-      : `height:${2400 - props.event.getEventTopPositionIng()}%`
-  }
+    ? props.event.calculateHeight(!props.event.doesEventStartOn(props.gridDate))
+    : `height:${2400 - props.event.getEventTopPositionIng()}%`
+  })
+  // function getHeight() {
+  //   return props.event.doesEventEndOn(props.gridDate)
+  //     ? props.event.calculateHeight(!props.event.doesEventStartOn(props.gridDate))
+  //     : `height:${2400 - props.event.getEventTopPositionIng()}%`
+  // }
 
   function getBackGroundColor() {
     return `;background-color:${props.event.color}`
+  }
+ 
+  function isLowHeight(){
+   return (props.event.calculateHeightPersentage() <45 )
   }
 
   return (
@@ -32,11 +41,11 @@ export const EventItem: FComponent<EventItem> = (props) => {
         props.onDragStart(props.event, e, !props.event.doesEventStartOn(props.gridDate))
       }}
       id={'event-' + props.event.id}
-      class="ec-event"
+      class={`ec-event ${isLowHeight() ? 'one-line-event ':''} `  }
       data-test-event-id={props.event.id}
       style={`${getPosition()} ;${getHeight()} ;${props.width} ;${getBackGroundColor()}`}
-    >
-      <div
+      >
+       <div  
         style="position:sticky;top:0px;bottom:30px"
         class="tooltip-multiline event-info"
         data-tooltip={`${props.event.name} ${formatRange(props.event.start, props.event.end, props.locale)}`}

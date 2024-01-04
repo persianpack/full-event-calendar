@@ -1,5 +1,5 @@
 //types
-import { EventClass, FComponent, SourceEvent } from '@full-event-calendar/shared-ts'
+import { EventClass, FComponent, Group, SourceEvent } from '@full-event-calendar/shared-ts'
 //solid.js
 import { createMutable } from 'solid-js/store'
 import { For, batch, createEffect, createMemo, mergeProps } from 'solid-js'
@@ -17,6 +17,8 @@ export interface WeeklyGridProps {
   events?: EventClass[]
   initialDate?: Date
   onEventUpdate?: (event: any) => void
+  onAddEvent?:(event: SourceEvent,groupId?:Group['id']) =>void
+
   onDateChange?: (d: Date) => void
   onGridChange?: (d: any) => void
   locale?: string
@@ -31,6 +33,7 @@ const defaultProps = {
   onEventUpdate: () => {},
   onDateChange: () => {},
   onGridChange: () => {},
+  onAddEvent: () => {},
   locale: 'en-US',
   calendar: 'gregory',
   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
@@ -98,10 +101,12 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
 
     mergedProps.onEventUpdate(sourceCopy)
   }
+  
   function onDateChange(d: Date) {
     mergedProps.onDateChange(d)
     mergedProps.onGridChange('daily')
   }
+
   const headerDates = () => {
     let iniDay = mergedProps.initialDate
     iniDay.setDate(iniDay.getDate() - iniDay.getDay())
@@ -110,6 +115,14 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
       y.setDate(y.getDate() + i)
       return y
     })
+  }
+
+  function addEventProxy(event:SourceEvent,groupId?:number){
+    if(groupId){
+      mergedProps.onAddEvent({...event,...{groups:[groupId]}})
+    }else{
+      mergedProps.onAddEvent(event)
+    }
   }
 
   return (
@@ -142,6 +155,7 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
             <GroupGrid
               gridComponent={BasicGrid}
               cols={columData}
+              onAddEvent={addEventProxy}
               onEventUpdate={onEventUpdateProxy}
               initialDate={mergedProps.initialDate}
             />
