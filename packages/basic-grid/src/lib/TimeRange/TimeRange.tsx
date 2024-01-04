@@ -11,16 +11,20 @@ interface TimeRangeProps {
   houre: number
   locale: string
   timeZone:string
+  editable:boolean
+  oneHoureInPixel:number
+
 }
 
 export const TimeRange: FComponent<TimeRangeProps> = (props) => {
   const [resiserGr, setResizer] = createSignal<EventClass | null>(null)
 
   function timeRangeMouseDown(hour: number, min: number, mouseEvent: MouseEvent) {
-    const { onmousedownH } = useResize('addEventWithResize', resizeCb)
+    const { onmousedownH } = useResize('addEventWithResize', resizeCb,props.editable)
     function resizeCb(event: SourceEvent) {
+      if(!props.editable)return
       event.id = createUniqueId()
-      props.onAddEvent(reAdjust(event))
+      props.onAddEvent(event)
       setResizer(null)
     }
     const basdate = new Date(props.gridDate)
@@ -49,7 +53,7 @@ export const TimeRange: FComponent<TimeRangeProps> = (props) => {
   return (
     <>
       <div data-test-time-range-id={props.houre + 1} class="time-range">
-
+      
           <Show when={resiserGr()}>
         <div class="add-event-preview" style={getTop(resiserGr()?.start!)}>
             <EventItem
@@ -59,7 +63,9 @@ export const TimeRange: FComponent<TimeRangeProps> = (props) => {
               width="width:calc(100% - 20px)"
               onMouseDown={() => {}}
               onDragStart={() => {}}
+              onEventClick={() => {}}
               top0={true}
+              oneHoureInPixel={props.oneHoureInPixel}
             ></EventItem>
         </div>
           </Show>

@@ -75,7 +75,7 @@ export const DailyAllDay: FComponent<DailyAllDayProps> = (props) => {
     <>
     <Show when={filteredEvents().length > 0}>
       <div class={`all-d-wrapeer-header daosidj ${props.isAllDOpen ? 'alld-open' : 'alld-not-open'}`}>
-        <div class="mor-btn-container">
+        <div class="mor-btn-container" style='width:52px'>
           <Show when={filteredEvents().length > 2}>
             <div class="all-collapser" onclick={openAllD}>
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">

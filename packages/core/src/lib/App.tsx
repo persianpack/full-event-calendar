@@ -26,7 +26,7 @@ export function App() {
   function onAddEvent(event: SourceEvent) {
     if (data.store.autoUpdateEventOnChange) {
       // const prev = data.instance.getEventById(event.id) as EventClass
-      data.instance.addEvent(event)
+            data.instance.addEvent(event)
       // const next = data.instance.getEventById(event.id) as EventClass
       // data.instance.emitEvent('eventUpdate', {
       //   prev: prev,
@@ -69,6 +69,7 @@ export function App() {
             listMode={data.store.listMode}
             timeZone={data.store.timeZone}
             groups={data.store.groups}
+            editable={data.store.editable}
           ></Dynamic>
         </SliderWrapper>
       </div>

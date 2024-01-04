@@ -19,7 +19,7 @@ export interface EventClass {
   isIncludedInaRange(date1: Date, date2: Date): boolean
   calculatePositionTop(): string
   getEventTopPositionIng():number
-  calculateHeightPersentage():number
+  calculateHeightPersentage(calcFromZero: boolean):number
   calculateHeight(calcFromZero: boolean): string
   checkOverLap(event: EventClass): Boolean
   updateEventDetails(event: SourceEvent): void

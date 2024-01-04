@@ -19,6 +19,8 @@ export interface BasicGridProps {
   id?: string
   locale?: string
   timeZone?:string
+  editable?:boolean
+
 }
 
 const defaultProps = {
@@ -30,6 +32,7 @@ const defaultProps = {
   id: '',
   locale: 'en',
   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+  editable:true
 }
 
 export const BasicGrid: FComponent<BasicGridProps> = (props) => {
@@ -40,8 +43,8 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
   const mergedProps = mergeProps(defaultProps, props)
 
 
-  const { onmousedownH } = useResize('eventResizer', resizeCb)
-  const { draggedData, isDragging, itemDragstart } = userDragger(gridRef, dragEnd, gridContainer)
+  const { onmousedownH } = useResize('eventResizer', resizeCb,mergedProps.editable)
+  const { draggedData, isDragging, itemDragstart } = userDragger(gridRef, dragEnd, gridContainer,mergedProps.editable)
 
   onMount(() => {
     setTimeout(() => {
@@ -86,9 +89,15 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
   function oneHoureInPixel(){
     return mergedProps.gridHeight / 24
   }
-  
+
   function getWrapperHeight() {
     return `height:${oneHoureInPixel()}px`
+  }
+
+  function eventClick(event:EventClass){
+    if(!mergedProps.editable){
+      console.log('eventclicked')
+    }
   }
 
   return (
@@ -111,6 +120,7 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
                           width={lookForAvailableWith(ColList(), event, colNumber() + 1)}
                           onMouseDown={onmousedownH}
                           onDragStart={itemDragstart}
+                          onEventClick={eventClick}
                         ></EventItem>
                       )
                     }}
@@ -135,6 +145,8 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
                     gridDate={mergedProps.gridDate}
                     locale={mergedProps.locale}
                     timeZone={mergedProps.timeZone}
+                    oneHoureInPixel={oneHoureInPixel()}
+                    editable={mergedProps.editable}
                     houre={i()}
                   ></TimeRange>
               )

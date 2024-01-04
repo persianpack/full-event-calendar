@@ -74,6 +74,7 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
         columData2[i].props.calendar = mergedProps.calendar
         columData2[i].props.gridHeight = mergedProps.gridHeight
         columData2[i].props.showAllDay = true
+        columData2[i].props.editable = mergedProps.editable
         columData2[i].props.onDateChange = onDateChange
         columData2[i].props.group = mergedProps.groups[i]
       }
@@ -86,6 +87,7 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
       columData2[0].props.calendar = mergedProps.calendar
       columData2[0].props.gridHeight = mergedProps.gridHeight
       columData2[0].props.showAllDay = true
+      columData2[0].props.editable = mergedProps.editable
       columData2[0].props.onDateChange = onDateChange
     }
 

@@ -14,7 +14,8 @@ const defaultState: CalendarState = {
   plugins: [],
   autoUpdateEventOnChange: true,
   listMode:'day',
-  groups :[]
+  groups :[],
+  editable:true
 }
 
 interface SetAllChatsAction {
@@ -83,6 +84,10 @@ interface AddGroup {
   type: 'ADD_GROUP'
   group: Group
 }
+interface UpdateEditabel {
+  type: 'UPDATE_EDITABLE'
+  val: boolean
+}
 
 // To Do: use better names for set and update
 
@@ -103,6 +108,7 @@ export type StoreActions =
   | DeleteEvent
   | AddEvent
   | AddGroup
+  | UpdateEditabel
 
 export type EventCalendarOptions = { [K in keyof CalendarSourceOptions]-?: CalendarSourceOptions[K] }
 export interface CalendarState extends EventCalendarOptions {
@@ -111,10 +117,11 @@ export interface CalendarState extends EventCalendarOptions {
 
 const calendarReducer: Reducer<CalendarState, StoreActions> = (state = defaultState, action) => {
   switch (action.type) {
+    case 'UPDATE_EDITABLE':
+      return { ...state, editable: action.val }
     case 'ADD_EVENT':
       const events1 = [...state.events]
       let eve = new EventImpl(action.event)
-      eve.convertDateByTimeZone(state.timeZone)
       events1.push(eve)
       return { ...state, events: events1 }
     case 'UPDATE_GROUPS':

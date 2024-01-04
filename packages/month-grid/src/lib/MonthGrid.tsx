@@ -25,6 +25,7 @@ export interface MonthGridProps {
   rowLimit?: number
   onDateChange?: (d: Date) => void
   onGridChange?: (d: any) => void
+  editable?:boolean
 }
 export interface MonthDateObject {
   date: Date
@@ -46,7 +47,8 @@ const defaultProps = {
   locale: 'en-US',
   calendar: 'gregory',
   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-  rowLimit: 4
+  rowLimit: 4,
+  editable:false
 }
 
 export const MonthGrid: FComponent<MonthGridProps> = (props) => {

@@ -4,11 +4,12 @@ import { CalendarDragger, drageModes } from './newDragging'
 import { createSignal } from 'solid-js'
 import EventCollection from '../../../core/src/api/Collection'
 
-export function useResize(drageMode: drageModes, resizeEndCalllBack: (p: SourceEvent) => void,clickCalllBack?: (p: SourceEvent) => void) {
+export function useResize(drageMode: drageModes, resizeEndCalllBack: (p: SourceEvent) => void,editable:boolean) {
  
   const [draggedData, setDraggedData] = createSignal<any>()
  
   function onmousedownH(item: EventClass, e: MouseEvent) {
+    if(!editable)return
   const calendarDragger = new CalendarDragger(drageMode)
 
     e.stopPropagation()
@@ -25,7 +26,6 @@ export function useResize(drageMode: drageModes, resizeEndCalllBack: (p: SourceE
     function mouseup(e:MouseEvent) {
       setDraggedData(null)
       calendarDragger.dragger.dragEnd(e)
-      // console.log
       const sourceE = { ...calendarDragger.dragger.draggingController?.item.sourceEvent } as SourceEvent
       sourceE.end = calendarDragger.dragger.draggingController?.dragedEndDate!
       sourceE.start = calendarDragger.dragger.draggingController?.dragedStartDate!

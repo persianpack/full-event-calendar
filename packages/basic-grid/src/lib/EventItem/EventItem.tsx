@@ -11,15 +11,17 @@ interface EventItem {
   locale: string
   top0?:boolean
   oneHoureInPixel:number
+  onEventClick:(event:EventClass)=>void
 }
 
 export const EventItem: FComponent<EventItem> = (props) => {
+  const doesEventStartOnGridDate =()=> props.event.doesEventStartOn(props.gridDate)
   function getPosition() {
-    return props.event.doesEventStartOn(props.gridDate) && !props.top0 ? props.event.calculatePositionTop() : 'top:0'
+    return doesEventStartOnGridDate() && !props.top0 ? props.event.calculatePositionTop() : 'top:0'
   }
   const getHeight = createMemo(()=>{
     return props.event.doesEventEndOn(props.gridDate)
-    ? props.event.calculateHeight(!props.event.doesEventStartOn(props.gridDate))
+    ? props.event.calculateHeight(!doesEventStartOnGridDate())
     : `height:${2400 - props.event.getEventTopPositionIng()}%`
   })
 
@@ -29,7 +31,7 @@ export const EventItem: FComponent<EventItem> = (props) => {
   function getBorders(){
 
    const endCon = props.event.doesEventEndOn(props.gridDate)
-   const startCon = props.event.doesEventStartOn(props.gridDate)
+   const startCon = doesEventStartOnGridDate()
 
    if(!startCon){
     return 'border-top-left-radius: 0px;border-top-right-radius:0px'
@@ -40,15 +42,21 @@ export const EventItem: FComponent<EventItem> = (props) => {
   }
  
   function isLowHeight(){
-   const heightInPercentage = props.event.calculateHeightPersentage()
+   const heightInPercentage = props.event.calculateHeightPersentage(!doesEventStartOnGridDate())
    const heightInPixel =  (props.oneHoureInPixel * heightInPercentage)/ 100
+
    return heightInPixel < 40
   }
 
   return (
     <div
       onMouseDown={(e: MouseEvent) => {
-        props.onDragStart(props.event, e, !props.event.doesEventStartOn(props.gridDate))
+        props.onDragStart(props.event, e, !doesEventStartOnGridDate())
+        
+      }}
+      onclick={() => {
+        props.onEventClick(props.event)
+        
       }}
       id={'event-' + props.event.id}
       class={`ec-event ${isLowHeight() ? 'one-line-event ':''} `  }

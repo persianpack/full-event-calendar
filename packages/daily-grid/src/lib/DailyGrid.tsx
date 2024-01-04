@@ -17,6 +17,7 @@ export interface DailyGridProps {
   locale?: string
   id?: string
   showAllDay?: boolean
+  editable?: boolean
   container?: string
   events: EventClass[]
   group:Group
@@ -34,7 +35,8 @@ export const dailyDefaultProps = {
   onEventUpdate: () => {},
   onAddEvent: () => {},
   gridHeight: 65 * 24,
-  group:null
+  group:null,
+  editable:true
 }
 
 export const DailyGrid: FComponent<DailyGridProps> = (props) => {
@@ -70,6 +72,7 @@ export const DailyGrid: FComponent<DailyGridProps> = (props) => {
               gridHeight={mergedProps.gridHeight}
               container={mergedProps.container}
               timeZone={mergedProps.timeZone}
+              editable={mergedProps.editable}
             />
         </div>
       </div>

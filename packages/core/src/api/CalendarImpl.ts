@@ -28,9 +28,9 @@ export interface CalendarSourceOptions {
   autoUpdateEventOnChange?: boolean
   listMode?: listModeTypes
   groups?:Group[]
-  // dailyGridOptions : dailyGridOptions;
+  editable?:boolean
 }
-
+ 
 export interface Plugins {
   type: 'grid'
   name: string
@@ -92,6 +92,9 @@ export class CalendarImpl implements CalendarApi {
   }
   public addEvent(event:EventClass) {
     this.storeDispatch({ type: 'ADD_EVENT',event})
+  }
+  public updateEditable(val:boolean) {
+    this.storeDispatch({ type: 'UPDATE_EDITABLE',val})
   }
   public resetOptions(options: CalendarSourceOptions) {
     if (options.timeZone) {

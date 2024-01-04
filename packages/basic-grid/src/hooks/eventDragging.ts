@@ -4,7 +4,7 @@ import { DomController } from './DomController'
 import { CalendarDragger } from './newDragging'
 import { NewDraggingController } from './newDraggingEvent'
 
-export function userDragger(gridRef: any, dragEndCallBack: (initialDragNode: any) => void, gridContainer: any) {
+export function userDragger(gridRef: any, dragEndCallBack: (initialDragNode: any) => void, gridContainer: any,editable:boolean) {
 
   function getWarpperWidth(){
     return gridRef.current.clientWidth + 'px'
@@ -17,6 +17,7 @@ export function userDragger(gridRef: any, dragEndCallBack: (initialDragNode: any
 
   
   function itemDragstart(e: EventClass, d: any) {
+    if(!editable)return
     calendarDragger = new CalendarDragger('DailyDragDrop')
     calendarDragger.dragger.dragStart(d,e)
     
@@ -30,6 +31,7 @@ export function userDragger(gridRef: any, dragEndCallBack: (initialDragNode: any
 
 
   function mouseMove(e: MouseEvent) {
+    if(!editable)return
 
     if (!domController.mouseDown) return
     setDraggedData({ ...calendarDragger.dragger.draggingController,width:getWarpperWidth() })
@@ -39,12 +41,15 @@ export function userDragger(gridRef: any, dragEndCallBack: (initialDragNode: any
   }
 
  function handelMouseUp(e: MouseEvent) {
+   if(!editable)return
+
     // call mouse move in case of scolling not moving
     if (domController.hasScrolled) {
       mouseMove(e)
     } else if (!calendarDragger.dragger.hasMouseMoved) {
       console.log('eventClicked ')
     }
+
      calendarDragger.dragger.dragEnd(e)
   
     if (isDragging()) {

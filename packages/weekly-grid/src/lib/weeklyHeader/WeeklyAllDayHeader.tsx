@@ -97,7 +97,7 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
 
   return (
     <div class={`${isOpen() ? 'weekly-allDay-open' : ''}`} style="display: flex;">
-      <div class="mor-btn-container">
+      <div class="mor-btn-container" style='width:51px'>
         <Show when={getRowListArr().length > 3}>
           <div class="all-collapser" onclick={openAllD}>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
