@@ -278,7 +278,7 @@ console.log('page init')
 const EventCalendar = new Calendar(el, {
   events: events,
   // @ts-ignore
-  gridHeight: 65 * 24,
+  gridHeight: 60 * 24,
   // autoUpdateEventOnChange:false,
   timeZone: 'Africa/Abidjan',
   // calendar: 'persian',

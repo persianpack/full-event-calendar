@@ -96,13 +96,13 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
 
   function onEventUpdateProxy(updatedSourceEvent: SourceEvent) {
     // TargetCol and baseCol are indexes for which colum was event moved in .
-    const sourceCopy = { ...updatedSourceEvent }
+    // const sourceCopy = { ...updatedSourceEvent }
     // console.log(sourceCopy)
     // if (isDragend) {
     //   sourceCopy.start.setDate(sourceCopy.start.getDate() - (baseCol - targetCol))
     //   sourceCopy.end.setDate(sourceCopy.end.getDate() - (baseCol - targetCol))
     // }
-    mergedProps.onEventUpdate(sourceCopy)
+    mergedProps.onEventUpdate(updatedSourceEvent)
   }
 
   createEffect(generageCols)
@@ -124,7 +124,7 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
           <GroupGrid
             gridComponent={DailyGrid}
             cols={columData2}
-            onEventUpdate={onEventUpdateProxy}
+            onEventUpdate={mergedProps.onEventUpdate}
             onAddEvent={addEventProxy}
             initialDate={mergedProps.initialDate}
             hasCrossGridDrag={false}

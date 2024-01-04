@@ -40,7 +40,6 @@ export function userDragger(gridRef: any, dragEndCallBack: (initialDragNode: any
 
  function handelMouseUp(e: MouseEvent) {
     // call mouse move in case of scolling not moving
-
     if (domController.hasScrolled) {
       mouseMove(e)
     } else if (!calendarDragger.dragger.hasMouseMoved) {
@@ -49,8 +48,6 @@ export function userDragger(gridRef: any, dragEndCallBack: (initialDragNode: any
      calendarDragger.dragger.dragEnd(e)
   
     if (isDragging()) {
-    
-    
       if (!domController.isMouseoutsideTheContainer) {
         dragEndCallBack(calendarDragger.dragger.draggingController)
       }

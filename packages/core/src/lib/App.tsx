@@ -10,8 +10,10 @@ export function App() {
   const data = useGlobalState()
 
   function onEventUpdate(event: SourceEvent) {
+   
     if (data.store.autoUpdateEventOnChange) {
       const prev = data.instance.getEventById(event.id) as EventClass
+     
       data.instance.updateEvent(event.id, event)
       const next = data.instance.getEventById(event.id) as EventClass
       data.instance.emitEvent('eventUpdate', {

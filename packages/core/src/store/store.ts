@@ -147,13 +147,14 @@ const calendarReducer: Reducer<CalendarState, StoreActions> = (state = defaultSt
         data.push(ev)
       }
 
-      return { ...state, events: data }
+    return { ...state, events: data }
 
     case 'UPDATE_EVENT':
       const events = [...state.events]
       const eventIndex = events.findIndex((item) => item.id === action.id)
-      events[eventIndex] = new EventImpl({...events[eventIndex],...action.event})
-      events[eventIndex].convertDateByTimeZone(state.timeZone)
+      const eventss = new EventImpl(events[eventIndex].sourceEvent)
+      eventss.updateEventDetails(action.event)
+      events[eventIndex] = eventss
       
       return { ...state, events: events }
 

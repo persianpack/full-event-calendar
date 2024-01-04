@@ -101,7 +101,7 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
 
     mergedProps.onEventUpdate(sourceCopy)
   }
-  
+
   function onDateChange(d: Date) {
     mergedProps.onDateChange(d)
     mergedProps.onGridChange('daily')
@@ -149,7 +149,9 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
       />
 
       <div style=" position: relative; flex: 1;">
-        <div style=" position: absolute;height: 100%;  width: 100%;" class="custome-scroll-bar scroll-wrapper">
+        <div style=" position: absolute;height: 100%;width: 100%;"
+        id="scroll-wrapper"
+        class="custome-scroll-bar scroll-wrapper">
           <div style="display: flex;" class="week-wrapper">
             <DailyTimeRanges locale={mergedProps.locale} />
             <GroupGrid

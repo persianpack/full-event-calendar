@@ -94,8 +94,7 @@ export const EventModal: FComponent<ModalProps> = (props) => {
     <Show when={modalData().show}>
       {/* 
       //@ts-ignore */}
-      <div
-        use:ClickOutSide={modalClickOutSide}
+      <div use:ClickOutSide={modalClickOutSide}
         class="modal-event-list custome-scroll-bar "
         style={`left:${modalData().left};top:${modalData().bottom};`}
       >

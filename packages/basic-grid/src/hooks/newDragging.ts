@@ -67,7 +67,6 @@ class EventResize extends DraggerHandeler implements Dragger {
         this.prevX =e.y
         this.FirstBottomY = this.draggingController?.getEelementReact(e).bottom!
         this.rect = this.draggingController?.getEelementReact(e)!
-        console.log(this.FirstBottomY, this.rect)
     }
     mouseMove(e: MouseEvent) {
         this.hasMouseMoved = true

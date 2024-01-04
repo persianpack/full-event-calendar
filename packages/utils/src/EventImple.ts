@@ -82,7 +82,28 @@ export class EventImpl implements EventClass {
     const end2 = this.end
     return start1 < end2 && end1 > start2
   }
-
+  updateEventDetails(event: SourceEvent): void {
+    if(event.start){
+      this.start = event.start
+      this.duration = Math.round((event.end.getTime() - event.start.getTime()) / 60000)
+    }
+    if(event.end){
+      this.end = event.end
+      this.duration = Math.round((event.end.getTime() - event.start.getTime()) / 60000)
+    }
+    if(event.name){
+      this.name = event.name
+    }
+    if(event.groups){
+      this.groups = event.groups
+    }
+    if(event.color){
+      this.color = event.color 
+    }
+    // this.id = eventData.id
+    // this.sourceEvent = eventData
+    
+  }
   checkAllDayOverLap(event: EventImpl) {
     // this is for monthly .. to check if events overlap in full width of container
     const FloorStart1 = floorDate(event.start)

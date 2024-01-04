@@ -27,8 +27,8 @@ export function useResize(drageMode: drageModes, resizeEndCalllBack: (p: SourceE
       calendarDragger.dragger.dragEnd(e)
       // console.log
       const sourceE = { ...calendarDragger.dragger.draggingController?.item.sourceEvent } as SourceEvent
-      sourceE.end = calendarDragger.dragger.draggingController?.eventSourceEnd!
-      sourceE.start = calendarDragger.dragger.draggingController?.eventSourceStart!
+      sourceE.end = calendarDragger.dragger.draggingController?.dragedEndDate!
+      sourceE.start = calendarDragger.dragger.draggingController?.dragedStartDate!
       resizeEndCalllBack(sourceE)
       
       calendarDragger.dragger.hasMouseMoved

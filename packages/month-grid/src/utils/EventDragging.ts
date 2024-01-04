@@ -28,10 +28,10 @@ export function useMonthEventDragging() {
         startCopy.setDate(dragCopy.source.start.getDate() + dayDifference)
         endCopy.setDate(dragCopy.source.end.getDate() + dayDifference)
 
-        const SstartCopy = new Date(dragCopy.source.sourceEvent.start)
-        const SendCopy = new Date(dragCopy.source.sourceEvent.end)
-        SstartCopy.setDate(dragCopy.source.sourceEvent.start.getDate() + dayDifference)
-        SendCopy.setDate(dragCopy.source.sourceEvent.end.getDate() + dayDifference)
+        const SstartCopy = new Date(dragCopy.source.start)
+        const SendCopy = new Date(dragCopy.source.end)
+        SstartCopy.setDate(dragCopy.source.start.getDate() + dayDifference)
+        SendCopy.setDate(dragCopy.source.end.getDate() + dayDifference)
 
         const monthDraggingDate = new MonthDraggingObject(
           dragCopy.source.id,
@@ -60,8 +60,8 @@ export function useMonthEventDragging() {
         event.id,
         new Date(event.start),
         new Date(event.end),
-        event.sourceEvent.end,
-        event.sourceEvent.start,
+        event.end,
+        event.start,
         event
       )
 

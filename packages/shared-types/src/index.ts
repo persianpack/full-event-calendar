@@ -22,6 +22,7 @@ export interface EventClass {
   calculateHeightPersentage():number
   calculateHeight(calcFromZero: boolean): string
   checkOverLap(event: EventClass): Boolean
+  updateEventDetails(event: SourceEvent): void
   checkAllDayOverLap(event: EventClass): Boolean
   convertDateByTimeZone(tz: string): void
   getIncludedDays(): Date[]

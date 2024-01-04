@@ -10,6 +10,7 @@ interface EventItem {
   width: string
   locale: string
   top0?:boolean
+  oneHoureInPixel:number
 }
 
 export const EventItem: FComponent<EventItem> = (props) => {
@@ -21,18 +22,27 @@ export const EventItem: FComponent<EventItem> = (props) => {
     ? props.event.calculateHeight(!props.event.doesEventStartOn(props.gridDate))
     : `height:${2400 - props.event.getEventTopPositionIng()}%`
   })
-  // function getHeight() {
-  //   return props.event.doesEventEndOn(props.gridDate)
-  //     ? props.event.calculateHeight(!props.event.doesEventStartOn(props.gridDate))
-  //     : `height:${2400 - props.event.getEventTopPositionIng()}%`
-  // }
 
   function getBackGroundColor() {
     return `;background-color:${props.event.color}`
   }
+  function getBorders(){
+
+   const endCon = props.event.doesEventEndOn(props.gridDate)
+   const startCon = props.event.doesEventStartOn(props.gridDate)
+
+   if(!startCon){
+    return 'border-top-left-radius: 0px;border-top-right-radius:0px'
+   }else if(!endCon){
+    return 'border-bottom-left-radius: 0px;border-bottom-right-radius:0px'
+   }
+   return ''
+  }
  
   function isLowHeight(){
-   return (props.event.calculateHeightPersentage() <45 )
+   const heightInPercentage = props.event.calculateHeightPersentage()
+   const heightInPixel =  (props.oneHoureInPixel * heightInPercentage)/ 100
+   return heightInPixel < 40
   }
 
   return (
@@ -43,14 +53,14 @@ export const EventItem: FComponent<EventItem> = (props) => {
       id={'event-' + props.event.id}
       class={`ec-event ${isLowHeight() ? 'one-line-event ':''} `  }
       data-test-event-id={props.event.id}
-      style={`${getPosition()} ;${getHeight()} ;${props.width} ;${getBackGroundColor()}`}
+      style={`${getPosition()} ;${getHeight()} ;${props.width} ;${getBackGroundColor()};${getBorders()}`}
       >
        <div  
         style="position:sticky;top:0px;bottom:30px"
         class="tooltip-multiline event-info"
         data-tooltip={`${props.event.name} ${formatRange(props.event.start, props.event.end, props.locale)}`}
       >
-        <div class="item-trunctae">{props.event.name}</div>
+        <div class="item-trunctae event-name">{props.event.name}</div>
         <div>
           <span id={'event-end-' + props.event.id}>{getDateTimeRange(props.event.start, props.event.end)}</span>
         </div>

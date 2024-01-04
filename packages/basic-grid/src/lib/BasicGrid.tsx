@@ -60,12 +60,12 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
 
   function dragEnd(a: DraggedData) {
     
-    const sourceE = { ...a.item?.sourceEvent }
-    sourceE.start = a.eventSourceStart as Date
-    sourceE.end = a.eventSourceEnd as Date
+    const sourceE = { ...a.item?.sourceEvent }    
+    sourceE.start = a.dragedStartDate as Date
+    sourceE.end = a.dragedEndDate as Date
     
-    // console.log(sourceE.start,sourceE.end)
     if (a.item) {
+      // console.log(sourceE)
       mergedProps.onEventUpdate(sourceE as SourceEvent, a)
     }
   }
@@ -83,8 +83,12 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
 
   const timess = [0,1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
 
+  function oneHoureInPixel(){
+    return mergedProps.gridHeight / 24
+  }
+  
   function getWrapperHeight() {
-    return `height:${mergedProps.gridHeight / 24}px`
+    return `height:${oneHoureInPixel()}px`
   }
 
   return (
@@ -102,6 +106,7 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
                         <EventItem
                           locale={mergedProps.locale}
                           event={event}
+                          oneHoureInPixel={oneHoureInPixel()}
                           gridDate={mergedProps.gridDate}
                           width={lookForAvailableWith(ColList(), event, colNumber() + 1)}
                           onMouseDown={onmousedownH}
