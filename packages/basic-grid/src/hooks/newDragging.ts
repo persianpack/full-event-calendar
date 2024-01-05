@@ -5,7 +5,7 @@ import { NewDomController } from "./newUiController"
 import { Switch } from "solid-js"
 import { getDateTimeRange } from "@full-event-calendar/utils"
 
-
+ 
 abstract class DraggerHandeler {
     isDragging: boolean = false
     draggingController: NewDraggingController | null = null

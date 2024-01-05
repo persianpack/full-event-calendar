@@ -9,11 +9,12 @@ import { EventModal, openModal } from './MonthModal/MonthModal'
 import { MonthHeader } from './MonthHeader/MonthHeader'
 import { MonthEvent } from './MonthEvent/MonthEvent'
 // Utils
-import { ArraySplitIntoChunks, formatNumber, getCalendarMonthDays, getMonthName } from '@full-event-calendar/utils'
+import { ArraySplitIntoChunks, EventImpl, formatNumber, getCalendarMonthDays, getMonthName } from '@full-event-calendar/utils'
 import { getMonthRows } from '../utils/EventRows'
 import { isDateIncludedInaRange, sortEventByStart } from '@full-event-calendar/utils'
 import { useMonthEventDragging } from '../utils/EventDragging'
 import { getExtraRows } from '../utils/EventPosition'
+import { MonthEventPreview } from './MonthEventPreview/MonthEventPreview'
 
 export interface MonthGridProps {
   events?: EventClass[]
@@ -72,18 +73,18 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
     openModal(monthObject, e, filteredEvents())
   }
 
-  function ModalDragStart(draggingOnStartDate: Date, dragendEvent: EventClass) {
-    onDragStart(dragendEvent, draggingOnStartDate)
+  function ModalDragStart(draggingOnStartDate: Date,e:MouseEvent, dragendEvent: EventClass) {
+    onDragStart(dragendEvent,e, draggingOnStartDate)
   }
 
   function dragEnd() {
     if (!!draggingEventData()) {
-      const sourceE = { ...draggingEventData()?.source.sourceEvent }
-      sourceE.start = draggingEventData()?.sourceStart as Date
-      sourceE.end = draggingEventData()?.sourceEnd as Date
+      const sourceE = { ...draggingEventData()?.item.sourceEvent }
+      sourceE.start = draggingEventData()?.dragedStartDate as Date
+      sourceE.end = draggingEventData()?.dragedEndDate as Date
       if (sourceE) {
         //@ts-ignore
-        props.onEventUpdate(sourceE)
+       props.onEventUpdate(sourceE)
       }
     }
     onDragEnd()
@@ -97,6 +98,20 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
   function getRowLimit(arr: any) {
     return arr.slice(0, rowLimit())
   }
+
+  function monDathMouseDown(date:Date,e:MouseEvent){
+    // e.stopPropagation()
+    // e.preventDefault()
+
+    // const basdate = new Date(date)
+    // const endDate = new Date(date)
+    // basdate.setHours(0, 0)
+    // endDate.setHours(24,0)
+
+    // const x = new EventImpl({ start: basdate, end: endDate, name: '(no title)', id: 85 })
+    // onDragStart(x)
+  }
+
 
   return (
     <>
@@ -114,26 +129,26 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
             return (
               <div class="month-row">
                 <div class="dragging-wrapper">
-                  <Show
+                  {/* <Show
                     when={
-                      !!draggingEventData() &&
+                      draggingEventData() &&
                       isDateIncludedInaRange(
                         draggingEventData() as unknown as EventClass,
                         monthRowArr[0].date,
                         monthRowArr[6].date
                       )
                     }
-                  >
-                    <MonthEvent
+                  > */}
+                    <MonthEventPreview
                       locale={mergedProps.locale}
                       isFirstRow={monthRowIndex() === 0}
                       onDragEnd={() => {}}
                       ondragstart={() => {}}
-                      item={draggingEventData() as unknown as EventClass}
-                      endDate={monthRowArr[6].date}
+                      item={draggingEventData()!}
                       startDate={monthRowArr[0].date}
-                    />
-                  </Show>
+                      endDate={monthRowArr[6].date}
+                      />
+                  {/* </Show> */}
                 </div>
                 <div class="month-row-container" data-test-id-month-row={monthRowIndex()}>
                   <For each={getRowLimit(Object.keys(monthRowGridData()[monthRowIndex()]))}>
@@ -178,7 +193,7 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
                 </div>
                 <For each={monthRowArr}>
                   {(date, i) => (
-                    <div class="month-container" onmousemove={() => onMouseEnter(date.date)}>
+                    <div onmousedown={[monDathMouseDown,date.date]} class="month-container" onmousemove={() => onMouseEnter(date.date)}>
                       <div class={`month-day-wrapper ${isDateOne(date, i(), monthRowIndex(), monthRowArr)}`}>
                         <div onclick={() => dragClick(date.date)}>
                           <span>{formatNumber(mergedProps.locale, date.day as any)}</span>

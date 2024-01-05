@@ -7,7 +7,7 @@ interface EventProps {
   item: EventClass
   endDate: Date
   startDate: Date
-  ondragstart: (e: EventClass) => void
+  ondragstart: (event: EventClass,e:MouseEvent) => void
   onDragEnd: () => void
   isFirstRow: boolean
   locale: string
@@ -28,7 +28,7 @@ export const MonthEvent: FComponent<EventProps> = (props: EventProps) => {
     props.onDragEnd()
   }
 
-  function onEventMouseDown(data: boolean) {
+  function onEventMouseDown(data: boolean,event:MouseEvent) {
     setEventIsDragging(data)
     document.addEventListener('mouseup', handelMouseUp)
     //maybe remove this line it is not needed ?
@@ -36,8 +36,8 @@ export const MonthEvent: FComponent<EventProps> = (props: EventProps) => {
     document.getElementById('month-wrapper-id')?.classList.add('month-is-dragging')
   }
 
-  function mouseMove() {
-    props.ondragstart(props.item)
+  function mouseMove(e:MouseEvent) {
+    props.ondragstart(props.item,e)
   }
 
   function eventStyles() {

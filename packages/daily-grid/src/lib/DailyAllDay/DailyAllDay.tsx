@@ -70,11 +70,16 @@ export const DailyAllDay: FComponent<DailyAllDayProps> = (props) => {
   onMount(()=>{
     hasMounted = true
   })
+  
+
+  function headerClick(){
+    // console.log('downloaded')
+  }
 
   return (
     <>
     <Show when={filteredEvents().length > 0}>
-      <div class={`all-d-wrapeer-header daosidj ${props.isAllDOpen ? 'alld-open' : 'alld-not-open'}`}>
+      <div onclick={headerClick} class={`all-d-wrapeer-header daosidj ${props.isAllDOpen ? 'alld-open' : 'alld-not-open'}`}>
         <div class="mor-btn-container" style='width:52px'>
           <Show when={filteredEvents().length > 2}>
             <div class="all-collapser" onclick={openAllD}>

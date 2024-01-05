@@ -4,7 +4,7 @@ import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
 import './WeeklyAllDayHeader.scss'
 // Utils
 import { filterEventsByDateRange, formatNumber, sortEventByStart } from '@full-event-calendar/utils'
-import { addEventsToRows, getExtraRows, useMonthEventDragging } from '@full-event-calendar/month-grid'
+import { MonthEventPreview, addEventsToRows, getExtraRows, useMonthEventDragging } from '@full-event-calendar/month-grid'
 // Components
 import { MonthEvent } from '@full-event-calendar/month-grid'
 // solid.js
@@ -46,9 +46,9 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
 
   function dragEnd() {
     if (!!draggingEventData()) {
-      const sourceE = { ...draggingEventData()?.source.sourceEvent }
-      sourceE.start = draggingEventData()?.sourceStart as Date
-      sourceE.end = draggingEventData()?.sourceEnd as Date
+      const sourceE = { ...draggingEventData()?.item.sourceEvent }
+      sourceE.start = draggingEventData()?.dragedStartDate as Date
+      sourceE.end = draggingEventData()?.dragedEndDate as Date
       if (sourceE) {
         //@ts-ignore
         props.onEventUpdate(sourceE)
@@ -128,7 +128,7 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
         </Show>
         <div class="week-all-day-wrapper">
           {/* this is a dummy event thats show the preview of the dragging event */}
-          <Show when={!!draggingEventData()}>
+          {/* <Show when={!!draggingEventData()}>
             <MonthEvent
               locale={props.locale}
               isFirstRow={true}
@@ -138,7 +138,17 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
               startDate={props.cols[0]}
               endDate={props.cols[6]}
             />
-          </Show>
+          </Show> */}
+          <MonthEventPreview 
+            locale={props.locale}
+            isFirstRow={true}
+            onDragEnd={() => {}}
+            ondragstart={() => {}}
+            item={draggingEventData()!}
+            startDate={props.cols[0]}
+            endDate={props.cols[6]}
+            dontCheackRange={true}
+          ></MonthEventPreview>
         </div>
         {/* each colum box has a mouse move for handling drag  */}
         <div class="week-all-day-container123" data-test-id-all-w-c="1" onmousemove={() => onMouseEnter(props.cols[0])}>

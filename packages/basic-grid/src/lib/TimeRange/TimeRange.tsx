@@ -40,15 +40,7 @@ export const TimeRange: FComponent<TimeRangeProps> = (props) => {
     return `top:${date.getMinutes() + 'px'}`
   }
 
-  function reAdjust(event:SourceEvent){
-    let eve = new EventImpl(event)
-    eve.convertDateByTimeZone(props.timeZone)
-    const diff = eve.start.getTime() - event.start.getTime()
-    const newStart = new Date(event.start.getTime() - diff)
-    const endStart = new Date(event.end.getTime() - diff)
-    const retrs = {...event,...{start :newStart,end:endStart}}
-    return retrs
-  }
+ 
 
   return (
     <>

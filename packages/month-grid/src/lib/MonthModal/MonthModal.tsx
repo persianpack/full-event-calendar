@@ -41,7 +41,7 @@ export function openModal(data: MonthDateObject, e: MouseEvent, events: EventCla
 }
 
 interface ModalProps {
-  onDragStart: (draggingOnStartDate: Date, event: EventClass) => void
+  onDragStart: (draggingOnStartDate: Date,e:MouseEvent, event: EventClass) => void
   onDragEnd: () => void
   locale: string
 }
@@ -70,9 +70,9 @@ export const EventModal: FComponent<ModalProps> = (props) => {
     draggingEvent = null
   }
 
-  function mouseMove() {
+  function mouseMove(e:MouseEvent) {
     if (draggingEvent) {
-      props.onDragStart(modalData().somDate, draggingEvent)
+      props.onDragStart(modalData().somDate,e, draggingEvent)
     }
   }
 
