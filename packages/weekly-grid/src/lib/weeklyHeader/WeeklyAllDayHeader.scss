@@ -29,7 +29,15 @@
     width: calc(100% / 7);
     height: 10px;
     z-index: 14;
+    .month-item{
+      opacity: 0.7;
+    }
     // background-color: blue;
+  }
+}
+.month-is-dragging{
+  .month-item{
+    pointer-events: none;
   }
 }
 #group-grid-container > div {

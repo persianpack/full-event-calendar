@@ -1,19 +1,21 @@
 // Types
-import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
+import { EventClass, FComponent, Group, SourceEvent } from '@full-event-calendar/shared-ts'
 // Styles
 import './WeeklyAllDayHeader.scss'
 // Utils
-import { filterEventsByDateRange, formatNumber, sortEventByStart } from '@full-event-calendar/utils'
+import { EventImpl, filterEventsByDateRange, formatNumber, sortEventByStart } from '@full-event-calendar/utils'
 import { MonthEventPreview, addEventsToRows, getExtraRows, useMonthEventDragging } from '@full-event-calendar/month-grid'
 // Components
 import { MonthEvent } from '@full-event-calendar/month-grid'
 // solid.js
 import { For, Show, createMemo, createSignal, onMount } from 'solid-js'
+import { DraggerTypes } from '@full-event-calendar/month-grid/src/utils/RowDragger'
 
 interface WeeklyAllDayHeaderProps {
   events: EventClass[]
   cols: Date[]
   onEventUpdate: (event: any) => void
+  onAddEvent:(event: SourceEvent,groupId?:Group['id']) =>void
   locale: string
 }
 interface rowList {
@@ -42,19 +44,15 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
   const extraRowsData = createMemo(() => getExtraRows(getRowList(), props.cols[0], props.cols[6], 3))
 
   // Use monthly-grid hook for handling dragging logic
-  const { onDragEnd, onDragStart, onMouseEnter, draggingEventData } = useMonthEventDragging()
+  const { onDragEnd, onDragStart, onMouseEnter, draggingEventData,changeDraggerType} = useMonthEventDragging(dragEnd)
 
-  function dragEnd() {
-    if (!!draggingEventData()) {
-      const sourceE = { ...draggingEventData()?.item.sourceEvent }
-      sourceE.start = draggingEventData()?.dragedStartDate as Date
-      sourceE.end = draggingEventData()?.dragedEndDate as Date
-      if (sourceE) {
-        //@ts-ignore
-        props.onEventUpdate(sourceE)
-      }
+  function dragEnd(event:EventClass,draggerMode:DraggerTypes)  {
+    if(draggerMode === 'editEventRow'){
+
+      props.onEventUpdate(event)
+    }else{
+      props.onAddEvent(event)
     }
-    onDragEnd()
   }
 
   let allDRef: any
@@ -94,9 +92,34 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
   function getRowListArr() {
     return Object.keys(getRowList())
   }
+function preventDefault(e:MouseEvent){
+  e.stopPropagation()
+  e.preventDefault()
+}
+  function monDathMouseDown(date:Date,e:MouseEvent){
+    e.stopPropagation()
+    e.preventDefault()
+
+    const basdate = new Date(date)
+    const endDate = new Date(date)
+    basdate.setHours(0, 0)
+    endDate.setHours(23,59,59)
+
+    const x = new EventImpl({ start: basdate, end: endDate, name: '(no title)', id: 85 })
+    changeDraggerType('addEventRow')
+    onDragStart(x,e)
+    const handeler = ()=>{
+      onDragEnd()
+      changeDraggerType('editEventRow')
+
+      document.removeEventListener('mouseup',handeler)
+    
+    }
+    document.addEventListener('mouseup',handeler)
+  }
 
   return (
-    <div class={`${isOpen() ? 'weekly-allDay-open' : ''}`} style="display: flex;">
+    <div class={`${isOpen() ? 'weekly-allDay-open' : ''} ${draggingEventData()? 'month-is-dragging' :''}`} style="display: flex;">
       <div class="mor-btn-container" style='width:51px'>
         <Show when={getRowListArr().length > 3}>
           <div class="all-collapser" onclick={openAllD}>
@@ -128,17 +151,7 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
         </Show>
         <div class="week-all-day-wrapper">
           {/* this is a dummy event thats show the preview of the dragging event */}
-          {/* <Show when={!!draggingEventData()}>
-            <MonthEvent
-              locale={props.locale}
-              isFirstRow={true}
-              onDragEnd={() => {}}
-              ondragstart={() => {}}
-              item={draggingEventData() as unknown as EventClass}
-              startDate={props.cols[0]}
-              endDate={props.cols[6]}
-            />
-          </Show> */}
+        
           <MonthEventPreview 
             locale={props.locale}
             isFirstRow={true}
@@ -151,7 +164,9 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
           ></MonthEventPreview>
         </div>
         {/* each colum box has a mouse move for handling drag  */}
-        <div class="week-all-day-container123" data-test-id-all-w-c="1" onmousemove={() => onMouseEnter(props.cols[0])}>
+        <div class="week-all-day-container123" data-test-id-all-w-c="1"
+        onmousedown={[monDathMouseDown,props.cols[0]]}
+        onmousemove={() => onMouseEnter(props.cols[0])}>
           {/* loop on each row list */}
           <For each={getRowListArr()}>
             {(item) => (
@@ -162,7 +177,7 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
                     <MonthEvent
                       locale={props.locale}
                       isFirstRow={true}
-                      onDragEnd={dragEnd}
+                      onDragEnd={onDragEnd}
                       ondragstart={onDragStart}
                       item={item3}
                       startDate={props.cols[0]}
@@ -178,31 +193,41 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
           class="week-all-day-container123"
           data-test-id-all-w-c="2"
           onmousemove={() => onMouseEnter(props.cols[1])}
+          onmousedown={[monDathMouseDown,props.cols[1]]}
+
         ></div>
         <div
           class="week-all-day-container123"
           data-test-id-all-w-c="3"
           onmousemove={() => onMouseEnter(props.cols[2])}
+          onmousedown={[monDathMouseDown,props.cols[2]]}
         ></div>
         <div
           class="week-all-day-container123"
           data-test-id-all-w-c="4"
           onmousemove={() => onMouseEnter(props.cols[3])}
+          onmousedown={[monDathMouseDown,props.cols[3]]}
+
         ></div>
         <div
           class="week-all-day-container123"
           data-test-id-all-w-c="5"
           onmousemove={() => onMouseEnter(props.cols[4])}
+          onmousedown={[monDathMouseDown,props.cols[4]]}
+
         ></div>
         <div
           class="week-all-day-container123"
           data-test-id-all-w-c="6"
           onmousemove={() => onMouseEnter(props.cols[5])}
+          onmousedown={[monDathMouseDown,props.cols[5]]}
+
         ></div>
         <div
           class="week-all-day-container123"
           data-test-id-all-w-c="7"
           onmousemove={() => onMouseEnter(props.cols[6])}
+          onmousedown={[monDathMouseDown,props.cols[6]]}
         ></div>
       </div>
     </div>

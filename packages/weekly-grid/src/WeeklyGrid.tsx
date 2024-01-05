@@ -145,6 +145,7 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
         onEventUpdate={mergedProps.onEventUpdate}
         events={mergedProps.events}
         cols={getEachColDate(columData)}
+        onAddEvent={mergedProps.onAddEvent}
         locale={mergedProps.locale}
       />
 

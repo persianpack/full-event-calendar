@@ -1,7 +1,7 @@
 // Solid.js
 import { For, Show, createMemo, createSignal, mergeProps } from 'solid-js'
 // Types
-import { EventClass, FComponent, SourceEvent } from '@full-event-calendar/shared-ts'
+import { EventClass, FComponent, Group, SourceEvent } from '@full-event-calendar/shared-ts'
 // Styles
 import './MonthGrid.scss'
 // Components
@@ -15,6 +15,7 @@ import { isDateIncludedInaRange, sortEventByStart } from '@full-event-calendar/u
 import { useMonthEventDragging } from '../utils/EventDragging'
 import { getExtraRows } from '../utils/EventPosition'
 import { MonthEventPreview } from './MonthEventPreview/MonthEventPreview'
+import { DraggerTypes } from '../utils/RowDragger'
 
 export interface MonthGridProps {
   events?: EventClass[]
@@ -25,6 +26,7 @@ export interface MonthGridProps {
   timeZone?: string
   rowLimit?: number
   onDateChange?: (d: Date) => void
+  onAddEvent?:(event: SourceEvent,groupId?:Group['id']) =>void
   onGridChange?: (d: any) => void
   editable?:boolean
 }
@@ -45,6 +47,7 @@ const defaultProps = {
   onEventUpdate: (_: SourceEvent) => {},
   onDateChange: () => {},
   onGridChange: () => {},
+  onAddEvent: () => {},
   locale: 'en-US',
   calendar: 'gregory',
   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
@@ -56,7 +59,7 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
   const mergedProps = mergeProps(defaultProps, props)
   const [rowLimit, setRowLimit] = createSignal(4)
 
-  const { onDragEnd, onDragStart, onMouseEnter, draggingEventData } = useMonthEventDragging()
+  const { onDragEnd, onDragStart, onMouseEnter, draggingEventData,changeDraggerType } = useMonthEventDragging(dragEnd)
 
   const filteredEvents = createMemo(() => sortEventByStart(mergedProps.events))
 
@@ -77,39 +80,49 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
     onDragStart(dragendEvent,e, draggingOnStartDate)
   }
 
-  function dragEnd() {
-    if (!!draggingEventData()) {
-      const sourceE = { ...draggingEventData()?.item.sourceEvent }
-      sourceE.start = draggingEventData()?.dragedStartDate as Date
-      sourceE.end = draggingEventData()?.dragedEndDate as Date
-      if (sourceE) {
-        //@ts-ignore
-       props.onEventUpdate(sourceE)
-      }
+  function dragEnd(event:EventClass,draggerMode:DraggerTypes) {
+    if(draggerMode === 'editEventRow'){
+      mergedProps.onEventUpdate(event)
+    }else{
+      mergedProps.onAddEvent(event)
     }
-    onDragEnd()
   }
 
-  function dragClick(d: Date) {
+  function dragClick(e:MouseEvent,d: Date) {
+    e.stopPropagation()
+    e.preventDefault()
+ 
     mergedProps.onDateChange(d)
     mergedProps.onGridChange('daily')
   }
-
+function stopDefault(e:MouseEvent){
+  e.stopPropagation()
+  e.preventDefault()
+}
   function getRowLimit(arr: any) {
     return arr.slice(0, rowLimit())
   }
 
   function monDathMouseDown(date:Date,e:MouseEvent){
-    // e.stopPropagation()
-    // e.preventDefault()
+    e.stopPropagation()
+    e.preventDefault()
 
-    // const basdate = new Date(date)
-    // const endDate = new Date(date)
-    // basdate.setHours(0, 0)
-    // endDate.setHours(24,0)
+    const basdate = new Date(date)
+    const endDate = new Date(date)
+    basdate.setHours(0, 0)
+    endDate.setHours(23,59,59)
 
-    // const x = new EventImpl({ start: basdate, end: endDate, name: '(no title)', id: 85 })
-    // onDragStart(x)
+    const x = new EventImpl({ start: basdate, end: endDate, name: '(no title)', id: 85 })
+    changeDraggerType('addEventRow')
+    onDragStart(x,e)
+    const handeler = ()=>{
+      onDragEnd()
+      changeDraggerType('editEventRow')
+
+      document.removeEventListener('mouseup',handeler)
+    
+    }
+    document.addEventListener('mouseup',handeler)
   }
 
 
@@ -122,23 +135,14 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
         calendar={mergedProps.calendar}
       ></MonthHeader>
       <div class="month-wrapper" id="month-wrapper-id">
-        <EventModal locale={mergedProps.locale} onDragEnd={dragEnd} onDragStart={ModalDragStart} />
+        <EventModal locale={mergedProps.locale} onDragEnd={onDragEnd} onDragStart={ModalDragStart} />
 
         <For each={monthDateRows()}>
           {(monthRowArr, monthRowIndex) => {
             return (
               <div class="month-row">
                 <div class="dragging-wrapper">
-                  {/* <Show
-                    when={
-                      draggingEventData() &&
-                      isDateIncludedInaRange(
-                        draggingEventData() as unknown as EventClass,
-                        monthRowArr[0].date,
-                        monthRowArr[6].date
-                      )
-                    }
-                  > */}
+              
                     <MonthEventPreview
                       locale={mergedProps.locale}
                       isFirstRow={monthRowIndex() === 0}
@@ -148,7 +152,7 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
                       startDate={monthRowArr[0].date}
                       endDate={monthRowArr[6].date}
                       />
-                  {/* </Show> */}
+             
                 </div>
                 <div class="month-row-container" data-test-id-month-row={monthRowIndex()}>
                   <For each={getRowLimit(Object.keys(monthRowGridData()[monthRowIndex()]))}>
@@ -159,7 +163,7 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
                             <MonthEvent
                               locale={mergedProps.locale}
                               isFirstRow={monthRowIndex() === 0}
-                              onDragEnd={dragEnd}
+                              onDragEnd={onDragEnd}
                               ondragstart={onDragStart}
                               item={dayObject}
                               endDate={monthRowArr[6].date}
@@ -195,7 +199,7 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
                   {(date, i) => (
                     <div onmousedown={[monDathMouseDown,date.date]} class="month-container" onmousemove={() => onMouseEnter(date.date)}>
                       <div class={`month-day-wrapper ${isDateOne(date, i(), monthRowIndex(), monthRowArr)}`}>
-                        <div onclick={() => dragClick(date.date)}>
+                        <div onmousedown={stopDefault} onclick={(e) => dragClick(e,date.date)}>
                           <span>{formatNumber(mergedProps.locale, date.day as any)}</span>
                           <div class="month-name">
                             {getMonthName(mergedProps.calendar, date.date, mergedProps.locale)}

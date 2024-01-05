@@ -29,7 +29,11 @@ export const MonthEvent: FComponent<EventProps> = (props: EventProps) => {
   }
 
   function onEventMouseDown(data: boolean,event:MouseEvent) {
+    event.stopPropagation()
+    event.preventDefault()
     setEventIsDragging(data)
+    // event.stopPropagation()
+    // event.preventDefault()
     document.addEventListener('mouseup', handelMouseUp)
     //maybe remove this line it is not needed ?
     document.addEventListener('mousemove', mouseMove)
