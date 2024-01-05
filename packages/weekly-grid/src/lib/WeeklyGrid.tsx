@@ -139,7 +139,7 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
       <WeeklyAllDayHeader
         onEventUpdate={mergedProps.onEventUpdate}
         events={mergedProps.events}
-        cols={getEachColDate(columData)}
+        headerDates={getEachColDate(columData)}
         onAddEvent={mergedProps.onAddEvent}
         locale={mergedProps.locale}
       />
