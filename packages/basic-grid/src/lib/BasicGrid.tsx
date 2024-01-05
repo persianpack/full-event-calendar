@@ -96,7 +96,7 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
 
   function eventClick(event:EventClass){
     if(!mergedProps.editable){
-      console.log('eventclicked')
+      console.log('eventclicked',event)
     }
   }
 

@@ -1,5 +1,5 @@
 // Solid.js
-import { For, Show, createMemo, createSignal, mergeProps } from 'solid-js'
+import { For, Show, createMemo, createSignal, createUniqueId, mergeProps } from 'solid-js'
 // Types
 import { EventClass, FComponent, Group, SourceEvent } from '@full-event-calendar/shared-ts'
 // Styles
@@ -11,7 +11,7 @@ import { MonthEvent } from './MonthEvent/MonthEvent'
 // Utils
 import { ArraySplitIntoChunks, EventImpl, formatNumber, getCalendarMonthDays, getMonthName } from '@full-event-calendar/utils'
 import { getMonthRows } from '../utils/EventRows'
-import { isDateIncludedInaRange, sortEventByStart } from '@full-event-calendar/utils'
+import { sortEventByStart } from '@full-event-calendar/utils'
 import { useMonthEventDragging } from '../utils/EventDragging'
 import { getExtraRows } from '../utils/EventPosition'
 import { MonthEventPreview } from './MonthEventPreview/MonthEventPreview'
@@ -112,7 +112,7 @@ function stopDefault(e:MouseEvent){
     basdate.setHours(0, 0)
     endDate.setHours(23,59,59)
 
-    const x = new EventImpl({ start: basdate, end: endDate, name: '(no title)', id: 85 })
+    const x = new EventImpl({ start: basdate, end: endDate, name: '(no title)', id: createUniqueId() })
     changeDraggerType('addEventRow')
     onDragStart(x,e)
     const handeler = ()=>{

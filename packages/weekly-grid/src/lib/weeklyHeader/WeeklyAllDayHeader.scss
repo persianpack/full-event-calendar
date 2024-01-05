@@ -48,7 +48,7 @@
   display: flex;
   width: 100%;
   z-index: 13;
-  background-color: white;
+  background-color: var(--bg-color);
   height: 35px;
   bottom: 0;
   padding-right: 10px;
@@ -57,7 +57,7 @@
   transition: all 0.5s;
   > div {
     flex: 1;
-    background-color: white;
+    background-color: var(--bg-color);
     width: 99%;
     height: 72%;
     display: flex;
@@ -67,9 +67,10 @@
     padding-left: 8px;
     padding-top: 3px;
     border-radius: 8px;
-
+    color: var(--on-surface-variant);
     &:hover {
-      background: #ececec;
+      background-color: var(--bg-hover);
+
     }
   }
 }

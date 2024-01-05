@@ -9,11 +9,11 @@
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
-    color: #e2e4e9;
+    color: var(--on-surface-variant-agm) !important;
   }
   .month-name {
     display: inline;
-    color: #e2e4e9;
+    color: var(--on-surface-variant-agm) !important;
     font-size: 24px;
     font-style: normal;
     font-weight: 500;
@@ -21,7 +21,7 @@
   }
 }
 .month-day-out-no-name {
-  color: #e2e4e9;
+  color: var(--on-surface-variant-agm) !important;
 }
 .month-name {
   display: none;
@@ -44,7 +44,7 @@
     display: flex;
     position: relative;
     .month-container {
-      background-color: white;
+      background-color: var(--bg-color);
       flex: 1;
       // border-bottom: 1px solid var(--hairline);
       // border-left: 1px solid var(--hairline);
@@ -73,8 +73,8 @@
         flex: 1;
 
         .month-more-btn {
-          background-color: white;
-
+          background-color: var(--bg-color);
+          color: var(--on-surface-variant);
           transition: all 0.3s;
 
           align-items: center;
@@ -83,7 +83,7 @@
           border-radius: 8px;
 
           &:hover {
-            background: #ececec;
+            background: var(--bg-hover);
           }
           border-radius: 5px;
           cursor: pointer;
@@ -126,7 +126,11 @@
   margin-top: 40px;
   width: calc(100% / 7);
   position: absolute;
-  border-bottom: 1px solid white;
+}
+.month-day-wrapper:not(.month-day-out):not(.month-day-out-no-name){
+  span{
+    color: var(--on-surface-variant);
+  }
 }
 .month-day-wrapper {
   display: flex;
@@ -145,6 +149,7 @@
     align-items: center;
     border-radius: 50%;
     cursor: pointer;
+    // color: var(--on-surface-variant);
     transition: all 0.3s;
     &:hover {
       background-color: #31b5f7;

@@ -29,8 +29,9 @@ export interface CalendarSourceOptions {
   listMode?: listModeTypes
   groups?:Group[]
   editable?:boolean
+  theme?:string
 }
- 
+
 export interface Plugins {
   type: 'grid'
   name: string
@@ -96,6 +97,9 @@ export class CalendarImpl implements CalendarApi {
   public updateEditable(val:boolean) {
     this.storeDispatch({ type: 'UPDATE_EDITABLE',val})
   }
+  public changeTheme(val:string) {
+    this.storeDispatch({ type: 'CHANGE_THEME',val})
+  }
   public resetOptions(options: CalendarSourceOptions) {
     if (options.timeZone) {
       this.changeTimeZone(options.timeZone)
@@ -126,6 +130,9 @@ export class CalendarImpl implements CalendarApi {
     }
     if(options.groups){
       this.updateGroups(options.groups)
+    }
+    if(options.theme){
+      this.changeTheme(options.theme)
     }
     
     this.setEventList(options.events)

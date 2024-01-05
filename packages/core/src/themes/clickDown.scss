@@ -1,4 +1,4 @@
-:root {
+.calendar-theme-light {
   --border-color: #e6e6e69f;
   color-scheme: light;
   --primary: rgb(26, 115, 232);
@@ -30,4 +30,19 @@
   --dimmed: rgba(32, 33, 36, 0.38);
   --chip-hover: rgb(241, 243, 244);
   --now: rgb(234, 67, 53);
+}
+
+.calendar-theme-dark {
+  --hairline: #3a536b;
+  --primary: #3499F5;
+  --on-surface-variant: #FFFFFF;
+  --textfield-surface: #E6E6E6;
+  --on-surface-variant-agm: #BBBBBB;
+  --bg-color:#243443;
+  --bg-hover:#3f4d5a;
+  --shawdow:inset 0 0 0.5px 1px hsla(0, 0%,   100%, 0.075),  0 0 0 1px hsla(0, 0%, 0%, 0.05),
+  0 0.3px 0.4px hsla(0, 0%, 0%, 0.02),
+  0 0.9px 1.5px hsla(0, 0%, 0%, 0.045),
+  0 3.5px 6px hsla(0, 0%, 0%, 0.09);
+
 }

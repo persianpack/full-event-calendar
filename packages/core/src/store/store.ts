@@ -15,7 +15,8 @@ const defaultState: CalendarState = {
   autoUpdateEventOnChange: true,
   listMode:'day',
   groups :[],
-  editable:true
+  editable:true,
+  theme:'dark'
 }
 
 interface SetAllChatsAction {
@@ -88,6 +89,10 @@ interface UpdateEditabel {
   type: 'UPDATE_EDITABLE'
   val: boolean
 }
+interface ChangeTheme {
+  type: 'CHANGE_THEME'
+  val: string
+}
 
 // To Do: use better names for set and update
 
@@ -109,6 +114,7 @@ export type StoreActions =
   | AddEvent
   | AddGroup
   | UpdateEditabel
+  | ChangeTheme
 
 export type EventCalendarOptions = { [K in keyof CalendarSourceOptions]-?: CalendarSourceOptions[K] }
 export interface CalendarState extends EventCalendarOptions {
@@ -117,6 +123,8 @@ export interface CalendarState extends EventCalendarOptions {
 
 const calendarReducer: Reducer<CalendarState, StoreActions> = (state = defaultState, action) => {
   switch (action.type) {
+    case 'CHANGE_THEME':
+      return { ...state, theme: action.val }
     case 'UPDATE_EDITABLE':
       return { ...state, editable: action.val }
     case 'ADD_EVENT':

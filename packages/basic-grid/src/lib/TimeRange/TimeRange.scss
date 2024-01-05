@@ -13,7 +13,7 @@
         width: 100%;
         padding-left: 12px;
         .ec-event{ 
-            box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+            box-shadow: var(--shawdow);
             border: 0px solid red;
             padding-top: 5px;
         }
@@ -26,7 +26,7 @@
     .time-range-time {
       // z-index: -1;
       // background-color: red;
-      color: rgb(0, 0, 0);
+      color: var(--on-surface-variant);
       position: absolute;
       font-size: 12px;
       font-style: normal;

@@ -96,17 +96,6 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
 
   generageCols()
 
-  function onEventUpdateProxy(updatedSourceEvent: SourceEvent) {
-    // TargetCol and baseCol are indexes for which colum was event moved in .
-    // const sourceCopy = { ...updatedSourceEvent }
-    // console.log(sourceCopy)
-    // if (isDragend) {
-    //   sourceCopy.start.setDate(sourceCopy.start.getDate() - (baseCol - targetCol))
-    //   sourceCopy.end.setDate(sourceCopy.end.getDate() - (baseCol - targetCol))
-    // }
-    mergedProps.onEventUpdate(updatedSourceEvent)
-  }
-
   createEffect(generageCols)
 
   function addEventProxy(event:SourceEvent,groupId?:number){

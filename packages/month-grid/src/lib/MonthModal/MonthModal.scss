@@ -4,13 +4,13 @@
   height: fit-content;
   max-height: 250px;
   width: 200px;
-  background-color: white;
+  background-color: var(--bg-color);
   border-radius: 10px;
   left: 30px;
   transform: translateY(-104%);
   overflow-y: auto;
   overflow-x: hidden;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  box-shadow: var(--shadow);
   .modal-event {
     margin: 10px;
     height: 25px;
@@ -22,7 +22,7 @@
     color: white;
   }
   .month-item-no-all-day {
-    color: black;
+    color: var(--on-surface-variant);
   }
 }
 

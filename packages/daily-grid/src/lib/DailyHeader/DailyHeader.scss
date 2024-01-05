@@ -14,12 +14,7 @@
     font-weight: 500;
     line-height: normal;
     transition: all 0.2s;
-    background-color: white;
     color: #333;
-    &:hover {
-      background-color: #3a9bf5;
-      color: white;
-    }
     cursor: pointer;
     width: 60px;
     height: 60px;
@@ -27,11 +22,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: 5px;
+    color: var(--on-surface-variant);
+    &:hover {
+      background-color: var(--primary);
+      color: white;
+    }
   }
 }
 .daily-header-today {
   .week-day {
-    color: white;
-    background-color: rgba(14, 14, 105, 0.514);
+    color: var(--on-surface-variant);
+    background-color: var(--primary);
+
   }
 }

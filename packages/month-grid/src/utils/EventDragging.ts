@@ -1,5 +1,5 @@
 import { EventClass } from '@full-event-calendar/shared-ts'
-import { NewDraggingController, daysDiffInRange } from '@full-event-calendar/utils'
+import { NewDraggingController } from '@full-event-calendar/utils'
 import { createSignal } from 'solid-js'
 import { DraggerTypes, RowDragger } from './RowDragger'
 

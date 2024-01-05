@@ -49,7 +49,7 @@ export function App() {
   return (
     <>
       <div
-        class="full-event-calendar-core"
+        class={`full-event-calendar-core calendar-theme-${data.store.theme}`}
         id="full-event-calendar-core"
       >
         <CalendarHeader onDateChange={onDateChange} />

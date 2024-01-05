@@ -40,8 +40,6 @@ export const TimeRange: FComponent<TimeRangeProps> = (props) => {
     return `top:${date.getMinutes() + 'px'}`
   }
 
- 
-
   return (
     <>
       <div data-test-time-range-id={props.houre + 1} class="time-range">
