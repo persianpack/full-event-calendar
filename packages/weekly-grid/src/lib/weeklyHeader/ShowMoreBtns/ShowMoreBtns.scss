@@ -1,0 +1,31 @@
+.weeklymores {
+    position: absolute;
+    display: flex;
+    width: 100%;
+    z-index: 13;
+    background-color: var(--bg-color);
+    height: 35px;
+    bottom: 0;
+    padding-right: 10px;
+    gap: 5px;
+    align-items: center;
+    transition: all 0.5s;
+    > div {
+      flex: 1;
+      background-color: var(--bg-color);
+      width: 99%;
+      height: 72%;
+      display: flex;
+      transition: all 0.3s;
+      cursor: pointer;
+      align-items: center;
+      padding-left: 8px;
+      padding-top: 3px;
+      border-radius: 8px;
+      color: var(--on-surface-variant);
+      &:hover {
+        background-color: var(--bg-hover);
+  
+      }
+    }
+  }

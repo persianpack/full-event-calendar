@@ -1,5 +1,4 @@
 .weekly-allDay {
-  // height: 200px;
   overflow: hidden;
   display: flex;
   position: relative;
@@ -7,23 +6,11 @@
   position: relative;
   width: calc(100% - 50px);
   max-height: 112px;
-  // margin-left: 50px;
-  // border-left: 1px solid var(--hairline);
+
   padding-bottom: 7px;
   border-right: 1px solid var(--hairline);
   transition: all 0.5s;
 
-  .week-all-day-container123 {
-    flex: 1;
-    // position: relative;
-    // background-color: red;
-  }
-  .week-all-day-container {
-    // background-color: blue;
-    height: 20px;
-    margin-top: 5px;
-    position: relative;
-  }
   .week-all-day-wrapper {
     position: absolute;
     width: calc(100% / 7);
@@ -32,7 +19,6 @@
     .month-item{
       opacity: 0.7;
     }
-    // background-color: blue;
   }
 }
 .month-is-dragging{
@@ -43,37 +29,7 @@
 #group-grid-container > div {
   flex: 1;
 }
-.weeklymores {
-  position: absolute;
-  display: flex;
-  width: 100%;
-  z-index: 13;
-  background-color: var(--bg-color);
-  height: 35px;
-  bottom: 0;
-  padding-right: 10px;
-  gap: 5px;
-  align-items: center;
-  transition: all 0.5s;
-  > div {
-    flex: 1;
-    background-color: var(--bg-color);
-    width: 99%;
-    height: 72%;
-    display: flex;
-    transition: all 0.3s;
-    cursor: pointer;
-    align-items: center;
-    padding-left: 8px;
-    padding-top: 3px;
-    border-radius: 8px;
-    color: var(--on-surface-variant);
-    &:hover {
-      background-color: var(--bg-hover);
-
-    }
-  }
-}
+ 
 .weekly-allDay-open {
   .weeklymores {
     opacity: 0;

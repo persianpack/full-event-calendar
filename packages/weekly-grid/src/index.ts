@@ -1,5 +1,5 @@
-export { WeeklyGrid } from './WeeklyGrid.tsx'
-import { WeeklyGrid } from './WeeklyGrid.tsx'
+export { WeeklyGrid } from './lib/WeeklyGrid.tsx'
+import { WeeklyGrid } from './lib/WeeklyGrid.tsx'
 export const WeeklyGridPlugin = {
   code: WeeklyGrid,
   name: 'weekly',
