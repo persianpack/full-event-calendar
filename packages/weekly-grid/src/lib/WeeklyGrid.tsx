@@ -17,7 +17,7 @@ export interface WeeklyGridProps {
   events?: EventClass[]
   initialDate?: Date
   onEventUpdate?: (event: any) => void
-  onAddEvent?:(event: SourceEvent,groupId?:Group['id']) =>void
+  onAddEvent?: (event: SourceEvent, groupId?: Group['id']) => void
   onDateChange?: (d: Date) => void
   onGridChange?: (d: any) => void
   locale?: string
@@ -49,13 +49,13 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
 
   // Group Grid component takes a data for each grid colum
   const columData = createMutable([
-    { events: [], props: { initialDate: null, locale: null, timeZone: null, calendar: null } },
-    { events: [], props: { initialDate: null, locale: null, timeZone: null, calendar: null } },
-    { events: [], props: { initialDate: null, locale: null, timeZone: null, calendar: null } },
-    { events: [], props: { initialDate: null, locale: null, timeZone: null, calendar: null } },
-    { events: [], props: { initialDate: null, locale: null, timeZone: null, calendar: null } },
-    { events: [], props: { initialDate: null, locale: null, timeZone: null, calendar: null } },
-    { events: [], props: { initialDate: null, locale: null, timeZone: null, calendar: null } }
+    { props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null } },
+    { props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null } },
+    { props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null } },
+    { props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null } },
+    { props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null } },
+    { props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null } },
+    { props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null } }
   ]) as unknown as columData[]
 
   const generateCols = createMemo(() => {
@@ -69,7 +69,7 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
         // because the Daily grid component will filter out the event for the given they
         // so we do Not need the filter out here to ... it will be overdo
         const extractedEvents = getEventsInDate(mergedProps.events, new Date(iniDay))
-        columData[dayNumber].events = extractedEvents.filter((item) => !item.isAllDay())
+        columData[dayNumber].props.events = extractedEvents.filter((item) => !item.isAllDay())
         // set props for each colum that wil be passed to dailyGird package by GroupGrid Package
         columData[dayNumber].props.initialDate = new Date(iniDay)
         columData[dayNumber].props.gridDate = new Date(iniDay)
@@ -112,10 +112,10 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
     })
   }
 
-  function addEventProxy(event:SourceEvent,groupId?:number){
-    if(groupId){
-      mergedProps.onAddEvent({...event,...{groups:[groupId]}})
-    }else{
+  function addEventProxy(event: SourceEvent, groupId?: number) {
+    if (groupId) {
+      mergedProps.onAddEvent({ ...event, ...{ groups: [groupId] } })
+    } else {
       mergedProps.onAddEvent(event)
     }
   }
@@ -145,12 +145,14 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
       />
 
       <div style=" position: relative; flex: 1;">
-        <div style=" position: absolute;height: 100%;width: 100%;"
-             id="scroll-wrapper"
-             class="custome-scroll-bar scroll-wrapper">
+        <div
+          style=" position: absolute;height: 100%;width: 100%;"
+          id="scroll-wrapper"
+          class="custome-scroll-bar scroll-wrapper"
+        >
           <div style="display: flex;" class="week-wrapper">
             <DailyTimeRanges locale={mergedProps.locale} />
-             <GroupGrid
+            <GroupGrid
               gridComponent={BasicGrid}
               cols={columData}
               onAddEvent={addEventProxy}

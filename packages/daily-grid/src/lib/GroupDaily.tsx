@@ -19,12 +19,10 @@ const defaultProps = {
 }
 
 export interface columData {
-  events: EventClass[]
   props: any
 }
 
 export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
-
   const mergedProps = mergeProps(defaultProps, props)
 
   function onDateChange(d: Date) {
@@ -32,7 +30,7 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
   }
 
   const columData2 = createMutable([
-    { events: [], props: { initialDate: null, locale: null, timeZone: null, calendar: null, showAllDay: false } }
+    { props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null, showAllDay: false } }
   ]) as unknown as columData[]
 
   function getCols() {
@@ -40,8 +38,7 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
       if (columData2[i]) {
       } else {
         let x = {
-          events: [],
-          props: { initialDate: null, locale: null, timeZone: null, calendar: null, showAllDay: false }
+          props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null, showAllDay: false }
         }
         columData2.push(x)
       }
@@ -50,23 +47,23 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
   function generageCols() {
     getCols()
     // use Factory here
-  
+
     // const columData = [] as unknown as columData[]
     if (mergedProps.groups.length > 0) {
-        for (let i = 0; i < mergedProps.groups.length; i++) {
+      for (let i = 0; i < mergedProps.groups.length; i++) {
         const groupId = mergedProps.groups[i].id
-        
+
         //@ts-ignore
-        const filterdEvents = mergedProps.events.filter(ev=>{
-          if(ev.id===15){
-          //  console.log(groupId,ev.groups.includes(groupId))
+        const filterdEvents = mergedProps.events.filter((ev) => {
+          if (ev.id === 15) {
+            //  console.log(groupId,ev.groups.includes(groupId))
           }
           //@ts-ignore
-         return ev.groups.includes(groupId)
+          return ev.groups.includes(groupId)
         })
-        columData2[i].events = getEventsInDate(filterdEvents, mergedProps.initialDate)
+        columData2[i].props.events = getEventsInDate(filterdEvents, mergedProps.initialDate)
         // console.log(filterdEvents,columData2[i].events, mergedProps.initialDate)
- 
+
         columData2[i].props.initialDate = new Date(mergedProps.initialDate)
         columData2[i].props.gridDate = new Date(mergedProps.initialDate)
         columData2[i].props.locale = mergedProps.locale
@@ -79,7 +76,7 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
         columData2[i].props.group = mergedProps.groups[i]
       }
     } else {
-      columData2[0].events = getEventsInDate(mergedProps.events, mergedProps.initialDate)
+      columData2[0].props.events = getEventsInDate(mergedProps.events, mergedProps.initialDate)
       columData2[0].props.initialDate = new Date(mergedProps.initialDate)
       columData2[0].props.gridDate = new Date(mergedProps.initialDate)
       columData2[0].props.locale = mergedProps.locale
@@ -90,19 +87,17 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
       columData2[0].props.editable = mergedProps.editable
       columData2[0].props.onDateChange = onDateChange
     }
-
-
   }
 
   generageCols()
 
   createEffect(generageCols)
 
-  function addEventProxy(event:SourceEvent,groupId?:number){
-    if(groupId){
-        mergedProps.onAddEvent({...event,...{groups:[groupId]}})
-    }else{
-        mergedProps.onAddEvent(event)
+  function addEventProxy(event: SourceEvent, groupId?: number) {
+    if (groupId) {
+      mergedProps.onAddEvent({ ...event, ...{ groups: [groupId] } })
+    } else {
+      mergedProps.onAddEvent(event)
     }
   }
 

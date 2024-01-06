@@ -50,18 +50,15 @@ export const GroupDailyHeader: FComponent<GroupDailyHeaderProps> = (props) => {
             locale={mergedProps.locale}
           />
         </div>
-      <div class='group-item-header'>
-
-       <For each={mergedProps.columData}>
-          {(item) => (
-            <Show when={item.props.group}>
-              <GroupItemHeader group={item.props.group} />
-
-            </Show>
-          )}
-       </For>
-      
-      </div>
+        <div class="group-item-header">
+          <For each={mergedProps.columData}>
+            {(item) => (
+              <Show when={item.props.group}>
+                <GroupItemHeader group={item.props.group} />
+              </Show>
+            )}
+          </For>
+        </div>
       </div>
 
       <div class="alld-main-container">
@@ -71,7 +68,7 @@ export const GroupDailyHeader: FComponent<GroupDailyHeaderProps> = (props) => {
               isAllDOpen={isAllDOpen()}
               setIsAllDOpen={setIsAllDOpen}
               locale={mergedProps.locale}
-              events={item.events}
+              events={item.props.events}
               initialDate={mergedProps.initialDate}
             ></DailyAllDay>
           )}

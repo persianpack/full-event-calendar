@@ -10,13 +10,12 @@ interface GroupGridProps {
   initialDate?: Date
   cols?: columItem[]
   onEventUpdate?: (a: SourceEvent, colNumber: number, currCol: number, isDragend: boolean) => void
-  onAddEvent?:(event: SourceEvent) =>void
+  onAddEvent?: (event: SourceEvent) => void
   gridComponent: any
-  hasCrossGridDrag?:boolean
+  hasCrossGridDrag?: boolean
 }
 
 interface columItem {
-  events: EventClass[]
   props?: any
 }
 
@@ -24,10 +23,9 @@ const defaultProps = {
   events: [],
   initialDate: new Date(),
   cols: [],
-  hasCrossGridDrag:true,
+  hasCrossGridDrag: true,
   onEventUpdate: () => {},
-  onAddEvent: () => {},
-
+  onAddEvent: () => {}
 }
 
 export const GroupGrid: FComponent<GroupGridProps> = (props) => {
@@ -38,7 +36,7 @@ export const GroupGrid: FComponent<GroupGridProps> = (props) => {
 
   function eventUpdateProxy(eventSource: SourceEvent, draggedData: any, startingColId: number) {
     // calculate  which colum the event was dropped in
-        if (draggedData?.isDragg) {
+    if (draggedData?.isDragg) {
       const colNumber = whichColumWasDropped(colIds, draggedData.mouseX)
       // mergedProps.onEventUpdate(eventSource, startingColId, startingColId, false)
       mergedProps.onEventUpdate(eventSource, colNumber, startingColId, true)
@@ -46,7 +44,7 @@ export const GroupGrid: FComponent<GroupGridProps> = (props) => {
       mergedProps.onEventUpdate(eventSource, startingColId, startingColId, false)
     }
   }
-
+  console.log(mergedProps.cols)
   const mappedCols = createMemo(
     mapArray(
       () => mergedProps.cols,
@@ -58,9 +56,8 @@ export const GroupGrid: FComponent<GroupGridProps> = (props) => {
               eventUpdateProxy(a, b, i())
             }}
             onAddEvent={mergedProps.onAddEvent}
-            events={item.events}
             id={colIds[i()]}
-            container={mergedProps.hasCrossGridDrag ? "group-grid-container" :""}
+            container={mergedProps.hasCrossGridDrag ? 'group-grid-container' : ''}
             {...item.props}
           ></Dynamic>
         )
