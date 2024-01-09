@@ -1,0 +1,30 @@
+.month-wrapper{
+    .month-row {
+        background-color: blue;
+        // border: 1px solid white;
+        flex: 1;
+        display: flex;
+        position: relative;
+        .month-container {
+          background-color: var(--bg-color);
+          flex: 1;
+          // border-bottom: 1px solid var(--hairline);
+          // border-left: 1px solid var(--hairline);
+        }
+        .month-container {
+          // border-left: 1px solid var(--hairline);
+          // background-color: red;
+          // border-bottom: 1px solid var(--hairline);
+        }
+        // &:first-child{
+        //   background-color: red;
+        // }
+        .month-row-wrapper {
+          position: relative;
+          // background-color: rgba(215, 241, 215, 0.308);
+          height: 20px;
+          margin-top: 5px;
+        }
+      }
+      
+}

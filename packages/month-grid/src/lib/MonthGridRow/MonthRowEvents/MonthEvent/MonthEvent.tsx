@@ -1,7 +1,7 @@
 import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
 import { createMemo, createSignal } from 'solid-js'
 import './MonthEvent.scss'
-import { getLeftPosition, getEndPosition } from '../../utils/EventPosition'
+import { getLeftPosition, getEndPosition } from '../../../../utils/EventPosition'
 import { formatToShortTime, rightOrLeftInDateInRange } from '@full-event-calendar/utils'
 interface EventProps {
   item: EventClass

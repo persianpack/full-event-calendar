@@ -6,7 +6,7 @@ function getDaysOfMonth(date: Date, calendar: string) {
     calendar
   })
   let parts = dateTimeFormat.formatToParts(date)
-  return { ...extractYMD(parts), date: new Date(date), isOutCalendarMonth: false }
+  return { ...extractYMD(parts), date: new Date(date), isDateInsideMonth: false }
 }
 
 export function extractYMD(parts: Intl.DateTimeFormatPart[]) {
@@ -69,7 +69,7 @@ export function getCalendarMonthDays(date: Date, calendar: string = 'gregory') {
   for (let i = WeekDay; i > 0; i--) {
     selectedDataCopy.setDate(selectedDataCopy.getDate() - 1)
     const convertedDate = getDaysOfMonth(selectedDataCopy, calendar)
-    monthDays.unshift({ ...convertedDate, isOutCalendarMonth: true })
+    monthDays.unshift({ ...convertedDate, isDateInsideMonth: true })
   }
   const dataCopy2 = new Date(monthDays[monthDays.length - 1].date)
   const weekend = dataCopy2.getDay()
@@ -77,7 +77,7 @@ export function getCalendarMonthDays(date: Date, calendar: string = 'gregory') {
     dataCopy2.setDate(dataCopy2.getDate() + 1)
 
     const convertedDate = getDaysOfMonth(dataCopy2, calendar)
-    monthDays.push({ ...convertedDate, isOutCalendarMonth: true })
+    monthDays.push({ ...convertedDate, isDateInsideMonth: true })
   }
 
   return monthDays

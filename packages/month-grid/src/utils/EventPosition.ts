@@ -40,7 +40,7 @@ interface eventRows {
   [key: string]: EventClass[]
 }
 
-export function getExtraRows(eventRows: eventRows, weekStartDate: Date, weekendDate: Date, rowLimit: number) {
+export function getExtraRowsCount(eventRows: eventRows, weekStartDate: Date, weekendDate: Date, rowLimit: number) {
   let rowExtrasCount = [0, 0, 0, 0, 0, 0, 0]
   const arr = Object.keys(eventRows).filter((_, i) => {
     return i + 1 > rowLimit

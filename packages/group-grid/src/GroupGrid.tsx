@@ -44,7 +44,6 @@ export const GroupGrid: FComponent<GroupGridProps> = (props) => {
       mergedProps.onEventUpdate(eventSource, startingColId, startingColId, false)
     }
   }
-  console.log(mergedProps.cols)
   const mappedCols = createMemo(
     mapArray(
       () => mergedProps.cols,

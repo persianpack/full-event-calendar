@@ -1,4 +1,4 @@
-import { getExtraRows } from "@full-event-calendar/month-grid";
+import { getExtraRowsCount } from "@full-event-calendar/month-grid";
 import { FComponent } from "@full-event-calendar/shared-ts";
 import { For, Show, createMemo } from "solid-js";
 import { rowList } from "../WeeklyAllDayHeader";
@@ -16,7 +16,7 @@ interface ShowMoreBtnsProps{
 
 export const ShowMoreBtns: FComponent<ShowMoreBtnsProps> = (props) => {
     // Get overflowing events count for each colum grid
-    const extraRowsData = createMemo(() => getExtraRows(props.rowList, props.headerDates[0], props.headerDates[6], 3))
+    const extraRowsData = createMemo(() => getExtraRowsCount(props.rowList, props.headerDates[0], props.headerDates[6], 3))
 
     return (
         <Show when={props.show}>
