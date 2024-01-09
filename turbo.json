@@ -27,6 +27,13 @@
         "@full-event-calendar/core#dev",
         "@full-event-calendar/daily-grid#dev"
       ]
+    },
+    "vanilla-examples#dev": {
+      "dependsOn": [
+        "@full-event-calendar/weekly-grid#dev",
+        "@full-event-calendar/core#dev",
+        "@full-event-calendar/daily-grid#dev"
+      ]
     }
   },
   "globalDependencies": ["tsconfig.json"]

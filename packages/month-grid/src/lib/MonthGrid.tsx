@@ -119,7 +119,6 @@ function stopDefault(e:MouseEvent){
     const handeler = ()=>{
       onDragEnd()
       changeDraggerType('editEventRow')
-
       document.removeEventListener('mouseup',handeler)
     
     }

@@ -1,4 +1,4 @@
-import { EventClass, FComponent, Group, SourceEvent } from '@full-event-calendar/shared-ts'
+import { FComponent, Group, SourceEvent } from '@full-event-calendar/shared-ts'
 
 import { createMutable } from 'solid-js/store'
 import { createEffect, mergeProps } from 'solid-js'
@@ -35,8 +35,7 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
 
   function getCols() {
     for (let i = 0; i < mergedProps.groups.length; i++) {
-      if (columData2[i]) {
-      } else {
+      if (!columData2[i]) {
         let x = {
           props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null, showAllDay: false }
         }
@@ -52,7 +51,6 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
     if (mergedProps.groups.length > 0) {
       for (let i = 0; i < mergedProps.groups.length; i++) {
         const groupId = mergedProps.groups[i].id
-
         //@ts-ignore
         const filterdEvents = mergedProps.events.filter((ev) => {
           if (ev.id === 15) {
@@ -63,7 +61,6 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
         })
         columData2[i].props.events = getEventsInDate(filterdEvents, mergedProps.initialDate)
         // console.log(filterdEvents,columData2[i].events, mergedProps.initialDate)
-
         columData2[i].props.initialDate = new Date(mergedProps.initialDate)
         columData2[i].props.gridDate = new Date(mergedProps.initialDate)
         columData2[i].props.locale = mergedProps.locale

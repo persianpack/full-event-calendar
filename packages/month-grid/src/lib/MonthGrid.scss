@@ -152,7 +152,7 @@
     // color: var(--on-surface-variant);
     transition: all 0.3s;
     &:hover {
-      background-color: #31b5f7;
+      background-color:var(--primary) ;
       color: white;
     }
   }

@@ -49,13 +49,13 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
 
   // Group Grid component takes a data for each grid colum
   const columData = createMutable([
-    { props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null } },
-    { props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null } },
-    { props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null } },
-    { props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null } },
-    { props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null } },
-    { props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null } },
-    { props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null } }
+    { props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null } },// day 0
+    { props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null } },// day 1
+    { props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null } },// day 2
+    { props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null } },// day 3
+    { props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null } },// day 4
+    { props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null } },// day 5
+    { props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null } }// day 6
   ]) as unknown as columData[]
 
   const generateCols = createMemo(() => {

@@ -1,5 +1,5 @@
 import { EventClass } from '@full-event-calendar/shared-ts'
-import { ceilDate, floorDate } from '.'
+import { ceilDate, floorDate } from '..'
 
 interface Event {
   start: Date

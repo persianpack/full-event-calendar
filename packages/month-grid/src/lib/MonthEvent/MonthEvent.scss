@@ -32,7 +32,7 @@
   cursor: pointer;
   transition: all 0.3s;
   &:hover {
-    background: #ececec !important;
+    background: var(--bg-hover) !important;
   }
   &:before {
     content: '';

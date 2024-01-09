@@ -1,5 +1,5 @@
 // Types
-import { EventClass, FComponent, SourceEvent } from '@full-event-calendar/shared-ts'
+import { FComponent, SourceEvent } from '@full-event-calendar/shared-ts'
 // Solid.js
 import { Dynamic } from 'solid-js/web'
 import { createMemo, mapArray, mergeProps } from 'solid-js'

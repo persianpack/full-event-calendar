@@ -2,12 +2,12 @@
   .time-range:hover {
     .time-rage-up-container {
       &:hover {
-        border: 2px solid #31b5f7;
+        border: 2px solid var(--primary) ;
       }
     }
     .time-rage-down-container {
       &:hover {
-        border: 2px solid #31b5f7;
+        border: 2px solid var(--primary) ;
       }
     }
   }
