@@ -1,11 +1,6 @@
 import { EventClass } from "@full-event-calendar/shared-ts"
-import { DraggingEvent } from "./DraggingEvent"
-import { NewDraggingController } from "./newDraggingEvent"
-import { NewDomController } from "./newUiController"
-import { Switch } from "solid-js"
-import { getDateTimeRange } from "@full-event-calendar/utils"
-
  
+import { NewDomController, NewDraggingController, getDateTimeRange } from "@full-event-calendar/utils"
 abstract class DraggerHandeler {
     isDragging: boolean = false
     draggingController: NewDraggingController | null = null
@@ -79,7 +74,8 @@ class EventResize extends DraggerHandeler implements Dragger {
         const delta = targetEvent.getBoundingClientRect().bottom - this.FirstBottomY
         const newD = (delta * 60) / this.draggingController?.oneHourInPixelSize!
         this.draggingController?.shiftEndTime(newD* 60000)
-        targetEvent.innerHTML = getDateTimeRange(this.draggingController?.dragedStartDate!,this.draggingController?.dragedEndDate!)
+        const endTimeNode = this.draggingController?.getEventTimeDetailesNode(e)
+        if(endTimeNode) endTimeNode.innerHTML = getDateTimeRange(this.draggingController?.dragedStartDate!,this.draggingController?.dragedEndDate!)
 
     }
     dragEnd(e: MouseEvent) {
@@ -136,22 +132,4 @@ export class CalendarDragger {
                 break;
         }
     }
-}
-
-
-
-interface DraggingData {
-    width: string
-    height: string
-    left: string
-    top: string
-    item: EventClass,
-    duration: 0,
-    dragedStartDate: Date,
-    dragedEndDate: Date,
-    animation: string,
-    isDragg: boolean,
-    mouseX: number,
-    eventSourceStart: Date,
-    eventSourceEnd: Date
 }

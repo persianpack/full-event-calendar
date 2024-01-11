@@ -9,9 +9,10 @@ import { DailyHeader, DailyTimeRanges } from '@full-event-calendar/daily-grid'
 import { BasicGrid } from '@full-event-calendar/basic-grid'
 //utils
 import { WeeklyAllDayHeader } from './WeeklyHeader/WeeklyAllDayHeader'
-import { getEventsInDate } from '@full-event-calendar/utils'
+import { ScrollBarWrapper, getEventsInDate } from '@full-event-calendar/utils'
 // Styles
 import './WeekGrid.scss'
+import { useWeekCols } from './WeekCols'
 
 export interface WeeklyGridProps {
   events?: EventClass[]
@@ -39,7 +40,7 @@ const defaultProps = {
   gridHeight: 65 * 24
 }
 
-interface columData {
+export interface columData {
   events: EventClass[]
   props: any
 }
@@ -48,43 +49,7 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
   const mergedProps = mergeProps(defaultProps, props)
 
   // Group Grid component takes a data for each grid colum
-  const columData = createMutable([
-    { props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null } },// day 0
-    { props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null } },// day 1
-    { props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null } },// day 2
-    { props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null } },// day 3
-    { props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null } },// day 4
-    { props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null } },// day 5
-    { props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null } }// day 6
-  ]) as unknown as columData[]
-
-  const generateCols = createMemo(() => {
-    let iniDay = new Date(mergedProps.initialDate)
-    iniDay.setDate(iniDay.getDate() - iniDay.getDay())
-    // Holds executing downstream computations within the block until the end to prevent unnecessary recalculation
-    batch(() => {
-      for (let i = 0; i < 7; i++) {
-        const dayNumber = iniDay.getDay()
-        // Instead of filtering list for each event we pass down the entire event list
-        // because the Daily grid component will filter out the event for the given they
-        // so we do Not need the filter out here to ... it will be overdo
-        const extractedEvents = getEventsInDate(mergedProps.events, new Date(iniDay))
-        columData[dayNumber].props.events = extractedEvents.filter((item) => !item.isAllDay())
-        // set props for each colum that wil be passed to dailyGird package by GroupGrid Package
-        columData[dayNumber].props.initialDate = new Date(iniDay)
-        columData[dayNumber].props.gridDate = new Date(iniDay)
-        columData[dayNumber].props.locale = mergedProps.locale
-        columData[dayNumber].props.timeZone = mergedProps.timeZone
-        columData[dayNumber].props.calendar = mergedProps.calendar
-        columData[dayNumber].props.gridHeight = mergedProps.gridHeight
-        columData[dayNumber].props.onDateChange = onDateChange
-        // Increment day for the next colum
-        iniDay.setDate(iniDay.getDate() + 1)
-      }
-    })
-  })
-
-  createEffect(generateCols)
+  const {columData} = useWeekCols(mergedProps,onDateChange)
 
   function onEventUpdateProxy(updatedSourceEvent: SourceEvent, targetCol: number, baseCol: number, isDragend: boolean) {
     // TargetCol and baseCol are indexes for which colum was event moved in .
@@ -143,13 +108,7 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
         onAddEvent={mergedProps.onAddEvent}
         locale={mergedProps.locale}
       />
-
-      <div style=" position: relative; flex: 1;">
-        <div
-          style=" position: absolute;height: 100%;width: 100%;"
-          id="scroll-wrapper"
-          class="custome-scroll-bar scroll-wrapper"
-        >
+      <ScrollBarWrapper>
           <div style="display: flex;" class="week-wrapper">
             <DailyTimeRanges locale={mergedProps.locale} />
             <GroupGrid
@@ -160,8 +119,10 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
               initialDate={mergedProps.initialDate}
             />
           </div>
-        </div>
-      </div>
+      </ScrollBarWrapper>
+    
+   
+        
     </>
   )
 }

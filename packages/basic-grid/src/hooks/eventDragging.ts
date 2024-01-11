@@ -1,8 +1,9 @@
 import { createSignal, batch, onCleanup } from 'solid-js'
 import { EventClass } from '@full-event-calendar/shared-ts'
-import { DomController } from './DomController'
+ 
 import { CalendarDragger } from './newDragging'
-import { NewDraggingController } from './newDraggingEvent'
+import { NewDraggingController } from '@full-event-calendar/utils'
+import { DomController } from '@full-event-calendar/utils/src/Drag/DomController'
 
 export function userDragger(gridRef: any, dragEndCallBack: (initialDragNode: any) => void, gridContainer: any,editable:boolean) {
 
@@ -74,7 +75,7 @@ export function userDragger(gridRef: any, dragEndCallBack: (initialDragNode: any
 
   function startSrasnferAnimation(e:MouseEvent){
     cleanUps()
-    const baseEl = calendarDragger.dragger.draggingController as NewDraggingController
+    const baseEl = calendarDragger.dragger.draggingController as any as NewDraggingController
    
     calendarDragger.dragger.draggingController?.setEelementOpacity('0')
 

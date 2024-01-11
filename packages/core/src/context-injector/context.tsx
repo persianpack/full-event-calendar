@@ -1,15 +1,3 @@
-// import { createContext, useContext } from 'solid-js'
-
-// const CalendarContext = createContext()
-
-// export function CounterProvider(props: any) {
-//   console.log(props.store)
-//   return <CalendarContext.Provider value={props.store}>{props.children}</CalendarContext.Provider>
-// }
-
-// export function useGlobalState() {
-//   return useContext(CalendarContext)
-// }
 import { Calendar } from '../Calendar'
 import { createContext, useContext } from 'solid-js'
 import type { Context } from 'solid-js'
@@ -17,7 +5,6 @@ import { CalendarState } from '../store/store'
 import { FComponent } from '@full-event-calendar/shared-ts'
 
 const ChatContext = createContext() as Context<ContextProvider>
-
 interface ContextProvider {
   store: CalendarState
   instance: Calendar

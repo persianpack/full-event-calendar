@@ -1,3 +1,5 @@
+export { ScrollBarWrapper } from './ScrollWrapper'
+export { NewDomController } from './Drag/newUiController'
 export { rightOrLeftInDateInRange,rightOrLeftInDate } from './Month utils/rageArrows'
 export { NewDraggingController } from './Drag/DraggingEvent'
 export {  getEventsInDate, areDatesInTheSameDate, sortEventByStart  } from './filterEvents/filters'

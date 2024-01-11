@@ -70,7 +70,7 @@ export const EventItem: FComponent<EventItem> = (props) => {
       >
         <div class="item-trunctae event-name">{props.event.name}</div>
         <div>
-          <span id={'event-end-' + props.event.id}>{getDateTimeRange(props.event.start, props.event.end)}</span>
+          <span class='event-time-detals' id={'event-end-' + props.event.id}>{getDateTimeRange(props.event.start, props.event.end)}</span>
         </div>
       </div>
       <div onmousedown={[props.onMouseDown, props.event]} class="resizer"></div>

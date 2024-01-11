@@ -1,5 +1,5 @@
 // Solid.js
-import { For, Show, createMemo, createSignal, createUniqueId, mergeProps } from 'solid-js'
+import { For, createMemo, createSignal, createUniqueId, mergeProps } from 'solid-js'
 // Types
 import { EventClass, FComponent, Group, SourceEvent } from '@full-event-calendar/shared-ts'
 // Styles
@@ -7,14 +7,11 @@ import './MonthGrid.scss'
 // Components
 import { EventModal, openModal } from './MonthModal/MonthModal'
 import { MonthHeader } from './MonthHeader/MonthHeader'
-import { MonthEvent } from './MonthGridRow/MonthRowEvents/MonthEvent/MonthEvent'
 // Utils
-import { ArraySplitIntoChunks, EventImpl, formatNumber, getCalendarMonthDays, getMonthName } from '@full-event-calendar/utils'
+import { ArraySplitIntoChunks, EventImpl, getCalendarMonthDays } from '@full-event-calendar/utils'
 import { getMonthRows } from '../utils/EventRows'
 import { sortEventByStart } from '@full-event-calendar/utils'
 import { useMonthEventDragging } from '../utils/EventDragging'
-import { getExtraRowsCount } from '../utils/EventPosition'
-import { MonthEventPreview } from './MonthGridRow/MonthEventPreview/MonthEventPreview'
 import { DraggerTypes } from '../utils/RowDragger'
 import { MonthGridRow } from './MonthGridRow/MonthGridRow'
 

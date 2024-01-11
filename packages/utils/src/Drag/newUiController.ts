@@ -22,23 +22,38 @@ export class NewDomController implements DomController {
             return document.getElementById(`event-${this.event.id}`)
         }
     }
+    getEventTimeDetailesNode(e:MouseEvent){
+        const node = this.getEventNode(e)
+       return node?.querySelector('.event-time-detals')
+    }
     private getClosestNode(e: MouseEvent) {
         const nodes = document.querySelectorAll(`#event-${this.event.id}`);
         const mouseX = e.clientX;
         const mouseY = e.clientY;
-        
+    
         let closestNode = null;
         let closestDistance = Infinity;
     
         nodes.forEach((node) => {
             const nodeRect = node.getBoundingClientRect();
-            const nodeX = nodeRect.left + nodeRect.width / 2;
-            const nodeY = nodeRect.top + nodeRect.height / 2;
+            const nodeLeft = nodeRect.left;
+            const nodeRight = nodeRect.right;
+            const nodeTop = nodeRect.top;
+            const nodeBottom = nodeRect.bottom;
     
-            const distance = Math.sqrt((mouseX - nodeX) ** 2 + (mouseY - nodeY) ** 2);
+            // Calculate distances from each side of the node
+            const distances = [
+                Math.abs(mouseX - nodeLeft),
+                Math.abs(mouseX - nodeRight),
+                Math.abs(mouseY - nodeTop),
+                Math.abs(mouseY - nodeBottom)
+            ];
     
-            if (distance < closestDistance) {
-                closestDistance = distance;
+            // Find the minimum distance
+            const minDistance = Math.min(...distances);
+    
+            if (minDistance < closestDistance) {
+                closestDistance = minDistance;
                 closestNode = node;
             }
         });

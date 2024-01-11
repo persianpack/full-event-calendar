@@ -132,7 +132,7 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
         </div>
 
         <div class="fec-daily-grid" style={`height: ${mergedProps.gridHeight}px`}>
-          {/* <div class="grid-border-left"></div> */}
+          
           <Show when={isDateToday(mergedProps.gridDate)}>
             <TimeBar container={gridRef} />
           </Show>

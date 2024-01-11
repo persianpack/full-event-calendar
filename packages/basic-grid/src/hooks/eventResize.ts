@@ -1,8 +1,6 @@
 import { EventClass, SourceEvent } from '@full-event-calendar/shared-ts'
-import { getDateTimeRange, roundMinutesToMultipleOf5 } from '@full-event-calendar/utils'
 import { CalendarDragger, drageModes } from './newDragging'
 import { createSignal } from 'solid-js'
-import EventCollection from '../../../core/src/api/Collection'
 
 export function useResize(drageMode: drageModes, resizeEndCalllBack: (p: SourceEvent) => void,editable:boolean) {
  
