@@ -1,15 +1,14 @@
 //types
 import { EventClass, FComponent, Group, SourceEvent } from '@full-event-calendar/shared-ts'
 //solid.js
-import { createMutable } from 'solid-js/store'
-import { For, batch, createEffect, createMemo, mergeProps } from 'solid-js'
+import { For, mergeProps } from 'solid-js'
 //components
 import { GroupGrid } from '@full-event-calendar/group-grid'
 import { DailyHeader, DailyTimeRanges } from '@full-event-calendar/daily-grid'
 import { BasicGrid } from '@full-event-calendar/basic-grid'
 //utils
 import { WeeklyAllDayHeader } from './WeeklyHeader/WeeklyAllDayHeader'
-import { ScrollBarWrapper, getEventsInDate } from '@full-event-calendar/utils'
+import { ScrollBarWrapper } from '@full-event-calendar/utils'
 // Styles
 import './WeekGrid.scss'
 import { useWeekCols } from './WeekCols'

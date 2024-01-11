@@ -6,7 +6,6 @@ import { DailyTimeRanges } from '..'
 import { GroupDailyHeader } from './GroupDailyHeader/GroupDailyHeader'
 import { DailyCols } from './DailyCols'
 import { mergeProps } from 'solid-js'
-import { ScrollBarWrapper } from '@full-event-calendar/utils'
 
 export interface GroupDailyProps extends DailyGridProps {
   groups?: Group[]

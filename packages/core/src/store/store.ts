@@ -16,7 +16,7 @@ const defaultState: CalendarState = {
   listMode:'day',
   groups :[],
   editable:true,
-  theme:'dark'
+  theme:'light'
 }
 
 interface SetAllChatsAction {

@@ -42,8 +42,6 @@
   },
   "clean-package": "../../../clean-package.config.json",
   "dependencies": {
-    "@full-event-calendar/daily-grid": "workspace:*",
-    "@full-event-calendar/group-grid": "workspace:*",
     "@full-event-calendar/utils": "workspace:*",
     "esbuild-sass-plugin": "^2.16.0",
     "solid-js": "^1.7.7",

@@ -10,19 +10,18 @@ interface TimeRangeProps {
   gridDate: Date
   houre: number
   locale: string
-  timeZone:string
-  editable:boolean
-  oneHoureInPixel:number
-
+  timeZone: string
+  editable: boolean
+  oneHoureInPixel: number
 }
 
 export const TimeRange: FComponent<TimeRangeProps> = (props) => {
   const [resiserGr, setResizer] = createSignal<EventClass | null>(null)
 
   function timeRangeMouseDown(hour: number, min: number, mouseEvent: MouseEvent) {
-    const { onmousedownH } = useResize('addEventWithResize', resizeCb,props.editable)
+    const { onmousedownH ,draggedData} = useResize('addEventWithResize', resizeCb, props.editable)
     function resizeCb(event: SourceEvent) {
-      if(!props.editable)return
+      if (!props.editable) return
       event.id = createUniqueId()
       props.onAddEvent(event)
       setResizer(null)
@@ -32,20 +31,19 @@ export const TimeRange: FComponent<TimeRangeProps> = (props) => {
     basdate.setHours(hour, min)
     endDate.setHours(hour, min + 15)
 
-    const x = new EventImpl({ start: basdate, end: endDate, name: '(no title)', id: 85 })
+    const x = new EventImpl({ start: basdate, end: endDate, name: '(no title)', id: createUniqueId() })
     setResizer(x)
     onmousedownH(x, mouseEvent)
   }
-  function getTop(date:Date){
+  function getTop(date: Date) {
     return `top:${date.getMinutes() + 'px'}`
   }
 
   return (
     <>
       <div data-test-time-range-id={props.houre + 1} class="time-range">
-      
-          <Show when={resiserGr()}>
-        <div class="add-event-preview" style={getTop(resiserGr()?.start!)}>
+        <Show when={resiserGr()}>
+          <div class="add-event-preview" style={getTop(resiserGr()?.start!)}>
             <EventItem
               locale={props.locale}
               event={resiserGr()!}
@@ -57,8 +55,8 @@ export const TimeRange: FComponent<TimeRangeProps> = (props) => {
               top0={true}
               oneHoureInPixel={props.oneHoureInPixel}
             ></EventItem>
-        </div>
-          </Show>
+          </div>
+        </Show>
 
         <div class="some-container">
           <div class="time-rage-up-container">

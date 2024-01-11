@@ -20,16 +20,11 @@
     "vite": "^4.3.9",
     "vite-dts": "^1.0.4",
     "vite-plugin-dts": "3.0.0",
-    "vite-plugin-solid": "^2.7.0"
+    "vite-plugin-solid": "^2.7.0",
+    "@full-event-calendar/shared-ts": "workspace:*"
   },
   "dependencies": {
-    "@full-event-calendar/basic-grid": "workspace:*",
-    "@full-event-calendar/daily-grid": "workspace:*",
-    "@full-event-calendar/group-grid": "workspace:*",
-    "@full-event-calendar/month-grid": "workspace:*",
-    "@full-event-calendar/shared-ts": "workspace:*",
     "@full-event-calendar/utils": "workspace:*",
-    "@full-event-calendar/weekly-grid": "workspace:*",
     "redux": "^4.2.1",
     "solid-js": "^1.7.7",
     "solid-transition-group": "^0.2.3"

@@ -18,22 +18,47 @@
       "cache": false,
       "dependsOn": ["^typecheck"]
     },
-    "@full-event-calendar/weekly-grid#dev": {
-      "dependsOn": ["@full-event-calendar/group-grid#dev"]
-    },
     "vue3#dev": {
       "dependsOn": [
-        "@full-event-calendar/weekly-grid#dev",
+        "@full-event-calendar/basic-grid#dev",
         "@full-event-calendar/core#dev",
-        "@full-event-calendar/daily-grid#dev"
+        "@full-event-calendar/daily-grid#dev",
+        "@full-event-calendar/group-grid#dev",
+        "@full-event-calendar/list#dev",
+        "@full-event-calendar/month-grid#dev",
+        "@full-event-calendar/shared-ts#dev",
+        "@full-event-calendar/utils#dev",
+        "@full-event-calendar/weekly-grid#dev"
       ]
     },
     "vanilla-examples#dev": {
       "dependsOn": [
-        "@full-event-calendar/weekly-grid#dev",
+        "@full-event-calendar/basic-grid#dev",
         "@full-event-calendar/core#dev",
-        "@full-event-calendar/daily-grid#dev"
+        "@full-event-calendar/daily-grid#dev",
+        "@full-event-calendar/group-grid#dev",
+        "@full-event-calendar/list#dev",
+        "@full-event-calendar/month-grid#dev",
+        "@full-event-calendar/shared-ts#dev",
+        "@full-event-calendar/utils#dev",
+        "@full-event-calendar/weekly-grid#dev"
       ]
+    },
+
+    "@full-event-calendar/weekly-grid#dev": {
+      "dependsOn": ["@full-event-calendar/daily-grid#dev", "@full-event-calendar/month-grid#dev"]
+    },
+    "@full-event-calendar/daily-grid#dev": {
+      "dependsOn": ["@full-event-calendar/basic-grid#dev", "@full-event-calendar/group-grid#dev"]
+    },
+    "@full-event-calendar/basic-grid#dev": {
+      "dependsOn": ["@full-event-calendar/shared-ts#dev", "@full-event-calendar/utils#dev"]
+    },
+    "@full-event-calendar/list#dev": {
+      "dependsOn": ["@full-event-calendar/shared-ts#dev", "@full-event-calendar/utils#dev"]
+    },
+    "@full-event-calendar/core#dev": {
+      "dependsOn": ["@full-event-calendar/shared-ts#dev", "@full-event-calendar/utils#dev"]
     }
   },
   "globalDependencies": ["tsconfig.json"]

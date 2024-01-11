@@ -141,27 +141,9 @@ importers:
 
   packages/core:
     dependencies:
-      '@full-event-calendar/basic-grid':
-        specifier: workspace:*
-        version: link:../basic-grid
-      '@full-event-calendar/daily-grid':
-        specifier: workspace:*
-        version: link:../daily-grid
-      '@full-event-calendar/group-grid':
-        specifier: workspace:*
-        version: link:../group-grid
-      '@full-event-calendar/month-grid':
-        specifier: workspace:*
-        version: link:../month-grid
-      '@full-event-calendar/shared-ts':
-        specifier: workspace:*
-        version: link:../shared-types
       '@full-event-calendar/utils':
         specifier: workspace:*
         version: link:../utils
-      '@full-event-calendar/weekly-grid':
-        specifier: workspace:*
-        version: link:../weekly-grid
       redux:
         specifier: ^4.2.1
         version: 4.2.1
@@ -172,6 +154,9 @@ importers:
         specifier: ^0.2.3
         version: 0.2.3(solid-js@1.7.7)
     devDependencies:
+      '@full-event-calendar/shared-ts':
+        specifier: workspace:*
+        version: link:../shared-types
       esbuild-sass-plugin:
         specifier: ^2.16.0
         version: 2.16.0(esbuild@0.19.5)
@@ -208,9 +193,6 @@ importers:
       '@full-event-calendar/group-grid':
         specifier: workspace:*
         version: link:../group-grid
-      '@full-event-calendar/month-grid':
-        specifier: workspace:*
-        version: link:../month-grid
       '@full-event-calendar/utils':
         specifier: workspace:*
         version: link:../utils
@@ -277,12 +259,6 @@ importers:
 
   packages/month-grid:
     dependencies:
-      '@full-event-calendar/daily-grid':
-        specifier: workspace:*
-        version: link:../daily-grid
-      '@full-event-calendar/group-grid':
-        specifier: workspace:*
-        version: link:../group-grid
       '@full-event-calendar/utils':
         specifier: workspace:*
         version: link:../utils
