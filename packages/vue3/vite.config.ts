@@ -22,6 +22,10 @@ export default defineConfig({
         __dirname,
         '/node_modules/@full-event-calendar/weekly-grid/node_modules/@full-event-calendar/group-grid/dist/index.js'
       ),
+      // '@full-event-calendar/utils': path.join(
+      //   __dirname,
+      //   '/node_modules/@full-event-calendar/core/node_modules/@full-event-calendar/utils/dist/index.js'
+      // ),
 
       '@full-event-css-core': path.join(__dirname, '/node_modules/@full-event-calendar/core/dist/index.css'),
       '@full-event-css-basic': path.join(

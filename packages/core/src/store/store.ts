@@ -1,6 +1,6 @@
 import { legacy_createStore as createStore, Reducer } from 'redux'
 import { EventImpl } from '@full-event-calendar/utils'
-import { CalendarSourceOptions, GridModes, Plugins } from '../api/CalendarImpl'
+import { AppSlots, CalendarSourceOptions, GridModes, Plugins } from '../api/CalendarImpl'
 import { EventClass, Group, SourceEvent } from '@full-event-calendar/shared-ts'
 
 const defaultState: CalendarState = {
@@ -16,12 +16,17 @@ const defaultState: CalendarState = {
   listMode:'day',
   groups :[],
   editable:true,
-  theme:'light'
+  theme:'light',
+  avalibalSots:[]
 }
 
 interface SetAllChatsAction {
   type: 'SET_ALL_EVENTS'
   events: SourceEvent[]
+}
+interface SetAvalibleSlots {
+  type: 'SET_AVALIBLE_SLOTS'
+  avalibalSots: AppSlots[]
 }
 interface AddEvent {
   type: 'ADD_EVENT'
@@ -115,6 +120,7 @@ export type StoreActions =
   | AddGroup
   | UpdateEditabel
   | ChangeTheme
+  | SetAvalibleSlots
 
 export type EventCalendarOptions = { [K in keyof CalendarSourceOptions]-?: CalendarSourceOptions[K] }
 export interface CalendarState extends EventCalendarOptions {
@@ -123,6 +129,8 @@ export interface CalendarState extends EventCalendarOptions {
 
 const calendarReducer: Reducer<CalendarState, StoreActions> = (state = defaultState, action) => {
   switch (action.type) {
+    case 'SET_AVALIBLE_SLOTS':
+      return { ...state, avalibalSots: action.avalibalSots }
     case 'CHANGE_THEME':
       return { ...state, theme: action.val }
     case 'UPDATE_EDITABLE':

@@ -1,8 +1,8 @@
 import { defineConfig } from 'tsup'
 
 export default defineConfig({
-  globalName: 'FullEventCalendat',
-  entry: ['src/components/FullEventCalendat.ts'],
+  globalName: 'FullEventCalendar',
+  entry: ['src/components/FullEventCalendar.ts'],
   format: ['esm', 'cjs'],
   dts: true,
   clean: true

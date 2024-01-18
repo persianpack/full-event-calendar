@@ -11,6 +11,7 @@ export function getLeftPosition(event: EventClass, weekStartDate: Date) {
 }
 
 export function getEndPosition(event: EventClass, weekendDate: Date, start: number) {
+  if(event.isAllDay && !event.isAllDay()) return 1
   const floorDate = ceilDate(weekendDate)
   if (event.end <= floorDate) {
     return event.end.getDay() - start + 1

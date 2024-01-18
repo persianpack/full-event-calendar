@@ -70,6 +70,8 @@ export function App() {
             timeZone={data.store.timeZone}
             groups={data.store.groups}
             editable={data.store.editable}
+            slotRenderStore={data.instance.renderStore}
+            avalibalSots={data.store.avalibalSots}
           ></Dynamic>
         </SliderWrapper>
       </div>

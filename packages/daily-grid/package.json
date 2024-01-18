@@ -32,6 +32,7 @@
     "build": "tsup src/index.ts --dts",
     "build:fast": "tsup src/index.ts",
     "dev": "pnpm build:fast -- --watch",
+    "devw": "pnpm build:fast --watch",
     "clean": "rimraf dist .turbo",
     "typecheck": "tsc --noEmit",
     "prepack": "clean-package",

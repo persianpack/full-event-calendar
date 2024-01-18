@@ -6,7 +6,9 @@
   "author": "Amirkian Adl <amircc1200@gmail.com>",
   "homepage": "https://github.com/ -ui/ -ui#readme",
   "license": "MIT",
-  "main": "src/index.ts",
+  "type": "module",
+  "main": "dist/index.js",
+  "types":"dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -25,15 +27,14 @@
   "devDependencies": {
     "@full-event-calendar/shared-ts": "workspace:*",
     "clean-package": "2.2.0",
-    "framer-motion": "^10.16.1",
-    "solid-js": "^1.7.7"
+    "framer-motion": "^10.16.1"
   },
   "scripts": {
     "test": "vitest",
     "test:client": "vitest -c ../../vitest.config.ts",
-    "build": "tsup src/index.ts --dts",
+    "build": "tsup src/index.ts && node writeD.js",
     "build:fast": "tsup src/index.ts",
-    "dev": "pnpm build:fast -- --watch",
+    "dev": "tsup src/index.ts && node writeD.js",
     "clean": "rimraf dist .turbo",
     "typecheck": "tsc --noEmit",
     "prepack": "clean-package",
@@ -42,6 +43,6 @@
   },
   "clean-package": "../../../clean-package.config.json",
   "dependencies": {
-    "@full-event-calendar/shared-ts": "workspace:*"
+    "solid-js": "^1.7.7"
   }
 }

@@ -13,28 +13,34 @@ interface TimeRangeProps {
   timeZone: string
   editable: boolean
   oneHoureInPixel: number
+  eventPreviewData:EventClass | null
+  setEventPreview:any
 }
 
 export const TimeRange: FComponent<TimeRangeProps> = (props) => {
-  const [resiserGr, setResizer] = createSignal<EventClass | null>(null)
+  // const [resiserGr, setResizer] = createSignal<EventClass | null>(null)
 
   function timeRangeMouseDown(hour: number, min: number, mouseEvent: MouseEvent) {
     const { onmousedownH ,draggedData} = useResize('addEventWithResize', resizeCb, props.editable)
+  
     function resizeCb(event: SourceEvent) {
-      if (!props.editable) return
-      event.id = createUniqueId()
-      props.onAddEvent(event)
-      setResizer(null)
+    if (!props.editable) return
+        event.id = createUniqueId()
+        props.onAddEvent(event)
+        props.setEventPreview(null,null)
     }
+
     const basdate = new Date(props.gridDate)
     const endDate = new Date(props.gridDate)
+
     basdate.setHours(hour, min)
     endDate.setHours(hour, min + 15)
 
     const x = new EventImpl({ start: basdate, end: endDate, name: '(no title)', id: createUniqueId() })
-    setResizer(x)
+    props.setEventPreview(x,props.houre)
     onmousedownH(x, mouseEvent)
   }
+
   function getTop(date: Date) {
     return `top:${date.getMinutes() + 'px'}`
   }
@@ -42,11 +48,11 @@ export const TimeRange: FComponent<TimeRangeProps> = (props) => {
   return (
     <>
       <div data-test-time-range-id={props.houre + 1} class="time-range">
-        <Show when={resiserGr()}>
-          <div class="add-event-preview" style={getTop(resiserGr()?.start!)}>
+        <Show when={props.eventPreviewData}>
+          <div class="add-event-preview" style={getTop(props.eventPreviewData?.start!)}>
             <EventItem
               locale={props.locale}
-              event={resiserGr()!}
+              event={props.eventPreviewData!}
               gridDate={props.gridDate}
               width="width:calc(100% - 20px)"
               onMouseDown={() => {}}

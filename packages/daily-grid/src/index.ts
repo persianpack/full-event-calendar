@@ -1,5 +1,5 @@
 export { DailyGrid } from './lib/DailyGrid.tsx'
-export { DailyHeader } from './lib/DailyHeader/DailyHeader.tsx'
+export { DailyHeader } from './lib/GroupDailyHeader/GroupItemHeader/DailyHeader/DailyHeader.tsx'
 // import { DailyGrid } from './lib/DailyGrid.tsx'
 import { GroupDaily } from './lib/GroupDaily.tsx'
 

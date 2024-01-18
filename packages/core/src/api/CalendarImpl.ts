@@ -3,11 +3,13 @@ import chatStore from '../store/store'
 import type { Dispatch } from 'redux'
 import { CalendarState, StoreActions } from '../store/store'
 import { EventClass, Group, SourceEvent } from '@full-event-calendar/shared-ts'
+import { RenderStore } from './RenderStore.ts'
 interface CalendarApi {
   // Current Date
   // -----------------------------------------------------------------------------------------------------------------
   storeManager: CalendarState
   storeDispatch: Dispatch<StoreActions>
+  renderStore:any
   setEventList(events: SourceEvent[]): any
   updateEvent(id: SourceEvent['id'], event: SourceEvent): void
   prevDay(): any
@@ -15,7 +17,7 @@ interface CalendarApi {
   getDate(): any
   today(): any
 }
-
+export type AppSlots = string
 export interface CalendarSourceOptions {
   events: SourceEvent[]
   plugins: Plugins[]
@@ -30,6 +32,7 @@ export interface CalendarSourceOptions {
   groups?:Group[]
   editable?:boolean
   theme?:string
+  avalibalSots?: AppSlots[]
 }
 
 export interface Plugins {
@@ -44,12 +47,14 @@ type listModeTypes ='day' | 'month' | 'week'
 export class CalendarImpl implements CalendarApi {
   readonly storeManager
   readonly storeDispatch
-
+  readonly renderStore = new RenderStore()
+  
   constructor(eventCalendarOptions: CalendarSourceOptions) {
     const { store, dispatch } = useRedux(chatStore)
     this.storeManager = store
     this.storeDispatch = dispatch
     this.resetOptions(eventCalendarOptions)
+    
   }
 
   public setEventList(events: SourceEvent[]) {
@@ -99,6 +104,9 @@ export class CalendarImpl implements CalendarApi {
   }
   public changeTheme(val:string) {
     this.storeDispatch({ type: 'CHANGE_THEME',val})
+  }
+  public setAvalibleSlots(AppSlots:AppSlots[]) {
+    this.storeDispatch({ type: 'SET_AVALIBLE_SLOTS',avalibalSots:AppSlots})
   }
   public resetOptions(options: CalendarSourceOptions) {
     if (options.timeZone) {

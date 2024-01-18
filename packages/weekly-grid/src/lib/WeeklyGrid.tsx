@@ -8,7 +8,6 @@ import { DailyHeader, DailyTimeRanges } from '@full-event-calendar/daily-grid'
 import { BasicGrid } from '@full-event-calendar/basic-grid'
 //utils
 import { WeeklyAllDayHeader } from './WeeklyHeader/WeeklyAllDayHeader'
-import { ScrollBarWrapper } from '@full-event-calendar/utils'
 // Styles
 import './WeekGrid.scss'
 import { useWeekCols } from './WeekCols'
@@ -90,6 +89,7 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
         <For each={headerDates()}>
           {(item) => (
             <DailyHeader
+            slotRenderStore={''}
               headerDate={item}
               timeZone={mergedProps.timeZone}
               calendar={mergedProps.calendar}
@@ -119,15 +119,28 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
             />
           </div>
       </ScrollBarWrapper>
-    
-   
-        
     </>
   )
 }
+
 // get colum list ant return the Dates in Arr
 function getEachColDate(cols: columData[]) {
   return cols.map((item) => {
     return item.props.initialDate
   }) as Date[]
 }
+
+ function ScrollBarWrapper (props:any) {
+  return (
+    <div style="position: relative; flex: 1;">
+      <div
+        style=" position: absolute;height: 100%;width: 100%;"
+        id="scroll-wrapper"
+        class="custome-scroll-bar scroll-wrapper"
+      >
+        {props.children}
+      </div>
+    </div>
+  )
+}
+

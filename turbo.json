@@ -21,7 +21,6 @@
     "vue3#dev": {
       "dependsOn": [
         "@full-event-calendar/basic-grid#dev",
-        "@full-event-calendar/core#dev",
         "@full-event-calendar/daily-grid#dev",
         "@full-event-calendar/group-grid#dev",
         "@full-event-calendar/list#dev",
@@ -34,7 +33,6 @@
     "vanilla-examples#dev": {
       "dependsOn": [
         "@full-event-calendar/basic-grid#dev",
-        "@full-event-calendar/core#dev",
         "@full-event-calendar/daily-grid#dev",
         "@full-event-calendar/group-grid#dev",
         "@full-event-calendar/list#dev",
@@ -59,6 +57,9 @@
     },
     "@full-event-calendar/core#dev": {
       "dependsOn": ["@full-event-calendar/shared-ts#dev", "@full-event-calendar/utils#dev"]
+    },
+    "@full-event-calendar/month-grid#dev": {
+      "dependsOn": [ "@full-event-calendar/utils#dev"]
     }
   },
   "globalDependencies": ["tsconfig.json"]

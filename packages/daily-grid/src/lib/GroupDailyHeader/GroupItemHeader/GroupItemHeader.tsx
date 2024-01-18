@@ -1,11 +1,10 @@
 import { FComponent, Group } from "@full-event-calendar/shared-ts";
 import './GroupItemHeader.scss'
 
-
-
 interface GroupDailyHeader {
     group:Group
 }
+
 export const GroupItemHeader:FComponent<GroupDailyHeader> = (props)=>{
 
     return (

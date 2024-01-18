@@ -7,6 +7,7 @@ import './GroupDailyHeader.scss'
 import { DailyHeader } from '../..'
 import { GroupItemHeader } from './GroupItemHeader/GroupItemHeader'
 export interface GroupDailyHeaderProps {
+  columData: columData[],
   initialDate?: Date
   onDateChange?: (d: Date) => void
   onAddEvent?: (event: SourceEvent) => void
@@ -16,7 +17,8 @@ export interface GroupDailyHeaderProps {
   id?: string
   showAllDay?: boolean
   container?: string
-  columData: columData[]
+  avalibalSots?:string[],
+  slotRenderStore:any
 }
 
 export const dailyDefaultProps = {
@@ -30,7 +32,8 @@ export const dailyDefaultProps = {
   onDateChange: () => {},
   onEventUpdate: () => {},
   onAddEvent: () => {},
-  gridHeight: 65 * 24
+  gridHeight: 65 * 24,
+  avalibalSots:[]
 }
 
 export const GroupDailyHeader: FComponent<GroupDailyHeaderProps> = (props) => {
@@ -41,15 +44,16 @@ export const GroupDailyHeader: FComponent<GroupDailyHeaderProps> = (props) => {
   return (
     <>
       <div style="display:flex;position:relative">
-        <div>
+       
           <DailyHeader
             headerDate={mergedProps.initialDate}
+            slotRenderStore={mergedProps.slotRenderStore}
             timeZone={mergedProps.timeZone}
             calendar={mergedProps.calendar}
             onDateChange={mergedProps.onDateChange}
             locale={mergedProps.locale}
           />
-        </div>
+       
         <div class="group-item-header">
           <For each={mergedProps.columData}>
             {(item) => (

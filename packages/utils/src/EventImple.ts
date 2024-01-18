@@ -1,4 +1,4 @@
-import { EventClass, Group, SourceEvent } from '@full-event-calendar/shared-ts'
+import { EventClass, SourceEvent } from '@full-event-calendar/shared-ts'
 import { convertTZ } from './TimeZone'
 import { ceilDate, floorDate } from '.'
 
@@ -106,11 +106,19 @@ export class EventImpl implements EventClass {
   }
   checkAllDayOverLap(event: EventImpl) {
     // this is for monthly .. to check if events overlap in full width of container
-    const FloorStart1 = floorDate(event.start)
-    const FloorStart2 = floorDate(this.start)
+    let FloorStart1 = floorDate(event.start)
+    let FloorStart2 = floorDate(this.start)
 
-    const FloorEnd1 = ceilDate(event.end)
-    const FloorEnd2 = ceilDate(this.end)
+
+    let FloorEnd1 = ceilDate(event.end)
+    let FloorEnd2 = ceilDate(this.end)
+
+    if(!this.isAllDay()&& !this.doesEventEndOn(this.start)){
+      FloorEnd2 = ceilDate(this.start)
+    } 
+    if(!event.isAllDay()&& !event.doesEventEndOn(event.start)){
+       FloorEnd1 = ceilDate(event.start)
+     } 
 
     return FloorStart1 < FloorEnd2 && FloorEnd1 > FloorStart2
   }

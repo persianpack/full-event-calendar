@@ -47,8 +47,11 @@ const columData = createMutable([
         columData[i].props.gridHeight = mergedProps.gridHeight
         columData[i].props.showAllDay = true
         columData[i].props.editable = mergedProps.editable
+        columData[i].props.avalibalSots = mergedProps.avalibalSots
         columData[i].props.onDateChange = onDateChange
         columData[i].props.group = mergedProps.groups[i]
+        columData[i].props.slotRenderStore = mergedProps.slotRenderStore
+   
       }
     } else {
       columData[0].props.events = getEventsInDate(mergedProps.events, mergedProps.initialDate)
@@ -59,8 +62,11 @@ const columData = createMutable([
       columData[0].props.calendar = mergedProps.calendar
       columData[0].props.gridHeight = mergedProps.gridHeight
       columData[0].props.showAllDay = true
+      columData[0].props.avalibalSots = mergedProps.avalibalSots
       columData[0].props.editable = mergedProps.editable
       columData[0].props.onDateChange = onDateChange
+      columData[0].props.slotRenderStore = mergedProps.slotRenderStore
+
     }
   }
 

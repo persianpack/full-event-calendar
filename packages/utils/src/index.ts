@@ -1,4 +1,6 @@
-export { ScrollBarWrapper } from './ScrollWrapper'
+export { useSlot } from './useSlot'
+export { DomController } from './Drag/DomController'
+export { SlotProvider,useSlotState } from './useSlot'
 export { NewDomController } from './Drag/newUiController'
 export { rightOrLeftInDateInRange,rightOrLeftInDate } from './Month utils/rageArrows'
 export { NewDraggingController } from './Drag/DraggingEvent'

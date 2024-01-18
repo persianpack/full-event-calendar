@@ -22,7 +22,7 @@ export interface columData {
 export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
 
   const mergedProps = mergeProps(defaultProps, props)
-
+ 
   function onDateChange(d: Date) {
     mergedProps.onDateChange(d)
   }
@@ -39,7 +39,12 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
   
   return (
     <>
-      <GroupDailyHeader columData={columData} locale={mergedProps.locale} initialDate={mergedProps.initialDate} />
+      <GroupDailyHeader
+       slotRenderStore={mergedProps.slotRenderStore} 
+       columData={columData}
+       onDateChange={mergedProps.onDateChange}
+       locale={mergedProps.locale} 
+       initialDate={mergedProps.initialDate} />
       <div class="scroll-wrapper " id="scroll-wrapper">
         <div style="position: absolute;width:100%;display:flex;">
           <DailyTimeRanges locale={mergedProps.locale}></DailyTimeRanges>

@@ -5,6 +5,7 @@ import { useGlobalState } from '../../context-injector/context'
 import { GridModes } from '../../api/CalendarImpl'
 import { Transition } from 'solid-transition-group'
 import { HeaderFormat } from './filterRange'
+import { useSlot } from '@full-event-calendar/utils'
 interface CalendarHeader {
   onDateChange: (d: Date) => void
 }
@@ -20,7 +21,6 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
   function amodalClickOut() {
     SetDropDown(false)
   }
-
 
   const headerDate = createMemo(() => {
     return new HeaderFormat(data.store).format()
@@ -74,6 +74,14 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
     props.onDateChange(dCopy)
   }
 
+  // let headerSlot: any = {
+  //   el:null
+  // }
+
+  // const dd = () => {
+  //   return data.store.initialDate
+  // }
+  // const { isSlotAvalibale } = useSlot(headerSlot, dd, 'headerSlot', () => data.store.initialDate)
 
   return (
     <div class="calendar-header">
@@ -94,6 +102,7 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
           ></path>
         </svg>
       </div>
+      {/* <div id="test-vue-id" ref={headerSlot.el}></div> */}
       <div class="go-forward-icon" onclick={goForward}>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
           <path

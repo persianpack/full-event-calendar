@@ -1,6 +1,6 @@
-import { For } from 'solid-js'
+import { For, Show } from 'solid-js'
 import './DailyTimeRanges.scss'
-import { formatToShortTime } from '@full-event-calendar/utils'
+import { formatToShortTime, useSlot } from '@full-event-calendar/utils'
 import { FComponent } from '@full-event-calendar/shared-ts'
 const timess = [
   '',
@@ -34,16 +34,39 @@ interface rangeProps {
 }
 
 export const DailyTimeRanges: FComponent<rangeProps> = (props) => {
+
   return (
     <div class="daily-time-ranges">
       <For each={timess}>
         {(time) => (
-          <div>
-            <div class="time-range-time">{(time && formatToShortTime(time as Date, props.locale)) || ''}</div>
-            <div class="time-range-hairline"></div>
-          </div>
+          // <div ref={headerSlot.el}>
+          //   <div class="time-range-time">{(time && formatToShortTime(time as Date, props.locale)) || ''}</div>
+          //   <div class="time-range-hairline"></div>
+          // </div>
+          <Time time={time} locale={props.locale} />
         )}
       </For>
     </div>
+  )
+}
+const Time:FComponent<any> = (props)=>{
+
+  let headerSlot: any = {
+    el: null
+  }
+ 
+  const dd = () => {
+    return { time: props.time}
+  }
+
+  const { isSlotAvalibale } = useSlot(headerSlot, dd, 'timeRange', () => {})
+
+  return (
+    <div ref={headerSlot.el}>
+      <Show when={!isSlotAvalibale}>
+        <div class="time-range-time">{(props.time && formatToShortTime(props.time as Date, props.locale)) || ''}</div>
+        <div class="time-range-hairline"></div>
+      </Show>
+  </div>
   )
 }

@@ -1,6 +1,11 @@
 <script setup lang="ts">
 // import HelloWorld from './components/HelloWorld.vue'
-import FullEventCalendar from './components/FullEventCalendat'
+import { ref } from 'vue';
+import FullEventCalendar from './components/FullEventCalendar'
+const count = ref(0)
+function saySmt(ss){
+  console.log('sdsd',ss.data.ondataChange(new Date()))
+}
 // import
 </script>
 
@@ -13,8 +18,13 @@ import FullEventCalendar from './components/FullEventCalendat'
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
     </a>
   </div>
+  <button @click="count++">count</button>
   <FullEventCalendar>
-    <template #testslot="data"> this is a test {{ data }} </template>
+    <template #dailyHeader="data" >
+      <button @click="saySmt(data)" >click</button>
+  boooooos {{ data }} </template>
+  <!-- <template #timeRange="{data}">{{ data.time }}</template> -->
+    <template #headerSlot="data"> <button @click="count++" >click</button> this is {{ count }} a test {{ data }} </template>
   </FullEventCalendar>
 </template>
 

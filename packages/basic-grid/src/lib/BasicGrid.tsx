@@ -9,6 +9,7 @@ import './basicGrid.scss'
 import { getDateTimeRange, isDateToday } from '@full-event-calendar/utils'
 import { EventItem } from './EventItem/EventItem'
 import { TimeRange } from './TimeRange/TimeRange'
+import { TimeRanges } from './TimeRange/TimeRanges'
 export interface BasicGridProps {
   events?: EventClass[]
   onEventUpdate?: (event: SourceEvent, dragData?: DraggedData) => void
@@ -20,6 +21,7 @@ export interface BasicGridProps {
   locale?: string
   timeZone?:string
   editable?:boolean
+  avalibalSots?:string[]
 
 }
 
@@ -32,7 +34,8 @@ const defaultProps = {
   id: '',
   locale: 'en',
   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-  editable:true
+  editable:true,
+  avalibalSots:[]
 }
 
 export const BasicGrid: FComponent<BasicGridProps> = (props) => {
@@ -41,7 +44,6 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
   }
   let gridContainer: any = { curret: '' }
   const mergedProps = mergeProps(defaultProps, props)
-
 
   const { onmousedownH } = useResize('eventResizer', resizeCb,mergedProps.editable)
   const { draggedData, isDragging, itemDragstart } = userDragger(gridRef, dragEnd, gridContainer,mergedProps.editable)
@@ -137,7 +139,7 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
             <TimeBar container={gridRef} />
           </Show>
 
-          <For each={timess}>
+          {/* <For each={timess}>
             {(_, i) => {
               return (
                   <TimeRange 
@@ -151,8 +153,17 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
                   ></TimeRange>
               )
             }}
-          </For>
+          </For> */}
+        <TimeRanges
+            onAddEvent={mergedProps.onAddEvent}
+            gridDate={mergedProps.gridDate}
+            locale={mergedProps.locale}
+            timeZone={mergedProps.timeZone}
+            oneHoureInPixel={oneHoureInPixel()}
+            editable={mergedProps.editable}
+        >
 
+        </TimeRanges>
           <div class="wrapper-container dragger-wrapper" style={getWrapperHeight()}>
             <Show when={isDragging()}>
               <div

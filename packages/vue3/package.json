@@ -9,12 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.3.8",
     "@full-event-calendar/core": "workspace:*",
     "@full-event-calendar/daily-grid": "workspace:*",
-    "@full-event-calendar/weekly-grid": "workspace:*",
     "@full-event-calendar/month-grid": "workspace:*",
-    "@full-event-calendar/test-events": "workspace:*"
+    "@full-event-calendar/test-events": "workspace:*",
+    "@full-event-calendar/weekly-grid": "workspace:*",
+    "solid-js": "1.7.7",
+    "vue": "^3.3.8"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.5.0",

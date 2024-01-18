@@ -13,10 +13,7 @@ export interface DailyHeaderProps {
 export const DailyHeader: FComponent<DailyHeaderProps> = (props) => {
   
   return (
-    <div
-      
-      class={`daily-header ${isDateToday(props.headerDate) ? 'daily-header-today' : ' '}`}
-    >
+    <div class={`daily-header ${isDateToday(props.headerDate) ? 'daily-header-today' : ' '}`}>
       <div class="weekend-narrow">{formatWeekDays(props.headerDate, props.calendar, props.timeZone, props.locale)}</div>
       <div onClick={() => props.onDateChange(props.headerDate)} class="week-day">{formatDayNumber(props.locale, props.calendar, props.timeZone, props.headerDate)}</div>
     </div>

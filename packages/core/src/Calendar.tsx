@@ -7,11 +7,16 @@ import { FComponent } from '@full-event-calendar/shared-ts'
 import EventCollection, { EventPayLoads, EventTypes } from './api/Collection.js'
 
 import './themes/clickDown.scss'
+import { SlotProvider } from '@full-event-calendar/utils'
 
 const CalendarRoot: FComponent<{ store: CalendarState; instance: Calendar }> = (props) => {
+
   return (
     <CounterProvider store={props.store} instance={props.instance}>
-      <App />
+      <SlotProvider slotRenderer={props.instance.renderStore} 
+      avalibalSots={props.store.avalibalSots}>
+         <App />
+      </SlotProvider>
     </CounterProvider>
   )
 }
