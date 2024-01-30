@@ -6,9 +6,9 @@ import { useResize } from '../hooks/eventResize'
 import { TimeBar } from './TimeBar/TimeBar'
 import { lookForAvailableWith } from '../utils/coleLine'
 import './basicGrid.scss'
-import { getDateTimeRange, isDateToday } from '@full-event-calendar/utils'
+import { getDateTimeRange, isDateToday, useSlotModal } from '@full-event-calendar/utils'
 import { EventItem } from './EventItem/EventItem'
-import { TimeRange } from './TimeRange/TimeRange'
+// import { TimeRange } from './TimeRange/TimeRange'
 import { TimeRanges } from './TimeRange/TimeRanges'
 export interface BasicGridProps {
   events?: EventClass[]
@@ -19,10 +19,10 @@ export interface BasicGridProps {
   container?: string
   id?: string
   locale?: string
-  timeZone?:string
-  editable?:boolean
-  avalibalSots?:string[]
-
+  timeZone?: string
+  editable?: boolean
+  avalibalSots?: string[]
+  stopAddEvent: boolean
 }
 
 const defaultProps = {
@@ -34,8 +34,9 @@ const defaultProps = {
   id: '',
   locale: 'en',
   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-  editable:true,
-  avalibalSots:[]
+  editable: true,
+  avalibalSots: [],
+  stopAddEvent: false
 }
 
 export const BasicGrid: FComponent<BasicGridProps> = (props) => {
@@ -45,8 +46,16 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
   let gridContainer: any = { curret: '' }
   const mergedProps = mergeProps(defaultProps, props)
 
-  const { onmousedownH } = useResize('eventResizer', resizeCb,mergedProps.editable)
-  const { draggedData, isDragging, itemDragstart } = userDragger(gridRef, dragEnd, gridContainer,mergedProps.editable)
+  const { onmousedownH } = useResize('eventResizer', resizeCb, mergedProps.editable)
+  const { draggedData, isDragging, itemDragstart } = userDragger(
+    gridRef,
+    dragEnd,
+    gridContainer,
+    mergedProps.editable,
+    onEventCLick
+  )
+  //@ts-ignore
+  const { modalElementNode, setSlotModalData, openSlotModalOnElement, isSlotModalOpen } = useSlotModal('eventClick')
 
   onMount(() => {
     setTimeout(() => {
@@ -64,11 +73,12 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
   })
 
   function dragEnd(a: DraggedData) {
-    
-    const sourceE = { ...a.item?.sourceEvent }    
-    sourceE.start = a.dragedStartDate as Date
-    sourceE.end = a.dragedEndDate as Date
-    
+    const sourceE = { ...a.item?.sourceEvent }
+    sourceE.start = a.eventSourceStart as Date
+    sourceE.end = a.eventSourceEnd as Date
+    // sourceE.start = a.dragedStartDate as Date
+    // sourceE.end = a.dragedEndDate as Date
+
     if (a.item) {
       // console.log(sourceE)
       mergedProps.onEventUpdate(sourceE as SourceEvent, a)
@@ -80,15 +90,14 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
   }
 
   function getDragingStyle() {
-    
     return `width : ${draggedData().width};height : ${draggedData().height};left:${draggedData().left} ; transition : ${
       draggedData().animation
-    };${draggedData().animation ? 'box-shadow: none;opacity:0.9':''} ;top:${draggedData().top};position:fixed;background-color:${draggedData().item.color}`
+    };${draggedData().animation ? 'box-shadow: none;opacity:0.9' : ''} ;top:${
+      draggedData().top
+    };position:fixed;background-color:${draggedData().item.color}`
   }
 
-  const timess = [0,1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
-
-  function oneHoureInPixel(){
+  function oneHoureInPixel() {
     return mergedProps.gridHeight / 24
   }
 
@@ -96,17 +105,16 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
     return `height:${oneHoureInPixel()}px`
   }
 
-  function eventClick(event:EventClass){
-    if(!mergedProps.editable){
-      console.log('eventclicked',event)
-    }
+  function onEventCLick(event: EventClass, targetELnode: HTMLElement) {
+    setSlotModalData(event)
+    openSlotModalOnElement(targetELnode)
   }
 
   return (
     <>
+      {modalElementNode}
       <div ref={gridRef.current} id={mergedProps.id} class="basic-grid">
         <div class="holdcontainer" style={getWrapperHeight()}>
-        
           <For each={ColList()}>
             {(eventList, colNumber) => {
               return (
@@ -122,7 +130,6 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
                           width={lookForAvailableWith(ColList(), event, colNumber() + 1)}
                           onMouseDown={onmousedownH}
                           onDragStart={itemDragstart}
-                          onEventClick={eventClick}
                         ></EventItem>
                       )
                     }}
@@ -134,36 +141,19 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
         </div>
 
         <div class="fec-daily-grid" style={`height: ${mergedProps.gridHeight}px`}>
-          
           <Show when={isDateToday(mergedProps.gridDate)}>
             <TimeBar container={gridRef} />
           </Show>
 
-          {/* <For each={timess}>
-            {(_, i) => {
-              return (
-                  <TimeRange 
-                    onAddEvent={mergedProps.onAddEvent}
-                    gridDate={mergedProps.gridDate}
-                    locale={mergedProps.locale}
-                    timeZone={mergedProps.timeZone}
-                    oneHoureInPixel={oneHoureInPixel()}
-                    editable={mergedProps.editable}
-                    houre={i()}
-                  ></TimeRange>
-              )
-            }}
-          </For> */}
-        <TimeRanges
+          <TimeRanges
             onAddEvent={mergedProps.onAddEvent}
             gridDate={mergedProps.gridDate}
             locale={mergedProps.locale}
             timeZone={mergedProps.timeZone}
             oneHoureInPixel={oneHoureInPixel()}
             editable={mergedProps.editable}
-        >
-
-        </TimeRanges>
+            stopAddEvent={mergedProps.stopAddEvent}
+          ></TimeRanges>
           <div class="wrapper-container dragger-wrapper" style={getWrapperHeight()}>
             <Show when={isDragging()}>
               <div

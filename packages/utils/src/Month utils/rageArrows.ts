@@ -36,7 +36,7 @@ export function rightOrLeftInDate(event: EventClass, initialDate: Date) {
       return 'month-both-arrow'
     } else if (floweredEvent >= flOWR && eventCeil > Ceil) {
       return 'month-right-arrow'
-    } else if (floweredEvent <= flOWR && eventCeil < Ceil) {
+    } else if (floweredEvent < flOWR && eventCeil < Ceil) {
       return 'month-left-arrow'
     }
     return 'month-no-arrow'

@@ -1,3 +1,4 @@
+export { useSlotModal } from './useSlotModal'
 export { useSlot } from './useSlot'
 export { DomController } from './Drag/DomController'
 export { SlotProvider,useSlotState } from './useSlot'
@@ -8,7 +9,7 @@ export {  getEventsInDate, areDatesInTheSameDate, sortEventByStart  } from './fi
 export { EventModeFilter } from './filterEvents/EventFilter'
 export { formatDDMMYYYY, formatDM, formatDD,formatRange,formatToShortTime } from './format/Date'
 export { EventImpl } from './EventImple'
-export { convertTZ } from './TimeZone'
+export { convertTZ ,getEventSourceFromTz} from './TimeZone'
 export { getCalendarMonthDays, getMonthName, extractMonthDates } from './Month utils/Month'
 export { ArraySplitIntoChunks } from './array'
 export { formatWeekDays, formatDayNumber } from './format/Weekend'
@@ -23,3 +24,4 @@ export {
   getEventTimeRange
 } from './Date'
 export { getWeekDates } from './week'
+ 

@@ -4,6 +4,7 @@ import type { Dispatch } from 'redux'
 import { CalendarState, StoreActions } from '../store/store'
 import { EventClass, Group, SourceEvent } from '@full-event-calendar/shared-ts'
 import { RenderStore } from './RenderStore.ts'
+import EventCollection, { EventPayLoads, EventTypes } from './Collection.ts'
 interface CalendarApi {
   // Current Date
   // -----------------------------------------------------------------------------------------------------------------
@@ -33,6 +34,7 @@ export interface CalendarSourceOptions {
   editable?:boolean
   theme?:string
   avalibalSots?: AppSlots[]
+  stopAddEvent?:boolean
 }
 
 export interface Plugins {
@@ -48,18 +50,26 @@ export class CalendarImpl implements CalendarApi {
   readonly storeManager
   readonly storeDispatch
   readonly renderStore = new RenderStore()
+  private EventListenrsStorage: EventCollection
   
   constructor(eventCalendarOptions: CalendarSourceOptions) {
     const { store, dispatch } = useRedux(chatStore)
     this.storeManager = store
     this.storeDispatch = dispatch
     this.resetOptions(eventCalendarOptions)
-    
+    this.EventListenrsStorage = new EventCollection()
+  }
+  public emitEvent(eventType: EventTypes, payload: EventPayLoads[EventTypes]) {
+    this.EventListenrsStorage[eventType].forEach((f) => f(payload))
   }
 
+  public on(eventType: EventTypes, handler: Function) {
+    this.EventListenrsStorage[eventType].push(handler)
+  }
   public setEventList(events: SourceEvent[]) {
     this.storeDispatch({ type: 'SET_ALL_EVENTS', events })
   }
+
   public setPlugins(plugins: Plugins[]) {
     this.storeDispatch({ type: 'SET_PLUGINS', plugins })
   }
@@ -108,6 +118,9 @@ export class CalendarImpl implements CalendarApi {
   public setAvalibleSlots(AppSlots:AppSlots[]) {
     this.storeDispatch({ type: 'SET_AVALIBLE_SLOTS',avalibalSots:AppSlots})
   }
+  public setStopAddEvent(val:boolean) {
+    this.storeDispatch({ type: 'SET_STOP_ADD_EVENT',val})
+  }
   public resetOptions(options: CalendarSourceOptions) {
     if (options.timeZone) {
       this.changeTimeZone(options.timeZone)
@@ -130,7 +143,7 @@ export class CalendarImpl implements CalendarApi {
     if (options.autoUpdateEventOnChange === false) {
       this.changeEventAutoUpdate(options.autoUpdateEventOnChange)
     }
-    if (options.plugins.length > 0) {
+    if (options?.plugins?.length > 0) {
       this.setPlugins(options.plugins)
     }
     if(options.listMode){
@@ -142,8 +155,12 @@ export class CalendarImpl implements CalendarApi {
     if(options.theme){
       this.changeTheme(options.theme)
     }
-    
-    this.setEventList(options.events)
+    if(options.stopAddEvent){
+      this.setStopAddEvent(options.stopAddEvent)
+    }
+    if(options.events){
+      this.setEventList(options.events)
+    }
   }
 
   prevDay() {}

@@ -57,7 +57,7 @@ export class NewDomController implements DomController {
                 closestNode = node;
             }
         });
-    
+        // console.log(closestNode)
         return closestNode;
     }
     getEelementReact(e?:MouseEvent) {
@@ -72,13 +72,13 @@ export class NewDomController implements DomController {
         })
     }
    
-    static previewAndEventTimeDiff(eventNode: HTMLElement, previewNode: HTMLElement) {
+    static previewAndEventTimeDiff(eventNode: number, previewNode: number) {
    
-        const firstTopPosition = eventNode.getBoundingClientRect().top + window.scrollY
+        const firstTopPosition = eventNode + window.scrollY
         const oneHourInPixelSize = document.querySelector('.time-range')?.clientHeight || 1
-        const eventRect = previewNode.getBoundingClientRect()
+        // const eventRect = previewNode.getBoundingClientRect()
       
-        return (((eventRect.top + window.scrollY - firstTopPosition) * 60) / oneHourInPixelSize) * 60000
+        return (((previewNode + window.scrollY - firstTopPosition) * 60) / oneHourInPixelSize) * 60000
     }
   
 }

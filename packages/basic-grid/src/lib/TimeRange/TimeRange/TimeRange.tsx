@@ -1,8 +1,8 @@
 import { EventClass, FComponent, SourceEvent } from '@full-event-calendar/shared-ts'
-import { Show, createSignal, createUniqueId } from 'solid-js'
-import { useResize } from '../../hooks/eventResize'
-import { EventImpl } from '@full-event-calendar/utils'
-import { EventItem } from '../EventItem/EventItem'
+import { Show, createEffect, createSignal, createUniqueId, on } from 'solid-js'
+import { useResize } from '../../../hooks/eventResize'
+import { EventImpl, getEventSourceFromTz } from '@full-event-calendar/utils'
+import { EventItem } from '../../EventItem/EventItem'
 import './TimeRange.scss'
 
 interface TimeRangeProps {
@@ -13,21 +13,33 @@ interface TimeRangeProps {
   timeZone: string
   editable: boolean
   oneHoureInPixel: number
-  eventPreviewData:EventClass | null
-  setEventPreview:any
+  eventPreviewData: EventClass | null
+  setEventPreview: any
+  setEventPreview2: any
+  setContainerRef: any
+  showModal: any
+  stopAddEvent: boolean
 }
 
 export const TimeRange: FComponent<TimeRangeProps> = (props) => {
   // const [resiserGr, setResizer] = createSignal<EventClass | null>(null)
+  let refr: any = null
 
   function timeRangeMouseDown(hour: number, min: number, mouseEvent: MouseEvent) {
-    const { onmousedownH ,draggedData} = useResize('addEventWithResize', resizeCb, props.editable)
-  
-    function resizeCb(event: SourceEvent) {
-    if (!props.editable) return
-        event.id = createUniqueId()
-        props.onAddEvent(event)
-        props.setEventPreview(null,null)
+    if (props.showModal) return
+    const { onmousedownH, draggedData } = useResize('addEventWithResize', resizeCb, props.editable)
+
+    function resizeCb(sourceEv: SourceEvent) {
+      if (!props.editable) return
+      const event = getEventSourceFromTz(new EventImpl(sourceEv),props.timeZone)
+      event.id = createUniqueId()
+      if (props.stopAddEvent) {
+        props.setContainerRef(refr)
+        props.setEventPreview(event, props.houre)
+      } else {
+        props.onAddEvent(event.sourceEvent)
+        props.setEventPreview(null, null)
+      }
     }
 
     const basdate = new Date(props.gridDate)
@@ -37,7 +49,8 @@ export const TimeRange: FComponent<TimeRangeProps> = (props) => {
     endDate.setHours(hour, min + 15)
 
     const x = new EventImpl({ start: basdate, end: endDate, name: '(no title)', id: createUniqueId() })
-    props.setEventPreview(x,props.houre)
+
+    props.setEventPreview(x, props.houre)
     onmousedownH(x, mouseEvent)
   }
 
@@ -49,7 +62,7 @@ export const TimeRange: FComponent<TimeRangeProps> = (props) => {
     <>
       <div data-test-time-range-id={props.houre + 1} class="time-range">
         <Show when={props.eventPreviewData}>
-          <div class="add-event-preview" style={getTop(props.eventPreviewData?.start!)}>
+          <div ref={refr} class="add-event-preview" style={getTop(props.eventPreviewData?.start!)}>
             <EventItem
               locale={props.locale}
               event={props.eventPreviewData!}
@@ -57,7 +70,6 @@ export const TimeRange: FComponent<TimeRangeProps> = (props) => {
               width="width:calc(100% - 20px)"
               onMouseDown={() => {}}
               onDragStart={() => {}}
-              onEventClick={() => {}}
               top0={true}
               oneHoureInPixel={props.oneHoureInPixel}
             ></EventItem>

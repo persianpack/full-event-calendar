@@ -10,15 +10,16 @@ export function App() {
   const data = useGlobalState()
 
   function onEventUpdate(event: SourceEvent) {
-   
     if (data.store.autoUpdateEventOnChange) {
       const prev = data.instance.getEventById(event.id) as EventClass
-     
+
       data.instance.updateEvent(event.id, event)
       const next = data.instance.getEventById(event.id) as EventClass
+
       data.instance.emitEvent('eventUpdate', {
         prev: prev,
-        next: next
+        next: next,
+        id:event.id
       })
     }
   }
@@ -26,12 +27,11 @@ export function App() {
   function onAddEvent(event: SourceEvent) {
     if (data.store.autoUpdateEventOnChange) {
       // const prev = data.instance.getEventById(event.id) as EventClass
-            data.instance.addEvent(event)
+      data.instance.addEvent(event as any)
       // const next = data.instance.getEventById(event.id) as EventClass
-      // data.instance.emitEvent('eventUpdate', {
-      //   prev: prev,
-      //   next: next
-      // })
+      data.instance.emitEvent('eventAdd', {
+        event
+      })
     }
   }
 
@@ -48,10 +48,7 @@ export function App() {
 
   return (
     <>
-      <div
-        class={`full-event-calendar-core calendar-theme-${data.store.theme}`}
-        id="full-event-calendar-core"
-      >
+      <div class={`full-event-calendar-core calendar-theme-${data.store.theme}`} id="full-event-calendar-core">
         <CalendarHeader onDateChange={onDateChange} />
         <SliderWrapper>
           {/* Grid plugin goes here */}
@@ -72,6 +69,7 @@ export function App() {
             editable={data.store.editable}
             slotRenderStore={data.instance.renderStore}
             avalibalSots={data.store.avalibalSots}
+            stopAddEvent={data.store.stopAddEvent}
           ></Dynamic>
         </SliderWrapper>
       </div>

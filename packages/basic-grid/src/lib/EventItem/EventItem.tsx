@@ -11,7 +11,6 @@ interface EventItem {
   locale: string
   top0?:boolean
   oneHoureInPixel:number
-  onEventClick:(event:EventClass)=>void
 }
 
 export const EventItem: FComponent<EventItem> = (props) => {
@@ -54,10 +53,7 @@ export const EventItem: FComponent<EventItem> = (props) => {
         props.onDragStart(props.event, e, !doesEventStartOnGridDate())
         
       }}
-      onclick={() => {
-        props.onEventClick(props.event)
-        
-      }}
+     
       id={'event-' + props.event.id}
       class={`ec-event ${isLowHeight() ? 'one-line-event ':''} `  }
       data-test-event-id={props.event.id}
@@ -66,7 +62,7 @@ export const EventItem: FComponent<EventItem> = (props) => {
        <div  
         style="position:sticky;top:0px;bottom:30px"
         class="tooltip-multiline event-info"
-        data-tooltip={`${props.event.name} ${formatRange(props.event.start, props.event.end, props.locale)}`}
+       
       >
         <div class="item-trunctae event-name">{props.event.name}</div>
         <div>

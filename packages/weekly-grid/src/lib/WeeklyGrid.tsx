@@ -1,10 +1,10 @@
 //types
 import { EventClass, FComponent, Group, SourceEvent } from '@full-event-calendar/shared-ts'
 //solid.js
-import { For, mergeProps } from 'solid-js'
+import {  mergeProps } from 'solid-js'
 //components
 import { GroupGrid } from '@full-event-calendar/group-grid'
-import { DailyHeader, DailyTimeRanges } from '@full-event-calendar/daily-grid'
+import {  DailyTimeRanges } from '@full-event-calendar/daily-grid'
 import { BasicGrid } from '@full-event-calendar/basic-grid'
 //utils
 import { WeeklyAllDayHeader } from './WeeklyHeader/WeeklyAllDayHeader'
@@ -23,6 +23,7 @@ export interface WeeklyGridProps {
   calendar?: string
   timeZone?: string
   gridHeight?: number
+  stopAddEvent?: boolean
 }
 
 const defaultProps = {
@@ -35,7 +36,8 @@ const defaultProps = {
   locale: 'en-US',
   calendar: 'gregory',
   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-  gridHeight: 65 * 24
+  gridHeight: 65 * 24,
+  stopAddEvent:false
 }
 
 export interface columData {
@@ -56,7 +58,7 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
       sourceCopy.start.setDate(sourceCopy.start.getDate() - (baseCol - targetCol))
       sourceCopy.end.setDate(sourceCopy.end.getDate() - (baseCol - targetCol))
     }
-
+    
     mergedProps.onEventUpdate(sourceCopy)
   }
 
@@ -85,27 +87,16 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
 
   return (
     <>
-      <div class="header-dates">
-        <For each={headerDates()}>
-          {(item) => (
-            <DailyHeader
-            slotRenderStore={''}
-              headerDate={item}
-              timeZone={mergedProps.timeZone}
-              calendar={mergedProps.calendar}
-              onDateChange={onDateChange}
-              locale={mergedProps.locale}
-            ></DailyHeader>
-          )}
-        </For>
-      </div>
 
       <WeeklyAllDayHeader
         onEventUpdate={mergedProps.onEventUpdate}
         events={mergedProps.events}
-        headerDates={getEachColDate(columData)}
+        headerDates={headerDates()}
         onAddEvent={mergedProps.onAddEvent}
         locale={mergedProps.locale}
+        timeZone={mergedProps.timeZone}
+        calendar={mergedProps.calendar}
+        stopAddEvent={mergedProps.stopAddEvent}
       />
       <ScrollBarWrapper>
           <div style="display: flex;" class="week-wrapper">
@@ -123,13 +114,6 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
   )
 }
 
-// get colum list ant return the Dates in Arr
-function getEachColDate(cols: columData[]) {
-  return cols.map((item) => {
-    return item.props.initialDate
-  }) as Date[]
-}
-
  function ScrollBarWrapper (props:any) {
   return (
     <div style="position: relative; flex: 1;">
@@ -143,4 +127,3 @@ function getEachColDate(cols: columData[]) {
     </div>
   )
 }
-

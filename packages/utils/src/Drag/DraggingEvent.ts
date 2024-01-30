@@ -80,6 +80,18 @@ export class NewDraggingController extends NewDomController implements DraggingC
 
     this.dragedEndDate = newEndDate
     this.dragedStartDate = newStartDate
+    this.shiftTimeByDaySource(dayNumber)
+  }
+  public shiftTimeByDaySource(dayNumber: number) {
+    const newStartDate = new Date(this.item.sourceEvent.start)
+    newStartDate.setDate(newStartDate.getDate() + dayNumber)
+
+    const newEndDate = new Date(this.item.sourceEvent.end)
+    newEndDate.setDate(newEndDate.getDate() + dayNumber)
+
+    this.eventSourceEnd = newEndDate
+    this.eventSourceStart = newStartDate
+
   }
   public shiftEndTime(miliSeconds: number) {
     const newEndDate = new Date(this.item.end.getTime() + miliSeconds)
@@ -92,12 +104,26 @@ export class NewDraggingController extends NewDomController implements DraggingC
     newEndDate.setDate(newEndDate.getDate() + dayNumber)
 
     this.dragedEndDate = newEndDate
+    this.shiftEndByDaySource(dayNumber)
+  }
+  public shiftEndByDaySource(dayNumber: number) {
+    const newEndDate = new Date(this.item.sourceEvent.end)
+    newEndDate.setDate(newEndDate.getDate() + dayNumber)
+    this.eventSourceEnd = newEndDate
   }
   public shiftStartByDay(dayNumber: number) {
     const newStartDate = new Date(this.item.start)
     newStartDate.setDate(newStartDate.getDate() + dayNumber)
 
     this.dragedStartDate = newStartDate
+    this.shiftStartByDaySource(dayNumber)
+  }
+  
+  public shiftStartByDaySource(dayNumber: number) {
+    const newStartDate = new Date(this.item.sourceEvent.start)
+    newStartDate.setDate(newStartDate.getDate() + dayNumber)
+
+    this.eventSourceStart = newStartDate
   }
 
   private shiftEndSource(miliSeconds: number) {

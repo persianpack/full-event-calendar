@@ -5,7 +5,7 @@ import { CalendarDragger } from './newDragging'
 import { DomController, NewDraggingController } from '@full-event-calendar/utils'
 // import { DomController } from '@full-event-calendar/utils/src/Drag/DomController'
 
-export function userDragger(gridRef: any, dragEndCallBack: (initialDragNode: any) => void, gridContainer: any,editable:boolean) {
+export function userDragger(gridRef: any, dragEndCallBack: (initialDragNode: any) => void, gridContainer: any,editable:boolean,onEventCLick:(event:EventClass,targetELnode:HTMLElement)=>void) {
 
   function getWarpperWidth(){
     return gridRef.current.clientWidth + 'px'
@@ -29,8 +29,6 @@ export function userDragger(gridRef: any, dragEndCallBack: (initialDragNode: any
     })
   }
 
-
-
   function mouseMove(e: MouseEvent) {
     if(!editable)return
 
@@ -48,7 +46,8 @@ export function userDragger(gridRef: any, dragEndCallBack: (initialDragNode: any
     if (domController.hasScrolled) {
       mouseMove(e)
     } else if (!calendarDragger.dragger.hasMouseMoved) {
-      console.log('eventClicked ')
+      onEventCLick(calendarDragger.dragger.draggingController?.event!,calendarDragger.dragger.draggingController?.getEventNode()!)
+      // console.log('eventClicked ',calendarDragger.dragger.draggingController?.event)
     }
 
      calendarDragger.dragger.dragEnd(e)
@@ -77,9 +76,10 @@ export function userDragger(gridRef: any, dragEndCallBack: (initialDragNode: any
     cleanUps()
     const baseEl = calendarDragger.dragger.draggingController as any as NewDraggingController
    
-    calendarDragger.dragger.draggingController?.setEelementOpacity('0')
-
+    calendarDragger.dragger.draggingController?.setEelementOpacity('0.3')
+    
     time1 = setTimeout(() => {
+      calendarDragger.dragger.draggingController?.setEelementOpacity('0.3')
       let targetEl =  calendarDragger.dragger.draggingController?.getEventNode(e) as HTMLElement
       NewDraggingController.setState(baseEl, targetEl)
       setDraggedData(baseEl)

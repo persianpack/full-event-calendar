@@ -24,24 +24,32 @@ export function useMonthEventDragging(dragEndCb:(event:EventClass,draggerMode:Dr
     })
   }
 
-  function onDragEnd() {
+  function onDragEnd(clearDate:boolean = true) {
     eventdrager.dragger.onDragEnd()
     
     if (!!draggingEventData()) {
       const sourceE = { ...draggingEventData()?.item.sourceEvent }
-      sourceE.start = draggingEventData()?.dragedStartDate as Date
-      sourceE.end = draggingEventData()?.dragedEndDate as Date
+      // sourceE.start = draggingEventData()?.dragedStartDate as Date
+      // sourceE.end = draggingEventData()?.dragedEndDate as Date
+      // console.log(draggingEventData())
+      sourceE.start = draggingEventData()?.eventSourceStart as Date
+      sourceE.end = draggingEventData()?.eventSourceEnd as Date
+
       if (sourceE) {
         //@ts-ignore
       //  props.onEventUpdate(sourceE)
        dragEndCb(sourceE,eventdrager.draggerMode)
       }
     }
-    setDraggingEventData(null)
+
+    if(clearDate){
+      setDraggingEventData(null)
+    }
+    
   }
 
   function changeDraggerType(draggerType:DraggerTypes){
     eventdrager = new RowDragger(draggerType)
   }
-  return { onDragEnd, onDragStart, onMouseEnter, draggingEventData ,changeDraggerType}
+  return { onDragEnd, onDragStart, onMouseEnter, draggingEventData ,changeDraggerType ,setDraggingEventData}
 }

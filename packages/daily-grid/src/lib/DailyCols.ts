@@ -51,7 +51,7 @@ const columData = createMutable([
         columData[i].props.onDateChange = onDateChange
         columData[i].props.group = mergedProps.groups[i]
         columData[i].props.slotRenderStore = mergedProps.slotRenderStore
-   
+        columData[i].props.stopAddEvent = mergedProps.stopAddEvent
       }
     } else {
       columData[0].props.events = getEventsInDate(mergedProps.events, mergedProps.initialDate)
@@ -66,7 +66,7 @@ const columData = createMutable([
       columData[0].props.editable = mergedProps.editable
       columData[0].props.onDateChange = onDateChange
       columData[0].props.slotRenderStore = mergedProps.slotRenderStore
-
+      columData[0].props.stopAddEvent = mergedProps.stopAddEvent
     }
   }
 

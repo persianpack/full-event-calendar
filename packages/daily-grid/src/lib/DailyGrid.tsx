@@ -22,7 +22,8 @@ export interface DailyGridProps {
   events: EventClass[]
   group: Group,
   avalibalSots:string[],
-  slotRenderStore:any
+  slotRenderStore:any,
+  stopAddEvent:boolean
 }
 
 export const dailyDefaultProps = {
@@ -39,6 +40,7 @@ export const dailyDefaultProps = {
   gridHeight: 65 * 24,
   group: null,
   editable: true,
+  stopAddEvent: true,
   avalibalSots:[]
 }
 
@@ -54,19 +56,7 @@ export const DailyGrid: FComponent<DailyGridProps> = (props) => {
       mergedProps.onAddEvent(event)
     }
   }
-  // mergedProps.slotRenderStore.dispatch({
-  //   name:'headerSlot',
-  //   target:headerSlot,
-  //   data:data.store.initialDate
-  // })
- 
-  // createEffect(on(()=>data.store.initialDate,()=>{
-  //   mergedProps.slotRenderStore.dispatch({
-  //     name:'headerSlot',
-  //     target:headerSlot,
-  //     data:data.store.initialDate
-  //   })
-  // }))
+
   return (
     <>
       <div
@@ -86,6 +76,7 @@ export const DailyGrid: FComponent<DailyGridProps> = (props) => {
             timeZone={mergedProps.timeZone}
             editable={mergedProps.editable}
             avalibalSots={mergedProps.avalibalSots}
+            stopAddEvent={mergedProps.stopAddEvent}
             />
         </div>
       </div>

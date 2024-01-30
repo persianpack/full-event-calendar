@@ -17,12 +17,17 @@ const defaultState: CalendarState = {
   groups :[],
   editable:true,
   theme:'light',
-  avalibalSots:[]
+  avalibalSots:[],
+  stopAddEvent:false
 }
 
 interface SetAllChatsAction {
   type: 'SET_ALL_EVENTS'
   events: SourceEvent[]
+}
+interface SetStopAddEvent {
+  type: 'SET_STOP_ADD_EVENT'
+  val: boolean
 }
 interface SetAvalibleSlots {
   type: 'SET_AVALIBLE_SLOTS'
@@ -121,6 +126,7 @@ export type StoreActions =
   | UpdateEditabel
   | ChangeTheme
   | SetAvalibleSlots
+  | SetStopAddEvent
 
 export type EventCalendarOptions = { [K in keyof CalendarSourceOptions]-?: CalendarSourceOptions[K] }
 export interface CalendarState extends EventCalendarOptions {
@@ -129,6 +135,8 @@ export interface CalendarState extends EventCalendarOptions {
 
 const calendarReducer: Reducer<CalendarState, StoreActions> = (state = defaultState, action) => {
   switch (action.type) {
+    case 'SET_STOP_ADD_EVENT':
+      return { ...state, stopAddEvent: action.val }
     case 'SET_AVALIBLE_SLOTS':
       return { ...state, avalibalSots: action.avalibalSots }
     case 'CHANGE_THEME':
@@ -138,6 +146,7 @@ const calendarReducer: Reducer<CalendarState, StoreActions> = (state = defaultSt
     case 'ADD_EVENT':
       const events1 = [...state.events]
       let eve = new EventImpl(action.event)
+      eve.convertDateByTimeZone(state.timeZone)
       events1.push(eve)
       return { ...state, events: events1 }
     case 'UPDATE_GROUPS':
@@ -175,9 +184,14 @@ const calendarReducer: Reducer<CalendarState, StoreActions> = (state = defaultSt
     case 'UPDATE_EVENT':
       const events = [...state.events]
       const eventIndex = events.findIndex((item) => item.id === action.id)
-      const eventss = new EventImpl(events[eventIndex].sourceEvent)
-      eventss.updateEventDetails(action.event)
+      const eventss = new EventImpl(action.event)
+      eventss.convertDateByTimeZone(state.timeZone)
       events[eventIndex] = eventss
+      // const events = [...state.events]
+      // const eventIndex = events.findIndex((item) => item.id === action.id)
+      // const eventss = new EventImpl(events[eventIndex].sourceEvent)
+      // eventss.updateEventDetails(action.event)
+      // events[eventIndex] = eventss
       
       return { ...state, events: events }
 

@@ -51,7 +51,7 @@ class RowEditDragger implements MonthDraggerss {
           this.currentDate = dayDifference
           if(dayDifference<0){
               this.draggingController?.shiftStartByDay(dayDifference)
-              this.draggingController?.shiftEndByDay(0)
+              this.draggingController?.shiftEndByDay(0) 
             }else if(dayDifference>0){
               this.draggingController?.shiftEndByDay(dayDifference)
               this.draggingController?.shiftStartByDay(0)
