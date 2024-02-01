@@ -57,9 +57,7 @@ export function useSlotModal(modalType: string, clearDataCb?: any) {
 
       setTimeout(() => {
         activeInstence = thisInsctence
-        // console.log(thisInsctence)
         setIsModalOpen(true)
-        
       }, 0)
     }, 0)
   }
@@ -87,16 +85,17 @@ export function useSlotModal(modalType: string, clearDataCb?: any) {
     const modal = modalContainerRef()
     modal && modal.removeEventListener('resize', calculateModalPosition)
   })
-
   
   //@ts-ignore
   function ClickOutSide(el: any, accessor: any) {
+ 
     const onClick = (e: MouseEvent) => {
       e.preventDefault()
       e.stopPropagation()
-      let someID = targetElRef()?.querySelector('.ec-event')?.id
+      let someID = targetElRef()?.classList.contains('ec-event')? targetElRef()?.id: targetElRef()?.querySelector('.ec-event')?.id
+      // console.log(targetElRef(),e.target)
       //@ts-ignore
-      return !el.contains(e.target) && !(e.target?.id === someID) && accessor()?.()
+      return !el.contains(e.target) && !(e.target === targetElRef()) && !targetElRef()?.contains(e.target) && !(e.target?.id === someID) && accessor()?.()
     }
     document.addEventListener('mousedown', onClick)
     onCleanup(() => document.removeEventListener('mousedown', onClick))
@@ -159,6 +158,7 @@ export function useSlotModal(modalType: string, clearDataCb?: any) {
   )
 
   function openSlotModalOnElement(el: any) {
+    if(isSlotModalOpen()) return
     setTargetElRef(el)
     calculateModalPosition()
     setScrollListner()

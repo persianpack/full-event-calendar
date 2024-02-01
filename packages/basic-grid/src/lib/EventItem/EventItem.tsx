@@ -1,5 +1,5 @@
 import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
-import { formatRange, getDateTimeRange, getEventTimeRange } from '@full-event-calendar/utils'
+import { detectLeftButton, formatRange, getDateTimeRange, getEventTimeRange } from '@full-event-calendar/utils'
 import './EventItem.scss'
 import { createMemo } from 'solid-js'
 interface EventItem {
@@ -9,64 +9,60 @@ interface EventItem {
   gridDate: Date
   width: string
   locale: string
-  top0?:boolean
-  oneHoureInPixel:number
+  top0?: boolean
+  oneHoureInPixel: number
 }
 
 export const EventItem: FComponent<EventItem> = (props) => {
-  const doesEventStartOnGridDate =()=> props.event.doesEventStartOn(props.gridDate)
+  const doesEventStartOnGridDate = () => props.event.doesEventStartOn(props.gridDate)
   function getPosition() {
     return doesEventStartOnGridDate() && !props.top0 ? props.event.calculatePositionTop() : 'top:0'
   }
-  const getHeight = createMemo(()=>{
+  const getHeight = createMemo(() => {
     return props.event.doesEventEndOn(props.gridDate)
-    ? props.event.calculateHeight(!doesEventStartOnGridDate())
-    : `height:${2400 - props.event.getEventTopPositionIng()}%`
+      ? props.event.calculateHeight(!doesEventStartOnGridDate())
+      : `height:${2400 - props.event.getEventTopPositionIng()}%`
   })
 
   function getBackGroundColor() {
     return `;background-color:${props.event.color}`
   }
-  function getBorders(){
+  function getBorders() {
+    const endCon = props.event.doesEventEndOn(props.gridDate)
+    const startCon = doesEventStartOnGridDate()
 
-   const endCon = props.event.doesEventEndOn(props.gridDate)
-   const startCon = doesEventStartOnGridDate()
+    if (!startCon) {
+      return 'border-top-left-radius: 0px;border-top-right-radius:0px'
+    } else if (!endCon) {
+      return 'border-bottom-left-radius: 0px;border-bottom-right-radius:0px'
+    }
+    return ''
+  }
 
-   if(!startCon){
-    return 'border-top-left-radius: 0px;border-top-right-radius:0px'
-   }else if(!endCon){
-    return 'border-bottom-left-radius: 0px;border-bottom-right-radius:0px'
-   }
-   return ''
+  function isLowHeight() {
+    const heightInPercentage = props.event.calculateHeightPersentage(!doesEventStartOnGridDate())
+    const heightInPixel = (props.oneHoureInPixel * heightInPercentage) / 100
+
+    return heightInPixel < 40
   }
  
-  function isLowHeight(){
-   const heightInPercentage = props.event.calculateHeightPersentage(!doesEventStartOnGridDate())
-   const heightInPixel =  (props.oneHoureInPixel * heightInPercentage)/ 100
-
-   return heightInPixel < 40
-  }
 
   return (
     <div
       onMouseDown={(e: MouseEvent) => {
-        props.onDragStart(props.event, e, !doesEventStartOnGridDate())
-        
+        if (detectLeftButton(e)) props.onDragStart(props.event, e, !doesEventStartOnGridDate())
       }}
-     
       id={'event-' + props.event.id}
-      class={`ec-event ${isLowHeight() ? 'one-line-event ':''} `  }
+      class={`ec-event ${isLowHeight() ? 'one-line-event ' : ''} `}
       data-test-event-id={props.event.id}
       style={`${getPosition()} ;${getHeight()} ;${props.width} ;${getBackGroundColor()};${getBorders()}`}
-      >
-       <div  
-        style="position:sticky;top:0px;bottom:30px"
-        class="tooltip-multiline event-info"
-       
-      >
+    >
+      <div style="position:sticky;top:0px;bottom:30px" class="tooltip-multiline event-info">
         <div class="item-trunctae event-name">{props.event.name}</div>
         <div>
-          <span class='event-time-detals' id={'event-end-' + props.event.id}>{getDateTimeRange(props.event.start, props.event.end)}</span>
+          <span class="event-time-detals" id={'event-end-' + props.event.id}>
+            {getDateTimeRange(props.event.start, props.event.end)}
+          </span>
         </div>
       </div>
       <div onmousedown={[props.onMouseDown, props.event]} class="resizer"></div>

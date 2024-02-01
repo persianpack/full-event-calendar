@@ -2,7 +2,7 @@ import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
 import { For, Show, createEffect, createMemo, on, onMount } from 'solid-js'
 import './DailyAllDay.scss'
  
-import { formatNumber, rightOrLeftInDate, sortEventByStart } from '@full-event-calendar/utils'
+import { formatNumber, rightOrLeftInDate, sortEventByStart, useSlotModal } from '@full-event-calendar/utils'
 
 interface DailyAllDayProps {
   events: EventClass[]
@@ -14,6 +14,7 @@ interface DailyAllDayProps {
 
 export const DailyAllDay: FComponent<DailyAllDayProps> = (props) => {
   const filteredEvents = createMemo(() => sortEventByStart(props.events.filter((item) => item.isAllDay())))
+  const { modalElementNode, setSlotModalData, openSlotModalOnElement, isSlotModalOpen } = useSlotModal('eventClick')
 
   let allDRef: any
   let cachecH = 0
@@ -70,16 +71,17 @@ export const DailyAllDay: FComponent<DailyAllDayProps> = (props) => {
   onMount(()=>{
     hasMounted = true
   })
-  
 
-  function headerClick(){
-    // console.log('downloaded')
+  function headerClick(event:EventClass,e:MouseEvent){
+      setSlotModalData(event)
+      openSlotModalOnElement(e.target)
   }
 
   return (
     <>
+    {modalElementNode}
     <Show when={filteredEvents().length > 0}>
-      <div onclick={headerClick} class={`all-d-wrapeer-header daosidj ${props.isAllDOpen ? 'alld-open' : 'alld-not-open'}`}>
+      <div class={`all-d-wrapeer-header daosidj ${props.isAllDOpen ? 'alld-open' : 'alld-not-open'}`}>
         <div class="more-btn-container" style='width:52px'>
           <Show when={filteredEvents().length > 2}>
             <div class="all-collapser" onclick={openAllD}>
@@ -102,6 +104,7 @@ export const DailyAllDay: FComponent<DailyAllDayProps> = (props) => {
             {(item) => {
               return (
                 <div
+                onClick={[headerClick,item]}
                   data-testid={item.id}
                   style={`background-color:${item.color}`}
                   class={`all-day-wrapper ${rightOrLeftInDate(item, props.initialDate)}`}

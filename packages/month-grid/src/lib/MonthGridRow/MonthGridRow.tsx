@@ -20,6 +20,7 @@ interface MonthGridRowProps {
   onDragStart: any //
   monthDateMouseDown: any //
   onMouseEnter: any //
+  eventClick: any //
 }
 
 export const MonthGridRow: FComponent<MonthGridRowProps> = (props) => {
@@ -47,6 +48,7 @@ export const MonthGridRow: FComponent<MonthGridRowProps> = (props) => {
           monthRowData={props.monthRowData}
           onDragEnd={props.onDragEnd}
           onDragStart={props.onDragStart}
+          eventClick={props.eventClick}
         />
         {/* for showing more bts */}
         <MonthRowMoreBtns

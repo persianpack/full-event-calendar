@@ -64,3 +64,14 @@ export class DomController {
     // document.getElementById('scroll-wrapper')?.removeEventListener('scrollend', MMM)
   }
 }
+
+
+export function detectLeftButton(evt: MouseEvent) {
+  evt = evt || window.event
+  if ('buttons' in evt) {
+    return evt.buttons == 1
+  }
+  //@ts-ignore
+  var button = evt.which || evt.button
+  return button == 1
+}

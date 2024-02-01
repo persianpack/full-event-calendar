@@ -7,6 +7,7 @@ import {
   formatDD,
   formatDM,
   formatRange,
+  useSlotModal,
 } from '@full-event-calendar/utils'
 import { GroupEventMap } from './lib/EventListCollection'
 // Styles
@@ -40,11 +41,13 @@ const defaultProps = {
 
 export const List: FComponent<ListGridProps> = (props) => {
   const mergedProps = mergeProps(defaultProps, props)
-
+  console.log(mergedProps.locale)
   const generateGroup = createMemo(() => {
     let groupEventMap = new GroupEventMap(mergedProps.listMode, mergedProps.initialDate, mergedProps.calendar)
     return groupEventMap.group(mergedProps.events)
   })
+
+  const { modalElementNode:addModalElement, setSlotModalData:setEvModalElement, openSlotModalOnElement:openEvSlotModalOnElement} = useSlotModal('eventClick')
 
 
   function isMlistEmpty() {
@@ -54,10 +57,13 @@ export const List: FComponent<ListGridProps> = (props) => {
     })
     return len === 0
   }
-
-
+function itemClick(event:EventClass,e:MouseEvent){
+  setEvModalElement(event)
+  openEvSlotModalOnElement(e.target)
+}
   return (
     <>
+    {addModalElement}
       <div class="event-list">
         <div class='scroll-wrapper-list custome-scroll-bar'>
 
@@ -71,13 +77,13 @@ export const List: FComponent<ListGridProps> = (props) => {
                 (
                   <div class="event-list-item">
                     <div class="event-list-item-time">
-                      <div class="scchedule-date">{formatDD(new Date(item), mergedProps.calendar)}</div>
-                      <div class="scchedule-dates">{formatDM(new Date(item), mergedProps.calendar)}</div>
+                      <div class="scchedule-date">{formatDD(new Date(item), mergedProps.calendar,mergedProps.locale)}</div>
+                      <div class="scchedule-dates">{formatDM(new Date(item), mergedProps.calendar,mergedProps.locale)}</div>
                     </div>
                     <div class="scheachile-event-wrapper">
                       <For each={generateGroup()[item]}>
                         {(item) => (
-                          <div class="event-list-item-des">
+                          <div onclick={[itemClick,item]} class="event-list-item-des">
                             <div class="event-date">
                               <div class="event-dot" style={`background-color:${item.color}`}></div>
                               {item.isAllDay() ? 'all day' : formatRange(item.start, item.end, mergedProps.locale)}

@@ -11,6 +11,7 @@ import { MonthHeader } from './MonthHeader/MonthHeader'
 import {
   ArraySplitIntoChunks,
   EventImpl,
+  detectLeftButton,
   getCalendarMonthDays,
   getEventSourceFromTz,
   useSlotModal
@@ -72,12 +73,19 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
     'addModal',
     clearDataCb
   )
+  //@ts-ignore
+  const { modalElementNode:addModalElement, setSlotModalData:setEvModalElement, openSlotModalOnElement:openEvSlotModalOnElement, isSlotModalOpen:isEvOPen } = useSlotModal('eventClick')
+
   function clearDataCb() {
     setDraggingEventData(null)
   }
 
   const sortedEvents = createMemo(() => sortEventByStart(mergedProps.events))
 
+  function eventClick(event:EventClass,e:MouseEvent){
+    setEvModalElement(event)
+    openEvSlotModalOnElement(e.target)
+  }
   // [
   // {
   //   date: Date;
@@ -145,6 +153,7 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
   }
 
   function monthDateMouseDown(date: Date, e: MouseEvent) {
+    if(!detectLeftButton(e)) return
     e.stopPropagation()
     e.preventDefault()
 
@@ -176,6 +185,7 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
   return (
     <>
       {modalElementNode}
+      {addModalElement}
       <MonthHeader
         headerData={monthCalendarDates()}
         locale={mergedProps.locale}
@@ -200,6 +210,7 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
               onDragStart={onDragStart}
               monthDateMouseDown={monthDateMouseDown}
               onMouseEnter={EnterProxy}
+              eventClick={eventClick}
             ></MonthGridRow>
           )}
         </For>

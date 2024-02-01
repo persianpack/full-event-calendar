@@ -12,6 +12,8 @@ import '@full-event-css-week'
 import { DailyGridPlugin } from '@full-event-calendar/daily-grid'
 import { MonthGridPlugin } from '@full-event-calendar/month-grid'
 import { WeeklyGridPlugin } from '@full-event-calendar/weekly-grid'
+import { ListPlugin } from '@full-event-calendar/list/dist/index.js'
+import'@full-event-calendar/list/dist/index.css'
 
 const FullEventCalendar = defineComponent({
   props: {
@@ -57,7 +59,7 @@ const FullEventCalendar = defineComponent({
       locale: 'fa-IR',
       initialDate: new Date('Thu Aug 10 2023 15:00:0'),
       //@ts-ignore
-      plugins: [DailyGridPlugin, WeeklyGridPlugin, MonthGridPlugin],
+      plugins: [DailyGridPlugin, WeeklyGridPlugin, MonthGridPlugin,ListPlugin],
       stopAddEvent:true,
       grid: 'daily'
     })

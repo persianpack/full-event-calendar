@@ -323,6 +323,9 @@ importers:
       '@full-event-calendar/daily-grid':
         specifier: workspace:*
         version: link:../daily-grid
+      '@full-event-calendar/list':
+        specifier: workspace:*
+        version: link:../list
       '@full-event-calendar/month-grid':
         specifier: workspace:*
         version: link:../month-grid

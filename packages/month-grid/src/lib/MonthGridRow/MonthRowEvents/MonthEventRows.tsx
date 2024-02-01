@@ -15,6 +15,7 @@ interface MonthEventRowsProps {
   // dragClick: any //
   onDragEnd: any //
   onDragStart: any //
+  eventClick: any //
   // monthDateMouseDown: any //
   // onMouseEnter: any //
 }
@@ -37,6 +38,7 @@ export const MonthEventRows: FComponent<MonthEventRowsProps> = (props) => {
                     isFirstRow={props.monthRowIndex === 0}
                     onDragEnd={props.onDragEnd}
                     ondragstart={props.onDragStart}
+                    onClick={props.eventClick}
                     item={dayObject}
                     endDate={props.monthRowDates[6].date}
                     startDate={props.monthRowDates[0].date}

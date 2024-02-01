@@ -27,6 +27,9 @@ export const DateCol: FComponent<DateColProps> = (props) => {
     'addModal',
     clearDataCb
   )
+  const { modalElementNode:addModalElement, setSlotModalData:setEvModalElement,
+     openSlotModalOnElement:openEvSlotModalOnElement, isSlotModalOpen:isEvOPen } = useSlotModal('eventClick')
+
   function clearDataCb() {
     setDraggingEventData(null)
   }
@@ -92,11 +95,17 @@ export const DateCol: FComponent<DateColProps> = (props) => {
     }
   }
 
+  function onEventClick(event:EventClass,e:MouseEvent){
+    setEvModalElement(event)
+    openEvSlotModalOnElement(e.target)
+  }
+
   props.moseEvents.enter = onMouseEnterProxy
   props.moseEvents.down = dataColMouseDown
 
   return (
     <>
+      {addModalElement}
       {modalElementNode}
       {/* each colum box has a mouse move for handling drag  */}
       <div
@@ -121,6 +130,7 @@ export const DateCol: FComponent<DateColProps> = (props) => {
                     item={item3}
                     startDate={props.headerDates[0]}
                     endDate={props.headerDates[6]}
+                    onClick={onEventClick}
                   />
                 )}
               </For>

@@ -14,6 +14,7 @@
     "@full-event-calendar/month-grid": "workspace:*",
     "@full-event-calendar/test-events": "workspace:*",
     "@full-event-calendar/weekly-grid": "workspace:*",
+    "@full-event-calendar/list": "workspace:*",
     "solid-js": "1.7.7",
     "vue": "^3.3.8"
   },

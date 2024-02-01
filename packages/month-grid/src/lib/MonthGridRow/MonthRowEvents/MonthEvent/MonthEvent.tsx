@@ -3,6 +3,7 @@ import { createMemo, createSignal } from 'solid-js'
 import './MonthEvent.scss'
 import { getLeftPosition, getEndPosition } from '../../../../utils/EventPosition'
 import { formatToShortTime, rightOrLeftInDateInRange } from '@full-event-calendar/utils'
+import { detectLeftButton } from '@full-event-calendar/utils'
 interface EventProps {
   item: EventClass
   endDate: Date
@@ -11,6 +12,7 @@ interface EventProps {
   onDragEnd: () => void
   isFirstRow: boolean
   locale: string
+  onClick?: (event:EventClass,e:MouseEvent)=>void
 }
 
 export const MonthEvent: FComponent<EventProps> = (props: EventProps) => {
@@ -20,29 +22,36 @@ export const MonthEvent: FComponent<EventProps> = (props: EventProps) => {
 
   const [eventIsDragging, setEventIsDragging] = createSignal(false)
 
-  function handelMouseUp() {
-    setEventIsDragging(false)
-    document.removeEventListener('mouseup', handelMouseUp)
-    document.removeEventListener('mousemove', mouseMove)
-    document.getElementById('month-wrapper-id')?.classList.remove('month-is-dragging')
-    props.onDragEnd()
-  }
+
 
   function onEventMouseDown(data: boolean,event:MouseEvent) {
+
+    if(!detectLeftButton(event)) return
     event.stopPropagation()
     event.preventDefault()
-    setEventIsDragging(data)
-    // event.stopPropagation()
-    // event.preventDefault()
+    let hasBenMoved= false
     document.addEventListener('mouseup', handelMouseUp)
     //maybe remove this line it is not needed ?
     document.addEventListener('mousemove', mouseMove)
-    document.getElementById('month-wrapper-id')?.classList.add('month-is-dragging')
+    function mouseMove(e:MouseEvent) {
+      if(!hasBenMoved){
+        setEventIsDragging(data)
+        document.getElementById('month-wrapper-id')?.classList.add('month-is-dragging')
+      }else{
+        hasBenMoved = true
+      }
+      props.ondragstart(props.item,e)
+    }
+    function handelMouseUp() {
+     
+      setEventIsDragging(false)
+      document.removeEventListener('mouseup', handelMouseUp)
+      document.removeEventListener('mousemove', mouseMove)
+      document.getElementById('month-wrapper-id')?.classList.remove('month-is-dragging')
+      props.onDragEnd()
+    }
   }
 
-  function mouseMove(e:MouseEvent) {
-    props.ondragstart(props.item,e)
-  }
 
   function eventStyles() {
     return `--ca-color:${props.item.color};${
@@ -55,10 +64,16 @@ export const MonthEvent: FComponent<EventProps> = (props: EventProps) => {
     }
     return ''
   }
+  function onClickHandel(e:MouseEvent){
+    if(props.onClick){
+      props.onClick(props.item,e)
+    }
+  }
 
   return (
     <div
       onmousedown={[onEventMouseDown, true]}
+      onclick={onClickHandel}
       class={`month-item ${isNotAllDay()} ${rightOrLeftInDateInRange(props.item, props.startDate, props.endDate)}`}
       id={`month--item-${props.item.id}`}
       style={eventStyles()}
