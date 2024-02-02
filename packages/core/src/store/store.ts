@@ -135,6 +135,9 @@ export interface CalendarState extends EventCalendarOptions {
 
 const calendarReducer: Reducer<CalendarState, StoreActions> = (state = defaultState, action) => {
   switch (action.type) {
+    case 'DELETE_EVENT':
+      const events12 = [...state.events].filter(ev=>ev.id != action.id)
+      return { ...state, events: events12 }
     case 'SET_STOP_ADD_EVENT':
       return { ...state, stopAddEvent: action.val }
     case 'SET_AVALIBLE_SLOTS':

@@ -121,6 +121,9 @@ export class CalendarImpl implements CalendarApi {
   public setStopAddEvent(val:boolean) {
     this.storeDispatch({ type: 'SET_STOP_ADD_EVENT',val})
   }
+  public deleteEvent(id:string|number) {
+    this.storeDispatch({ type: 'DELETE_EVENT',id})
+  }
   public resetOptions(options: CalendarSourceOptions) {
     if (options.timeZone) {
       this.changeTimeZone(options.timeZone)
