@@ -162,7 +162,7 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
                 style={getDragingStyle()}
               >
                 <div> {draggedData().item?.name}</div>
-                <div>{getDateTimeRange(draggedData().dragedStartDate, draggedData().dragedEndDate)}</div>
+                <div>{getDateTimeRange(draggedData().dragedStartDate, draggedData().dragedEndDate,mergedProps.locale)}</div>
               </div>
             </Show>
           </div>

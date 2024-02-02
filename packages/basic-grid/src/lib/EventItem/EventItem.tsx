@@ -52,7 +52,7 @@ export const EventItem: FComponent<EventItem> = (props) => {
       onMouseDown={(e: MouseEvent) => {
         if (detectLeftButton(e)) props.onDragStart(props.event, e, !doesEventStartOnGridDate())
       }}
-      id={'event-' + props.event.id}
+      id={'event-' + props.event.id} 
       class={`ec-event ${isLowHeight() ? 'one-line-event ' : ''} `}
       data-test-event-id={props.event.id}
       style={`${getPosition()} ;${getHeight()} ;${props.width} ;${getBackGroundColor()};${getBorders()}`}
@@ -61,7 +61,7 @@ export const EventItem: FComponent<EventItem> = (props) => {
         <div class="item-trunctae event-name">{props.event.name}</div>
         <div>
           <span class="event-time-detals" id={'event-end-' + props.event.id}>
-            {getDateTimeRange(props.event.start, props.event.end)}
+            {getDateTimeRange(props.event.start, props.event.end,props.locale)}
           </span>
         </div>
       </div>
