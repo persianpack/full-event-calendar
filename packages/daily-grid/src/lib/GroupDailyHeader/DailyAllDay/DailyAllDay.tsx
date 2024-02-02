@@ -1,15 +1,15 @@
 import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
 import { For, Show, createEffect, createMemo, on, onMount } from 'solid-js'
 import './DailyAllDay.scss'
- 
+
 import { formatNumber, rightOrLeftInDate, sortEventByStart, useSlotModal } from '@full-event-calendar/utils'
 
 interface DailyAllDayProps {
   events: EventClass[]
   initialDate: Date
   locale: string
-  isAllDOpen:boolean
-  setIsAllDOpen:any
+  isAllDOpen: boolean
+  setIsAllDOpen: any
 }
 
 export const DailyAllDay: FComponent<DailyAllDayProps> = (props) => {
@@ -23,18 +23,16 @@ export const DailyAllDay: FComponent<DailyAllDayProps> = (props) => {
     props.setIsAllDOpen(!props.isAllDOpen)
   }
 
-  let hasMounted =false
-  const setHeader = ()=>{
- 
-
+  let hasMounted = false
+  const setHeader = () => {
     const el = allDRef as HTMLElement
-    if(!el) return
+    if (!el) return
     if (props.isAllDOpen) {
       cachecH = el.clientHeight
       el.style.height = el.clientHeight + 'px'
       el.style.maxHeight = 'initial'
 
-      if(!hasMounted) return;
+      if (!hasMounted) return
       setTimeout(() => {
         el.style.height = el.scrollHeight + 'px'
         el.style.maxHeight = '220px'
@@ -48,7 +46,7 @@ export const DailyAllDay: FComponent<DailyAllDayProps> = (props) => {
       el.style.height = el.clientHeight + 'px'
       el.style.maxHeight = 'initial'
 
-      if(!hasMounted) return;
+      if (!hasMounted) return
       setTimeout(() => {
         el.style.height = cachecH + 'px'
         el.style.overflow = 'hidden'
@@ -60,73 +58,75 @@ export const DailyAllDay: FComponent<DailyAllDayProps> = (props) => {
       // props.setIsAllDOpen(false)
     }
   }
-  createEffect(on(()=>props.isAllDOpen, setHeader ) )
-  createEffect(on(()=>props.events, ()=>{
-    if(filteredEvents().length > 0){
+  createEffect(on(() => props.isAllDOpen, setHeader))
+  createEffect(
+    on(
+      () => props.events,
+      () => {
+        if (filteredEvents().length > 0) {
+        } else {
+          const el = allDRef as HTMLElement
+          if (!el) return
+          el.style.height = 'fit-content'
+        }
+      }
+    )
+  )
 
-    }else{
-      const el = allDRef as HTMLElement
-    if(!el) return
-
-      el.style.height = 'fit-content'
-    }
-
-  } ) )
-  onMount(()=>{
+  onMount(() => {
     hasMounted = true
   })
 
-  function headerClick(event:EventClass,e:MouseEvent){
-      setSlotModalData(event)
-      openSlotModalOnElement(e.target)
+  function headerClick(event: EventClass, e: MouseEvent) {
+    setSlotModalData(event)
+    openSlotModalOnElement(e.target)
   }
 
   return (
     <>
-    {modalElementNode}
-    <Show when={filteredEvents().length > 0}>
-      <div class={`all-d-wrapeer-header daosidj ${props.isAllDOpen ? 'alld-open' : 'alld-not-open'}`}>
-        <div class="more-btn-container" style='width:52px'>
-          <Show when={filteredEvents().length > 2}>
-            <div class="all-collapser" onclick={openAllD}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path
-                  d="M13.28 10.0333L8.93333 5.68667C8.42 5.17333 7.58 5.17333 7.06667 5.68667L2.72 10.0333"
-                  stroke="#7E7E7F"
-                  stroke-width="1.5"
-                  stroke-miterlimit="10"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </div>
-          </Show>
-        </div>
+      {modalElementNode}
+      <Show when={filteredEvents().length > 0}>
+        <div class={`all-d-wrapeer-header daosidj ${props.isAllDOpen ? 'alld-open' : 'alld-not-open'}`}>
+          <div class="more-btn-container" style="width:52px">
+            <Show when={filteredEvents().length > 2}>
+              <div class="all-collapser" onclick={openAllD}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path
+                    d="M13.28 10.0333L8.93333 5.68667C8.42 5.17333 7.58 5.17333 7.06667 5.68667L2.72 10.0333"
+                    stroke="#7E7E7F"
+                    stroke-width="1.5"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+            </Show>
+          </div>
 
-        <div class="all-day-container" ref={allDRef}>
-          <For each={filteredEvents()}>
-            {(item) => {
-              return (
-                <div
-                onClick={[headerClick,item]}
-                  data-testid={item.id}
-                  style={`background-color:${item.color}`}
-                  class={`all-day-wrapper ${rightOrLeftInDate(item, props.initialDate)}`}
-                >
-                  {`${item.name} `}
-                </div>
-              )
-            }}
-          </For>
-          <Show when={filteredEvents().length > 2}>
-            <div class="more-btn" onclick={openAllD}>
-              <div class="more-wrapper">{formatNumber(props.locale, filteredEvents().length - 2)} +</div>
-            </div>
-          </Show>
+          <div class="all-day-container" ref={allDRef}>
+            <For each={filteredEvents()}>
+              {(item) => {
+                return (
+                  <div
+                    onClick={[headerClick, item]}
+                    data-testid={item.id}
+                    style={`background-color:${item.color}`}
+                    class={`all-day-wrapper ${rightOrLeftInDate(item, props.initialDate)}`}
+                  >
+                    {`${item.name} `}
+                  </div>
+                )
+              }}
+            </For>
+            <Show when={filteredEvents().length > 2}>
+              <div class="more-btn" onclick={openAllD}>
+                <div class="more-wrapper">{formatNumber(props.locale, filteredEvents().length - 2)} +</div>
+              </div>
+            </Show>
+          </div>
         </div>
-      </div>
-
-    </Show>
+      </Show>
     </>
   )
 }
