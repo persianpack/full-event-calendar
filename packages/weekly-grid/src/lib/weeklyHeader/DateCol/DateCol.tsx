@@ -99,9 +99,35 @@ export const DateCol: FComponent<DateColProps> = (props) => {
     setEvModalElement(event)
     openEvSlotModalOnElement(e.target)
   }
+   let hasMouseMoved =false
+ 
+  function mouseDownSome(n: any, e: any){
+        function handelMouseMove(){
+          console.log('download ')
+      if(!hasMouseMoved){
+        dataColMouseDown(n, e)
+        hasMouseMoved = true
+      }
+      document.removeEventListener('mousemove',handelMouseMove)
+ 
+    }
+    function handelMouseUp(){
+      document.removeEventListener('mouseup',handelMouseUp)
+      document.removeEventListener('mousemove',handelMouseMove)
+      hasMouseMoved = false
+      onDragEnd()
+    }
+    document.addEventListener('mousemove',handelMouseMove)
+    document.addEventListener('mouseup',handelMouseUp)
+  }
+  function mouseEnterSome(n: any){
+    if(hasMouseMoved){
+      onMouseEnterProxy(n)
+    }
+  }
 
-  props.moseEvents.enter = onMouseEnterProxy
-  props.moseEvents.down = dataColMouseDown
+  props.moseEvents.enter = mouseEnterSome
+  props.moseEvents.down = mouseDownSome
 
   return (
     <>
@@ -111,8 +137,8 @@ export const DateCol: FComponent<DateColProps> = (props) => {
       <div
         class="week-all-day-container123"
         data-test-id-all-w-c="1"
-        onmousedown={[dataColMouseDown, 0]}
-        onmousemove={() => onMouseEnterProxy(0)}
+        onmousedown={[mouseDownSome, 0]}
+        onmousemove={() => mouseEnterSome(0)}
         style={isSlotModalOpen() ? 'pointer-events:none' : ''}
       >
         {/* loop on each row list */}
@@ -141,38 +167,38 @@ export const DateCol: FComponent<DateColProps> = (props) => {
       <div
         class="week-all-day-container123"
         data-test-id-all-w-c="2"
-        onmousemove={() => onMouseEnterProxy(1)}
-        onmousedown={[dataColMouseDown, 1]}
+        onmousemove={() => mouseEnterSome(1)}
+        onmousedown={[mouseDownSome, 1]}
       ></div>
       <div
         class="week-all-day-container123"
         data-test-id-all-w-c="3"
-        onmousemove={() => onMouseEnterProxy(2)}
-        onmousedown={[dataColMouseDown, 2]}
+        onmousemove={() => mouseEnterSome(2)}
+        onmousedown={[mouseDownSome, 2]}
       ></div>
       <div
         class="week-all-day-container123"
         data-test-id-all-w-c="4"
-        onmousemove={() => onMouseEnterProxy(3)}
-        onmousedown={[dataColMouseDown, 3]}
+        onmousemove={() => mouseEnterSome(3)}
+        onmousedown={[mouseDownSome, 3]}
       ></div>
       <div
         class="week-all-day-container123"
         data-test-id-all-w-c="5"
-        onmousemove={() => onMouseEnterProxy(4)}
-        onmousedown={[dataColMouseDown, 4]}
+        onmousemove={() => mouseEnterSome(4)}
+        onmousedown={[mouseDownSome, 4]}
       ></div>
       <div
         class="week-all-day-container123"
         data-test-id-all-w-c="6"
-        onmousemove={() => onMouseEnterProxy(5)}
-        onmousedown={[dataColMouseDown, 5]}
+        onmousemove={() => mouseEnterSome(5)}
+        onmousedown={[mouseDownSome, 5]}
       ></div>
       <div
         class="week-all-day-container123"
         data-test-id-all-w-c="7"
-        onmousemove={() => onMouseEnterProxy(6)}
-        onmousedown={[dataColMouseDown, 6]}
+        onmousemove={() => mouseEnterSome(6)}
+        onmousedown={[mouseDownSome, 6]}
       ></div>
     </>
   )
