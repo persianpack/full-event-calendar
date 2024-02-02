@@ -18,10 +18,11 @@ export const DailyHeader: FComponent<DailyHeaderProps> = (props) => {
   let headerSlot: any = {
     el: null
   }
-  // function hi(d:any){
-  //   console.log(d)
-  //   props.onDateChange(d)
-  // }
+  function headerClick(e:MouseEvent){
+    e.stopPropagation()
+    e.preventDefault()
+    props.onDateChange(props.headerDate)
+  }
   const dd = () => {
     return { datee: props.headerDate, ondataChange: props.onDateChange }
   }
@@ -36,7 +37,7 @@ export const DailyHeader: FComponent<DailyHeaderProps> = (props) => {
           <div class="weekend-narrow">
             {formatWeekDays(props.headerDate, props.calendar, props.timeZone, props.locale)}
           </div>
-          <div onClick={() => props.onDateChange(props.headerDate)} class="week-day">
+          <div onClick={headerClick} class="week-day">
             {formatDayNumber(props.locale, props.calendar, props.timeZone, props.headerDate)}
           </div>
         </div>

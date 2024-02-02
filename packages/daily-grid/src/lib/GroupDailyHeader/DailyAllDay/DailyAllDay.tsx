@@ -37,17 +37,21 @@ export const DailyAllDay: FComponent<DailyAllDayProps> = (props) => {
       if(!hasMounted) return;
       setTimeout(() => {
         el.style.height = el.scrollHeight + 'px'
+        el.style.maxHeight = '220px'
       }, 0)
       setTimeout(() => {
+        el.style.overflow = 'auto'
         el.style.height = 'fit-content'
       }, 500)
       // props.setIsAllDOpen(true)
     } else {
       el.style.height = el.clientHeight + 'px'
+      el.style.maxHeight = 'initial'
 
       if(!hasMounted) return;
       setTimeout(() => {
         el.style.height = cachecH + 'px'
+        el.style.overflow = 'hidden'
       }, 0)
       setTimeout(() => {
         el.style.height = 'fit-content'
