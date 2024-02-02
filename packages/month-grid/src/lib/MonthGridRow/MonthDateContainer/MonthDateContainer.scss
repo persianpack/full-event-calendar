@@ -24,7 +24,7 @@
       transition: all 0.3s;
       &:hover {
         background-color:var(--primary) ;
-        color: white;
+        color: white !important;
       }
     }
   }
