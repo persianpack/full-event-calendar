@@ -22,8 +22,6 @@ export const MonthEvent: FComponent<EventProps> = (props: EventProps) => {
 
   const [eventIsDragging, setEventIsDragging] = createSignal(false)
 
-
-
   function onEventMouseDown(data: boolean,event:MouseEvent) {
 
     if(!detectLeftButton(event)) return
@@ -43,7 +41,6 @@ export const MonthEvent: FComponent<EventProps> = (props: EventProps) => {
       props.ondragstart(props.item,e)
     }
     function handelMouseUp() {
-     
       setEventIsDragging(false)
       document.removeEventListener('mouseup', handelMouseUp)
       document.removeEventListener('mousemove', mouseMove)
@@ -61,6 +58,8 @@ export const MonthEvent: FComponent<EventProps> = (props: EventProps) => {
   function isNotAllDay() {
     if (props?.item?.isAllDay) {
       return !props?.item?.isAllDay() ? 'month-item-no-all-day' : ''
+    }else if(props?.item.source){
+      return !props?.item?.source.isAllDay() ? 'month-item-no-all-day' : ''
     }
     return ''
   }
@@ -80,7 +79,6 @@ export const MonthEvent: FComponent<EventProps> = (props: EventProps) => {
       data-test-id-month-item={props.item.id}
     >
       <div class="event-time-month">{`${isNotAllDay() ? formatToShortTime(props.item.start, props.locale) : ''} `}</div>
-
       <div class="event-name-month">{isNotAllDay() ? `(${props.item.name})` : props.item.name}</div>
     </div>
   )

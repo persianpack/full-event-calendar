@@ -27,8 +27,12 @@ export const DateCol: FComponent<DateColProps> = (props) => {
     'addModal',
     clearDataCb
   )
-  const { modalElementNode:addModalElement, setSlotModalData:setEvModalElement,
-     openSlotModalOnElement:openEvSlotModalOnElement, isSlotModalOpen:isEvOPen } = useSlotModal('eventClick')
+  const {
+    modalElementNode: addModalElement,
+    setSlotModalData: setEvModalElement,
+    openSlotModalOnElement: openEvSlotModalOnElement,
+    isSlotModalOpen: isEvOPen
+  } = useSlotModal('eventClick')
 
   function clearDataCb() {
     setDraggingEventData(null)
@@ -95,33 +99,31 @@ export const DateCol: FComponent<DateColProps> = (props) => {
     }
   }
 
-  function onEventClick(event:EventClass,e:MouseEvent){
+  function onEventClick(event: EventClass, e: MouseEvent) {
     setEvModalElement(event)
     openEvSlotModalOnElement(e.target)
   }
-   let hasMouseMoved =false
- 
-  function mouseDownSome(n: any, e: any){
-        function handelMouseMove(){
-          console.log('download ')
-      if(!hasMouseMoved){
+  let hasMouseMoved = false
+
+  function mouseDownSome(n: any, e: any) {
+    function handelMouseMove() {
+      if (!hasMouseMoved) {
         dataColMouseDown(n, e)
         hasMouseMoved = true
       }
-      document.removeEventListener('mousemove',handelMouseMove)
- 
+      document.removeEventListener('mousemove', handelMouseMove)
     }
-    function handelMouseUp(){
-      document.removeEventListener('mouseup',handelMouseUp)
-      document.removeEventListener('mousemove',handelMouseMove)
+    function handelMouseUp() {
+      document.removeEventListener('mouseup', handelMouseUp)
+      document.removeEventListener('mousemove', handelMouseMove)
       hasMouseMoved = false
       onDragEnd()
     }
-    document.addEventListener('mousemove',handelMouseMove)
-    document.addEventListener('mouseup',handelMouseUp)
+    document.addEventListener('mousemove', handelMouseMove)
+    document.addEventListener('mouseup', handelMouseUp)
   }
-  function mouseEnterSome(n: any){
-    if(hasMouseMoved){
+  function mouseEnterSome(n: any) {
+    if (hasMouseMoved) {
       onMouseEnterProxy(n)
     }
   }

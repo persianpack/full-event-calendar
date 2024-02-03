@@ -21,10 +21,11 @@ const [modalData, setModalData] = createSignal<ModalData>({
   left: '0px',
   events: [],
   show: false,
-  somDate: new Date()
+  somDate: new Date(),
 })
 
 export function openModal(data: MonthDateObject, e: MouseEvent, events: EventClass[]) {
+  console.log(data.date.getDay())
   const eventsModal = getEventsInDate(events, data.date)
   const target = e.target as HTMLElement
   const targetRect = target.getBoundingClientRect()
@@ -32,6 +33,11 @@ export function openModal(data: MonthDateObject, e: MouseEvent, events: EventCla
   const modalDataCopy = { ...modalData() }
 
   modalDataCopy.left = targetRect.left + 'px'
+  if(data.date.getDay()=== 6){
+    modalDataCopy.left = '83%'
+  }else if(data.date.getDay()=== 0){
+    modalDataCopy.left = '1%'
+  }
   modalDataCopy.bottom = targetRect.top - containerRect.top + 'px'
   modalDataCopy.show = true
   modalDataCopy.events = eventsModal
@@ -44,6 +50,8 @@ interface ModalProps {
   onDragStart: (draggingOnStartDate: Date,e:MouseEvent, event: EventClass) => void
   onDragEnd: () => void
   locale: string
+  openEvSlotModalOnElement: any
+  setEvModalElement: any
 }
 
 export const EventModal: FComponent<ModalProps> = (props) => {
@@ -90,6 +98,14 @@ export const EventModal: FComponent<ModalProps> = (props) => {
     return ''
   }
 
+  function itemClick(eve:EventClass,e:MouseEvent){
+    // console.log(e.target,eve)
+    e.stopPropagation()
+    e.preventDefault()
+    props.setEvModalElement(eve)
+    props.openEvSlotModalOnElement(e.target)
+  }
+
   return (
     <Show when={modalData().show}>
       {/* 
@@ -97,10 +113,12 @@ export const EventModal: FComponent<ModalProps> = (props) => {
       <div use:ClickOutSide={modalClickOutSide}
         class="modal-event-list custome-scroll-bar "
         style={`left:${modalData().left};top:${modalData().bottom};`}
+      
       >
         <For each={modalData().events}>
           {(event) => (
             <div
+              onclick={[itemClick,event]}
               class={`modal-event ${isNotAllDay(event)} ${rightOrLeftInDate(event, modalData().somDate)}`}
               onmousedown={[modalDragStart, event]}
               style={`background:${event.color};--ca-color:${event.color}`}

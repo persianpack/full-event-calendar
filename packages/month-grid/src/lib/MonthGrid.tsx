@@ -191,9 +191,10 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
         locale={mergedProps.locale}
         timeZone={mergedProps.timeZone}
         calendar={mergedProps.calendar}
+        
       ></MonthHeader>
       <div class="month-wrapper" id="month-wrapper-id">
-        <EventModal locale={mergedProps.locale} onDragEnd={onDragEnd} onDragStart={ModalDragStart} />
+        <EventModal openEvSlotModalOnElement={openEvSlotModalOnElement} setEvModalElement={setEvModalElement} locale={mergedProps.locale} onDragEnd={onDragEnd} onDragStart={ModalDragStart} />
         <For each={monthDatesRows()}>
           {(monthRowDates, monthRowIndex) => (
             <MonthGridRow

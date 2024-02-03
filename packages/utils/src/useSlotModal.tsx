@@ -66,11 +66,14 @@ export function useSlotModal(modalType: string, clearDataCb?: any) {
      // scroll-wrapper 
     const scrollWrapper =  document.getElementById('scroll-wrapper')
     scrollWrapper?.addEventListener('scroll',closeModal)
+    document.addEventListener('scroll',closeModal)
   }
   function removeScrollListner(){
      // scroll-wrapper 
     const scrollWrapper =  document.getElementById('scroll-wrapper')
     scrollWrapper?.removeEventListener('scroll',closeModal)
+    document.removeEventListener('scroll',closeModal)
+
   }
 
   onMount(() => {
