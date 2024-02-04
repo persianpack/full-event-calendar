@@ -58,7 +58,9 @@ export const MonthEvent: FComponent<EventProps> = (props: EventProps) => {
   function isNotAllDay() {
     if (props?.item?.isAllDay) {
       return !props?.item?.isAllDay() ? 'month-item-no-all-day' : ''
+      //@ts-ignore
     }else if(props?.item.source){
+      //@ts-ignore
       return !props?.item?.source.isAllDay() ? 'month-item-no-all-day' : ''
     }
     return ''

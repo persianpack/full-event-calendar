@@ -123,7 +123,7 @@ export const DateCol: FComponent<DateColProps> = (props) => {
     document.addEventListener('mouseup', handelMouseUp)
   }
   function mouseEnterSome(n: any) {
-    if (hasMouseMoved) {
+    if (hasMouseMoved || draggingEventData()) {
       onMouseEnterProxy(n)
     }
   }
