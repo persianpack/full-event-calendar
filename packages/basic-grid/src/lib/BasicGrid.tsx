@@ -69,7 +69,7 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
 
   const ColList = createMemo(() => {
     const finalData = createLinesOfColum(mergedProps.events)
-    return Object.values(finalData)
+    return finalData
   })
 
   function dragEnd(a: DraggedData) {
@@ -114,31 +114,35 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
     <>
       {modalElementNode}
       <div ref={gridRef.current} id={mergedProps.id} class="basic-grid">
-        <div class="holdcontainer" style={getWrapperHeight()}>
-          <For each={ColList()}>
-            {(eventList, colNumber) => {
-              return (
-                <div class="event-colom" data-test-col-id={colNumber()}>
-                  <For each={eventList}>
-                    {(event: EventClass) => {
-                      return (
-                        <EventItem
-                          locale={mergedProps.locale}
-                          event={event}
-                          oneHoureInPixel={oneHoureInPixel()}
-                          gridDate={mergedProps.gridDate}
-                          width={lookForAvailableWith(ColList(), event, colNumber() + 1)}
-                          onMouseDown={onmousedownH}
-                          onDragStart={itemDragstart}
-                        ></EventItem>
-                      )
-                    }}
-                  </For>
-                </div>
-              )
-            }}
-          </For>
-        </div>
+        <For each={ColList()}>
+          {(data) => (
+            <div class="holdcontainer" style={getWrapperHeight()}>
+              <For each={Object.values(data)}>
+                {(eventList, colNumber) => {
+                  return (
+                    <div class="event-colom" data-test-col-id={colNumber()}>
+                      <For each={eventList}>
+                        {(event: EventClass) => {
+                          return (
+                            <EventItem
+                              locale={mergedProps.locale}
+                              event={event}
+                              oneHoureInPixel={oneHoureInPixel()}
+                              gridDate={mergedProps.gridDate}
+                              width={lookForAvailableWith(data, event, colNumber() + 1)}
+                              onMouseDown={onmousedownH}
+                              onDragStart={itemDragstart}
+                            ></EventItem>
+                          )
+                        }}
+                      </For>
+                    </div>
+                  )
+                }}
+              </For>
+            </div>
+          )}
+        </For>
 
         <div class="fec-daily-grid" style={`height: ${mergedProps.gridHeight}px`}>
           <Show when={isDateToday(mergedProps.gridDate)}>
@@ -162,7 +166,9 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
                 style={getDragingStyle()}
               >
                 <div> {draggedData().item?.name}</div>
-                <div>{getDateTimeRange(draggedData().dragedStartDate, draggedData().dragedEndDate,mergedProps.locale)}</div>
+                <div>
+                  {getDateTimeRange(draggedData().dragedStartDate, draggedData().dragedEndDate, mergedProps.locale)}
+                </div>
               </div>
             </Show>
           </div>

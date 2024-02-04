@@ -9,17 +9,34 @@ export function createLinesOfColum(eventList: EventClass[]) {
   eventListCopy.sort(function (a, b) {
     return new Date(a.start).valueOf() - new Date(b.start).valueOf()
   })
+  let currentCol = 0
+  let colList: ColList[] = [
+    {
+      1: []
+    }
+  ]
 
-  const colList: ColList = {
-    1: []
+  function isRowEmptyForEvent(baseEvent: EventClass) {
+    let hasFound = false
+    for (const [key, value] of Object.entries(colList[currentCol])) {
+      if (key === String(1)) continue
+      for (let index = 0; index < value.length; index++) {
+        const event = value[index] as EventClass
+        if (event.checkOverLap(baseEvent)) {
+          hasFound = true
+          break
+        }
+      }
+      if (hasFound) break
+    }
+    return !hasFound
   }
-
   function findAvalibaleCol(colNumber: number, event: EventClass): number {
-    if (!colList[colNumber]) {
-      colList[colNumber] = []
+    if (!colList[currentCol][colNumber]) {
+      colList[currentCol][colNumber] = []
     }
 
-    const colEvents = colList[colNumber]
+    const colEvents = colList[currentCol][colNumber]
     let isColAvalibale = true
 
     for (let i = 0; i < colEvents.length; i++) {
@@ -38,9 +55,20 @@ export function createLinesOfColum(eventList: EventClass[]) {
 
   for (let i = 0; i < eventListCopy.length; i++) {
     const num = findAvalibaleCol(1, eventListCopy[i])
-    colList[num].push(eventListCopy[i])
+    if (num === 1) {
+      // console.log(isRowEmptyForEvent(eventListCopy[i]),eventListCopy[i])
+      const isNewGroup = isRowEmptyForEvent(eventListCopy[i])
+      if (isNewGroup) {
+        currentCol++
+      }
+    }
+    if (!colList[currentCol]) {
+      colList.push({
+        1: []
+      })
+    }
+    colList[currentCol][num].push(eventListCopy[i])
   }
-
   return colList
 }
 
