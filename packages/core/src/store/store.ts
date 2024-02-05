@@ -18,7 +18,8 @@ const defaultState: CalendarState = {
   editable:true,
   theme:'light',
   avalibalSots:[],
-  stopAddEvent:false
+  stopAddEvent:false,
+  containerHeight:900
 }
 
 interface SetAllChatsAction {
@@ -103,6 +104,10 @@ interface ChangeTheme {
   type: 'CHANGE_THEME'
   val: string
 }
+interface ChangeContainerHeight {
+  type: 'CHANGE_CONTAINER_HEIGHT'
+  val: number
+}
 
 // To Do: use better names for set and update
 
@@ -127,6 +132,7 @@ export type StoreActions =
   | ChangeTheme
   | SetAvalibleSlots
   | SetStopAddEvent
+  | ChangeContainerHeight
 
 export type EventCalendarOptions = { [K in keyof CalendarSourceOptions]-?: CalendarSourceOptions[K] }
 export interface CalendarState extends EventCalendarOptions {
@@ -135,6 +141,8 @@ export interface CalendarState extends EventCalendarOptions {
 
 const calendarReducer: Reducer<CalendarState, StoreActions> = (state = defaultState, action) => {
   switch (action.type) {
+    case 'CHANGE_CONTAINER_HEIGHT':
+      return { ...state, containerHeight: action.val }
     case 'DELETE_EVENT':
       const events12 = [...state.events].filter(ev=>ev.id != action.id)
       return { ...state, events: events12 }

@@ -28,6 +28,7 @@ export interface CalendarSourceOptions {
   locale?: string
   grid?: GridModes
   gridHeight?: number
+  containerHeight?:number
   autoUpdateEventOnChange?: boolean
   listMode?: listModeTypes
   groups?:Group[]
@@ -120,6 +121,9 @@ export class CalendarImpl implements CalendarApi {
   }
   public setStopAddEvent(val:boolean) {
     this.storeDispatch({ type: 'SET_STOP_ADD_EVENT',val})
+  }
+  public changeContainerHeight(val:number) {
+    this.storeDispatch({ type: 'CHANGE_CONTAINER_HEIGHT',val})
   }
   public deleteEvent(id:string|number) {
     this.storeDispatch({ type: 'DELETE_EVENT',id})
