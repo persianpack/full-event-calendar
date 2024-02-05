@@ -35,6 +35,7 @@ export interface MonthGridProps {
   onGridChange?: (d: any) => void
   editable?: boolean
   stopAddEvent?: boolean
+  containerHeight:number
 }
 
 export interface MonthDateObject {
@@ -111,7 +112,8 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
   // row 1 -- eventlist[]
   // row n -- eventlist[]
   const monthRowsData = createMemo(() => {
-    setRowLimit(monthDatesRows().length > 5 ? 3 : 4)
+    let r = Math.floor((((props.containerHeight - 75 - 40) / monthDatesRows().length) - 50  -30) / 23)
+    setRowLimit(r)
     return getMonthRows(monthDatesRows(), sortedEvents()) as MonthGridData[]
   })
 
@@ -191,7 +193,6 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
         locale={mergedProps.locale}
         timeZone={mergedProps.timeZone}
         calendar={mergedProps.calendar}
-        
       ></MonthHeader>
       <div class="month-wrapper" id="month-wrapper-id">
         <EventModal openEvSlotModalOnElement={openEvSlotModalOnElement} setEvModalElement={setEvModalElement} locale={mergedProps.locale} onDragEnd={onDragEnd} onDragStart={ModalDragStart} />

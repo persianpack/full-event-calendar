@@ -7,7 +7,7 @@ import { createEffect } from "solid-js"
 export function DailyCols(mergedProps:any,onDateChange:any){
 
 const columData = createMutable([
-    { props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null, showAllDay: false } }
+    { props: { events: [], initialDate: mergedProps.initialDate, locale: mergedProps.locale, timeZone: mergedProps.timeZone, calendar: mergedProps.calendar, showAllDay: true } }
   ]) as unknown as columData[]
 
   function getCols() {
@@ -69,8 +69,6 @@ const columData = createMutable([
       columData[0].props.stopAddEvent = mergedProps.stopAddEvent
     }
   }
-
-  generageCols()
 
   createEffect(generageCols)
   

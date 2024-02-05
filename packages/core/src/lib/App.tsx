@@ -48,7 +48,7 @@ export function App() {
 
   return (
     <>
-      <div class={`full-event-calendar-core calendar-theme-${data.store.theme}`} id="full-event-calendar-core">
+      <div class={`full-event-calendar-core calendar-theme-${data.store.theme}`} id="full-event-calendar-core" style={`height:${data.store.containerHeight}px`}>
         <CalendarHeader onDateChange={onDateChange} />
         <SliderWrapper>
           {/* Grid plugin goes here */}
@@ -70,6 +70,7 @@ export function App() {
             slotRenderStore={data.instance.renderStore}
             avalibalSots={data.store.avalibalSots}
             stopAddEvent={data.store.stopAddEvent}
+            containerHeight={data.store.containerHeight}
           ></Dynamic>
         </SliderWrapper>
       </div>
