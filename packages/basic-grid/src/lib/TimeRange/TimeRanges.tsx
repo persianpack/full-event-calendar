@@ -28,6 +28,7 @@ export const TimeRanges: FComponent<TimeRangeProps> = (props) => {
   }
 
   function getPreviewDate(data: any, houre: any) {
+    if (!props.editable) return
     setSelectedHoure(houre)
     setSlotModalData(data)
   }

@@ -19,7 +19,7 @@ export function App() {
       data.instance.emitEvent('eventUpdate', {
         prev: prev,
         next: next,
-        id:event.id
+        id: event.id
       })
     }
   }
@@ -45,10 +45,14 @@ export function App() {
 
   // We need to unwrapp and cache events for better sorting and performace
   const unwrappedEvents = createMemo(() => [...data.store.events])
-
+  console.log(data.store.editable)
   return (
     <>
-      <div class={`full-event-calendar-core calendar-theme-${data.store.theme}`} id="full-event-calendar-core" style={`height:${data.store.containerHeight}px`}>
+      <div
+        class={`full-event-calendar-core calendar-theme-${data.store.theme}`}
+        id="full-event-calendar-core"
+        style={`height:${data.store.containerHeight}px`}
+      >
         <CalendarHeader onDateChange={onDateChange} />
         <SliderWrapper>
           {/* Grid plugin goes here */}

@@ -1,10 +1,10 @@
 //types
 import { EventClass, FComponent, Group, SourceEvent } from '@full-event-calendar/shared-ts'
 //solid.js
-import {  mergeProps } from 'solid-js'
+import { mergeProps } from 'solid-js'
 //components
 import { GroupGrid } from '@full-event-calendar/group-grid'
-import {  DailyTimeRanges } from '@full-event-calendar/daily-grid'
+import { DailyTimeRanges } from '@full-event-calendar/daily-grid'
 import { BasicGrid } from '@full-event-calendar/basic-grid'
 //utils
 import { WeeklyAllDayHeader } from './WeeklyHeader/WeeklyAllDayHeader'
@@ -22,6 +22,7 @@ export interface WeeklyGridProps {
   locale?: string
   calendar?: string
   timeZone?: string
+  editable: boolean
   gridHeight?: number
   stopAddEvent?: boolean
 }
@@ -37,7 +38,8 @@ const defaultProps = {
   calendar: 'gregory',
   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   gridHeight: 65 * 24,
-  stopAddEvent:false
+  stopAddEvent: false,
+  editable: true
 }
 
 export interface columData {
@@ -49,7 +51,7 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
   const mergedProps = mergeProps(defaultProps, props)
 
   // Group Grid component takes a data for each grid colum
-  const {columData} = useWeekCols(mergedProps,onDateChange)
+  const { columData } = useWeekCols(mergedProps, onDateChange)
 
   function onEventUpdateProxy(updatedSourceEvent: SourceEvent, targetCol: number, baseCol: number, isDragend: boolean) {
     // TargetCol and baseCol are indexes for which colum was event moved in .
@@ -58,7 +60,7 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
       sourceCopy.start.setDate(sourceCopy.start.getDate() - (baseCol - targetCol))
       sourceCopy.end.setDate(sourceCopy.end.getDate() - (baseCol - targetCol))
     }
-    
+
     mergedProps.onEventUpdate(sourceCopy)
   }
 
@@ -87,7 +89,6 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
 
   return (
     <>
-
       <WeeklyAllDayHeader
         onEventUpdate={mergedProps.onEventUpdate}
         events={mergedProps.events}
@@ -100,22 +101,22 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
         onDateChange={onDateChange}
       />
       <ScrollBarWrapper>
-          <div style="display: flex;" class="week-wrapper">
-            <DailyTimeRanges locale={mergedProps.locale} />
-            <GroupGrid
-              gridComponent={BasicGrid}
-              cols={columData}
-              onAddEvent={addEventProxy}
-              onEventUpdate={onEventUpdateProxy}
-              initialDate={mergedProps.initialDate}
-            />
-          </div>
+        <div style="display: flex;" class="week-wrapper">
+          <DailyTimeRanges locale={mergedProps.locale} />
+          <GroupGrid
+            gridComponent={BasicGrid}
+            cols={columData}
+            onAddEvent={addEventProxy}
+            onEventUpdate={onEventUpdateProxy}
+            initialDate={mergedProps.initialDate}
+          />
+        </div>
       </ScrollBarWrapper>
     </>
   )
 }
 
- function ScrollBarWrapper (props:any) {
+function ScrollBarWrapper(props: any) {
   return (
     <div style="position: relative; flex: 1;">
       <div

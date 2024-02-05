@@ -1,17 +1,25 @@
-import { getEventsInDate } from "@full-event-calendar/utils"
-import { createMutable } from "solid-js/store"
-import { columData } from "./GroupDaily"
-import { createEffect } from "solid-js"
+import { getEventsInDate } from '@full-event-calendar/utils'
+import { createMutable } from 'solid-js/store'
+import { columData } from './GroupDaily'
+import { createEffect } from 'solid-js'
 
-
-export function DailyCols(mergedProps:any,onDateChange:any){
-
-const columData = createMutable([
-    { props: { events: [], initialDate: mergedProps.initialDate, locale: mergedProps.locale, timeZone: mergedProps.timeZone, calendar: mergedProps.calendar, showAllDay: true } }
+export function DailyCols(mergedProps: any, onDateChange: any) {
+  const columData = createMutable([
+    {
+      props: {
+        events: [],
+        initialDate: mergedProps.initialDate,
+        locale: mergedProps.locale,
+        timeZone: mergedProps.timeZone,
+        editable: mergedProps.editable,
+        calendar: mergedProps.calendar,
+        showAllDay: true
+      }
+    }
   ]) as unknown as columData[]
 
   function getCols() {
-    for (let i = 0; i < mergedProps.groups.length;  i++) {
+    for (let i = 0; i < mergedProps.groups.length; i++) {
       if (!columData[i]) {
         let x = {
           props: { events: [], initialDate: null, locale: null, timeZone: null, calendar: null, showAllDay: false }
@@ -20,7 +28,7 @@ const columData = createMutable([
       }
     }
   }
-  
+
   function generageCols() {
     getCols()
     // use Factory here
@@ -71,10 +79,9 @@ const columData = createMutable([
   }
 
   createEffect(generageCols)
-  
+
   return {
     columData,
     generageCols
   }
-
 }
