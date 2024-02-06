@@ -15,11 +15,11 @@ const defaultState: CalendarState = {
   autoUpdateEventOnChange: true,
   listMode: 'day',
   groups: [],
-  editable: false,
+  editable: true,
   theme: 'light',
   avalibalSots: [],
   stopAddEvent: false,
-  containerHeight: 900
+  containerHeight: 900 
 }
 
 interface SetAllChatsAction {

@@ -23,6 +23,7 @@ interface WeeklyAllDayHeaderProps {
   timeZone: string
   calendar: string
   stopAddEvent: boolean
+  editable: boolean
 }
 export interface rowList {
   [key: string]: EventClass[]
@@ -48,7 +49,6 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
   })
 
   // Use monthly-grid hook for handling dragging logic
-  // const { onDragEnd, onDragStart, onMouseEnter, draggingEventData,changeDraggerType} = useMonthEventDragging(dragEnd)
   const [draggingEventData, setdraggingEventData] = createSignal(null)
 
   let allDRef: any = {
@@ -138,6 +138,7 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
             locale={props.locale}
             timeZone={props.timeZone}
             stopAddEvent={props.stopAddEvent}
+            editable={props.editable}
             setDraggingDate={setdraggingEventData}
             moseEvents={moseEvents}
           ></DateCol>

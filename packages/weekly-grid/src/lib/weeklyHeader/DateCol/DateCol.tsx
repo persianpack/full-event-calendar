@@ -17,11 +17,12 @@ interface DateColProps {
   setDraggingDate: any
   moseEvents: any
   stopAddEvent: boolean
+  editable: boolean
 }
 
 export const DateCol: FComponent<DateColProps> = (props) => {
   const { onDragEnd, onDragStart, setDraggingEventData, onMouseEnter, draggingEventData, changeDraggerType } =
-    useMonthEventDragging(dragEnd)
+    useMonthEventDragging(dragEnd,props.editable)
 
   const { modalElementNode, setSlotModalData, openSlotModalOnElement, isSlotModalOpen } = useSlotModal(
     'addModal',
@@ -106,6 +107,7 @@ export const DateCol: FComponent<DateColProps> = (props) => {
   let hasMouseMoved = false
 
   function mouseDownSome(n: any, e: any) {
+    if(!props.editable) return
     function handelMouseMove() {
       if (!hasMouseMoved) {
         dataColMouseDown(n, e)
@@ -123,6 +125,7 @@ export const DateCol: FComponent<DateColProps> = (props) => {
     document.addEventListener('mouseup', handelMouseUp)
   }
   function mouseEnterSome(n: any) {
+    if(!props.editable) return
     if (hasMouseMoved || draggingEventData()) {
       onMouseEnterProxy(n)
     }

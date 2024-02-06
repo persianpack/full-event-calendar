@@ -98,6 +98,7 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
         timeZone={mergedProps.timeZone}
         calendar={mergedProps.calendar}
         stopAddEvent={mergedProps.stopAddEvent}
+        editable={mergedProps.editable}
         onDateChange={onDateChange}
       />
       <ScrollBarWrapper>

@@ -68,7 +68,7 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
   const [rowLimit, setRowLimit] = createSignal(4)
 
   const { onDragEnd, onDragStart, onMouseEnter, draggingEventData, changeDraggerType, setDraggingEventData } =
-    useMonthEventDragging(dragEnd)
+    useMonthEventDragging(dragEnd,props.editable)
   //@ts-ignore
   const { modalElementNode, setSlotModalData, openSlotModalOnElement, isSlotModalOpen } = useSlotModal(
     'addModal',

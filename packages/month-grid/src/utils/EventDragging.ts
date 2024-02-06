@@ -3,13 +3,13 @@ import { NewDraggingController } from '@full-event-calendar/utils'
 import { createSignal } from 'solid-js'
 import { DraggerTypes, RowDragger } from './RowDragger'
 
-export function useMonthEventDragging(dragEndCb:(event:EventClass,draggerMode:DraggerTypes)=>void,draggerType:DraggerTypes = 'editEventRow') {
+export function useMonthEventDragging(dragEndCb:(event:EventClass,draggerMode:DraggerTypes)=>void,editable = true,draggerType:DraggerTypes = 'editEventRow') {
 
   const [draggingEventData, setDraggingEventData] = createSignal<null | NewDraggingController>(null)
 
   let eventdrager = new RowDragger(draggerType)
   function onDragStart(event: EventClass,mouseEvent:MouseEvent, startDate?: Date) {
-
+    if(!editable) return 
     eventdrager.dragger.onDragStart(event,mouseEvent,startDate)
     if (!draggingEventData()) {
       setDraggingEventData(eventdrager.dragger.draggingController)
@@ -17,6 +17,7 @@ export function useMonthEventDragging(dragEndCb:(event:EventClass,draggerMode:Dr
   }
 
   function onMouseEnter(date: Date) {
+    if(!editable) return 
     if (!draggingEventData()) return
     eventdrager.dragger.onMouseEnter(date,()=>{
       setDraggingEventData(null)
