@@ -104,7 +104,7 @@ export const DailyAllDay: FComponent<DailyAllDayProps> = (props) => {
             </Show>
           </div>
 
-          <div class="all-day-container" ref={allDRef}>
+          <div class="all-day-container" ref={allDRef} style='height: fit-content; max-height: 81px; overflow: hidden;'>
             <For each={filteredEvents()}>
               {(item) => {
                 return (
