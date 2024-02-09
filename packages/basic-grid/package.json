@@ -46,7 +46,9 @@
   },
   "clean-package": "../../../clean-package.config.json",
   "dependencies": {
-    "@full-event-calendar/utils": "workspace:*",
-    "solid-js": "^1.7.7"
+    "@full-event-calendar/utils": "workspace:*"
+  },
+  "peerDependencies": {
+    "solid-js": ">=1.0.0"
   }
 }

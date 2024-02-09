@@ -26,7 +26,9 @@
   "devDependencies": {
     "@full-event-calendar/shared-ts": "workspace:*",
     "clean-package": "2.2.0",
-    "framer-motion": "^10.16.1"
+    "framer-motion": "^10.16.1",
+
+    "esbuild-sass-plugin": "^2.16.0"
   },
   "scripts": {
     "build": "tsup src/index.ts --dts",
@@ -38,10 +40,12 @@
     "postpack": "clean-package restore",
     "typedocs": "tsx ../../../scripts/generate-type-docs.ts"
   },
+  
   "clean-package": "../../../clean-package.config.json",
   "dependencies": {
-    "esbuild-sass-plugin": "^2.16.0",
-    "@full-event-calendar/utils": "workspace:*",
-    "solid-js": "^1.7.7"
+    "@full-event-calendar/utils": "workspace:*"
+  },
+  "peerDependencies": {
+    "solid-js": ">=1.0.0"
   }
 }

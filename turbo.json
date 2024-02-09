@@ -1,6 +1,5 @@
 {
   "$schema": "https://turborepo.org/schema.json",
-  "baseBranch": "origin/main",
   "pipeline": {
     "build": {
       "outputs": ["dist/**"]
@@ -56,6 +55,9 @@
       "dependsOn": ["@full-event-calendar/shared-ts#dev", "@full-event-calendar/utils#dev"]
     },
     "@full-event-calendar/core#dev": {
+      "dependsOn": ["@full-event-calendar/shared-ts#dev", "@full-event-calendar/utils#dev"]
+    },
+    "@full-event-calendar/group-grid#dev": {
       "dependsOn": ["@full-event-calendar/shared-ts#dev", "@full-event-calendar/utils#dev"]
     },
     "@full-event-calendar/month-grid#dev": {

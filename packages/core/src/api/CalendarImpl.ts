@@ -212,7 +212,7 @@ export class CalendarImpl implements CalendarApi {
         res = plugin.code
       }
     }
-    return res
+    return res ?? plugins[0]?.code
   }
   getOptions() {
     return this.storeManager.plugins.map((item) => {

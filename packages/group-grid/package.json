@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "@full-event-calendar/shared-ts": "workspace:*",
+    "@full-event-calendar/utils": "workspace:*",
     "clean-package": "2.2.0",
     "framer-motion": "^10.16.1"
   },
@@ -40,7 +41,9 @@
   },
   "clean-package": "../../../clean-package.config.json",
   "dependencies": {
-    "esbuild-sass-plugin": "^2.16.0",
-    "solid-js": "^1.7.7"
+    "esbuild-sass-plugin": "^2.16.0"
+  },
+  "peerDependencies": {
+    "solid-js": ">=1.0.0"
   }
 }

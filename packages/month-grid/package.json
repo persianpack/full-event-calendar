@@ -44,7 +44,9 @@
   "dependencies": {
     "@full-event-calendar/utils": "workspace:*",
     "esbuild-sass-plugin": "^2.16.0",
-    "solid-js": "^1.7.7",
     "solid-transition-group": "^0.2.3"
+  },
+  "peerDependencies": {
+    "solid-js": ">=1.0.0"
   }
 }

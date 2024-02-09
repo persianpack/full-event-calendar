@@ -42,7 +42,7 @@
     "typedocs": "tsx ../../../scripts/generate-type-docs.ts"
   },
   "clean-package": "../../../clean-package.config.json",
-  "dependencies": {
-    "solid-js": "^1.7.7"
+  "peerDependencies": {
+    "solid-js": ">=1.0.0"
   }
 }

@@ -45,5 +45,8 @@ export default defineConfig({
         '/node_modules/@full-event-calendar/month-grid/dist/index.js'
       )
     }
+  },
+  server:{
+    port: 8080
   }
 })

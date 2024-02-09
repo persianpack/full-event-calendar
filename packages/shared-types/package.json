@@ -24,8 +24,10 @@
   },
   "devDependencies": {
     "framer-motion": "^10.16.1",
-    "solid-js": "^1.7.7",
     "clean-package": "2.2.0"
+  },
+  "peerDependencies": {
+    "solid-js": ">=1.0.0"
   },
   "scripts": {
     "build": "tsup src --dts",

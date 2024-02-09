@@ -45,7 +45,9 @@
     "@full-event-calendar/utils": "workspace:*",
     "@full-event-calendar/basic-grid": "workspace:*",
     "@full-event-calendar/daily-grid": "workspace:*",
-    "@full-event-calendar/month-grid": "workspace:*",
-    "solid-js": "^1.7.7"
+    "@full-event-calendar/month-grid": "workspace:*"
+  },
+  "peerDependencies": {
+    "solid-js": ">=1.0.0"
   }
 }
