@@ -8,7 +8,6 @@ interface CalendarApi {
   // Current Date
   // -----------------------------------------------------------------------------------------------------------------
   storeManager: CalendarState
-  storeDispatch: Dispatch<StoreActions>
   renderStore:any
   setEventList(events: SourceEvent[]): any
   updateEvent(id: SourceEvent['id'], event: SourceEvent): void
@@ -48,9 +47,9 @@ type listModeTypes ='day' | 'month' | 'week'
 
 export class CalendarImpl implements CalendarApi {
   readonly storeManager
-  readonly storeDispatch
   readonly renderStore = new RenderStore()
   private EventListenrsStorage: EventCollection
+  private readonly storeDispatch:Dispatch<StoreActions>
   
   constructor(eventCalendarOptions: CalendarSourceOptions) {
 
@@ -82,14 +81,12 @@ export class CalendarImpl implements CalendarApi {
   public emitEvent(eventType: EventTypes, payload: EventPayLoads[EventTypes]) {
     this.EventListenrsStorage[eventType].forEach((f) => f(payload))
   }
-
   public on(eventType: EventTypes, handler: Function) {
     this.EventListenrsStorage[eventType].push(handler)
   }
   public setEventList(events: SourceEvent[]) {
     this.storeDispatch({ type: 'SET_ALL_EVENTS', events })
   }
-
   public setPlugins(plugins: Plugins[]) {
     this.storeDispatch({ type: 'SET_PLUGINS', plugins })
   }
@@ -147,7 +144,8 @@ export class CalendarImpl implements CalendarApi {
   public deleteEvent(id:string|number) {
     this.storeDispatch({ type: 'DELETE_EVENT',id})
   }
-  public resetOptions(options: CalendarSourceOptions) {
+  public resetOptions<T extends CalendarSourceOptions>(options:  T) {
+    
     if (options.timeZone) {
       this.changeTimeZone(options.timeZone)
     }
@@ -186,6 +184,9 @@ export class CalendarImpl implements CalendarApi {
     }
     if(options.events){
       this.setEventList(options.events)
+    }
+    if(Object.keys(options).includes('editable')){
+      this.updateEditable(Boolean(options.editable))
     }
   }
 

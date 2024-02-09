@@ -20,7 +20,8 @@
     "format": "prettier --write",
     "build": "pnpm -r build && cd ./packages/vue-full-event-calendar && pnpm pack",
     "precommit": "pretty-quick --staged",
-    "prepare": "husky install .husky"
+    "prepare": "husky install .husky",
+    "build-css":"vite build"
   },
   "author": "Amirkian adl",
   "license": "MIT",

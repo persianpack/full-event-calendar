@@ -119,7 +119,6 @@ export interface CalendarState extends EventCalendarOptions {
   events: EventClass[]
 }
 
- 
 export const createReducer =(ds:CalendarState)=>{
 
   const calendarReducer: Reducer<CalendarState, StoreActions> = (state = ds, action) => {
@@ -136,6 +135,7 @@ export const createReducer =(ds:CalendarState)=>{
       case 'CHANGE_THEME':
         return { ...state, theme: action.val }
       case 'UPDATE_EDITABLE':
+        console.log('action.val',action.val)
         return { ...state, editable: action.val }
       case 'ADD_EVENT':
         const events1 = [...state.events]

@@ -1,34 +1,66 @@
 import { PropType, defineComponent, h, Fragment, Teleport, VNode } from 'vue'
-import { Calendar } from '@full-event-calendar/core'
-// import '@full-event-calendar/core/dist/index.css'
-// import '@full-event-calendar/core/node_modules/@full-event-calendar/basic-grid/dist/index.css'
-// import '@full-event-calendar/month-grid/dist/index.css'
-import '@full-event-css-daily'
-import '@full-event-css-basic'
-import '@full-event-css-core'
-import '@full-event-css-month'
-import '@full-event-css-week'
-
-import { DailyGridPlugin } from '@full-event-calendar/daily-grid'
-import { MonthGridPlugin } from '@full-event-calendar/month-grid'
-import { WeeklyGridPlugin } from '@full-event-calendar/weekly-grid'
-import { ListPlugin } from '@full-event-calendar/list/dist/index.js'
-import'@full-event-calendar/list/dist/index.css'
-
+import { Calendar,CalendarSourceOptions } from '@full-event-calendar/core/dist/index.js'
+import '@full-event-calendar/core/dist/index.css'
+type CalendaropptioNS = keyof CalendarSourceOptions
+const options :CalendaropptioNS[]= [
+  'events',
+  'initialDate',
+  'timeZone',
+  'calendar',
+  'locale',
+  'grid',
+  'gridHeight',
+  'plugins',
+  'autoUpdateEventOnChange',
+  'listMode',
+  'groups',
+  'editable',
+  'theme',
+  'avalibalSots',
+  'stopAddEvent',
+  'containerHeight',
+]
+interface DateComponent {
+  EventCalendar : Calendar | null,
+  customRenderingMap:  Map<string, any>,
+  renderId:number
+}
 const FullEventCalendar = defineComponent({
   props: {
-    events: Array
+    events: {
+      type :Array as unknown as PropType<CalendarSourceOptions['events']> ,
+      required: true,
+    },
+    plugins: {
+      type :Array as any ,
+      required: true,
+    },
+    initialDate: Date as unknown as PropType<CalendarSourceOptions['initialDate']>,
+    timeZone: String as unknown as PropType<CalendarSourceOptions['timeZone']>,
+    calendar: String as unknown as PropType<CalendarSourceOptions['calendar']>,
+    locale: String as unknown as PropType<CalendarSourceOptions['locale']>,
+    grid: String as unknown as PropType<CalendarSourceOptions['grid']>,
+    groups: String as unknown as PropType<CalendarSourceOptions['groups']>,
+    gridHeight: Number as unknown as PropType<CalendarSourceOptions['gridHeight']>,
+    autoUpdateEventOnChange: Boolean as unknown as PropType<CalendarSourceOptions['autoUpdateEventOnChange']>,
+    editable: Boolean as unknown as PropType<CalendarSourceOptions['editable']>,
+    theme: String as unknown as PropType<CalendarSourceOptions['theme']>,
+    avalibalSots: Array as unknown as PropType<CalendarSourceOptions['avalibalSots']>,
+    stopAddEvent: Boolean as unknown as PropType<CalendarSourceOptions['stopAddEvent']>,
+    listMode: Object as unknown as PropType<CalendarSourceOptions['listMode']>,
+    containerHeight: Object as unknown as PropType<CalendarSourceOptions['containerHeight']>
   },
-  data() {
+  data():DateComponent {
     return {
       renderId: 0,
       customRenderingMap: new Map<string, any>(),
-      EventClalendar:null
+      EventCalendar:null
     }
   },
-  methods: {},
+
   render() {
     const customRenderingNodes: VNode[] = []
+ 
     for (const customRendering of this.customRenderingMap.values()) {
      if(!this.$slots[customRendering.name]) continue
       customRenderingNodes.push(
@@ -36,43 +68,41 @@ const FullEventCalendar = defineComponent({
           innerContext:this.$slots[customRendering.name],
           targetContainer:customRendering.target.el,
           data:customRendering.data
-        })
+        }) 
       )
     }
-    // @ts-ignore
     return h('div', { id: `data-fc-render-id-${this.renderId}` },h(Fragment, customRenderingNodes))
-    //  return h('div',  { 'id': `data-fc-render-id-${this.renderId}` },h(this.$slots.testslot,{ 'data-fc-render-id': 1 }))
   },
   
   mounted() {
- 
-    // this.$emit('')
-    // use ref insted
-    const el = document.getElementById(`data-fc-render-id-${this.renderId}`) as HTMLElement
-    const EventCalendar = new Calendar(el, {
-      // @ts-ignore
+
+    const EventCalendar = new Calendar(this.$el, {
       events: this.events,
-      // @ts-ignore
-      gridHeight: 65 * 24,
-      timeZone: 'Africa/Abidjan',
-      calendar: 'persian',
-      locale: 'fa-IR',
-      initialDate: new Date('Thu Aug 10 2023 15:00:0'),
-      //@ts-ignore
-      plugins: [DailyGridPlugin, WeeklyGridPlugin, MonthGridPlugin,ListPlugin],
-      stopAddEvent:true,
-      grid: 'daily'
+      gridHeight: this.gridHeight,
+      timeZone: this.timeZone,
+      calendar: this.calendar,
+      locale: this.locale,
+      initialDate: this.initialDate,
+      plugins: this.plugins,
+      stopAddEvent:this.stopAddEvent,
+      autoUpdateEventOnChange:this.autoUpdateEventOnChange,
+      grid: this.grid,
+      listMode: this.listMode,
+      groups: this.groups,
+      editable: this.editable,
+      theme: this.theme,
+      containerHeight: this.containerHeight,
     })
-      //@ts-ignore
-    this.EventClalendar = EventCalendar
+    
+    this.EventCalendar = EventCalendar
     console.time('rendered in vue')
     EventCalendar.renderStore.subscribe(()=>{
       this.customRenderingMap = EventCalendar.renderStore.getState()
-      this.renderId++
+      this.renderRequest()
     })
     EventCalendar.setAvalibleSlots(Object.keys(kebabToCamelKeys(this.$slots)))
     EventCalendar.render()
-    // this.customRenderingMap.set('sometarget','somevalue')
+    
     const self = this
 
     EventCalendar.on('eventClicked',(data:any)=>{
@@ -80,36 +110,56 @@ const FullEventCalendar = defineComponent({
     })
 
     EventCalendar.on('eventUpdate',(data:any)=>{
-      // update:firstName
       
-      //@ts-ignore
-      const eventsCopy = [...this.events] as EventSource[]
+      const eventsCopy = [...this.events] 
 
       let ind = eventsCopy.findIndex(item=>item.id === data.id)
       eventsCopy[ind] = data.next.sourceEvent
       self.$emit('update:events',eventsCopy)
-      setTimeout(() => {
-      }, 500);
-      // self.$emit('eventUpdate',data)
+     
     })
     
     console.timeEnd('rendered in vue')
   },
-  watch:{
-    'events':{
+  methods: {
+    registerListenrs(){
+      const self = this
+      if(!this.EventCalendar) return
+      this.EventCalendar.on('eventClicked',(data:any)=>{
+        self.$emit('eventClicked',data)
+      })
+  
+      this.EventCalendar.on('eventUpdate',(data:any)=>{
+        const eventsCopy = [...this.events] 
+        let ind = eventsCopy.findIndex(item=>item.id === data.id)
+        eventsCopy[ind] = data.next.sourceEvent
+        self.$emit('update:events',eventsCopy)
+     
+      })
+    },
+    renderRequest(){
+      this.renderId++
+    }
+  },
+  watch:buildWatchers()
+})
+function buildWatchers(){
+  const wacthers = {}as any
+
+  for (let index = 0; index < options.length; index++) {
+    const option = options[index];
+    wacthers[option] = {
       deep: true,
       handler(val: any) {
-        const calendar =  this.EventClalendar as any as Calendar
         //@ts-ignore
-        calendar.resetOptions({events:val})
+        this.EventCalendar.resetOptions({[option]:val})
       }
     }
   }
-})
-
+  return wacthers
+}
 const CustomRenderingComponent = defineComponent({
   props: ['targetContainer','innerContext','data'],
-
   render() {
     return h(Teleport, { to: this.targetContainer }, h(this.innerContext,{'data': this.data }))
   }

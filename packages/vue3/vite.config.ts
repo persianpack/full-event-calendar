@@ -35,7 +35,7 @@ export default defineConfig({
       '@full-event-css-daily': path.join(__dirname, '/node_modules/@full-event-calendar/daily-grid/dist/index.css'),
       '@full-event-css-month': path.join(__dirname, '/node_modules/@full-event-calendar/month-grid/dist/index.css'),
       '@full-event-css-week': path.join(__dirname, '/node_modules/@full-event-calendar/weekly-grid/dist/index.css'),
-      '@full-event-calendar/core': path.join(__dirname, '/node_modules/@full-event-calendar/core/dist/index.js'),
+      // '@full-event-calendar/core': path.join(__dirname, '/node_modules/@full-event-calendar/core/dist/index.js'),
       '@full-event-calendar/weekly-grid': path.join(
         __dirname,
         '/node_modules/@full-event-calendar/weekly-grid/dist/index.js'
