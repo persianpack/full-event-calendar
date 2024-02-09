@@ -6,6 +6,7 @@ import { DailyTimeRanges } from '..'
 import { GroupDailyHeader } from './GroupDailyHeader/GroupDailyHeader'
 import { DailyCols } from './DailyCols'
 import { mergeProps } from 'solid-js'
+import { useCalenderContainerState } from '@full-event-calendar/utils'
 
 export interface GroupDailyProps extends DailyGridProps {
   groups?: Group[]
@@ -22,7 +23,7 @@ export interface columData {
 export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
 
   const mergedProps = mergeProps(defaultProps, props)
- 
+  const container = useCalenderContainerState()
   function onDateChange(d: Date) {
     mergedProps.onDateChange(d)
   }
@@ -55,6 +56,7 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
             onAddEvent={addEventProxy}
             initialDate={mergedProps.initialDate}
             hasCrossGridDrag={false}
+            container={container}
           />
       </div>
       </div>

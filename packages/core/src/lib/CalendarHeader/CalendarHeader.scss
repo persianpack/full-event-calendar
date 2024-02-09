@@ -108,6 +108,7 @@
     position: relative;
     cursor: pointer;
     transition: all 0.3s;
+    text-transform: capitalize;
     &:hover{
     background: var(--bg-hover);
       

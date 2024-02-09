@@ -45,7 +45,6 @@ export function App() {
 
   // We need to unwrapp and cache events for better sorting and performace
   const unwrappedEvents = createMemo(() => [...data.store.events])
-  console.log(data.store.editable)
   return (
     <>
       <div

@@ -1,7 +1,7 @@
 import { EventClass } from '@full-event-calendar/shared-ts'
 
 import {   createSignal, onCleanup, onMount } from 'solid-js'
-import { useSlot } from '.'
+import { useCalenderContainerState, useSlot } from '.'
 
 let inctenceCout = 0
 let activeInstence = 0
@@ -61,25 +61,29 @@ export function useSlotModal(modalType: string, clearDataCb?: any) {
       }, 0)
     }, 0)
   }
+  const container = useCalenderContainerState()
     
   function setScrollListner(){
      // scroll-wrapper 
-    const scrollWrapper =  document.getElementById('scroll-wrapper')
+    const scrollWrapper =  container?.querySelector('.scroll-wrapper')
     scrollWrapper?.addEventListener('scroll',closeModal)
     document.addEventListener('scroll',closeModal)
   }
   function removeScrollListner(){
      // scroll-wrapper 
-    const scrollWrapper =  document.getElementById('scroll-wrapper')
+    const scrollWrapper =  container?.querySelector('.scroll-wrapper')
     scrollWrapper?.removeEventListener('scroll',closeModal)
     document.removeEventListener('scroll',closeModal)
 
   }
 
   onMount(() => {
-    document.querySelector('#scroll-wrapper')?.addEventListener('scroll', () => {
-      // remove modal
-    })
+
+    if(container){
+      container.querySelector('#scroll-wrapper')?.addEventListener('scroll', () => {
+        // remove modal
+      })
+    }
   })
   onCleanup(() => {
     const container = targetElRef()

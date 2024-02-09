@@ -2,7 +2,7 @@ import { createSignal, batch, onCleanup } from 'solid-js'
 import { EventClass } from '@full-event-calendar/shared-ts'
  
 import { CalendarDragger } from './newDragging'
-import { DomController, NewDraggingController } from '@full-event-calendar/utils'
+import { DomController, NewDraggingController, useCalenderContainerState } from '@full-event-calendar/utils'
 // import { DomController } from '@full-event-calendar/utils/src/Drag/DomController'
 
 export function userDragger(gridRef: any, dragEndCallBack: (initialDragNode: any) => void, gridContainer: any,editable:boolean,onEventCLick:(event:EventClass,targetELnode:HTMLElement)=>void) {
@@ -16,10 +16,11 @@ export function userDragger(gridRef: any, dragEndCallBack: (initialDragNode: any
   const [isDragging, setIsDragging] = createSignal(false)
   const [draggedData, setDraggedData] = createSignal<any>()
 
-  
+  const container = useCalenderContainerState()
   function itemDragstart(e: EventClass, d: any) {
     if(!editable)return
-    calendarDragger = new CalendarDragger('DailyDragDrop')
+    
+    calendarDragger = new CalendarDragger('DailyDragDrop',container!)
     calendarDragger.dragger.dragStart(d,e)
     
     if (isDragging()) return
@@ -41,9 +42,8 @@ export function userDragger(gridRef: any, dragEndCallBack: (initialDragNode: any
 
  function handelMouseUp(e: MouseEvent) {
    if(!editable)return
-
     // call mouse move in case of scolling not moving
-    if (domController.hasScrolled) {
+    if (calendarDragger.dragger.hasScrolled) {
       mouseMove(e)
     } else if (!calendarDragger.dragger.hasMouseMoved) {
       onEventCLick(calendarDragger.dragger.draggingController?.event!,calendarDragger.dragger.draggingController?.getEventNode()!)

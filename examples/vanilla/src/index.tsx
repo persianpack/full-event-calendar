@@ -5,6 +5,7 @@ import { WeeklyGridPlugin } from '@full-event-calendar/weekly-grid'
 import { ListPlugin } from '@full-event-calendar/list'
 import './App.css'
 const el = document.getElementById('app') as HTMLElement
+const el2 = document.getElementById('app2') as HTMLElement
 
 const events = [
   //all days for wwekly
@@ -290,8 +291,25 @@ const EventCalendar = new Calendar(el, {
   listMode : 'week',
   // groups:[]
 })
+const EventCalendar2 = new Calendar(el2, {
+  events: events,
+  // @ts-ignore
+  gridHeight: 60 * 24,
+  // autoUpdateEventOnChange:false,
+  timeZone: 'Africa/Abidjan',
+  // calendar: 'persian',
+  // locale: 'fa-IR',
+  initialDate: new Date('Thu Aug 10 2023 15:00:0'),
+  //@ts-ignore
+  plugins: [DailyGridPlugin, MonthGridPlugin, WeeklyGridPlugin, ListPlugin],
+  grid: 'daily',
+  listMode : 'week',
+  // groups:[]
+})
+console.log(EventCalendar2,EventCalendar)
 console.time('rendered in ')
 EventCalendar.render()
+EventCalendar2.render() 
 console.timeEnd('rendered in ')
 EventCalendar.on('eventUpdate', (e, r, t) => {
   console.log(e, r, t)

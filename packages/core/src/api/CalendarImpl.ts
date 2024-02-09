@@ -1,5 +1,4 @@
 import useRedux from '../store/useRedux'
-import chatStore from '../store/store'
 import type { Dispatch } from 'redux'
 import { CalendarState, StoreActions } from '../store/store'
 import { EventClass, Group, SourceEvent } from '@full-event-calendar/shared-ts'
@@ -54,7 +53,27 @@ export class CalendarImpl implements CalendarApi {
   private EventListenrsStorage: EventCollection
   
   constructor(eventCalendarOptions: CalendarSourceOptions) {
-    const { store, dispatch } = useRedux(chatStore)
+
+    const defaultState: CalendarState = {
+      events: [],
+      initialDate: new Date(),
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      calendar: 'gregory',
+      locale: 'en-US',
+      grid: 'daily',
+      gridHeight: 1920,
+      plugins: [],
+      autoUpdateEventOnChange: true,
+      listMode: 'day',
+      groups: [],
+      editable: true,
+      theme: 'light',
+      avalibalSots: [],
+      stopAddEvent: false,
+      containerHeight: 900 
+    }
+    
+    const { store, dispatch } = useRedux(defaultState)
     this.storeManager = store
     this.storeDispatch = dispatch
     this.resetOptions(eventCalendarOptions)

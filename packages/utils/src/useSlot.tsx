@@ -8,18 +8,23 @@ const CustomeRenderContext = createContext() as Context<ContextProvider>
 interface ContextProvider {
   slotRenderer: any
   avalibalSots: any
+  calendarContainer: any
 }
 
 export const SlotProvider: FComponent<ContextProvider> = (props) => {
   const data = {
     slotRenderer: props.slotRenderer,
-    avalibalSots: props.avalibalSots
+    avalibalSots: props.avalibalSots,
+    calendarContainer: props.calendarContainer,
   }
   return <CustomeRenderContext.Provider value={data}>{props.children}</CustomeRenderContext.Provider>
 }
 
 export function useSlotState() {
   return useContext(CustomeRenderContext)
+}
+export function useCalenderContainerState():HTMLElement | null {
+  return useContext(CustomeRenderContext)?.calendarContainer
 }
 
 export function useSlot(target:any,data:any,slotName:any,dep:any) {

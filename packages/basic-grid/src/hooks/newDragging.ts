@@ -1,12 +1,17 @@
 import { EventClass } from '@full-event-calendar/shared-ts'
 
-import { NewDomController, NewDraggingController, getDateTimeRange } from '@full-event-calendar/utils'
+import { NewDomController, NewDraggingController, getDateTimeRange,useCalenderContainerState } from '@full-event-calendar/utils'
 abstract class DraggerHandeler {
   isDragging: boolean = false
   draggingController: NewDraggingController | null = null
+  container:HTMLElement;
+  constructor(container:HTMLElement){
+    this.container = container
+  }
   public createDraggingObject(mouseEvent: MouseEvent, event: EventClass) {
+ 
     if (this.isDragging) return
-    this.draggingController = new NewDraggingController(mouseEvent, event)
+    this.draggingController = new NewDraggingController(mouseEvent, event,this.container)
   }
 }
 
@@ -15,45 +20,65 @@ interface Dragger extends DraggerHandeler {
   dragStart: (e: MouseEvent, event: EventClass) => void
   dragEnd: (e: MouseEvent) => void
   hasMouseMoved: boolean
+  hasScrolled: boolean
 }
 
 class DailyGridDragger extends DraggerHandeler implements Dragger {
   hasMouseMoved = false
-  firstTopPosition = 0
-  dragStart(e: MouseEvent, event: EventClass) {
+  hasScrolled = false
+  firstTopPosition = 0 
+  firstScrollTop = 0
+  private sceollHande:any;
+  dragStart(e: MouseEvent, event: EventClass,) {
     this.createDraggingObject(e, event)
     const el = this.draggingController?.getEventNode(e) as HTMLElement
     this.firstTopPosition = el.getBoundingClientRect().top
+    this.firstScrollTop = this.container.querySelector('#scroll-wrapper')?.scrollTop!
+    const self = this
+    this.sceollHande = ()=>{
+      self.hasScrolled = true
+    }
+   this.container.querySelector('#scroll-wrapper')?.addEventListener('scroll',self.sceollHande)
   }
   mouseMove(e: MouseEvent) {
+    const scrollDiff = this.container.querySelector('#scroll-wrapper')?.scrollTop! - this.firstScrollTop
+    if(scrollDiff != 0 ){
+      this.hasScrolled = true
+    }
     this.hasMouseMoved = true
     if (!this.draggingController) return
     if (!this.isDragging) {
       this.isDragging = true
-      document.getElementById('full-event-calendar-core')?.classList.add('calendar-draging')
+      this.container.querySelector('#full-event-calendar-core')?.classList.add('calendar-draging')
       this.draggingController.setEelementOpacity('0.3')
     }
     const previewieNode = this.getPreviewNode()
-    if (previewieNode) {
+    if (previewieNode) { 
       const mouseDiff = e.clientY - previewieNode.getBoundingClientRect().top
-      const diffInSeconds = NewDomController.previewAndEventTimeDiff(this.firstTopPosition, e.clientY - mouseDiff)
+      //@ts-ignore
+      const oneHoureInPixel = this.container.querySelector('.time-range')?.offsetHeight 
+      const diffInSeconds = NewDomController.previewAndEventTimeDiff(this.firstTopPosition - scrollDiff, e.clientY - mouseDiff,oneHoureInPixel)
       // console.log(diffInSeconds/1000/60)
       this.draggingController.shiftTime(diffInSeconds)
     }
     this.draggingController.shiftPoistion(e)
   }
   dragEnd(e: MouseEvent) {
+    const self = this
+   this.container.querySelector('#scroll-wrapper')?.removeEventListener('scroll',self.sceollHande)
+
     this.isDragging = false
     if (!this.draggingController) return
-    document.getElementById('full-event-calendar-core')?.classList.remove('calendar-draging')
+    this.container.querySelector('#full-event-calendar-core')?.classList.remove('calendar-draging')
   }
   getPreviewNode() {
-    return document.getElementById(`draging-event-${this.draggingController?.item.id}`) as HTMLElement
+    return this.container.querySelector(`#draging-event-${this.draggingController?.item.id}`) as HTMLElement
   }
 }
 
 class EventResize extends DraggerHandeler implements Dragger {
   hasMouseMoved = false
+  hasScrolled = false
   prevX = 0
   FirstBottomY = 0
   rect = null as any
@@ -78,7 +103,8 @@ class EventResize extends DraggerHandeler implements Dragger {
     if (endTimeNode)
       endTimeNode.innerHTML = getDateTimeRange(
         this.draggingController?.dragedStartDate!,
-        this.draggingController?.dragedEndDate!
+        this.draggingController?.dragedEndDate!,
+        'en-US'
       )
   }
   dragEnd(e: MouseEvent) {
@@ -92,10 +118,12 @@ class EventResize extends DraggerHandeler implements Dragger {
 
 class AddEventWithResize extends DraggerHandeler implements Dragger {
   hasMouseMoved = false
+  hasScrolled = false
   resizer: EventResize | null = null
   private event: EventClass | null = null
   dragStart(e: MouseEvent, event: EventClass) {
-    this.resizer = new EventResize()
+   
+    this.resizer = new EventResize(this.container)
     this.event = event
   }
   mouseMove(e: MouseEvent) {
@@ -118,19 +146,19 @@ class AddEventWithResize extends DraggerHandeler implements Dragger {
 export type drageModes = 'DailyDragDrop' | 'eventResizer' | 'addEventWithResize'
 export class CalendarDragger {
   dragger: Dragger
-  constructor(mode: drageModes) {
+  constructor(mode: drageModes,container:HTMLElement) {
     switch (mode) {
       case 'DailyDragDrop':
-        this.dragger = new DailyGridDragger()
+        this.dragger = new DailyGridDragger(container)
         break
       case 'eventResizer':
-        this.dragger = new EventResize()
+        this.dragger = new EventResize(container)
         break
       case 'addEventWithResize':
-        this.dragger = new AddEventWithResize()
+        this.dragger = new AddEventWithResize(container)
         break
       default:
-        this.dragger = new DailyGridDragger()
+        this.dragger = new DailyGridDragger(container)
         break
     }
   }

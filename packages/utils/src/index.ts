@@ -1,7 +1,7 @@
 export { useSlotModal } from './useSlotModal'
 export { useSlot } from './useSlot'
 export { DomController ,detectLeftButton} from './Drag/DomController'
-export { SlotProvider,useSlotState } from './useSlot'
+export { SlotProvider,useSlotState ,useCalenderContainerState} from './useSlot'
 export { NewDomController } from './Drag/newUiController'
 export { rightOrLeftInDateInRange,rightOrLeftInDate } from './Month utils/rageArrows'
 export { NewDraggingController } from './Drag/DraggingEvent'

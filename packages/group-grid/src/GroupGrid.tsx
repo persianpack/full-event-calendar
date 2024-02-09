@@ -5,6 +5,7 @@ import { Dynamic } from 'solid-js/web'
 import { createMemo, mapArray, mergeProps } from 'solid-js'
 // Utils
 import { whichColumWasDropped } from './utils/col'
+import { useCalenderContainerState } from '@full-event-calendar/utils'
 
 interface GroupGridProps {
   initialDate?: Date
@@ -13,6 +14,7 @@ interface GroupGridProps {
   onAddEvent?: (event: SourceEvent) => void
   gridComponent: any
   hasCrossGridDrag?: boolean
+  container?:any
 }
 
 interface columItem {
@@ -25,7 +27,8 @@ const defaultProps = {
   cols: [],
   hasCrossGridDrag: true,
   onEventUpdate: () => {},
-  onAddEvent: () => {}
+  onAddEvent: () => {},
+
 }
 
 export const GroupGrid: FComponent<GroupGridProps> = (props) => {
@@ -33,11 +36,11 @@ export const GroupGrid: FComponent<GroupGridProps> = (props) => {
   const mergedProps = mergeProps(defaultProps, props)
   //@ts-ignore
   let colIds = mergedProps.cols.map((_, i) => `cl-${i}`) as string[]
-
+  const container = props.container ?? useCalenderContainerState()
   function eventUpdateProxy(eventSource: SourceEvent, draggedData: any, startingColId: number) {
     // calculate  which colum the event was dropped in
     if (draggedData?.isDragg) {
-      const colNumber = whichColumWasDropped(colIds, draggedData.mouseX)
+      const colNumber = whichColumWasDropped(colIds, draggedData.mouseX,container!)
       // mergedProps.onEventUpdate(eventSource, startingColId, startingColId, false)
       mergedProps.onEventUpdate(eventSource, colNumber, startingColId, true)
     } else {

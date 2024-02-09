@@ -2,7 +2,7 @@ import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
 import { createMemo, createSignal } from 'solid-js'
 import './MonthEvent.scss'
 import { getLeftPosition, getEndPosition } from '../../../../utils/EventPosition'
-import { formatToShortTime, rightOrLeftInDateInRange } from '@full-event-calendar/utils'
+import { formatToShortTime, rightOrLeftInDateInRange, useCalenderContainerState } from '@full-event-calendar/utils'
 import { detectLeftButton } from '@full-event-calendar/utils'
 interface EventProps {
   item: EventClass
@@ -21,6 +21,7 @@ export const MonthEvent: FComponent<EventProps> = (props: EventProps) => {
   const eventWidth = getEndPosition(props.item, props.endDate, leftP())
 
   const [eventIsDragging, setEventIsDragging] = createSignal(false)
+  const container = useCalenderContainerState()
 
   function onEventMouseDown(data: boolean,event:MouseEvent) {
 
@@ -34,7 +35,7 @@ export const MonthEvent: FComponent<EventProps> = (props: EventProps) => {
     function mouseMove(e:MouseEvent) {
       if(!hasBenMoved){
         setEventIsDragging(data)
-        document.getElementById('month-wrapper-id')?.classList.add('month-is-dragging')
+        container?.querySelector('#month-wrapper-id')?.classList.add('month-is-dragging')
       }else{
         hasBenMoved = true
       }
@@ -44,7 +45,7 @@ export const MonthEvent: FComponent<EventProps> = (props: EventProps) => {
       setEventIsDragging(false)
       document.removeEventListener('mouseup', handelMouseUp)
       document.removeEventListener('mousemove', mouseMove)
-      document.getElementById('month-wrapper-id')?.classList.remove('month-is-dragging')
+      container?.querySelector('#month-wrapper-id')?.classList.remove('month-is-dragging')
       props.onDragEnd()
     }
   }

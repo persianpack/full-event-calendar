@@ -2,7 +2,7 @@
 import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
 import { MonthDateObject } from '../MonthGrid'
 // Utils
-import { formatToShortTime, getEventsInDate, rightOrLeftInDate } from '@full-event-calendar/utils'
+import { formatToShortTime, getEventsInDate, rightOrLeftInDate, useCalenderContainerState } from '@full-event-calendar/utils'
 // Solid.js
 import { For, Show, createSignal, onCleanup } from 'solid-js'
 // Styles
@@ -16,35 +16,7 @@ interface ModalData {
   somDate: Date
 }
 
-const [modalData, setModalData] = createSignal<ModalData>({
-  bottom: '0px',
-  left: '0px',
-  events: [],
-  show: false,
-  somDate: new Date(),
-})
-
-export function openModal(data: MonthDateObject, e: MouseEvent, events: EventClass[]) {
-  console.log(data.date.getDay())
-  const eventsModal = getEventsInDate(events, data.date)
-  const target = e.target as HTMLElement
-  const targetRect = target.getBoundingClientRect()
-  const containerRect = document.getElementById('month-wrapper-id')?.getBoundingClientRect() as DOMRect
-  const modalDataCopy = { ...modalData() }
-
-  modalDataCopy.left = targetRect.left + 'px'
-  if(data.date.getDay()=== 6){
-    modalDataCopy.left = '83%'
-  }else if(data.date.getDay()=== 0){
-    modalDataCopy.left = '1%'
-  }
-  modalDataCopy.bottom = targetRect.top - containerRect.top + 'px'
-  modalDataCopy.show = true
-  modalDataCopy.events = eventsModal
-  modalDataCopy.somDate = data.date
-
-  setModalData(modalDataCopy)
-}
+ 
 
 interface ModalProps {
   onDragStart: (draggingOnStartDate: Date,e:MouseEvent, event: EventClass) => void
@@ -52,6 +24,8 @@ interface ModalProps {
   locale: string
   openEvSlotModalOnElement: any
   setEvModalElement: any
+  setModalData: any
+  modalData: any
 }
 
 export const EventModal: FComponent<ModalProps> = (props) => {
@@ -64,23 +38,24 @@ export const EventModal: FComponent<ModalProps> = (props) => {
   }
 
   function modalClickOutSide() {
-    const modalDataCopy = { ...modalData() }
+    const modalDataCopy = { ...props.modalData }
     modalDataCopy.show = false
-    setModalData(modalDataCopy)
+    props.setModalData(modalDataCopy)
   }
   let draggingEvent: EventClass | null = null
+  const container = useCalenderContainerState()
 
   function handelMouseUp() {
     document.removeEventListener('mouseup', handelMouseUp)
     document.removeEventListener('mousemove', mouseMove)
-    document.getElementById('month-wrapper-id')?.classList.remove('month-is-dragging')
+    container?.querySelector('#month-wrapper-id')?.classList.remove('month-is-dragging')
     props.onDragEnd()
     draggingEvent = null
   }
 
   function mouseMove(e:MouseEvent) {
     if (draggingEvent) {
-      props.onDragStart(modalData().somDate,e, draggingEvent)
+      props.onDragStart(props.modalData.somDate,e, draggingEvent)
     }
   }
 
@@ -88,7 +63,7 @@ export const EventModal: FComponent<ModalProps> = (props) => {
     draggingEvent = event
     document.addEventListener('mouseup', handelMouseUp)
     document.addEventListener('mousemove', mouseMove)
-    document.getElementById('month-wrapper-id')?.classList.add('month-is-dragging')
+    container?.querySelector('#month-wrapper-id')?.classList.add('month-is-dragging')
   }
 
   function isNotAllDay(event: EventClass) {
@@ -107,19 +82,19 @@ export const EventModal: FComponent<ModalProps> = (props) => {
   }
 
   return (
-    <Show when={modalData().show}>
+    <Show when={props.modalData.show}>
       {/* 
       //@ts-ignore */}
       <div use:ClickOutSide={modalClickOutSide}
         class="modal-event-list custome-scroll-bar "
-        style={`left:${modalData().left};top:${modalData().bottom};`}
+        style={`left:${props.modalData.left};top:${props.modalData.bottom};`}
       
       >
-        <For each={modalData().events}>
+        <For each={props.modalData.events}>
           {(event) => (
             <div
               onclick={[itemClick,event]}
-              class={`modal-event ${isNotAllDay(event)} ${rightOrLeftInDate(event, modalData().somDate)}`}
+              class={`modal-event ${isNotAllDay(event)} ${rightOrLeftInDate(event, props.modalData.somDate)}`}
               onmousedown={[modalDragStart, event]}
               style={`background:${event.color};--ca-color:${event.color}`}
             >

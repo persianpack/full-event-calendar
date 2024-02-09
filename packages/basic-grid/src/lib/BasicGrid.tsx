@@ -6,7 +6,7 @@ import { useResize } from '../hooks/eventResize'
 import { TimeBar } from './TimeBar/TimeBar'
 import { lookForAvailableWith } from '../utils/coleLine'
 import './basicGrid.scss'
-import { getDateTimeRange, isDateToday, useSlotModal } from '@full-event-calendar/utils'
+import { getDateTimeRange, isDateToday, useSlotModal,useCalenderContainerState } from '@full-event-calendar/utils'
 import { EventItem } from './EventItem/EventItem'
 // import { TimeRange } from './TimeRange/TimeRange'
 import { TimeRanges } from './TimeRange/TimeRanges'
@@ -60,7 +60,7 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
   onMount(() => {
     setTimeout(() => {
       if (mergedProps.container) {
-        gridContainer.current = document.getElementById(mergedProps.container)
+        gridContainer.current = container?.querySelector('#' + mergedProps.container)
       } else {
         gridContainer.current = gridRef.current
       }
@@ -72,6 +72,8 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
     return finalData
   })
 
+  const container = useCalenderContainerState()
+ 
   function dragEnd(a: DraggedData) {
     const sourceE = { ...a.item?.sourceEvent }
     sourceE.start = a.eventSourceStart as Date

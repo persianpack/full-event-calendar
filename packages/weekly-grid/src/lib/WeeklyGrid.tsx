@@ -11,6 +11,7 @@ import { WeeklyAllDayHeader } from './WeeklyHeader/WeeklyAllDayHeader'
 // Styles
 import './WeekGrid.scss'
 import { useWeekCols } from './WeekCols'
+import { useCalenderContainerState } from '@full-event-calendar/utils'
 
 export interface WeeklyGridProps {
   events?: EventClass[]
@@ -49,6 +50,7 @@ export interface columData {
 
 export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
   const mergedProps = mergeProps(defaultProps, props)
+  const container = useCalenderContainerState()
 
   // Group Grid component takes a data for each grid colum
   const { columData } = useWeekCols(mergedProps, onDateChange)
@@ -109,6 +111,7 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
             cols={columData}
             onAddEvent={addEventProxy}
             onEventUpdate={onEventUpdateProxy}
+            container={container}
             initialDate={mergedProps.initialDate}
           />
         </div>

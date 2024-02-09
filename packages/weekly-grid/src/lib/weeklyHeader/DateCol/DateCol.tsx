@@ -2,7 +2,7 @@ import { MonthEvent, addEventsToRows, useMonthEventDragging } from '@full-event-
 import { EventClass, FComponent, Group, SourceEvent } from '@full-event-calendar/shared-ts'
 import { For, createEffect, createMemo, createUniqueId } from 'solid-js'
 import { rowList } from '../WeeklyAllDayHeader'
-import { EventImpl, useSlotModal } from '@full-event-calendar/utils'
+import { EventImpl, useCalenderContainerState, useSlotModal } from '@full-event-calendar/utils'
 import { DraggerTypes } from '@full-event-calendar/month-grid/src/utils/RowDragger'
 import './DateCol.scss'
 import { getEventSourceFromTz } from '@full-event-calendar/utils'
@@ -52,7 +52,7 @@ export const DateCol: FComponent<DateColProps> = (props) => {
   function getRowListArr() {
     return Object.keys(getRowList())
   }
-
+ const container = useCalenderContainerState()
   function dataColMouseDown(dateNumber: number, e: MouseEvent) {
     if (isSlotModalOpen()) return
     e.stopPropagation()
@@ -69,7 +69,7 @@ export const DateCol: FComponent<DateColProps> = (props) => {
       document.removeEventListener('mouseup', handeler)
       if (props.stopAddEvent && !isSlotModalOpen()) {
         setSlotModalData(ev)
-        openSlotModalOnElement(document.querySelector('.week-all-day-wrapper .month-item'))
+        openSlotModalOnElement(container?.querySelector('.week-all-day-wrapper .month-item'))
         onDragEnd(false)
       } else {
         onDragEnd()
@@ -119,7 +119,7 @@ export const DateCol: FComponent<DateColProps> = (props) => {
       document.removeEventListener('mouseup', handelMouseUp)
       document.removeEventListener('mousemove', handelMouseMove)
       hasMouseMoved = false
-      onDragEnd()
+      // onDragEnd()
     }
     document.addEventListener('mousemove', handelMouseMove)
     document.addEventListener('mouseup', handelMouseUp)

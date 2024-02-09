@@ -1,12 +1,21 @@
 import { EventClass } from "@full-event-calendar/shared-ts"
 import { NewDraggingController, daysDiffInRange } from "@full-event-calendar/utils"
 
-class RowEditDragger implements MonthDraggerss {
+
+abstract class DraggerHandeler {
+
+  container:HTMLElement;
+  constructor(container:HTMLElement){
+    this.container = container
+  }
+
+}
+class RowEditDragger extends DraggerHandeler implements MonthDraggerss {
     draggingController:NewDraggingController|null = null
     private startingDate: Date | null = null
     private currentDate: number | null = null
     onDragStart(event: EventClass,mouseEvent:MouseEvent, startDate?: Date){
-      this.draggingController = new NewDraggingController(mouseEvent, event)
+      this.draggingController = new NewDraggingController(mouseEvent, event,this.container)
   
       if (startDate) {
         this.startingDate = startDate
@@ -32,12 +41,12 @@ class RowEditDragger implements MonthDraggerss {
   }
 
 
-  class RowAddDragger implements MonthDraggerss {
+  class RowAddDragger extends DraggerHandeler implements MonthDraggerss {
     draggingController:NewDraggingController|null = null
     private startingDate: Date | null = null
     private currentDate: number | null = null
     onDragStart(event: EventClass,mouseEvent:MouseEvent, startDate?: Date){
-      this.draggingController = new NewDraggingController(mouseEvent, event)
+      this.draggingController = new NewDraggingController(mouseEvent, event,this.container)
   
       if (startDate) {
         this.startingDate = startDate
@@ -82,17 +91,17 @@ class RowEditDragger implements MonthDraggerss {
   export class RowDragger {
     dragger : MonthDraggerss
     draggerMode:DraggerTypes
-    constructor(draggerMode:DraggerTypes){
+    constructor(draggerMode:DraggerTypes,container:HTMLElement){
         this.draggerMode = draggerMode
         switch (draggerMode) {
             case 'editEventRow':
-                this.dragger = new RowEditDragger()
+                this.dragger = new RowEditDragger(container)
                 break;
             case 'addEventRow':
-                this.dragger = new RowAddDragger()
+                this.dragger = new RowAddDragger(container)
                 break;
             default:
-                this.dragger = new RowEditDragger()
+                this.dragger = new RowEditDragger(container)
                 break;
         }
     }

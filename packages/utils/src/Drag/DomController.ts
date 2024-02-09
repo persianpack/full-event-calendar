@@ -3,10 +3,8 @@ let MU: any
 
 let c1: any
 let c2: any
-let handelScroll: any
 
 export class DomController {
-  hasScrolled = false
   mouseDown = false
   wrapperContainer: any
   handelMouseUp: any
@@ -37,13 +35,9 @@ export class DomController {
     c2 = () => {
       self.isMouseoutsideTheContainer = true
     }
-    handelScroll = () => {
-      self.hasScrolled = true
-    }
-
+ 
     document.addEventListener('mousemove', MMM)
     document.addEventListener('mouseup', MU)
-    document.getElementById('scroll-wrapper')?.addEventListener('scroll', handelScroll)
 
     this.wrapperContainer?.current?.addEventListener('mouseenter', c1)
     this.wrapperContainer?.current?.addEventListener('mouseleave', c2)
@@ -60,8 +54,6 @@ export class DomController {
     this.wrapperContainer?.current?.removeEventListener('mouseleave', c2)
     document.removeEventListener('mouseup', MU)
     document.removeEventListener('mousemove', MMM)
-    document.getElementById('scroll-wrapper')?.removeEventListener('scroll', handelScroll)
-    // document.getElementById('scroll-wrapper')?.removeEventListener('scrollend', MMM)
   }
 }
 

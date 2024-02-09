@@ -18,7 +18,7 @@ export class RenderStore {
   
     dispatch(customRender:any) { 
       this.state.set(customRender.id,customRender)
-      console.log('slot render req',customRender)
+      // console.log('slot render req',customRender)
     
       // Notify subscribers about the state change
       this.subscribers.forEach((subscriber:any) => {

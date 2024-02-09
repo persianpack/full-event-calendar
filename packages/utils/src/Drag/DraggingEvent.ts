@@ -38,8 +38,8 @@ export class NewDraggingController extends NewDomController implements DraggingC
   Xdiff: any
   Ydiff: any
 
-  constructor(mouseEvent: MouseEvent, event: EventClass) {
-    super(event)
+  constructor(mouseEvent: MouseEvent, event: EventClass,container:HTMLElement) {
+    super(event,container)
     // const target = domController.getEventNode(e.id)
     // target.style.opacity = '0'
     const targetElementRect = this.getEelementReact(mouseEvent)

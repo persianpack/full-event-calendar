@@ -1,5 +1,6 @@
 import { createEffect, on, onCleanup, onMount } from 'solid-js'
 import { useGlobalState } from '../../../context-injector/context'
+import { useCalenderContainerState } from '@full-event-calendar/utils'
 
 interface containers {
   containerRef: any
@@ -69,20 +70,29 @@ export function useGridSliderAnimation(containers: containers) {
     const observer = new MutationObserver(() => {
       makeClone()
     })
+    const container = useCalenderContainerState()
+ 
+    if(container){
+      // call `observe()`, passing it the element to observe, and the options object
+      observer.observe(container.querySelector('#full-event-calendar-wrapper') as HTMLElement, {
+        subtree: true,
+        childList: true,
+        attributes: true
+      })
 
-    // call `observe()`, passing it the element to observe, and the options object
-    observer.observe(document.querySelector('#full-event-calendar-wrapper') as HTMLElement, {
-      subtree: true,
-      childList: true,
-      attributes: true
-    })
+    }
   })
-
-  containers.containerRef.querySelector('.scroll-wrapper').addEventListener('scroll', makeClone)
+  const scrollContainer = containers.containerRef.querySelector('.scroll-wrapper')
+  if(scrollContainer){
+    containers.containerRef.querySelector('.scroll-wrapper').addEventListener('scroll', makeClone)
+  }
 
   function addListners() {
+  const scrollContainer = containers.containerRef.querySelector('.scroll-wrapper')
+  if(scrollContainer){
     containers.containerRef.querySelector('.scroll-wrapper')?.removeEventListener('scroll', makeClone)
     containers.containerRef.querySelector('.scroll-wrapper')?.addEventListener('scroll', makeClone)
+  }
   }
 
   onCleanup(() => {
