@@ -1,13 +1,13 @@
 <script setup lang="ts">
 // import HelloWorld from './components/HelloWorld.vue'
-import { ref } from 'vue';
+import { ref } from 'vue'
 import FullEventCalendar from './components/FullEventCalendar'
 import { events } from '@full-event-calendar/test-events'
 import { DailyGridPlugin } from '@full-event-calendar/daily-grid'
 import { MonthGridPlugin } from '@full-event-calendar/month-grid'
 import { WeeklyGridPlugin } from '@full-event-calendar/weekly-grid'
 import { ListPlugin } from '@full-event-calendar/list/dist/index.js'
-import '@full-event-calendar/core/dist/wht.css'
+import '@full-event-calendar/core/dist/main.css'
 
 const eventsList = ref(events)
 const count = ref(0)
@@ -28,7 +28,7 @@ function AddEvent(data: any) {
 const dateee = ref(new Date('Thu Aug 10 2023 15:00:0'))
 setTimeout(() => {
   //dateee.value = new Date()
-}, 4000);
+}, 4000)
 </script>
 
 <template>
@@ -41,19 +41,23 @@ setTimeout(() => {
     </a>
   </div>
   <button @click="count++">count</button>
-  <FullEventCalendar :auto-update-event-on-change="true" :editable="true" v-model:events="eventsList" @eventUpdate="eventUpdate"
+  <FullEventCalendar
+    :auto-update-event-on-change="true"
+    :editable="true"
+    v-model:events="eventsList"
+    @eventUpdate="eventUpdate"
     stop-add-event
     :initial-date="dateee"
-    :plugins="[DailyGridPlugin, MonthGridPlugin, WeeklyGridPlugin, ListPlugin]">
+    :plugins="[DailyGridPlugin, MonthGridPlugin, WeeklyGridPlugin, ListPlugin]"
+  >
     <!-- <template #dailyHeader="data">
       <button @click="saySmt(data)">click</button>
       boooooos {{ data }} </template> -->
     <!-- <template #timeRange="{data}">{{ data.time }}</template> -->
     <template #addModal="{ data }">
-      <div class="modaaaaal">this is a vue modal slot {{ data?.time?.start?.toString() }}
-        --- {{ data?.time?.end?.toString() }}
+      <div class="modaaaaal">
+        this is a vue modal slot {{ data?.time?.start?.toString() }} --- {{ data?.time?.end?.toString() }}
         <div @click="data.saveModal">
-
           <button @click="AddEvent(data.time)">save</button>
         </div>
       </div>
@@ -61,7 +65,8 @@ setTimeout(() => {
     <template #eventClick="{ data }">
       <div class="eventClickModal">{{ data }}</div>
     </template>
-    <template #headerSlot="data"> <button @click="count++">click</button> this is {{ count }} a test {{ data }}
+    <template #headerSlot="data">
+      <button @click="count++">click</button> this is {{ count }} a test {{ data }}
     </template>
   </FullEventCalendar>
 </template>

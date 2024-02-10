@@ -3,7 +3,7 @@ import { DailyGridPlugin } from '@full-event-calendar/daily-grid'
 import { MonthGridPlugin } from '@full-event-calendar/month-grid'
 import { WeeklyGridPlugin } from '@full-event-calendar/weekly-grid'
 import { ListPlugin } from '@full-event-calendar/list'
-import '@full-event-calendar/core/dist/wht.css'
+import '@full-event-calendar/core/dist/main.css'
 import './App.css'
 const el = document.getElementById('app') as HTMLElement
 const el2 = document.getElementById('app2') as HTMLElement
@@ -236,7 +236,7 @@ const events = [
     start: new Date('Thu Aug 10 2023 17:10:00'),
     end: new Date('Thu Aug 10 2023 19:30:00'),
     id: 14,
-    groups:[2]
+    groups: [2]
   },
   {
     name: 'some name',
@@ -244,7 +244,7 @@ const events = [
     start: new Date('Thu Aug 10 2023 17:15:00'),
     end: new Date('Thu Aug 10 2023 20:00:00'),
     id: 15,
-    groups:[1]
+    groups: [1]
   },
   {
     name: 'some name',
@@ -289,7 +289,7 @@ const EventCalendar = new Calendar(el, {
   //@ts-ignore
   plugins: [DailyGridPlugin, MonthGridPlugin, WeeklyGridPlugin, ListPlugin],
   grid: 'daily',
-  listMode : 'week',
+  listMode: 'week'
   // groups:[]
 })
 const EventCalendar2 = new Calendar(el2, {
@@ -304,21 +304,21 @@ const EventCalendar2 = new Calendar(el2, {
   //@ts-ignore
   plugins: [DailyGridPlugin, MonthGridPlugin, WeeklyGridPlugin, ListPlugin],
   grid: 'daily',
-  listMode : 'week',
+  listMode: 'week'
   // groups:[]
 })
-console.log(EventCalendar2,EventCalendar)
+console.log(EventCalendar2, EventCalendar)
 console.time('rendered in ')
 EventCalendar.render()
-EventCalendar2.render() 
+EventCalendar2.render()
 console.timeEnd('rendered in ')
 EventCalendar.on('eventUpdate', (e, r, t) => {
   console.log(e, r, t)
 })
 let id = 1
-function addGroup(name:string){
+function addGroup(name: string) {
   // EventCalendar.addGroup([{id:2,name:'group2'},{id:1,name:'group1'}])
-  EventCalendar.addGroup({id,name})
+  EventCalendar.addGroup({ id, name })
   id++
 }
 window.addGroup = addGroup
