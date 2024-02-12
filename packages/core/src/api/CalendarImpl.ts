@@ -8,7 +8,7 @@ interface CalendarApi {
   // Current Date
   // -----------------------------------------------------------------------------------------------------------------
   storeManager: CalendarState
-  renderStore:any
+  renderStore: any
   setEventList(events: SourceEvent[]): any
   updateEvent(id: SourceEvent['id'], event: SourceEvent): void
   prevDay(): any
@@ -26,14 +26,14 @@ export interface CalendarSourceOptions {
   locale?: string
   grid?: GridModes
   gridHeight?: number
-  containerHeight?:number
+  containerHeight?: number
   autoUpdateEventOnChange?: boolean
   listMode?: listModeTypes
-  groups?:Group[]
-  editable?:boolean
-  theme?:string
+  groups?: Group[]
+  editable?: boolean
+  theme?: string
   avalibalSots?: AppSlots[]
-  stopAddEvent?:boolean
+  stopAddEvent?: boolean
 }
 
 export interface Plugins {
@@ -43,16 +43,17 @@ export interface Plugins {
 }
 
 export type GridModes = 'daily' | 'weekly' | 'month' | 'list'
-type listModeTypes ='day' | 'month' | 'week'
+type listModeTypes = 'day' | 'month' | 'week'
+
+// const slots = ['timeRange','dailyHeader','eventClick','addModal','headerDateSlot','todayBtn']
 
 export class CalendarImpl implements CalendarApi {
   readonly storeManager
   readonly renderStore = new RenderStore()
   private EventListenrsStorage: EventCollection
-  private readonly storeDispatch:Dispatch<StoreActions>
-  
-  constructor(eventCalendarOptions: CalendarSourceOptions) {
+  private readonly storeDispatch: Dispatch<StoreActions>
 
+  constructor(eventCalendarOptions: CalendarSourceOptions) {
     const defaultState: CalendarState = {
       events: [],
       initialDate: new Date(),
@@ -69,9 +70,9 @@ export class CalendarImpl implements CalendarApi {
       theme: 'light',
       avalibalSots: [],
       stopAddEvent: false,
-      containerHeight: 900 
+      containerHeight: 900
     }
-    
+
     const { store, dispatch } = useRedux(defaultState)
     this.storeManager = store
     this.storeDispatch = dispatch
@@ -115,37 +116,36 @@ export class CalendarImpl implements CalendarApi {
     this.storeDispatch({ type: 'AUTO_UPADTE_EVENT', val })
   }
   public updateListMode(val: listModeTypes) {
-    this.storeDispatch({ type: 'UPDATE_LIST_MODE',val})
+    this.storeDispatch({ type: 'UPDATE_LIST_MODE', val })
   }
-  public updateGroups(groups:Group[]) {
-    this.storeDispatch({ type: 'UPDATE_GROUPS',groups})
+  public updateGroups(groups: Group[]) {
+    this.storeDispatch({ type: 'UPDATE_GROUPS', groups })
   }
-  public addGroup(group:Group) {
-    this.storeDispatch({ type: 'ADD_GROUP',group})
+  public addGroup(group: Group) {
+    this.storeDispatch({ type: 'ADD_GROUP', group })
   }
-  public addEvent(event:EventClass) {
-    this.storeDispatch({ type: 'ADD_EVENT',event})
+  public addEvent(event: EventClass) {
+    this.storeDispatch({ type: 'ADD_EVENT', event })
   }
-  public updateEditable(val:boolean) {
-    this.storeDispatch({ type: 'UPDATE_EDITABLE',val})
+  public updateEditable(val: boolean) {
+    this.storeDispatch({ type: 'UPDATE_EDITABLE', val })
   }
-  public changeTheme(val:string) {
-    this.storeDispatch({ type: 'CHANGE_THEME',val})
+  public changeTheme(val: string) {
+    this.storeDispatch({ type: 'CHANGE_THEME', val })
   }
-  public setAvalibleSlots(AppSlots:AppSlots[]) {
-    this.storeDispatch({ type: 'SET_AVALIBLE_SLOTS',avalibalSots:AppSlots})
+  public setAvalibleSlots(AppSlots: AppSlots[]) {
+    this.storeDispatch({ type: 'SET_AVALIBLE_SLOTS', avalibalSots: AppSlots })
   }
-  public setStopAddEvent(val:boolean) {
-    this.storeDispatch({ type: 'SET_STOP_ADD_EVENT',val})
+  public setStopAddEvent(val: boolean) {
+    this.storeDispatch({ type: 'SET_STOP_ADD_EVENT', val })
   }
-  public changeContainerHeight(val:number) {
-    this.storeDispatch({ type: 'CHANGE_CONTAINER_HEIGHT',val})
+  public changeContainerHeight(val: number) {
+    this.storeDispatch({ type: 'CHANGE_CONTAINER_HEIGHT', val })
   }
-  public deleteEvent(id:string|number) {
-    this.storeDispatch({ type: 'DELETE_EVENT',id})
+  public deleteEvent(id: string | number) {
+    this.storeDispatch({ type: 'DELETE_EVENT', id })
   }
-  public resetOptions<T extends CalendarSourceOptions>(options:  T) {
-    
+  public resetOptions<T extends CalendarSourceOptions>(options: T) {
     if (options.timeZone) {
       this.changeTimeZone(options.timeZone)
     }
@@ -170,22 +170,22 @@ export class CalendarImpl implements CalendarApi {
     if (options?.plugins?.length > 0) {
       this.setPlugins(options.plugins)
     }
-    if(options.listMode){
+    if (options.listMode) {
       this.updateListMode(options.listMode)
     }
-    if(options.groups){
+    if (options.groups) {
       this.updateGroups(options.groups)
     }
-    if(options.theme){
+    if (options.theme) {
       this.changeTheme(options.theme)
     }
-    if(options.stopAddEvent){
+    if (options.stopAddEvent) {
       this.setStopAddEvent(options.stopAddEvent)
     }
-    if(options.events){
+    if (options.events) {
       this.setEventList(options.events)
     }
-    if(Object.keys(options).includes('editable')){
+    if (Object.keys(options).includes('editable')) {
       this.updateEditable(Boolean(options.editable))
     }
   }

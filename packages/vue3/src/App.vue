@@ -50,9 +50,7 @@ setTimeout(() => {
     :initial-date="dateee"
     :plugins="[DailyGridPlugin, MonthGridPlugin, WeeklyGridPlugin, ListPlugin]"
   >
-    <!-- <template #dailyHeader="data">
-      <button @click="saySmt(data)">click</button>
-      boooooos {{ data }} </template> -->
+    <template #dailyHeader="data"> daily header slot {{ data }} </template>
     <!-- <template #timeRange="{data}">{{ data.time }}</template> -->
     <template #addModal="{ data }">
       <div class="modaaaaal">
@@ -68,6 +66,21 @@ setTimeout(() => {
     <template #headerSlot="data">
       <button @click="count++">click</button> this is {{ count }} a test {{ data }}
     </template>
+    <template #headerDateSlot="data">
+      <button @click="count++">click</button> this is {{ count }} a test {{ data }}
+    </template>
+    <template #todayBtn>
+      <button>go to mee</button>
+    </template>
+    <template #goBackDate>
+      <button>عقب</button>
+    </template>
+    <template #goForwardDate>
+      <button>جلو</button>
+    </template>
+    <!-- <template #gridDropDown="DATA">
+      <button  >گرید</button>  {{ DATA }}
+    </template> -->
   </FullEventCalendar>
 </template>
 
