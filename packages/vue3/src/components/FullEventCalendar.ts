@@ -1,6 +1,6 @@
-import { PropType, defineComponent, h, Fragment, Teleport, VNode, toRaw } from 'vue'
-import { Calendar,CalendarSourceOptions } from '@full-event-calendar/core/dist/index.js'
-import '@full-event-calendar/core/dist/index.css'
+import { PropType, defineComponent, h, Fragment, Teleport, VNode } from 'vue'
+import { Calendar,CalendarSourceOptions } from '@full-event-calendar/core'
+ 
 type CalendaropptioNS = keyof CalendarSourceOptions
 const options :CalendaropptioNS[]= [
   'events',
@@ -25,7 +25,8 @@ interface DateComponent {
   customRenderingMap:  Map<string, any>,
   renderId:number
 }
-const FullEventCalendar = defineComponent({
+//@ts-ignore
+export const FullEventCalendar = defineComponent({
   props: {
     events: {
       type :Array as unknown as PropType<CalendarSourceOptions['events']> ,
@@ -170,5 +171,3 @@ function kebabToCamel(s: string): string {
 function capitalize(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1)
 }
-
-export default FullEventCalendar

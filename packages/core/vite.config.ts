@@ -5,9 +5,9 @@ export default defineConfig({
   //@ts-ignore
   plugins: [solid()],
   build: {
-    outDir:'packages/core/dist',
+    outDir:'./dist',
     lib: {
-      entry: 'packages/core/main.css',
+      entry: './main.css',
      name:'main'
     },
     emptyOutDir:false,

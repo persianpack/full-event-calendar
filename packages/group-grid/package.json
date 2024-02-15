@@ -1,13 +1,19 @@
 {
   "name": "@full-event-calendar/group-grid",
-  "version": "0.0.0",
+  "version": "0.0.2",
   "description": "A grid",
-  "keywords": [],
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "keywords": [
+    "grid",
+    "calendar",
+    "calendar drag n drop"
+  ],
   "author": "Amirkian Adl <amircc1200@gmail.com>",
-  "homepage": "https://github.com/ -ui/ -ui#readme",
+  "homepage": "https://github.com/persianpack/full-event-calendar#readme",
   "license": "MIT",
   "type": "module",
-  "main": "src/index.ts",
   "files": [
     "dist"
   ],
@@ -17,11 +23,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/s-ui/s-u i.git",
-    "directory": "packages/components/basic-grid"
+    "url": "git+https://github.com/persianpack/full-event-calendar.git",
+    "directory": "packages/components/group-grid"
   },
   "bugs": {
-    "url": " "
+    "url": "https://github.com/persianpack/full-event-calendar/issues"
   },
   "devDependencies": {
     "@full-event-calendar/shared-ts": "workspace:*",
@@ -35,11 +41,8 @@
     "dev": "pnpm build:fast -- --watch",
     "clean": "rimraf dist .turbo",
     "typecheck": "tsc --noEmit",
-    "prepack": "clean-package",
-    "postpack": "clean-package restore",
     "typedocs": "tsx ../../../scripts/generate-type-docs.ts"
   },
-  "clean-package": "../../../clean-package.config.json",
   "dependencies": {
     "esbuild-sass-plugin": "^2.16.0"
   },

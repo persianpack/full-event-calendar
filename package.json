@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@calendarview/root",
+  "name": "@full-event-calendar/root",
   "description": "Full-event calendar with drag and drop in JavaScript",
   "version": "0.0.0",
   "type": "module",
@@ -16,12 +16,11 @@
     "test-root": "vitest ",
     "test-root-ui": "vitest --ui",
     "dev": "turbo run dev",
-    "install-packages": "cd ./packages/vue-full-event-calendar && npm i && cd .. && cd ./vue3-demo && npm i && cd .. && cd ./vue2-demo && npm i ",
     "format": "prettier --write",
-    "build": "pnpm -r build && cd ./packages/vue-full-event-calendar && pnpm pack",
+    "build": "pnpm -r build && node scripts/build.js",
     "precommit": "pretty-quick --staged",
     "prepare": "husky install .husky",
-    "build-css":"vite build"
+    "build-css": "vite build"
   },
   "author": "Amirkian adl",
   "license": "MIT",
@@ -40,7 +39,7 @@
   },
   "dependencies": {
     "jsdom": "^22.1.0",
-    "tsup": "^7.2.0",
+    "tsup": "^7.3.0",
     "tsup-preset-solid": "^2.1.0",
     "turbo": "^1.10.16",
     "typescript": "^5.1.3",

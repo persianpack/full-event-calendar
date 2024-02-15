@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import FullEventCalendar from './components/FullEventCalendar'
+import {FullEventCalendar} from './components/FullEventCalendar'
 import { events } from '@full-event-calendar/test-events'
 
 import { DailyGridPlugin } from '@full-event-calendar/daily-grid'
@@ -11,7 +11,7 @@ import { WeeklyGridPlugin } from '@full-event-calendar/weekly-grid'
 import { ListPlugin } from '@full-event-calendar/list/dist/index.js'
 import '@full-event-calendar/core/dist/main.css'
 import { MyFullCalendar } from './components/FullCalendar'
-
+//@ts-nocheck
 function AddModalSlot(props){
   return <div>daily header slot</div>
 }

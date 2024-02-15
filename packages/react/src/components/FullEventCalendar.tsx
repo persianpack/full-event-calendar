@@ -15,7 +15,7 @@ interface FullEventCalendarProps{
   addModal:any
   [key :string]: any
 }
-export default class FullEventCalendar extends Component<CalendarSourceOptions & FullEventCalendarProps, CalendarState> {
+export class FullEventCalendar extends Component<CalendarSourceOptions & FullEventCalendarProps, CalendarState> {
   static act = runNow // DEPRECATED. Not leveraged anymore
 
   private elRef = createRef<HTMLDivElement>()

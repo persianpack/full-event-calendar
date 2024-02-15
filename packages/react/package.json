@@ -1,26 +1,50 @@
 {
-  "name": "react",
-  "private": true,
-  "version": "0.0.0",
+  "name": "@full-event-calendar/react",
+  "version": "0.0.2",
+  "description": "A grid",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "keywords": [
+    "grid",
+    "calendar",
+    "calendar drag n drop"
+  ],
+  "author": "Amirkian Adl <amircc1200@gmail.com>",
+  "homepage": "https://github.com/persianpack/full-event-calendar#readme",
+  "license": "MIT",
   "type": "module",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/persianpack/full-event-calendar.git",
+    "directory": "packages/components/react"
+  },
+  "bugs": {
+    "url": "https://github.com/persianpack/full-event-calendar/issues"
+  },
   "scripts": {
-    "build": "tsc && vite build",
+    "build": "tsup src/index.ts --dts",
     "dev": "vite",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@full-event-calendar/core": "workspace:*",
+    "@full-event-calendar/core": "workspace:^",
+    "fast-deep-equal": "^3.1.3"
+  },
+  "devDependencies": {
     "@full-event-calendar/daily-grid": "workspace:*",
     "@full-event-calendar/list": "workspace:*",
     "@full-event-calendar/month-grid": "workspace:*",
     "@full-event-calendar/test-events": "workspace:*",
     "@full-event-calendar/weekly-grid": "workspace:*",
-    "fast-deep-equal": "^3.1.3",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
-  "devDependencies": {
     "@types/react": "^18.2.55",
     "@types/react-dom": "^18.2.19",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
@@ -31,5 +55,9 @@
     "eslint-plugin-react-refresh": "^0.4.5",
     "typescript": "^5.2.2",
     "vite": "^5.1.0"
+  },
+  "peerDependencies": {
+    "react": "^16.7.0 || ^17 || ^18",
+    "react-dom": "^16.7.0 || ^17 || ^18"
   }
 }
