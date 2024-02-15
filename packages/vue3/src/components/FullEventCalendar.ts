@@ -96,7 +96,6 @@ export const FullEventCalendar = defineComponent({
     })
     
     this.EventCalendar = EventCalendar
-    console.time('rendered in vue')
     EventCalendar.renderStore.subscribe(()=>{
      
       this.customRenderingMap = EventCalendar.renderStore.getState()
@@ -105,7 +104,6 @@ export const FullEventCalendar = defineComponent({
     EventCalendar.setAvalibleSlots(Object.keys(kebabToCamelKeys(this.$slots)))
     EventCalendar.render()
     this.registerListenrs()
-    console.timeEnd('rendered in vue')
   },
   methods: {
     registerListenrs(){

@@ -10,7 +10,8 @@ const preset_options: preset.PresetOptions = {
     }
   ],
 
-  // Set to `true` to remove all `console.*` calls and `debugger` statements in prod builds
+  // Set to `true` to remove all `console.*` calls and `debugger` statements in prod builds,
+  drop_console:true,
   cjs: true,
   esbuild_plugins: [sassPlugin()]
 }

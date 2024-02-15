@@ -1,8 +1,8 @@
-import { Calendar } from '@full-event-calendar/core'
-import { DailyGridPlugin } from '@full-event-calendar/daily-grid'
-import { MonthGridPlugin } from '@full-event-calendar/month-grid'
-import { WeeklyGridPlugin } from '@full-event-calendar/weekly-grid'
-import { ListPlugin } from '@full-event-calendar/list'
+import { Calendar } from '@full-event-calendar/core/src/Calendar'
+import { DailyGridPlugin } from '@full-event-calendar/daily-grid/src/index'
+import { MonthGridPlugin } from '@full-event-calendar/month-grid/src/index'
+import { WeeklyGridPlugin } from '@full-event-calendar/weekly-grid/src/index'
+import { ListPlugin } from '@full-event-calendar/list/src/index'
 // import '@full-event-calendar/core/dist/main.css'
 import '@full-event-calendar/core/dist/main.css'
 import './App.css'
@@ -311,7 +311,7 @@ const EventCalendar2 = new Calendar(el2, {
 console.log(EventCalendar2, EventCalendar)
 console.time('rendered in ')
 EventCalendar.render()
-EventCalendar2.render()
+// EventCalendar2.render()
 console.timeEnd('rendered in ')
 EventCalendar.on('eventUpdate', (e, r, t) => {
   console.log(e, r, t)

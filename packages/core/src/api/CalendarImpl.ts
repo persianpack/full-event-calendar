@@ -146,6 +146,11 @@ export class CalendarImpl implements CalendarApi {
     this.storeDispatch({ type: 'DELETE_EVENT', id })
   }
   public resetOptions<T extends CalendarSourceOptions>(options: T) {
+    if (options?.plugins?.length > 0) {
+      this.setPlugins(options.plugins)
+    }else{
+      throw Error('full-event-calendat --> must provide atleast 1 grid plugin')
+    }
     if (options.timeZone) {
       this.changeTimeZone(options.timeZone)
     }
@@ -153,7 +158,11 @@ export class CalendarImpl implements CalendarApi {
       this.changeCalendar(options.calendar)
     }
     if (options.grid) {
-      this.changeGrid(options.grid)
+      if(this.isPluginAvalible(options.grid)){
+        this.changeGrid(options.grid)
+      }else{
+        this.changeGrid(options?.plugins[0].name)
+      }
     }
     if (options.initialDate) {
       this.changeInitialDate(new Date(options.initialDate).toISOString())
@@ -166,9 +175,6 @@ export class CalendarImpl implements CalendarApi {
     }
     if (options.autoUpdateEventOnChange === false) {
       this.changeEventAutoUpdate(options.autoUpdateEventOnChange)
-    }
-    if (options?.plugins?.length > 0) {
-      this.setPlugins(options.plugins)
     }
     if (options.listMode) {
       this.updateListMode(options.listMode)
@@ -188,6 +194,7 @@ export class CalendarImpl implements CalendarApi {
     if (Object.keys(options).includes('editable')) {
       this.updateEditable(Boolean(options.editable))
     }
+    
   }
 
   prevDay() {}
@@ -214,6 +221,9 @@ export class CalendarImpl implements CalendarApi {
       }
     }
     return res ?? plugins[0]?.code
+  }
+  isPluginAvalible(name:string) {
+    return this.storeManager.plugins.some(plugin=>plugin.name === name)
   }
   getOptions() {
     return this.storeManager.plugins.map((item) => {
