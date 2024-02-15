@@ -3,7 +3,7 @@ import { DailyGridPlugin } from '@full-event-calendar/daily-grid'
 import { MonthGridPlugin } from '@full-event-calendar/month-grid'
 import { WeeklyGridPlugin } from '@full-event-calendar/weekly-grid'
 import { ListPlugin } from '@full-event-calendar/list'
-import '@full-event-calendar/core/dist/main.css'
+// import '@full-event-calendar/core/dist/main.css'
 import './App.css'
 const el = document.getElementById('app') as HTMLElement
 const el2 = document.getElementById('app2') as HTMLElement

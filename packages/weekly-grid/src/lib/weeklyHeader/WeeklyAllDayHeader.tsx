@@ -81,7 +81,7 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
 
   return (
     <>
-      <div class="header-dates">
+      <div class="header-dates" style="min-width:900px">
         <For each={props.headerDates}>
           {(item, i) => (
             <div
@@ -104,7 +104,7 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
 
       <div
         class={`${isOpen() ? 'weekly-allDay-open' : ''} ${draggingEventData() ? 'month-is-dragging' : ''}`}
-        style="display: flex;"
+        style="display: flex;min-width:900px"
       >
         <OpenAllDayBtn onClick={openAllD} show={getRowListArr().length > 3} />
 

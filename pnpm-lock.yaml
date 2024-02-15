@@ -25,7 +25,7 @@ importers:
         version: 5.3.3
       vite:
         specifier: ^5.0.2
-        version: 5.1.0(@types/node@20.11.17)
+        version: 5.1.0(sass@1.70.0)
       vite-plugin-solid:
         specifier: ^2.7.0
         version: 2.9.1(solid-js@1.8.14)(vite@5.1.0)
@@ -109,7 +109,7 @@ importers:
         version: 5.3.3
       vite:
         specifier: ^5.0.0
-        version: 5.1.0(@types/node@20.11.17)
+        version: 5.1.0(sass@1.70.0)
       vue-tsc:
         specifier: ^1.8.22
         version: 1.8.27(typescript@5.3.3)
@@ -308,6 +308,9 @@ importers:
       '@full-event-calendar/weekly-grid':
         specifier: workspace:*
         version: link:../weekly-grid
+      fast-deep-equal:
+        specifier: ^3.1.3
+        version: 3.1.3
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -344,7 +347,7 @@ importers:
         version: 5.3.3
       vite:
         specifier: ^5.1.0
-        version: 5.1.0(@types/node@20.11.17)
+        version: 5.1.0(sass@1.70.0)
 
   packages/shared-types:
     dependencies:
@@ -412,7 +415,7 @@ importers:
         version: 5.3.3
       vite:
         specifier: ^5.0.0
-        version: 5.1.0(@types/node@20.11.17)
+        version: 5.1.0(sass@1.70.0)
       vue-tsc:
         specifier: ^1.8.22
         version: 1.8.27(typescript@5.3.3)
@@ -2833,6 +2836,7 @@ packages:
     resolution: {integrity: sha512-QmgQZGWu1Yw9TDyAP9ZzpFJKynYNeOvwMJmaxABfieQoVoiVOS6MN1WSpqpRcbeA5+RW82kraAVxCCJg+780Qw==}
     dependencies:
       undici-types: 5.26.5
+    dev: true
 
   /@types/prop-types@15.7.11:
     resolution: {integrity: sha512-ga8y9v9uyeiLdpKddhxYQkxNDrfvuPrlFb0N1qnZZByvcElJaXthF1UhvCh9TLWJBEHeNtdnbysW7Y6Uq8CVng==}
@@ -3027,7 +3031,7 @@ packages:
       '@babel/plugin-transform-react-jsx-source': 7.23.3(@babel/core@7.23.9)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.0
-      vite: 5.1.0(@types/node@20.11.17)
+      vite: 5.1.0(sass@1.70.0)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -3039,7 +3043,7 @@ packages:
       vite: ^4.0.0 || ^5.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 5.1.0(@types/node@20.11.17)
+      vite: 5.1.0(sass@1.70.0)
       vue: 3.4.18(typescript@5.3.3)
     dev: true
 
@@ -4617,7 +4621,6 @@ packages:
 
   /fast-deep-equal@3.1.3:
     resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
-    dev: true
 
   /fast-glob@3.3.2:
     resolution: {integrity: sha512-oX2ruAFQwf/Orj8m737Y5adxDQO0LAB7/S5MnxCdTNDd4p6BsyIVsv9JQsATbTSq8KHRpLwIHbVlUNatxd+1Ow==}
@@ -6970,6 +6973,7 @@ packages:
 
   /undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
+    dev: true
 
   /unicode-canonical-property-names-ecmascript@2.0.0:
     resolution: {integrity: sha512-yY5PpDlfVIU5+y/BSCxAJRBIS1Zc2dDG3Ujq+sR0U+JjUevW2JhocOF+soROYDSaAezOzOKuyyixhD6mBknSmQ==}
@@ -7154,7 +7158,7 @@ packages:
       merge-anything: 5.1.7
       solid-js: 1.8.14
       solid-refresh: 0.6.3(solid-js@1.8.14)
-      vite: 5.1.0(@types/node@20.11.17)
+      vite: 5.1.0(sass@1.70.0)
       vitefu: 0.2.5(vite@5.1.0)
     transitivePeerDependencies:
       - supports-color
@@ -7230,6 +7234,7 @@ packages:
       rollup: 4.9.6
     optionalDependencies:
       fsevents: 2.3.3
+    dev: true
 
   /vite@5.1.0(sass@1.70.0):
     resolution: {integrity: sha512-STmSFzhY4ljuhz14bg9LkMTk3d98IO6DIArnTY6MeBwiD1Za2StcQtz7fzOUnRCqrHSD5+OS2reg4HOz1eoLnw==}
@@ -7265,8 +7270,6 @@ packages:
       sass: 1.70.0
     optionalDependencies:
       fsevents: 2.3.3
-    dev: true
-    optional: true
 
   /vitefu@0.2.5(vite@4.5.2):
     resolution: {integrity: sha512-SgHtMLoqaeeGnd2evZ849ZbACbnwQCIwRH57t18FxcXoZop0uQu0uzlIhJBlF/eWVzuce0sHeqPcDo+evVcg8Q==}
@@ -7287,7 +7290,7 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 5.1.0(@types/node@20.11.17)
+      vite: 5.1.0(sass@1.70.0)
     dev: false
 
   /vitest@0.34.6(@vitest/ui@0.34.7)(jsdom@22.1.0):

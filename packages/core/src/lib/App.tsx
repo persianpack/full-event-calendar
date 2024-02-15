@@ -6,22 +6,26 @@ import { GridModes } from '../api/CalendarImpl.js'
 import { Dynamic } from 'solid-js/web'
 import './App.scss'
 import { SliderWrapper } from './SliderWrapper/SliderWrapper.jsx'
+import { EventImpl } from '@full-event-calendar/utils'
 export function App() {
   const data = useGlobalState()
 
   function onEventUpdate(event: SourceEvent) {
+    const prev = data.instance.getEventById(event.id) as EventClass
+    console.log(event)
+    const next = new EventImpl(event)
+    next.convertDateByTimeZone(data.store.timeZone)
     if (data.store.autoUpdateEventOnChange) {
-      const prev = data.instance.getEventById(event.id) as EventClass
-
+      
       data.instance.updateEvent(event.id, event)
-      const next = data.instance.getEventById(event.id) as EventClass
-
-      data.instance.emitEvent('eventUpdate', {
-        prev: prev,
-        next: next,
-        id: event.id
-      })
+      
     }
+ 
+    data.instance.emitEvent('eventUpdate', {
+      prev: prev,
+      next: next,
+      id: event.id
+    })
   }
 
   function onAddEvent(event: SourceEvent) {
@@ -29,6 +33,7 @@ export function App() {
       // const prev = data.instance.getEventById(event.id) as EventClass
       data.instance.addEvent(event as any)
       // const next = data.instance.getEventById(event.id) as EventClass
+      console.log('eventAdd',event)
       data.instance.emitEvent('eventAdd', {
         event
       })

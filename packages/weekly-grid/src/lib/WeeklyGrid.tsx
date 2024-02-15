@@ -122,7 +122,7 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
 
 function ScrollBarWrapper(props: any) {
   return (
-    <div style="position: relative; flex: 1;">
+    <div style="position: relative; flex: 1;min-width:900px">
       <div
         style=" position: absolute;height: 100%;width: 100%;"
         id="scroll-wrapper"

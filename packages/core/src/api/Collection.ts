@@ -4,7 +4,7 @@ export type EventTypes = 'eventClicked' | 'eventUpdate' | 'eventAdd' | 'evntList
 
 export interface EventPayLoads {
   eventClicked: { event: EventClass }
-  eventUpdate: { prev: SourceEvent; next: SourceEvent }
+  eventUpdate: { prev: SourceEvent; next: SourceEvent,id:any }
   eventAdd:{ event: EventClass }
   evntListUpdate:{eventList:EventClass[]}
 }

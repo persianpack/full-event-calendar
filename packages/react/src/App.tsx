@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -20,14 +20,14 @@ function EventClickSlot(props){
   return <div className='eventClick'> i dont like react {props?.time?.start.toString()} </div>
 }
 function EventaddModalSlot(props){
-  console.log(props)
+  
   function saveBtnClik(){
     props.saveModal()
     props.someProp(props.time.sourceEvent)
   }
   return <div className='eventClick' style={{background:'red'}} > i dont like react 
   
-  <button onClick={props.saveModal} className='' onClick={saveBtnClik}>SAVE</button>
+  <button className='' onClick={saveBtnClik}>SAVE</button>
    </div>
 }
 function App() {
@@ -38,7 +38,27 @@ function App() {
 // }, 5000);
 
 function asaveEv(ev){
-  setEvents([...eventsR,ev])
+  console.log('save me')
+  let arr = [...eventsR,ev]
+  console.log(arr)
+  setEvents(arr)
+ 
+}
+useEffect(()=>{
+  // console.log('download',eventsR)
+},[eventsR])
+
+console.log('mount')
+const  onEveUpdate = (data)=>{
+  console.log(eventsR,data)
+  const eventsCopy = [...eventsR] 
+  let ind = eventsCopy.findIndex(item=>item.id === data.id)
+  eventsCopy[ind] = data.next.sourceEvent
+  setEvents(eventsCopy)
+  // console.log(eventsR)
+  // setTimeout(() => {
+  //   console.log(eventsR)
+  // }, 2000);
 }
 
   return (
@@ -54,7 +74,7 @@ function asaveEv(ev){
       <h1>Vite + React</h1>
       <div className="card" style={{width:'1500px'}}>
       
-        <MyFullCalendar 
+        <FullEventCalendar
          plugins={[DailyGridPlugin,WeeklyGridPlugin,MonthGridPlugin,ListPlugin]}
          dailyHeader={<AddModalSlot />}
          events={eventsR} 
@@ -64,7 +84,8 @@ function asaveEv(ev){
          addModal={<EventaddModalSlot someProp={asaveEv}/>}
          stopAddEvent={true}
          initialDate={count}
-        ></MyFullCalendar>
+         eventUpdate={onEveUpdate}
+        ></FullEventCalendar>
       </div>
      
     </>

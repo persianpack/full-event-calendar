@@ -1,4 +1,4 @@
-import { PropType, defineComponent, h, Fragment, Teleport, VNode } from 'vue'
+import { PropType, defineComponent, h, Fragment, Teleport, VNode, toRaw } from 'vue'
 import { Calendar,CalendarSourceOptions } from '@full-event-calendar/core/dist/index.js'
 import '@full-event-calendar/core/dist/index.css'
 type CalendaropptioNS = keyof CalendarSourceOptions
@@ -103,7 +103,7 @@ const FullEventCalendar = defineComponent({
     })
     EventCalendar.setAvalibleSlots(Object.keys(kebabToCamelKeys(this.$slots)))
     EventCalendar.render()
-    
+    this.registerListenrs()
     console.timeEnd('rendered in vue')
   },
   methods: {
