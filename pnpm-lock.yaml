@@ -290,6 +290,24 @@ importers:
 
   packages/react:
     dependencies:
+      '@full-event-calendar/core':
+        specifier: workspace:*
+        version: link:../core
+      '@full-event-calendar/daily-grid':
+        specifier: workspace:*
+        version: link:../daily-grid
+      '@full-event-calendar/list':
+        specifier: workspace:*
+        version: link:../list
+      '@full-event-calendar/month-grid':
+        specifier: workspace:*
+        version: link:../month-grid
+      '@full-event-calendar/test-events':
+        specifier: workspace:*
+        version: link:../test-events
+      '@full-event-calendar/weekly-grid':
+        specifier: workspace:*
+        version: link:../weekly-grid
       react:
         specifier: ^18.2.0
         version: 18.2.0

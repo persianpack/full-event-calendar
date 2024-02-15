@@ -5,10 +5,18 @@
   "type": "module",
   "scripts": {
     "build": "tsc && vite build",
+    "dev": "vite",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@full-event-calendar/core": "workspace:*",
+    "@full-event-calendar/daily-grid": "workspace:*",
+    "@full-event-calendar/list": "workspace:*",
+    "@full-event-calendar/month-grid": "workspace:*",
+    "@full-event-calendar/test-events": "workspace:*",
+    "@full-event-calendar/weekly-grid": "workspace:*",
+    "fast-deep-equal": "^3.1.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

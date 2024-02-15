@@ -42,8 +42,6 @@ export const TimeRange: FComponent<TimeRangeProps> = (props) => {
   function timeRangeMouseDown(hour: number, min: number, mouseEvent: MouseEvent) {
     if (props.showModal) return
 
-
-
     const basdate = new Date(props.gridDate)
     const endDate = new Date(props.gridDate)
 

@@ -19,7 +19,7 @@ interface CalendarApi {
 export type AppSlots = string
 export interface CalendarSourceOptions {
   events: SourceEvent[]
-  plugins: Plugins[]
+  plugins: any[]
   initialDate?: Date | string
   timeZone?: string
   calendar?: string

@@ -60,7 +60,7 @@ const FullEventCalendar = defineComponent({
 
   render() {
     const customRenderingNodes: VNode[] = []
- 
+
     for (const customRendering of this.customRenderingMap.values()) {
      if(!this.$slots[customRendering.name]) continue
       customRenderingNodes.push(
@@ -68,7 +68,7 @@ const FullEventCalendar = defineComponent({
           innerContext:this.$slots[customRendering.name],
           targetContainer:customRendering.target.el,
           data:customRendering.data
-        }) 
+        })
       )
     }
     return h('div', { id: `data-fc-render-id-${this.renderId}` },h(Fragment, customRenderingNodes))
@@ -97,27 +97,12 @@ const FullEventCalendar = defineComponent({
     this.EventCalendar = EventCalendar
     console.time('rendered in vue')
     EventCalendar.renderStore.subscribe(()=>{
+     
       this.customRenderingMap = EventCalendar.renderStore.getState()
       this.renderRequest()
     })
     EventCalendar.setAvalibleSlots(Object.keys(kebabToCamelKeys(this.$slots)))
     EventCalendar.render()
-    
-    const self = this
-
-    EventCalendar.on('eventClicked',(data:any)=>{
-      self.$emit('eventClicked',data)
-    })
-
-    EventCalendar.on('eventUpdate',(data:any)=>{
-      
-      const eventsCopy = [...this.events] 
-
-      let ind = eventsCopy.findIndex(item=>item.id === data.id)
-      eventsCopy[ind] = data.next.sourceEvent
-      self.$emit('update:events',eventsCopy)
-     
-    })
     
     console.timeEnd('rendered in vue')
   },
@@ -153,6 +138,7 @@ function buildWatchers(){
       handler(val: any) {
         //@ts-ignore
         this.EventCalendar.resetOptions({[option]:val})
+
       }
     }
   }
