@@ -1,29 +1,20 @@
-.item-trunctae {
+.fec-item-trunctae {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.one-line-event {
+.fec-one-line-event {
   padding: 0 5px;
   justify-content: center;
-  .event-info{
+  .fec-event-info{
 
     flex-direction: row;
     display: flex !important;
     gap: 10px;
   }
 }
-.custom-tooltip{
-  position: fixed;
-  height: fit-content;
-  width: 200px;
-  background-color: red;
-  z-index: 213123;
-}
-.event-name{
+
+.fec-event-name{
   display: flex;
   align-items: center;
-}
-.event-time-detals{
-  // white-space: nowrap;
 }

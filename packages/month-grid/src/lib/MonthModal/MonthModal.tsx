@@ -48,7 +48,7 @@ export const EventModal: FComponent<ModalProps> = (props) => {
   function handelMouseUp() {
     document.removeEventListener('mouseup', handelMouseUp)
     document.removeEventListener('mousemove', mouseMove)
-    container?.querySelector('#month-wrapper-id')?.classList.remove('month-is-dragging')
+    container?.querySelector('#fec-month-wrapper-id')?.classList.remove('fec-month-is-dragging')
     props.onDragEnd()
     draggingEvent = null
   }
@@ -63,12 +63,12 @@ export const EventModal: FComponent<ModalProps> = (props) => {
     draggingEvent = event
     document.addEventListener('mouseup', handelMouseUp)
     document.addEventListener('mousemove', mouseMove)
-    container?.querySelector('#month-wrapper-id')?.classList.add('month-is-dragging')
+    container?.querySelector('#fec-month-wrapper-id')?.classList.add('fec-month-is-dragging')
   }
 
   function isNotAllDay(event: EventClass) {
     if (event?.isAllDay) {
-      return !event?.isAllDay() ? 'month-item-no-all-day' : ''
+      return !event?.isAllDay() ? 'fec-month-item-no-all-day' : ''
     }
     return ''
   }
@@ -86,7 +86,7 @@ export const EventModal: FComponent<ModalProps> = (props) => {
       {/* 
       //@ts-ignore */}
       <div use:ClickOutSide={modalClickOutSide}
-        class="modal-event-list custome-scroll-bar "
+        class="fec-modal-event-list fec-custome-scroll-bar "
         style={`left:${props.modalData.left};top:${props.modalData.bottom};`}
       
       >
@@ -94,14 +94,14 @@ export const EventModal: FComponent<ModalProps> = (props) => {
           {(event) => (
             <div
               onclick={[itemClick,event]}
-              class={`modal-event ${isNotAllDay(event)} ${rightOrLeftInDate(event, props.modalData.somDate)}`}
+              class={`fec-modal-event ${isNotAllDay(event)} ${rightOrLeftInDate(event, props.modalData.somDate)}`}
               onmousedown={[modalDragStart, event]}
               style={`background:${event.color};--ca-color:${event.color}`}
             >
-              <div class="event-time-month">{`${
+              <div class="fec-event-time-month">{`${
                 isNotAllDay(event) ? formatToShortTime(event.start, props.locale) : ''
               } `}</div>
-              <div class="event-name-month">{isNotAllDay(event) ? `(${event.name})` : event.name}</div>
+              <div class="fec-event-name-month">{isNotAllDay(event) ? `(${event.name})` : event.name}</div>
             </div>
           )}
         </For>

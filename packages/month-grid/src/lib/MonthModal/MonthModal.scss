@@ -1,4 +1,4 @@
-.modal-event-list {
+.fec-modal-event-list {
   position: absolute !important;
   z-index: 10;
   height: fit-content;
@@ -11,7 +11,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   box-shadow: var(--shadow);
-  .modal-event {
+  .fec-modal-event {
     margin: 10px;
     height: 25px;
     border-radius: 7px;
@@ -22,19 +22,17 @@
     color: white;
     cursor: pointer;
   }
-  .month-item-no-all-day {
+  .fec-month-item-no-all-day {
     color: var(--on-surface-variant);
   }
 }
 
-.month-both-arrow {
+.fec-month-both-arrow {
   clip-path: polygon(10px 0, calc(100% - 10px) 0%, 100% 50%, calc(100% - 10px) 100%, 10px 100%, 0 50%);
 }
-.month-left-arrow {
+.fec-month-left-arrow {
   clip-path: polygon(100% 0, 10px 0, 0px 50%, 10px 100%, 100% 100%);
 }
-.month-no-arrow {
-}
-.month-right-arrow {
+.fec-month-right-arrow {
   clip-path: polygon(0 0, calc(100% - 10px) 0%, 100% 50%, calc(100% - 10px) 100%, 0 100%);
 }

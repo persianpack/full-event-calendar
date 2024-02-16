@@ -1,9 +1,9 @@
-.month-day-wrapper:not(.month-day-out):not(.month-day-out-no-name){
+.fec-month-day-wrapper:not(.fec-month-day-out):not(.fec-month-day-out-no-name){
     span{
       color: var(--on-surface-variant);
     }
   }
-  .month-day-wrapper {
+  .fec-month-day-wrapper {
     display: flex;
     justify-content: end;
     > div {

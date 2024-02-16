@@ -6,34 +6,28 @@
 .slide-fade-exit-to {
   opacity: 0;
 }
-.slide-fade-enter {
-}
 
-#group-grid-container {
+#fec-group-grid-container {
   .grid-border-left {
     display: none;
   }
-  .time-range {
+  .fec-time-range {
     margin: 0;
   }
-  .holdcontainer {
+  .fec-events-holder {
     padding-left: 12px;
   }
 }
-#group-grid-container > div:first-child {
-  .fec-daily-grid {
-    // border-left: none;
-  }
-}
-#group-grid-container {
+
+#fec-group-grid-container {
   .fec-daily-grid {
     padding: 0;
   }
-  .scroll-wrapper {
+  .fec-scroll-wrapper {
     overflow: auto
   }
-  .time-rage-down-container,
-  .time-rage-up-container {
+  .fec-time-rage-down-container,
+  .fec-time-rage-up-container {
     margin: 0;
   }
 
@@ -42,13 +36,13 @@
   }
 }
 
-.calendar-header {
+.fec-calendar-header {
   display: flex;
   gap: 10px;
   padding: 20px 50px;
   align-items: center;
   flex-wrap: wrap;
-  .header-date {
+  .fec-header-date {
     display: flex;
     white-space: nowrap;
     align-items: center;
@@ -60,8 +54,8 @@
     padding-left: 20px;
     color: var(--on-surface-variant);
   }
-  .go-back-icon,
-  .go-forward-icon {
+  .fec-go-back-icon,
+  .fec-go-forward-icon {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -79,13 +73,13 @@
       background-color: var(--bg-hover);
     }
   }
-  .go-back-icon {
+  .fec-go-back-icon {
     rotate: (-90deg);
   }
-  .go-forward-icon {
+  .fec-go-forward-icon {
     rotate: (90deg);
   }
-  .go-to-today {
+  .fec-go-to-today {
     border-radius: 4px;
     background: var(--bg--color);
     color: var(--on-surface-variant);
@@ -99,7 +93,7 @@
       background: var(--bg-hover);
     }
   }
-  .go-some-d {
+  .fec-grid-drop {
     border-radius: 4px;
     background: var(--bg--color);
     color: var(--on-surface-variant);
@@ -115,7 +109,7 @@
       
     }
   }
-  .dropdown-calendar {
+  .fec-dropdown-calendar {
     border-radius: 8px;
     position: absolute;
     background-color: var(--bg-color);
@@ -124,7 +118,7 @@
     width: 150px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     z-index: 1234;
-    .dropdown-calendar-item {
+    .fec-dropdown-calendar-item {
       transition: all;
       display: flex;
       align-items: center;
@@ -137,16 +131,13 @@
         background-color: var(--bg-hover);
       }
     }
-    .dropdown-calendar-item:first-child{
+    .fec-dropdown-calendar-item:first-child{
       border-top-right-radius:8px;
       border-top-left-radius:8px;
     }
-    .dropdown-calendar-item:last-child{
+    .fec-dropdown-calendar-item:last-child{
       border-bottom-right-radius:8px;
       border-bottom-left-radius:8px;
     }
   }
-}
-* {
-  user-select: none;
 }

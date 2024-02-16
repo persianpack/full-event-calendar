@@ -1,25 +1,21 @@
-.calendar-draging {
-  .time-range:hover {
-    .time-rage-up-container {
+.fec-calendar-draging  {
+  .fec-time-range:hover {
+    .fec-time-rage-up-container {
       &:hover {
         border: 2px solid var(--primary) ;
       }
     }
-    .time-rage-down-container {
+    .fec-time-rage-down-container {
       &:hover {
         border: 2px solid var(--primary) ;
       }
     }
   }
-  .ec-event {
+  .fec-event {
     pointer-events: none;
   }
 }
 
-.test3 {
-  position: sticky;
-  top: 0px;
-}
 .fec-daily-grid {
   display: flex;
   flex-direction: column;
@@ -28,10 +24,7 @@
   overflow: hidden;
   padding-right: 8px;
 }
-// border-right:1px solid var(--hairline);
-* {
-  box-sizing: border-box;
-}
+// border-right:1px solid var(--hairline)
 .grid-border-left {
   position: absolute;
   height: 100%;
@@ -40,13 +33,13 @@
   background-color: var(--hairline);
   left: 50px;
 }
-.event-colom {
+.fec-event-colom {
   // background-color: rgb(243, 163, 163);
   flex: 1;
   height: 100%;
   position: relative;
 }
-.ec-event {
+.fec-event {
   position: absolute;
   // overflow: hidden;
   z-index: 20;
@@ -64,7 +57,7 @@
   display: flex;
   flex-direction: column;
   cursor: grab;
-  .resizer {
+  .fec-resizer {
     position: absolute;
     bottom: 0px;
     height: 10px;
@@ -78,67 +71,29 @@
     z-index: 123123123;
   }
 }
-.basic-grid {
+.fec-basic-grid {
   position: relative;
   flex: 1;
-  .dragger-wrapper{
-    .ec-event{
+  .fec-dragger-wrapper{
+    .fec-event{
       box-shadow: var(--shawdow);
-      
-  }
+    }
   }
 }
 
-.wrapper-container {
+.fec-preview-wrapper {
   position: fixed;
   z-index: 50;
-}
-.drag-element {
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
 .drag-element:active {
   cursor: grabbing;
 }
-.holdcontainer {
+.fec-events-holder {
   position: absolute;
   width: 100%;
   display: flex;
   padding-left: 10px;
   padding-right: 10px;
   gap: 2px;
-}
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  position: absolute;
-  z-index: 1;
-  top: 150%;
-  left: 50%;
-  margin-left: -60px;
-}
-
-.tooltip .tooltiptext::after {
-  content: '';
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent transparent black transparent;
-}
-
-.tooltip:hover .tooltiptext {
-  visibility: visible;
 }

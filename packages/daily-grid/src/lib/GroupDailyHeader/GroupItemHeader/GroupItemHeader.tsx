@@ -9,14 +9,14 @@ export const GroupItemHeader:FComponent<GroupDailyHeader> = (props)=>{
 
     return (
         <div style="position:relative">
-            <div class="groupContainer">
-                 <div class="group-name">{props.group.name}</div>
-                 <div class="group-avatar"> {props.group.name[0]}</div>
+            <div class="fec-groupContainer">
+                 <div class="fec-group-name">{props.group.name}</div>
+                 <div class="fec-group-avatar"> {props.group.name[0]}</div>
             </div>
-            <div class="some-border">
+            <div class="fec-some-border">
 
             </div>
-            <div class="some-borderw">
+            <div class="fec-some-borderw">
 
             </div>
         </div>

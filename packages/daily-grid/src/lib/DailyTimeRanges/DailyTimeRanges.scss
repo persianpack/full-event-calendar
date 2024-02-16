@@ -1,15 +1,12 @@
-.daily-time-ranges {
+.fec-daily-time-ranges  {
   width: 51px;
-  // border-right: 1px solid var(--hairline);
-}
-.daily-time-ranges {
   display: flex;
   flex-direction: column;
   > div {
     flex: 1;
     position: relative;
     display: flex;
-    .time-range-time {
+    .fec-time-range-time {
       white-space: nowrap;
       transform: translateY(-6px);
       color: var(--textfield-surface);
@@ -17,7 +14,7 @@
       font-size: 12px;
       padding-left: 5px;
     }
-    .time-range-hairline {
+    .fec-time-range-hairline {
       position: absolute;
       width: 12px;
       height: 10px;

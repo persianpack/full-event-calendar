@@ -69,7 +69,7 @@ export const DateCol: FComponent<DateColProps> = (props) => {
       document.removeEventListener('mouseup', handeler)
       if (props.stopAddEvent && !isSlotModalOpen()) {
         setSlotModalData(ev)
-        openSlotModalOnElement(container?.querySelector('.week-all-day-wrapper .month-item'))
+        openSlotModalOnElement(container?.querySelector('.fec-week-all-day-wrapper .fec-month-item'))
         onDragEnd(false)
       } else {
         onDragEnd()
@@ -140,7 +140,7 @@ export const DateCol: FComponent<DateColProps> = (props) => {
       {modalElementNode}
       {/* each colum box has a mouse move for handling drag  */}
       <div
-        class="week-all-day-container123"
+        class="fec-week-all-day-container123"
         data-test-id-all-w-c="1"
         onmousedown={[mouseDownSome, 0]}
         onmousemove={() => mouseEnterSome(0)}
@@ -149,7 +149,7 @@ export const DateCol: FComponent<DateColProps> = (props) => {
         {/* loop on each row list */}
         <For each={getRowListArr()}>
           {(item) => (
-            <div class="week-all-day-container">
+            <div class="fec-week-all-day-container">
               {/* loop on each event in a row list and use monthly grid components for this */}
               <For each={getRowList()[item]}>
                 {(item3) => (
@@ -170,37 +170,37 @@ export const DateCol: FComponent<DateColProps> = (props) => {
         </For>
       </div>
       <div
-        class="week-all-day-container123"
+        class="fec-week-all-day-container123"
         data-test-id-all-w-c="2"
         onmousemove={() => mouseEnterSome(1)}
         onmousedown={[mouseDownSome, 1]}
       ></div>
       <div
-        class="week-all-day-container123"
+        class="fec-week-all-day-container123"
         data-test-id-all-w-c="3"
         onmousemove={() => mouseEnterSome(2)}
         onmousedown={[mouseDownSome, 2]}
       ></div>
       <div
-        class="week-all-day-container123"
+        class="fec-week-all-day-container123"
         data-test-id-all-w-c="4"
         onmousemove={() => mouseEnterSome(3)}
         onmousedown={[mouseDownSome, 3]}
       ></div>
       <div
-        class="week-all-day-container123"
+        class="fec-week-all-day-container123"
         data-test-id-all-w-c="5"
         onmousemove={() => mouseEnterSome(4)}
         onmousedown={[mouseDownSome, 4]}
       ></div>
       <div
-        class="week-all-day-container123"
+        class="fec-week-all-day-container123"
         data-test-id-all-w-c="6"
         onmousemove={() => mouseEnterSome(5)}
         onmousedown={[mouseDownSome, 5]}
       ></div>
       <div
-        class="week-all-day-container123"
+        class="fec-week-all-day-container123"
         data-test-id-all-w-c="7"
         onmousemove={() => mouseEnterSome(6)}
         onmousedown={[mouseDownSome, 6]}

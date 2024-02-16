@@ -1,17 +1,17 @@
-.month-row:not(:last-child) {
+.fec-month-row:not(:last-child) {
   border-bottom: 1px solid var(--hairline);
 }
-.month-container:not(:last-child) {
+.fec-month-container:not(:last-child) {
   border-right: 1px solid var(--hairline);
 }
-.month-day-out {
+.fec-month-day-out {
   > div {
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
     color: var(--on-surface-variant-agm) !important;
   }
-  .month-name {
+  .fec-month-name {
     display: inline;
     color: var(--on-surface-variant-agm) !important;
     font-size: 24px;
@@ -20,13 +20,13 @@
     line-height: normal;
   }
 }
-.month-day-out-no-name {
+.fec-month-day-out-no-name {
   color: var(--on-surface-variant-agm) !important;
 }
-.month-name {
+.fec-month-name {
   display: none;
 }
-.month-wrapper {
+.fec-month-wrapper {
   background-color: rgb(231, 133, 133);
   width: 100%;
   display: flex;
@@ -49,33 +49,20 @@
 .slide-fade-exit-to {
   opacity: 0;
 }
-.slide-fade-enter {
-}
 
-.month-is-dragging {
-  .month-row-container {
+.fec-month-is-dragging {
+  .fec-month-row-container {
     pointer-events: none;
   }
 }
 
-// .dragging-wrapper {
-//   height: 20px;
-//   width: calc(100% / 7);
-//   // background-color: rgba(145, 145, 145, 0.226);
-//   position: absolute;
-//   pointer-events: none;
-//   .month-item {
-//     opacity: 0.5;
-//   }
-// }
-
-.dragging-wrapper {
+.fec-dragging-wrapper {
   height: 20px;
   width: calc(100% / 7);
   // background-color: rgba(145, 145, 145, 0.226);
   position: absolute;
   pointer-events: none;
-  .month-item {
+  .fec-month-item {
     opacity: 0.5;
   }
 }

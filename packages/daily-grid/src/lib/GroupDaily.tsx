@@ -46,7 +46,7 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
        onDateChange={mergedProps.onDateChange}
        locale={mergedProps.locale} 
        initialDate={mergedProps.initialDate} />
-      <div class="scroll-wrapper " id="scroll-wrapper">
+      <div class="fec-scroll-wrapper " id="fec-scroll-wrapper">
         <div style="position: absolute;width:100%;display:flex;">
           <DailyTimeRanges locale={mergedProps.locale}></DailyTimeRanges>
           <GroupGrid

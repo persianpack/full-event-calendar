@@ -1,4 +1,4 @@
-.time-range {
+.fec-time-range {
     // background-color: green;
     border-top: 1px solid var(--hairline);
     // margin-left: 39px;
@@ -8,23 +8,23 @@
     width: 100%;
     position: relative;
     //  z-index: 3;
-    .add-event-preview{
+    .fec-add-event-preview{
         position: absolute;
         width: 100%;
         padding-left: 12px;
         height: 100%;
-        .ec-event{ 
+        .fec-event{ 
             box-shadow: var(--shawdow);
             border: 0px solid red;
             padding-top: 5px;
         }
-        .one-line-event {
+        .fec-one-line-event {
         
           justify-content: start !important;
         }
       
     }
-    .time-range-time {
+    .fec-time-range-time {
       // z-index: -1;
       // background-color: red;
       color: var(--on-surface-variant);
@@ -36,12 +36,12 @@
       top: 0;
       transform: translate(-120%, -50%);
     }
-    .some-container {
+    .fec-some-container {
       display: flex;
       flex-direction: column;
       flex: 1;
     }
-    .time-rage-up-container {
+    .fec-time-rage-up-container {
       flex: 1;
       margin-left: 12px;
       display: flex;
@@ -50,7 +50,7 @@
         flex: 1;
       }
     }
-    .time-rage-down-container {
+    .fec-time-rage-down-container {
       flex: 1;
       margin-left: 12px;
       display: flex;

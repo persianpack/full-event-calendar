@@ -64,14 +64,14 @@ export function useSlotModal(modalType: string, clearDataCb?: any) {
   const container = useCalenderContainerState()
     
   function setScrollListner(){
-     // scroll-wrapper 
-    const scrollWrapper =  container?.querySelector('.scroll-wrapper')
+     // fec-scroll-wrapper 
+    const scrollWrapper =  container?.querySelector('.fec-scroll-wrapper')
     scrollWrapper?.addEventListener('scroll',closeModal)
     document.addEventListener('scroll',closeModal)
   }
   function removeScrollListner(){
-     // scroll-wrapper 
-    const scrollWrapper =  container?.querySelector('.scroll-wrapper')
+     // fec-scroll-wrapper 
+    const scrollWrapper =  container?.querySelector('.fec-scroll-wrapper')
     scrollWrapper?.removeEventListener('scroll',closeModal)
     document.removeEventListener('scroll',closeModal)
 
@@ -80,7 +80,7 @@ export function useSlotModal(modalType: string, clearDataCb?: any) {
   onMount(() => {
 
     if(container){
-      container.querySelector('#scroll-wrapper')?.addEventListener('scroll', () => {
+      container.querySelector('#fec-scroll-wrapper')?.addEventListener('scroll', () => {
         // remove modal
       })
     }
@@ -99,7 +99,7 @@ export function useSlotModal(modalType: string, clearDataCb?: any) {
     const onClick = (e: MouseEvent) => {
       e.preventDefault()
       e.stopPropagation()
-      let someID = targetElRef()?.classList.contains('ec-event')? targetElRef()?.id: targetElRef()?.querySelector('.ec-event')?.id
+      let someID = targetElRef()?.classList.contains('fec-event')? targetElRef()?.id: targetElRef()?.querySelector('.fec-event')?.id
       // console.log(targetElRef(),e.target)
       //@ts-ignore
       return !el.contains(e.target) && !(e.target === targetElRef()) && !targetElRef()?.contains(e.target) && !(e.target?.id === someID) && accessor()?.()
@@ -153,7 +153,7 @@ export function useSlotModal(modalType: string, clearDataCb?: any) {
   useSlot(headerSlot, slotDependencies, modalType, slotModalData)
 
   const modalElementNode = (
-    <div ref={setModalRef} style={{ position: 'fixed', ...modalPosition() }} class="modal-container">
+    <div ref={setModalRef} style={{ position: 'fixed', ...modalPosition() }} class="fec-modal-container">
       {/* 
      //@ts-ignore */}
       <div use:ClickOutSide={modaClickOut}

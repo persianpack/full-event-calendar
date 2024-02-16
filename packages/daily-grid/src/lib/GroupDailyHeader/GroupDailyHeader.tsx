@@ -54,7 +54,7 @@ export const GroupDailyHeader: FComponent<GroupDailyHeaderProps> = (props) => {
             locale={mergedProps.locale}
           />
        
-        <div class="group-item-header">
+        <div class="fec-group-item-header">
           <For each={mergedProps.columData}>
             {(item) => (
               <Show when={item.props.group}>
@@ -65,7 +65,7 @@ export const GroupDailyHeader: FComponent<GroupDailyHeaderProps> = (props) => {
         </div>
       </div>
 
-      <div class="alld-main-container">
+      <div class="fec-alld-main-container">
         <For each={mergedProps.columData}>
           {(item) => (
             <DailyAllDay

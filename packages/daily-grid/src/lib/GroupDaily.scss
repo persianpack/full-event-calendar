@@ -1,15 +1,12 @@
-#group-grid-container{
-    > div:not(:first-child){
-        // background-color: red;
-       
-        .daily-time-ranges{
-            display: none;
-        }
+#fec-group-grid-container {
+  > div:not(:first-child) {
+    // background-color: red;
+    .fec-daily-time-ranges  {
+      display: none;
     }
-    .daily-header  {
-        display: none;
-    }
-    .fec-daily-grid{
-        // border-left: none;
-    }
+  }
+  .fec-daily-header {
+    display: none;
+  }
+
 }

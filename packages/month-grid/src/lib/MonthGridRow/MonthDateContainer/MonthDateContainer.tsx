@@ -43,13 +43,13 @@ export const MonthDateContainer: FComponent<MonthDateContainerProps> = (props) =
         {(date, i) => (
           <div
             onmousedown={[mouseDownSome, date.date]}
-            class="month-container"
+            class="fec-month-container"
             onmousemove={() => props.onMouseEnter(date.date)}
           >
-            <div class={`month-day-wrapper ${isDateInsideMonth(date, i(), props.monthRowIndex, props.monthRowDates)}`}>
+            <div class={`fec-month-day-wrapper ${isDateInsideMonth(date, i(), props.monthRowIndex, props.monthRowDates)}`}>
               <div onmousedown={stopDefault} onclick={(e) => props.dragClick(e, date.date)}>
                 <span>{formatNumber(props.locale, date.day as any)}</span>
-                <div class="month-name">{getMonthName(props.calendar, date.date, props.locale)}</div>
+                <div class="fec-month-name">{getMonthName(props.calendar, date.date, props.locale)}</div>
               </div>
             </div>
           </div>
@@ -67,9 +67,9 @@ function isDateInsideMonth(
 ) {
   if (date.isDateInsideMonth) {
     if (monthRowIndex === 0) {
-      return date.month != monthRowArr[index + 1]?.month ? 'month-day-out' : 'month-day-out-no-name'
+      return date.month != monthRowArr[index + 1]?.month ? 'fec-month-day-out' : 'fec-month-day-out-no-name'
     } else if (date.isDateInsideMonth) {
-      return date.month != monthRowArr[index - 1]?.month ? 'month-day-out' : 'month-day-out-no-name'
+      return date.month != monthRowArr[index - 1]?.month ? 'fec-month-day-out' : 'fec-month-day-out-no-name'
     }
   }
   return ''

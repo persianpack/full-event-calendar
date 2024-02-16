@@ -104,7 +104,7 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
         onDateChange={onDateChange}
       />
       <ScrollBarWrapper>
-        <div style="display: flex;" class="week-wrapper">
+        <div style="display: flex;" class="fec-week-wrapper">
           <DailyTimeRanges locale={mergedProps.locale} />
           <GroupGrid
             gridComponent={BasicGrid}
@@ -125,8 +125,8 @@ function ScrollBarWrapper(props: any) {
     <div style="position: relative; flex: 1;min-width:900px">
       <div
         style=" position: absolute;height: 100%;width: 100%;"
-        id="scroll-wrapper"
-        class="custome-scroll-bar scroll-wrapper"
+        id="fec-scroll-wrapper"
+        class="fec-custome-scroll-bar fec-scroll-wrapper"
       >
         {props.children}
       </div>

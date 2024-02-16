@@ -5,4 +5,7 @@
   display: flex;
   background-color: var(--bg-color);
   overflow: hidden;
+  * {
+    box-sizing: border-box;
+  }
 }

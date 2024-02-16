@@ -1,4 +1,4 @@
-.weekly-allDay {
+.fec-weekly-allDay {
   overflow: hidden;
   display: flex;
   position: relative;
@@ -6,36 +6,35 @@
   position: relative;
   width: calc(100% - 50px);
   max-height: 112px;
-
   padding-bottom: 7px;
   border-right: 1px solid var(--hairline);
   transition: all 0.5s;
 
-  .week-all-day-wrapper {
+  .fec-week-all-day-wrapper {
     position: absolute;
     width: calc(100% / 7);
     height: 10px;
     z-index: 14;
-    .month-item{
+    .fec-month-item{
       opacity: 0.7;
     }
   }
 }
-.month-is-dragging{
-  .month-item{
+.fec-month-is-dragging{
+  .fec-month-item{
     pointer-events: none;
   }
 }
-#group-grid-container > div {
+#fec-group-grid-container > div {
   flex: 1;
 }
  
-.weekly-allDay-open {
-  .weeklymores {
+.fec-weekly-allDay-open {
+  .fec-weekly-morecontainer {
     opacity: 0;
     pointer-events: none;
   }
-  .all-collapser {
+  .fec-all-collapser {
     rotate: 0deg !important;
   }
 }

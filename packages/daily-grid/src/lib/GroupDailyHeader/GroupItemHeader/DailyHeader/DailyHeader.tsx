@@ -33,11 +33,11 @@ export const DailyHeader: FComponent<DailyHeaderProps> = (props) => {
     <div ref={headerSlot.el}>
       {/* <div ref={headerSlot.el}></div> */}
       <Show when={!isSlotAvalibale}>
-        <div class={`daily-header ${isDateToday(props.headerDate) ? 'daily-header-today' : ' '}`}>
-          <div class="weekend-narrow">
+        <div class={`fec-daily-header ${isDateToday(props.headerDate) ? 'fec-daily-header-today' : ' '}`}>
+          <div class="fec-weekend-narrow">
             {formatWeekDays(props.headerDate, props.calendar, props.timeZone, props.locale)}
           </div>
-          <div onClick={headerClick} class="week-day">
+          <div onClick={headerClick} class="fec-week-day">
             {formatDayNumber(props.locale, props.calendar, props.timeZone, props.headerDate)}
           </div>
         </div>

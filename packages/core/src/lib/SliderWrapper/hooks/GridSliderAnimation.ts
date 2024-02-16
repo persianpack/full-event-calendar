@@ -19,24 +19,24 @@ export function useGridSliderAnimation(containers: containers) {
     // Start Animation
 
     isGoing = true
-    clonedCalendar.classList.add('cloned-calendar')
-    clonedCalendar.classList.remove('not-cloned')
+    clonedCalendar.classList.add('fec-cloned-calendar')
+    clonedCalendar.classList.remove('fec-not-cloned')
     containers.calendarContainerRef?.insertAdjacentElement('beforeend', clonedCalendar)
 
-    const scroller = clonedCalendar.querySelector('.scroll-wrapper')
-    // const scroller2 = containers.containerRef.querySelector('.scroll-wrapper')
+    const scroller = clonedCalendar.querySelector('.fec-scroll-wrapper')
+    // const scroller2 = containers.containerRef.querySelector('.fec-scroll-wrapper')
     if (scroller) {
       scroller.scrollTop = scrollTop
     }
 
     const baseEl = containers.containerRef
     if (hasAnimation) {
-      baseEl?.classList.add('grid-animate-smooth')
+      baseEl?.classList.add('fec-grid-animate-smooth')
     } else {
       if (new Date(prevInitDate) > new Date(data.store.initialDate)) {
-        baseEl?.classList.add('grid-animate-backward')
+        baseEl?.classList.add('fec-grid-animate-backward')
       } else {
-        baseEl?.classList.add('grid-animate-forward')
+        baseEl?.classList.add('fec-grid-animate-forward')
       }
     }
 
@@ -44,10 +44,10 @@ export function useGridSliderAnimation(containers: containers) {
 
     setTimeout(() => {
       // End Animation
-      containers.calendarContainerRef.querySelector('.cloned-calendar')?.remove()
-      baseEl?.classList.remove('grid-animate-forward')
-      baseEl?.classList.remove('grid-animate-backward')
-      baseEl?.classList.remove('grid-animate-smooth')
+      containers.calendarContainerRef.querySelector('.fec-cloned-calendar')?.remove()
+      baseEl?.classList.remove('fec-grid-animate-forward')
+      baseEl?.classList.remove('fec-grid-animate-backward')
+      baseEl?.classList.remove('fec-grid-animate-smooth')
       makeClone()
       addListners()
       isGoing = false
@@ -82,26 +82,26 @@ export function useGridSliderAnimation(containers: containers) {
 
     }
   })
-  const scrollContainer = containers.containerRef.querySelector('.scroll-wrapper')
+  const scrollContainer = containers.containerRef.querySelector('.fec-scroll-wrapper')
   if(scrollContainer){
-    containers.containerRef.querySelector('.scroll-wrapper').addEventListener('scroll', makeClone)
+    containers.containerRef.querySelector('.fec-scroll-wrapper').addEventListener('scroll', makeClone)
   }
 
   function addListners() {
-  const scrollContainer = containers.containerRef.querySelector('.scroll-wrapper')
+  const scrollContainer = containers.containerRef.querySelector('.fec-scroll-wrapper')
   if(scrollContainer){
-    containers.containerRef.querySelector('.scroll-wrapper')?.removeEventListener('scroll', makeClone)
-    containers.containerRef.querySelector('.scroll-wrapper')?.addEventListener('scroll', makeClone)
+    containers.containerRef.querySelector('.fec-scroll-wrapper')?.removeEventListener('scroll', makeClone)
+    containers.containerRef.querySelector('.fec-scroll-wrapper')?.addEventListener('scroll', makeClone)
   }
   }
 
   onCleanup(() => {
-    containers.containerRef.querySelector('.scroll-wrapper')?.removeEventListener('scroll', makeClone)
+    containers.containerRef.querySelector('.fec-scroll-wrapper')?.removeEventListener('scroll', makeClone)
   })
 
   function makeClone() {
     clonedCalendar = containers.containerRef?.cloneNode(true) as HTMLElement
-    const scroller2 = containers.containerRef.querySelector('.scroll-wrapper') as HTMLElement
+    const scroller2 = containers.containerRef.querySelector('.fec-scroll-wrapper') as HTMLElement
     if (scroller2) {
       scrollTop = scroller2.scrollTop
     }

@@ -63,10 +63,10 @@ export const List: FComponent<ListGridProps> = (props) => {
   return (
     <>
       {addModalElement}
-      <div class="event-list">
-        <div class="scroll-wrapper-list custome-scroll-bar">
+      <div class="fec-event-list">
+        <div class="fec-scroll-wrapper-list fec-custome-scroll-bar">
           <Show when={isMlistEmpty()}>
-            <div class="no-events-text">No events here</div>
+            <div class="fec-no-events-text">No events here</div>
           </Show>
 
           <For each={Object.keys(generateGroup())}>
@@ -74,21 +74,21 @@ export const List: FComponent<ListGridProps> = (props) => {
               return generateGroup()[item].length === 0 ? (
                 <></>
               ) : (
-                <div class="event-list-item">
-                  <div class="event-list-item-time">
-                    <div class="scchedule-date">
+                <div class="fec-event-list-item">
+                  <div class="fec-event-list-item-time">
+                    <div class="fec-schedule-date">
                       {formatDD(new Date(item), mergedProps.calendar, mergedProps.locale)}
                     </div>
-                    <div class="scchedule-dates">
+                    <div class="fec-schedule-dates">
                       {formatDM(new Date(item), mergedProps.calendar, mergedProps.locale)}
                     </div>
                   </div>
-                  <div class="scheachile-event-wrapper">
+                  <div class="fec-schedule-event-wrapper">
                     <For each={generateGroup()[item]}>
                       {(item) => (
-                        <div onclick={[itemClick, item]} class="event-list-item-des">
-                          <div class="event-date">
-                            <div class="event-dot" style={`background-color:${item.color}`}></div>
+                        <div onclick={[itemClick, item]} class="fec-fec-event-list-item-des">
+                          <div class="fec-event-date-list">
+                            <div class="fec-event-dot" style={`background-color:${item.color}`}></div>
                             {item.isAllDay() ? 'all day' : formatRange(item.start, item.end, mergedProps.locale)}
                           </div>
                           <div>{item.name}</div>

@@ -15,7 +15,7 @@ interface MonthGridRowProps {
 export const MonthRowMoreBtns: FComponent<MonthGridRowProps> = (props) => {
   return (
     <>
-      <div class="month-more-wrapper">
+      <div class="fec-month-more-wrapper">
           {/* get rowse count byand the row limit */}
         <For
           each={getExtraRowsCount(
@@ -26,9 +26,9 @@ export const MonthRowMoreBtns: FComponent<MonthGridRowProps> = (props) => {
           )}
         >
           {(extraCount, j) => (
-            <div class="month-more-item">
+            <div class="fec-month-more-item">
               <Show when={extraCount > 0}>
-                <div class="month-more-btn" onclick={[props.openModalEvents, props.monthRowDates[j()]]}>
+                <div class="fec-month-more-btn" onclick={[props.openModalEvents, props.monthRowDates[j()]]}>
                   {formatNumber(props.locale, extraCount as any)} +
                 </div>
               </Show>

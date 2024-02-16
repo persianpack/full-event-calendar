@@ -1,9 +1,9 @@
-.alld-not-open {
-  .all-day-container {
+.fec-alld-not-open {
+  .fec-all-day-container {
     max-height: 81px;
   }
 }
-.all-day-container {
+.fec-all-day-container {
   height: fit-content;
   padding: 5px 10px;
   // display: flex;
@@ -86,7 +86,7 @@
     pointer-events: none;
   }
 
-  .all-collapser {
+  .fec-all-collapser {
     rotate: 0deg !important;
   }
 }
@@ -109,7 +109,7 @@
   justify-content: end;
   padding-bottom: 5px;
   border-right: 1px solid var(--hairline);
-  .all-collapser {
+  .fec-all-collapser {
     height: 30px;
     rotate: 180deg;
     width: 30px;

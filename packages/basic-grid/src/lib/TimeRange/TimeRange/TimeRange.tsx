@@ -60,9 +60,9 @@ export const TimeRange: FComponent<TimeRangeProps> = (props) => {
 
   return (
     <>
-      <div data-test-time-range-id={props.houre + 1} class="time-range">
+      <div data-test-time-range-id={props.houre + 1} class="fec-time-range ">
         <Show when={props.eventPreviewData}>
-          <div ref={refr} class="add-event-preview" style={getTop(props.eventPreviewData?.start!)}>
+          <div ref={refr} class="fec-add-event-preview" style={getTop(props.eventPreviewData?.start!)}>
             <EventItem
               locale={props.locale}
               event={props.eventPreviewData!}
@@ -76,12 +76,12 @@ export const TimeRange: FComponent<TimeRangeProps> = (props) => {
           </div>
         </Show>
 
-        <div class="some-container">
-          <div class="time-rage-up-container">
+        <div class="fec-some-container">
+          <div class="fec-time-rage-up-container">
             <div onmousedown={(e) => timeRangeMouseDown(props.houre, 0, e)}></div>
             <div onmousedown={(e) => timeRangeMouseDown(props.houre, 15, e)}></div>
           </div>
-          <div class="time-rage-down-container">
+          <div class="fec-time-rage-down-container">
             <div onmousedown={(e) => timeRangeMouseDown(props.houre, 30, e)}></div>
             <div onmousedown={(e) => timeRangeMouseDown(props.houre, 45, e)}></div>
           </div>

@@ -15,7 +15,7 @@ export const SliderWrapper: FComponent = (props) => {
   })
   return (
     <div ref={calendarContainerRef} style="position:relative;flex: 1;" id="calendar-container">
-      <div ref={containerRef} class="not-cloned grid-wrapper" id="full-event-calendar-wrapper">
+      <div ref={containerRef} class="fec-not-cloned fec-grid-wrapper" id="full-event-calendar-wrapper">
         {props.children}
       </div>
     </div>

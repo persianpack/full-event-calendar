@@ -15,7 +15,7 @@ export class NewDomController implements DomController {
     constructor(event: EventClass,contaniner:HTMLElement) {
         this.event = event
         this.contaniner = contaniner
-        this.oneHourInPixelSize = this.contaniner.querySelector('.time-range')?.clientHeight || 1
+        this.oneHourInPixelSize = this.contaniner.querySelector('.fec-time-range')?.clientHeight || 1
     }
     getEventNode(e?:MouseEvent) {
         if(e){

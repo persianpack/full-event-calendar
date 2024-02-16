@@ -115,14 +115,14 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
   return (
     <>
       {modalElementNode}
-      <div ref={gridRef.current} id={mergedProps.id} class="basic-grid">
+      <div ref={gridRef.current} id={mergedProps.id} class="fec-basic-grid">
         <For each={ColList()}>
           {(data) => (
-            <div class="holdcontainer" style={getWrapperHeight()}>
+            <div class="fec-events-holder" style={getWrapperHeight()}>
               <For each={Object.values(data)}>
                 {(eventList, colNumber) => {
                   return (
-                    <div class="event-colom" data-test-col-id={colNumber()}>
+                    <div class="fec-event-colom " data-test-col-id={colNumber()}>
                       <For each={eventList}>
                         {(event: EventClass) => {
                           return (
@@ -160,11 +160,11 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
             editable={mergedProps.editable}
             stopAddEvent={mergedProps.stopAddEvent}
           ></TimeRanges>
-          <div class="wrapper-container dragger-wrapper" style={getWrapperHeight()}>
+          <div class="fec-preview-wrapper fec-dragger-wrapper" style={getWrapperHeight()}>
             <Show when={isDragging()}>
               <div
                 id={'draging-event-' + draggedData().item?.id}
-                class={`drag-element ec-event drag-element-grabbiing`}
+                class={`drag-element fec-event drag-element-grabbiing`}
                 style={getDragingStyle()}
               >
                 <div> {draggedData().item?.name}</div>

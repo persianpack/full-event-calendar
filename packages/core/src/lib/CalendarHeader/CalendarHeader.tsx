@@ -125,16 +125,16 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
   )
 
   return (
-    <div class="calendar-header">
+    <div class="fec-calendar-header">
       <div onclick={goToday} ref={todayBtnSlot.el}>
         <Show when={!isTodayBtnSlotAvalibale}>
-          <div class="go-to-today">Today</div>
+          <div class="fec-go-to-today">Today</div>
         </Show>
       </div>
 
       <div ref={goBackDateBtnSlot.el} onclick={goBack}>
         <Show when={!isGoBackDateSlotAvalibale}>
-          <div class="go-back-icon">
+          <div class="fec-go-back-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path
                 d="M13.28 10.0333L8.93333 5.68667C8.42 5.17333 7.58 5.17333 7.06667 5.68667L2.72 10.0333"
@@ -151,7 +151,7 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
       {/* <div id="test-vue-id" ref={headerSlot.el}></div> */}
       <div ref={goForwardDateBtnSlot.el} onclick={goForward}>
         <Show when={!isGoForwardDateSlotAvalibale}>
-          <div class="go-forward-icon">
+          <div class="fec-go-forward-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path
                 d="M13.28 10.0333L8.93333 5.68667C8.42 5.17333 7.58 5.17333 7.06667 5.68667L2.72 10.0333"
@@ -166,24 +166,24 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
         </Show>
       </div>
 
-      <div class="header-date" dir="rtl" ref={headerSlot.el}>
+      <div class="fec-header-date" dir="rtl" ref={headerSlot.el}>
         <Show when={!isHeaderDateSlotAvalibale}>{headerDate()}</Show>
       </div>
 
       <div style="flex:1"></div>
       <div ref={gridDropDown.el}>
         <Show when={!isGridDropDownSlotAvalibale}>
-          <div class="go-some-d" data-test-id-dropdown="1" onclick={() => SetDropDown(!showDropDown())}>
+          <div class="fec-grid-drop" data-test-id-dropdown="1" onclick={() => SetDropDown(!showDropDown())}>
             {data.store.grid}
             <Transition name="slide-fade">
               <Show when={showDropDown()}>
                 {/*
             //@ts-ignore */}
-                <div use:ClickOutSide={amodalClickOut} class="dropdown-calendar">
+                <div use:ClickOutSide={amodalClickOut} class="fec-dropdown-calendar">
                   <For each={data.instance.getOptions()}>
                     {(item: any) => (
                       <div
-                        class="dropdown-calendar-item"
+                        class="fec-dropdown-calendar-item"
                         onclick={(e) => {
                           e.stopPropagation()
                           SetDropDown(false)

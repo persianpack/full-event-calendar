@@ -1,14 +1,14 @@
-.daily-header {
+.fec-daily-header {
   display: flex;
   width: fit-content;
   flex-direction: column;
   align-items: center;
   font-size: 18px;
-  .weekend-narrow {
+  .fec-weekend-narrow {
     color: #c3c4c4;
   }
   margin-left: 50px;
-  .week-day {
+  .fec-week-day {
     font-size: 40px;
     font-style: normal;
     font-weight: 500;
@@ -30,8 +30,8 @@
     }
   }
 }
-.daily-header-today {
-  .week-day {
+.fec-daily-header-today {
+  .fec-week-day {
     color: white;
     background-color: var(--primary);
 

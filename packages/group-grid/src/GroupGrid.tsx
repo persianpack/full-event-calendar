@@ -59,7 +59,7 @@ export const GroupGrid: FComponent<GroupGridProps> = (props) => {
             }}
             onAddEvent={mergedProps.onAddEvent}
             id={colIds[i()]}
-            container={mergedProps.hasCrossGridDrag ? 'group-grid-container' : ''}
+            container={mergedProps.hasCrossGridDrag ? 'fec-group-grid-container' : ''}
             {...item.props}
           ></Dynamic>
         )
@@ -68,7 +68,7 @@ export const GroupGrid: FComponent<GroupGridProps> = (props) => {
   )
   return (
     <>
-      <div style="display:flex;width:100%;flex: 1;" id="group-grid-container" ref={groupContainerRef}>
+      <div style="display:flex;width:100%;flex: 1;" id="fec-group-grid-container" ref={groupContainerRef}>
         {mappedCols()}
       </div>
     </>

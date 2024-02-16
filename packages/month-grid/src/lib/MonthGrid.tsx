@@ -215,7 +215,7 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
         setSlotModalData(ev)
         if(container){
           openSlotModalOnElement(
-            container.querySelector('#month-wrapper-id')?.querySelector('.dragging-wrapper .month-item')
+            container.querySelector('#fec-month-wrapper-id')?.querySelector('.fec-dragging-wrapper .fec-month-item')
             )
           }
         onDragEnd(false)
@@ -238,7 +238,7 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
         timeZone={mergedProps.timeZone}
         calendar={mergedProps.calendar}
       ></MonthHeader>
-      <div class="month-wrapper" id="month-wrapper-id" ref={monthGridRef}>
+      <div class="fec-month-wrapper" id="fec-month-wrapper-id" ref={monthGridRef}>
         <EventModal 
         setModalData={setModalData}
         modalData={modalData()}

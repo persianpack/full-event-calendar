@@ -27,10 +27,10 @@ export const MonthEventRows: FComponent<MonthEventRowsProps> = (props) => {
 
   return (
     <>
-      <div class="month-row-container" data-test-id-month-row={props.monthRowIndex}>
+      <div class="fec-month-row-container" data-test-id-fec-month-row={props.monthRowIndex}>
         <For each={getRowLimit(Object.keys(props.monthRowData))}>
           {(rowItemKey, rowItemIndex) => (
-            <div class="month-row-wrapper" data-test-id-row-wrapper={rowItemIndex()}>
+            <div class="fec-month-row-wrapper" data-test-id-row-wrapper={rowItemIndex()}>
               <For each={props.monthRowData[rowItemKey]}>
                 {(dayObject) => (
                   <MonthEvent

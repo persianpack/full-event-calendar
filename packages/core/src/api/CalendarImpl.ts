@@ -76,7 +76,7 @@ export class CalendarImpl implements CalendarApi {
     const { store, dispatch } = useRedux(defaultState)
     this.storeManager = store
     this.storeDispatch = dispatch
-    this.resetOptions(eventCalendarOptions)
+    this.resetOptions(eventCalendarOptions,true)
     this.EventListenrsStorage = new EventCollection()
   }
   public emitEvent(eventType: EventTypes, payload: EventPayLoads[EventTypes]) {
@@ -145,10 +145,10 @@ export class CalendarImpl implements CalendarApi {
   public deleteEvent(id: string | number) {
     this.storeDispatch({ type: 'DELETE_EVENT', id })
   }
-  public resetOptions<T extends CalendarSourceOptions>(options: T) {
+  public resetOptions<T extends CalendarSourceOptions>(options: T,catchErrors:boolean) {
     if (options?.plugins?.length > 0) {
       this.setPlugins(options.plugins)
-    }else{
+    }else if(catchErrors){
       throw Error('full-event-calendat --> must provide atleast 1 grid plugin')
     }
     if (options.timeZone) {

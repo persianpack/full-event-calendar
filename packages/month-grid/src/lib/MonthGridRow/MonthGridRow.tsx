@@ -26,8 +26,8 @@ interface MonthGridRowProps {
 export const MonthGridRow: FComponent<MonthGridRowProps> = (props) => {
 
   return (
-    <div class="month-row">
-      <div class="dragging-wrapper">
+    <div class="fec-month-row">
+      <div class="fec-dragging-wrapper">
         {/* for event draging */}
         <MonthEventPreview
           locale={props.locale}

@@ -36,12 +36,12 @@ interface rangeProps {
 export const DailyTimeRanges: FComponent<rangeProps> = (props) => {
 
   return (
-    <div class="daily-time-ranges">
+    <div class="fec-daily-time-ranges ">
       <For each={timess}>
         {(time) => (
           // <div ref={headerSlot.el}>
-          //   <div class="time-range-time">{(time && formatToShortTime(time as Date, props.locale)) || ''}</div>
-          //   <div class="time-range-hairline"></div>
+          //   <div class="fec-time-range-time">{(time && formatToShortTime(time as Date, props.locale)) || ''}</div>
+          //   <div class="fec-time-range-hairline"></div>
           // </div>
           <Time time={time} locale={props.locale} />
         )}
@@ -64,8 +64,8 @@ const Time:FComponent<any> = (props)=>{
   return (
     <div ref={headerSlot.el}>
       <Show when={!isSlotAvalibale}>
-        <div class="time-range-time">{(props.time && formatToShortTime(props.time as Date, props.locale)) || ''}</div>
-        <div class="time-range-hairline"></div>
+        <div class="fec-time-range-time">{(props.time && formatToShortTime(props.time as Date, props.locale)) || ''}</div>
+        <div class="fec-time-range-hairline"></div>
       </Show>
   </div>
   )

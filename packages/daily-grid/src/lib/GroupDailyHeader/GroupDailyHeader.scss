@@ -1,4 +1,4 @@
-.alld-main-container {
+.fec-alld-main-container {
   display: flex;
   // margin-left: 51px;
   margin-right: 8px;
@@ -7,7 +7,7 @@
     flex: 1;
   }
 }
-.group-item-header{
+.fec-group-item-header{
     display: flex;
     padding-right: 8px;
     flex: 1;
@@ -28,13 +28,4 @@
         }
 
     }
-}
-
-.alld-main-container{
-  .all-d-wrapeer-header:not(:first-child){
-    .more-btn-container{
-    //  background-color: red;
-      
-    }
-  }
 }

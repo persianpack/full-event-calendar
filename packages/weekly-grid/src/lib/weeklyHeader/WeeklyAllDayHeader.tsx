@@ -81,7 +81,7 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
 
   return (
     <>
-      <div class="header-dates" style="min-width:900px">
+      <div class="fec-header-dates " style="min-width:900px">
         <For each={props.headerDates}>
           {(item, i) => (
             <div
@@ -103,12 +103,12 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
       </div>
 
       <div
-        class={`${isOpen() ? 'weekly-allDay-open' : ''} ${draggingEventData() ? 'month-is-dragging' : ''}`}
+        class={`${isOpen() ? 'fec-weekly-allDay-open' : ''} ${draggingEventData() ? 'fec-month-is-dragging' : ''}`}
         style="display: flex;min-width:900px"
       >
         <OpenAllDayBtn onClick={openAllD} show={getRowListArr().length > 3} />
 
-        <div class="weekly-allDay" id="month-wrapper-id" ref={allDRef.value}>
+        <div class="fec-weekly-allDay" id="fec-month-wrapper-id" ref={allDRef.value}>
           <ShowMoreBtns
             show={getRowListArr().length > 3}
             rowList={getRowList()}
@@ -117,7 +117,7 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
             openAllDayContainer={openAllD}
             onClick={openAllD}
           />
-          <div class="week-all-day-wrapper">
+          <div class="fec-week-all-day-wrapper">
             {/* this is a dummy event thats show the preview of the dragging event */}
             <MonthEventPreview
               locale={props.locale}

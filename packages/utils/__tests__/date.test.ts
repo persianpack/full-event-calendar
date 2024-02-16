@@ -59,10 +59,10 @@ test('all day arrowing in  a Date function utils', () => {
     name: 'noArrowEvent'
   })
 
-  expect(rightOrLeftInDate(noAllDayEvent, initDate)).toBe('month-item-no-all-day')
-  expect(rightOrLeftInDate(bothArrowEvent, initDate)).toBe('month-both-arrow')
-  expect(rightOrLeftInDate(leftArrowEvent, initDate)).toBe('month-left-arrow')
-  expect(rightOrLeftInDate(rightArrowEvent, initDate)).toBe('month-right-arrow')
+  expect(rightOrLeftInDate(noAllDayEvent, initDate)).toBe('fec-month-item-no-all-day')
+  expect(rightOrLeftInDate(bothArrowEvent, initDate)).toBe('fec-month-both-arrow')
+  expect(rightOrLeftInDate(leftArrowEvent, initDate)).toBe('fec-month-left-arrow')
+  expect(rightOrLeftInDate(rightArrowEvent, initDate)).toBe('fec-month-right-arrow')
   expect(rightOrLeftInDate(noArrowEvent, initDate)).toBe('month-no-arrow')
 })
 
@@ -105,9 +105,9 @@ test('all day arrowing in  a Date function utils', () => {
     name: 'noArrowEvent'
   })
 
-  expect(rightOrLeftInDateInRange(noAllDayEvent, range1, range2)).toBe('month-item-no-all-day')
-  expect(rightOrLeftInDateInRange(bothArrowEvent, range1, range2)).toBe('month-both-arrow')
-  expect(rightOrLeftInDateInRange(leftArrowEvent, range1, range2)).toBe('month-left-arrow')
-  expect(rightOrLeftInDateInRange(rightArrowEvent, range1, range2)).toBe('month-right-arrow')
+  expect(rightOrLeftInDateInRange(noAllDayEvent, range1, range2)).toBe('fec-month-item-no-all-day')
+  expect(rightOrLeftInDateInRange(bothArrowEvent, range1, range2)).toBe('fec-month-both-arrow')
+  expect(rightOrLeftInDateInRange(leftArrowEvent, range1, range2)).toBe('fec-month-left-arrow')
+  expect(rightOrLeftInDateInRange(rightArrowEvent, range1, range2)).toBe('fec-month-right-arrow')
   expect(rightOrLeftInDateInRange(noArrowEvent, range1, range2)).toBe('month-no-arrow')
 })

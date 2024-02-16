@@ -30,8 +30,8 @@ export const TimeBar: FComponent<{ container: any }> = (props) => {
   }
 
   return (
-    <div class="daily-timeBar" style={getstyles()}>
-      <div class="daily-timeBar-ball"></div>
+    <div class="fec-daily-timeBar" style={getstyles()}>
+      <div class="fec-daily-timeBar-ball"></div>
     </div>
   )
 }

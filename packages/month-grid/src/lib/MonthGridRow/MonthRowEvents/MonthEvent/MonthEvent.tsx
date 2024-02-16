@@ -35,7 +35,7 @@ export const MonthEvent: FComponent<EventProps> = (props: EventProps) => {
     function mouseMove(e:MouseEvent) {
       if(!hasBenMoved){
         setEventIsDragging(data)
-        container?.querySelector('#month-wrapper-id')?.classList.add('month-is-dragging')
+        container?.querySelector('#fec-month-wrapper-id')?.classList.add('fec-month-is-dragging')
       }else{
         hasBenMoved = true
       }
@@ -45,7 +45,7 @@ export const MonthEvent: FComponent<EventProps> = (props: EventProps) => {
       setEventIsDragging(false)
       document.removeEventListener('mouseup', handelMouseUp)
       document.removeEventListener('mousemove', mouseMove)
-      container?.querySelector('#month-wrapper-id')?.classList.remove('month-is-dragging')
+      container?.querySelector('#fec-month-wrapper-id')?.classList.remove('fec-month-is-dragging')
       props.onDragEnd()
     }
   }
@@ -58,11 +58,11 @@ export const MonthEvent: FComponent<EventProps> = (props: EventProps) => {
   }
   function isNotAllDay() {
     if (props?.item?.isAllDay) {
-      return !props?.item?.isAllDay() ? 'month-item-no-all-day' : ''
+      return !props?.item?.isAllDay() ? 'fec-month-item-no-all-day' : ''
       //@ts-ignore
     }else if(props?.item.source){
       //@ts-ignore
-      return !props?.item?.source.isAllDay() ? 'month-item-no-all-day' : ''
+      return !props?.item?.source.isAllDay() ? 'fec-month-item-no-all-day' : ''
     }
     return ''
   }
@@ -76,13 +76,13 @@ export const MonthEvent: FComponent<EventProps> = (props: EventProps) => {
     <div
       onmousedown={[onEventMouseDown, true]}
       onclick={onClickHandel}
-      class={`month-item ${isNotAllDay()} ${rightOrLeftInDateInRange(props.item, props.startDate, props.endDate)}`}
+      class={`fec-month-item ${isNotAllDay()} ${rightOrLeftInDateInRange(props.item, props.startDate, props.endDate)}`}
       id={`month--item-${props.item.id}`}
       style={eventStyles()}
       data-test-id-month-item={props.item.id}
     >
-      <div class="event-time-month">{`${isNotAllDay() ? formatToShortTime(props.item.start, props.locale) : ''} `}</div>
-      <div class="event-name-month">{isNotAllDay() ? `(${props.item.name})` : props.item.name}</div>
+      <div class="fec-event-time-month">{`${isNotAllDay() ? formatToShortTime(props.item.start, props.locale) : ''} `}</div>
+      <div class="fec-event-name-month">{isNotAllDay() ? `(${props.item.name})` : props.item.name}</div>
     </div>
   )
 }

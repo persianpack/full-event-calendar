@@ -1,17 +1,16 @@
-.month-more-wrapper {
+.fec-month-more-wrapper {
     display: flex;
     width: 100%;
     bottom: 7px;
     position: absolute;
     gap: 12px;
-    .month-more-item {
+    .fec-month-more-item {
       flex: 1;
 
-      .month-more-btn {
+      .fec-month-more-btn {
         background-color: var(--bg-color);
         color: var(--on-surface-variant);
         transition: all 0.3s;
-
         align-items: center;
         padding-left: 8px;
         padding-top: 3px;

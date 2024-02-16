@@ -33,15 +33,15 @@ class DailyGridDragger extends DraggerHandeler implements Dragger {
     this.createDraggingObject(e, event)
     const el = this.draggingController?.getEventNode(e) as HTMLElement
     this.firstTopPosition = el.getBoundingClientRect().top
-    this.firstScrollTop = this.container.querySelector('#scroll-wrapper')?.scrollTop!
+    this.firstScrollTop = this.container.querySelector('#fec-scroll-wrapper')?.scrollTop!
     const self = this
     this.sceollHande = ()=>{
       self.hasScrolled = true
     }
-   this.container.querySelector('#scroll-wrapper')?.addEventListener('scroll',self.sceollHande)
+   this.container.querySelector('#fec-scroll-wrapper')?.addEventListener('scroll',self.sceollHande)
   }
   mouseMove(e: MouseEvent) {
-    const scrollDiff = this.container.querySelector('#scroll-wrapper')?.scrollTop! - this.firstScrollTop
+    const scrollDiff = this.container.querySelector('#fec-scroll-wrapper')?.scrollTop! - this.firstScrollTop
     if(scrollDiff != 0 ){
       this.hasScrolled = true
     }
@@ -49,14 +49,14 @@ class DailyGridDragger extends DraggerHandeler implements Dragger {
     if (!this.draggingController) return
     if (!this.isDragging) {
       this.isDragging = true
-      this.container.querySelector('#full-event-calendar-core')?.classList.add('calendar-draging')
+      this.container.querySelector('#full-event-calendar-core')?.classList.add('fec-calendar-draging')
       this.draggingController.setEelementOpacity('0.3')
     }
     const previewieNode = this.getPreviewNode()
     if (previewieNode) { 
       const mouseDiff = e.clientY - previewieNode.getBoundingClientRect().top
       //@ts-ignore
-      const oneHoureInPixel = this.container.querySelector('.time-range')?.offsetHeight 
+      const oneHoureInPixel = this.container.querySelector('.fec-time-range')?.offsetHeight 
       const diffInSeconds = NewDomController.previewAndEventTimeDiff(this.firstTopPosition - scrollDiff, e.clientY - mouseDiff,oneHoureInPixel)
       // console.log(diffInSeconds/1000/60)
       this.draggingController.shiftTime(diffInSeconds)
@@ -65,11 +65,11 @@ class DailyGridDragger extends DraggerHandeler implements Dragger {
   }
   dragEnd(e: MouseEvent) {
     const self = this
-   this.container.querySelector('#scroll-wrapper')?.removeEventListener('scroll',self.sceollHande)
+   this.container.querySelector('#fec-scroll-wrapper')?.removeEventListener('scroll',self.sceollHande)
 
     this.isDragging = false
     if (!this.draggingController) return
-    this.container.querySelector('#full-event-calendar-core')?.classList.remove('calendar-draging')
+    this.container.querySelector('#full-event-calendar-core')?.classList.remove('fec-calendar-draging')
   }
   getPreviewNode() {
     return this.container.querySelector(`#draging-event-${this.draggingController?.item.id}`) as HTMLElement

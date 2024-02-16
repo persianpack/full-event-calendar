@@ -16,7 +16,7 @@ export const MonthHeader: FComponent<ModalHeaderProps> = (props) => {
   }
 
   return (
-    <div class="month-header">
+    <div class="fec-month-header">
       <div>{formateWeekDate(props.headerData[0].date)}</div>
       <div>{formateWeekDate(props.headerData[1].date)}</div>
       <div>{formateWeekDate(props.headerData[2].date)}</div>

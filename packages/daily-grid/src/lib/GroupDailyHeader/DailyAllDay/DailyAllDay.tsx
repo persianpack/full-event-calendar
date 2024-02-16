@@ -86,10 +86,10 @@ export const DailyAllDay: FComponent<DailyAllDayProps> = (props) => {
     <>
       {modalElementNode}
       <Show when={filteredEvents().length > 0}>
-        <div class={`all-d-wrapeer-header daosidj ${props.isAllDOpen ? 'alld-open' : 'alld-not-open'}`}>
+        <div class={`all-d-wrapeer-header ${props.isAllDOpen ? 'alld-open' : 'fec-alld-not-open'}`}>
           <div class="more-btn-container" style="width:52px">
             <Show when={filteredEvents().length > 2}>
-              <div class="all-collapser" onclick={openAllD}>
+              <div class="fec-all-collapser" onclick={openAllD}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                   <path
                     d="M13.28 10.0333L8.93333 5.68667C8.42 5.17333 7.58 5.17333 7.06667 5.68667L2.72 10.0333"
@@ -104,7 +104,7 @@ export const DailyAllDay: FComponent<DailyAllDayProps> = (props) => {
             </Show>
           </div>
 
-          <div class="all-day-container" ref={allDRef} style='height: fit-content; max-height: 81px; overflow: hidden;'>
+          <div class="fec-all-day-container" ref={allDRef} style='height: fit-content; max-height: 81px; overflow: hidden;'>
             <For each={filteredEvents()}>
               {(item) => {
                 return (

@@ -20,7 +20,7 @@ export const ShowMoreBtns: FComponent<ShowMoreBtnsProps> = (props) => {
 
     return (
         <Show when={props.show}>
-        <div class="weeklymores">
+        <div class="fec-weekly-morecontainer">
           <For each={extraRowsData()}>
             {(item, i) => (
               <div onclick={props.openAllDayContainer} style={item === 0 ? 'opacity:0;pointer-events: none;' : ''}>
