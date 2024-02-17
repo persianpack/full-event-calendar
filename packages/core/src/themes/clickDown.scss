@@ -1,60 +1,26 @@
 .calendar-theme-light {
-  // --border-color: #e6e6e69f;
-  // color-scheme: light;
-
-  // --primary-variant: rgb(66, 133, 244);
-  // --on-primary: #fff;
-  // --secondary: rgb(232, 240, 254);
-  // --secondary-variant: rgb(210, 227, 252);
-  // --on-secondary: rgb(25, 103, 210);
-  // --on-secondary-variant: rgb(24, 90, 188);
-  // --surface: #fff;
-  // --surface-transparent: rgba(255, 255, 255, 0);
-  // --on-surface: rgb(60, 64, 67);
-  // --background: #fff;
-  // --on-background: rgb(32, 33, 36);
-  // --textfield-primary: rgb(25, 103, 210);
-  // --textfield-hairline: rgb(128, 134, 139);
-  // --textfield-error: rgb(197, 34, 31);
-  // --textfield-on-surface-variant: rgb(95, 99, 104);
-
-  // --error: rgb(217, 48, 37);
-  // --on-error: #fff;
-  // --shadow: 0px 1px 2px 0px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
-   --shadow: 0px 4px 4px 0px rgba(60, 64, 67, 0.3), 0px 8px 12px 6px rgba(60, 64, 67, 0.15);
-  // --fab: rgba(255, 255, 255, 0.502);
-  // --fab-hover: #f6fafe;
-  // --dimmed: rgba(32, 33, 36, 0.38);
-  // --chip-hover: rgb(241, 243, 244);
-
+  --shadow: 0px 4px 4px 0px rgba(60, 64, 67, 0.3), 0px 8px 12px 6px rgba(60, 64, 67, 0.15);
   --now: rgb(234, 67, 53);
-
-  --primary: rgb(49, 181, 247);
+  --primary: #31b5f7;
   --hairline: rgb(218, 220, 224);
   --on-surface-variant-agm: #70757a;
   --on-surface-variant: rgb(95, 99, 104);
   --textfield-surface: rgb(32, 33, 36);
-  --bg-color:white;
-  --bg-hover:rgba(208, 208, 208, 0.38);
-  --shawdow:inset 0 0 0.5px 1px hsla(0, 0%,   100%, 0.075),  0 0 0 1px hsla(0, 0%, 0%, 0.05),
-  0 0.3px 0.4px hsla(0, 0%, 0%, 0.02),
-  0 0.9px 1.5px hsla(0, 0%, 0%, 0.045),
-  0 3.5px 6px hsla(0, 0%, 0%, 0.09);
+  --bg-color: white;
+  --bg-hover: rgba(208, 208, 208, 0.38);
+  --shawdow: inset 0 0 0.5px 1px hsla(0, 0%, 100%, 0.075), 0 0 0 1px hsla(0, 0%, 0%, 0.05),
+    0 0.3px 0.4px hsla(0, 0%, 0%, 0.02), 0 0.9px 1.5px hsla(0, 0%, 0%, 0.045), 0 3.5px 6px hsla(0, 0%, 0%, 0.09);
 }
 
 .calendar-theme-dark {
   --now: rgb(234, 67, 53);
-
-  --primary: #3499F5;
+  --primary: #3499f5;
   --hairline: #3a536b;
-  --on-surface-variant-agm: #BBBBBB;
-  --on-surface-variant: #FFFFFF;
-  --textfield-surface: #E6E6E6;
-  --bg-color:#243443;
-  --bg-hover:#3f4d5a;
-  --shawdow:inset 0 0 0.5px 1px hsla(0, 0%,   100%, 0.075),  0 0 0 1px hsla(0, 0%, 0%, 0.05),
-  0 0.3px 0.4px hsla(0, 0%, 0%, 0.02),
-  0 0.9px 1.5px hsla(0, 0%, 0%, 0.045),
-  0 3.5px 6px hsla(0, 0%, 0%, 0.09);
-
+  --on-surface-variant-agm: #bbbbbb;
+  --on-surface-variant: #ffffff;
+  --textfield-surface: #e6e6e6;
+  --bg-color: #243443;
+  --bg-hover: #3f4d5a;
+  --shawdow: inset 0 0 0.5px 1px hsla(0, 0%, 100%, 0.075), 0 0 0 1px hsla(0, 0%, 0%, 0.05),
+    0 0.3px 0.4px hsla(0, 0%, 0%, 0.02), 0 0.9px 1.5px hsla(0, 0%, 0%, 0.045), 0 3.5px 6px hsla(0, 0%, 0%, 0.09);
 }

@@ -1,6 +1,6 @@
 import { useGlobalState } from '../context-injector/context.jsx'
 import { CalendarHeader } from './CalendarHeader/CalendarHeader.jsx'
-import { createMemo, onMount } from 'solid-js'
+import { createMemo } from 'solid-js'
 import { EventClass, SourceEvent } from '@full-event-calendar/shared-ts'
 import { GridModes } from '../api/CalendarImpl.js'
 import { Dynamic } from 'solid-js/web'
@@ -12,15 +12,13 @@ export function App() {
 
   function onEventUpdate(event: SourceEvent) {
     const prev = data.instance.getEventById(event.id) as EventClass
-    console.log(event)
+
     const next = new EventImpl(event)
     next.convertDateByTimeZone(data.store.timeZone)
     if (data.store.autoUpdateEventOnChange) {
-      
       data.instance.updateEvent(event.id, event)
-      
     }
- 
+
     data.instance.emitEvent('eventUpdate', {
       prev: prev,
       next: next,
@@ -33,11 +31,11 @@ export function App() {
       // const prev = data.instance.getEventById(event.id) as EventClass
       data.instance.addEvent(event as any)
       // const next = data.instance.getEventById(event.id) as EventClass
-      console.log('eventAdd',event)
-      data.instance.emitEvent('eventAdd', {
-        event
-      })
+      console.log('eventAdd', event)
     }
+    data.instance.emitEvent('eventAdd', {
+      event
+    })
   }
 
   function onDateChange(d: Date) {

@@ -39,10 +39,6 @@ export function DailyCols(mergedProps: any, onDateChange: any) {
         const groupId = mergedProps.groups[i].id
         //@ts-ignore
         const filterdEvents = mergedProps.events.filter((ev) => {
-          if (ev.id === 15) {
-            //  console.log(groupId,ev.groups.includes(groupId))
-          }
-          //@ts-ignore
           return ev.groups.includes(groupId)
         })
         columData[i].props.events = getEventsInDate(filterdEvents, mergedProps.initialDate)

@@ -1,12 +1,12 @@
 import useRedux from '../store/useRedux'
 import type { Dispatch } from 'redux'
 import { CalendarState, StoreActions } from '../store/store'
-import { EventClass, Group, SourceEvent } from '@full-event-calendar/shared-ts'
+import { Group, SourceEvent } from '@full-event-calendar/shared-ts'
 import { RenderStore } from './RenderStore.ts'
 import EventCollection, { EventPayLoads, EventTypes } from './Collection.ts'
 interface CalendarApi {
   // Current Date
-  // -----------------------------------------------------------------------------------------------------------------
+  // ------------------------
   storeManager: CalendarState
   renderStore: any
   setEventList(events: SourceEvent[]): any
@@ -55,28 +55,28 @@ export class CalendarImpl implements CalendarApi {
 
   constructor(eventCalendarOptions: CalendarSourceOptions) {
     const defaultState: CalendarState = {
-      events: [],
-      initialDate: new Date(),
-      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-      calendar: 'gregory',
-      locale: 'en-US',
-      grid: 'daily',
-      gridHeight: 1920,
-      plugins: [],
-      autoUpdateEventOnChange: true,
-      listMode: 'day',
-      groups: [],
-      editable: true,
-      theme: 'light',
-      avalibalSots: [],
+      events: [], //
+      initialDate: new Date(), //
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone, //
+      calendar: 'gregory', //
+      locale: 'en-US', //
+      grid: 'daily', //
+      gridHeight: 1920, //
+      plugins: [], //
+      autoUpdateEventOnChange: true, //
+      listMode: 'day', //
+      groups: [], //
+      editable: true, //
+      theme: 'light', //
+      avalibalSots: [], //
       stopAddEvent: false,
-      containerHeight: 900
+      containerHeight: 900 //
     }
 
     const { store, dispatch } = useRedux(defaultState)
     this.storeManager = store
     this.storeDispatch = dispatch
-    this.resetOptions(eventCalendarOptions,true)
+    this.resetOptions(eventCalendarOptions, true)
     this.EventListenrsStorage = new EventCollection()
   }
   public emitEvent(eventType: EventTypes, payload: EventPayLoads[EventTypes]) {
@@ -86,16 +86,27 @@ export class CalendarImpl implements CalendarApi {
     this.EventListenrsStorage[eventType].push(handler)
   }
   public setEventList(events: SourceEvent[]) {
+    //////////
     this.storeDispatch({ type: 'SET_ALL_EVENTS', events })
+  }
+  public updateEvent(id: SourceEvent['id'], event: SourceEvent): void {
+    //////////
+    this.storeDispatch({ type: 'UPDATE_EVENT', id, event })
+  }
+  public addEvent(event: SourceEvent) {
+    ////////////
+    this.storeDispatch({ type: 'ADD_EVENT', event })
+  }
+  public deleteEvent(id: string | number) {
+    ////////////
+    this.storeDispatch({ type: 'DELETE_EVENT', id })
   }
   public setPlugins(plugins: Plugins[]) {
     this.storeDispatch({ type: 'SET_PLUGINS', plugins })
   }
   public setGridHeight(height: number) {
+    //////
     this.storeDispatch({ type: 'SET_GRID_HEIGHT', height })
-  }
-  public updateEvent(id: SourceEvent['id'], event: SourceEvent): void {
-    this.storeDispatch({ type: 'UPDATE_EVENT', id, event })
   }
   public changeTimeZone(tz: string) {
     this.storeDispatch({ type: 'SET_TIMEZONE', tz })
@@ -124,9 +135,6 @@ export class CalendarImpl implements CalendarApi {
   public addGroup(group: Group) {
     this.storeDispatch({ type: 'ADD_GROUP', group })
   }
-  public addEvent(event: EventClass) {
-    this.storeDispatch({ type: 'ADD_EVENT', event })
-  }
   public updateEditable(val: boolean) {
     this.storeDispatch({ type: 'UPDATE_EDITABLE', val })
   }
@@ -140,15 +148,14 @@ export class CalendarImpl implements CalendarApi {
     this.storeDispatch({ type: 'SET_STOP_ADD_EVENT', val })
   }
   public changeContainerHeight(val: number) {
+    ////
     this.storeDispatch({ type: 'CHANGE_CONTAINER_HEIGHT', val })
   }
-  public deleteEvent(id: string | number) {
-    this.storeDispatch({ type: 'DELETE_EVENT', id })
-  }
-  public resetOptions<T extends CalendarSourceOptions>(options: T,catchErrors:boolean) {
+
+  public resetOptions<T extends CalendarSourceOptions>(options: T, catchErrors?: boolean) {
     if (options?.plugins?.length > 0) {
       this.setPlugins(options.plugins)
-    }else if(catchErrors){
+    } else if (catchErrors) {
       throw Error('full-event-calendat --> must provide atleast 1 grid plugin')
     }
     if (options.timeZone) {
@@ -158,9 +165,9 @@ export class CalendarImpl implements CalendarApi {
       this.changeCalendar(options.calendar)
     }
     if (options.grid) {
-      if(this.isPluginAvalible(options.grid)){
+      if (this.isPluginAvalible(options.grid)) {
         this.changeGrid(options.grid)
-      }else{
+      } else {
         this.changeGrid(options?.plugins[0].name)
       }
     }
@@ -194,7 +201,6 @@ export class CalendarImpl implements CalendarApi {
     if (Object.keys(options).includes('editable')) {
       this.updateEditable(Boolean(options.editable))
     }
-    
   }
 
   prevDay() {}
@@ -222,8 +228,8 @@ export class CalendarImpl implements CalendarApi {
     }
     return res ?? plugins[0]?.code
   }
-  isPluginAvalible(name:string) {
-    return this.storeManager.plugins.some(plugin=>plugin.name === name)
+  isPluginAvalible(name: string) {
+    return this.storeManager.plugins.some((plugin) => plugin.name === name)
   }
   getOptions() {
     return this.storeManager.plugins.map((item) => {
