@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // import HelloWorld from './components/HelloWorld.vue'
 import { ref } from 'vue'
-import FullEventCalendar from './components/FullEventCalendar'
+import { FullEventCalendar } from './components/FullEventCalendar'
 import { events } from '@full-event-calendar/test-events'
 import { DailyGridPlugin } from '@full-event-calendar/daily-grid'
 import { MonthGridPlugin } from '@full-event-calendar/month-grid'
