@@ -4,21 +4,22 @@
 <img src="https://github.com/amirkian007/vue-awesome-sidebar/blob/main/assets/demo.gif" alt="vue-wesome-sidebar">
 
 ## About
-Full Event Calendar is a powerfull, fast.
+Full Event Calendar is a simple, lightweight, and fast event calendar that renders in any framework or library. It supports 18 calendars and 100 locales, powered by [Solid.js](https://solidjs.com/) and [Intl](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
 
+Inspired by [FullCalendar](https://fullcalendar.io/) and [ClickUp](https://clickup.com/).
 ## Demo
 Check out Live demo at [**_amirkian007.github.io/vasmenu_**](https://amirkian007.github.io/vasmenu/) and full Docs at [**_amirkian007.github.io/vasmenu_**](https://amirkian007.github.io/vasmenu/)
 <!-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale/getCalendars#supported_calendar_types -->
+Connectors:
 
+- [React](https://github.com/persianpack/full-event-calendar/tree/main/packages/react)
+- [Vue 3](https://github.com/persianpack/full-event-calendar/tree/main/packages/vue3)
 
-<!-- Connectors:
-React
-Vue 3 -->
 ## Features
 - ✔️ Built with typescript and [**_solid.js_**](https://www.solidjs.com/).
 - ✔️ Support for Vue.js(3x) and React.js.
+- ✔️ Mulitple Calendar type support like `chinese` , `gregory` , `persian` and ...
 - ✔️ Timezone converstion suppourt.
-- ✔️ Mulitple Calendar type support like chinese , gregory , persian and ...
 - ✔️ Customization support for every component slots , CSS and SASS.
 - ✔️ Reduce your project's bundle size by using FullEventCalendar's modular plugins.
 - ✔️ 100 locales support with intL.
@@ -55,10 +56,13 @@ NOTE : <ins>you have to install atleast 1 plugin</ins> like loading material-ico
 
 # Basic Usage
 
-a simple vanill example would be like this : 
-check out [**__Options__**](#props) for properites
-[**__Options__**](#props) for Vue usage
-[**__Options__**](#props) for React usage
+A simple vanill example would be like this :
+
+Check out [**__Options__**](#props) for properites
+
+[**__Vue usage__**](#props)
+
+[**__React usage__**](#props)
 
 Vanilla JS:
 ```js
@@ -133,15 +137,15 @@ fullEventCalendar.on('eventUpdate', ({prev,next,id}) => {
 ```
 # Api
 
-## calendar class
+## Calendar Class
 
 The `Calendar` class represents a calendar component that can be rendered in a specified HTML element.
-### Parameters
-#### targetElement
-- `targetElement`: HTMLElement - The HTML element where the calendar will be rendered.
+  ### Parameters
+  #### targetElement
+  - `targetElement`: HTMLElement - The HTML element where the calendar will be rendered.
 
 #### options
-- `options`: CalendarSourceOptions - Options for configuring the calendar.
+  - `options`: CalendarSourceOptions - Options for configuring the calendar.
 
 ## options
 
@@ -160,11 +164,11 @@ The `Calendar` class represents a calendar component that can be rendered in a s
  }
  ```
  the default color is #31b5f7 for light and #3499F5 for dark.
- the group resources id's which the event is part of. for this to work the - [**_Groups_**](#css-class) options has to be provided.
+ the group resources id's which the event is part of. for this to work the - [**_Groups_**](#groups) options has to be provided.
 ### `plugins` 
  - Type : Array
  - Required
-  An array of grid plugins for the event calendar different grid views<ins> atleast 1 plugin must be provided </ins> available grid plugins :
+  An array of grid plugins for the event calendar different grid views<ins> atleast 1 plugin must be provided </ins> available grid plugins:
   - `@full-event-calendar/daily-grid` - daily view
   - `@full-event-calendar/weekly-grid` - weekly view
   - `@full-event-calendar/month-grid` - month view
@@ -185,6 +189,7 @@ The `Calendar` class represents a calendar component that can be rendered in a s
 ### `calendar`
   - Type : String
   - Default : gregory
+
    The type of calendar to be used . the Calendar formatting is done with javascript [**_Intl_**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale/getCalendars#supported_calendar_types) avalible calendars : 
    `buddhist`,`chinese`,`coptic`,`dangi`,`ethioaa`,`ethiopic`,`gregory`,`hebrew`,`indian`,`islamic`,`islamic-umalqura`,`islamic-umalqura`,`islamic-tbla`,`islamic-civil`,`islamic-rgsa`,`iso8601`,`iso8601`,`japanese`,`persian`,`roc`,`islamicc`
   
@@ -196,6 +201,7 @@ The `Calendar` class represents a calendar component that can be rendered in a s
 ### `locale`
   - Type : String
   - Default : 'en-US'
+
     The BCP 47 language tag for the locale actually used. If any Unicode extension values were requested in the input BCP 47 language tag that led to this locale, the key-value pairs that were requested and are supported for this locale are included in locale.
   
    ```js
@@ -206,16 +212,18 @@ The `Calendar` class represents a calendar component that can be rendered in a s
 ### `locale`
   - Type : String
   - Default : 'daily'
+
     which grid plugin to show. options are : 
     `daily`,`weekly`,`month`,`list`
-   ```js
+   <!-- ```js
      // ...
      grid: `weekly`,
      // ..
-   ```
+   ``` -->
 ### `gridHeight`
   - Type : Number
   - Default : 1920
+
     height of the daily and weekly grid(not the container). for example if we consider every hour 60px then th grid hieght will be 60 * 24
    ```js
      // ...
@@ -225,6 +233,7 @@ The `Calendar` class represents a calendar component that can be rendered in a s
 ### `containerHeight`
   - Type : Number
   - Default : 600
+
     height of the entire container.
    ```js
      // ...
@@ -234,86 +243,93 @@ The `Calendar` class represents a calendar component that can be rendered in a s
 ### `editable`
   - Type : Boolean
   - Default : true
+
     can add or update event with dragging
-   ```js
+   <!-- ```js
      // ...
      editable: false,
      // ..
-   ```
+   ``` -->
 ### `groups`
   - Type : Array
   - Default : []
-   An array of resource IDs. If provided, the daily grid will be divided into grouped resources, and only events containing the group ID property will be displayed on the corresponding grid resource.
-   ```js
-   const events = [
-      {
+
+     An array of resource objects. If provided, the daily grid will be divided into grouped resources, and only events containing the group ID property will be displayed on the corresponding grid resource.
+      ```js
+      const events = [
+          {
             name: 'some name',
             start: new Date('Aug 10 2023 08:00:0'),
             end: new Date('Aug 10 2023 10:00:00'),
             id: 16123,
             color: '#BF51F9',
             // groups: [2]
-      },
-      {
+          },
+          {
             name: 'some name',
             start: new Date('Aug 10 2023 10:00:0'),
             color: '#31B5F7',
             end: new Date('Aug 10 2023 11:00:00'),
             id: 18123,
             // groups: [1]
-      },
-   ]
-   const options = {
-    events: events,
-    initialDate: new Date('Thu Aug 10 2023 15:00:0'),
-    plugins: [ DailyGridPlugin],
-    // ... 
-    groups : [{ id:1, name:'resource 1' },{ id:2, name:'resource 2' }],
-    // ... 
-   }
-   ```
-   ```ts
+          },
+      ]
+      const options = {
+       events: events,
+       initialDate: new Date('Thu Aug 10 2023 15:00:0'),
+       plugins: [ DailyGridPlugin],
+       // ... 
+       groups : [{ id:1, name:'resource 1' },{ id:2, name:'resource 2' }],
+       // ... 
+      }
+    ```
+    ```ts
       interface Group {
          id:string[] | number[]
          name:string
-         image?:any
       }
-   ```
+    ```
 ### `theme`
   - Type : String
-  - Default : Light
-  sets the theme of calendar. check out here for cusumising.
-  ```js
+  - Default : light
+
+    sets the theme of calendar. can be ethier `light` or `dark`.
+  <!-- ```js
      // ...
      theme: 'dark',
      // ..
-   ```
+   ``` -->
 ### `listMode`
   - Type : String
   - Default : day
-  sets the `list` grids formatting. avalible
+
+    sets the `list` grids formatting. avalible
   `day`, `week`, `month`
-    ```js
-     // ...
-     listMode: `week`,
-     // ..
-   ```
+  <!-- ```js
+   // ...
+   listMode: `week`,
+   // ..
+   ``` -->
    
 ### `timeZone`
   - Type : String
   - Default : Intl.DateTimeFormat().resolvedOptions().timeZone
-  if set shiftes all events time based on the provided timezone offset.
-  it also shiftes the newly added events source time.
+
+    The time zone to use. The only value implementations must recognize is "UTC"; the default is the runtime's default time zone. Implementations may also recognize the time zone names of the IANA time zone database, such as `Asia/Shanghai`, `Asia/Kolkata`, `America/New_York`.
+    or just run this code to see the avalible timeZones :
     ```js
-     // ...
-     timeZone: 'Africa/Abidjan',
-     // ..
-   ```
+    console.log(Intl.supportedValuesOf('calendar'));
+    ```
+       <!-- ```js
+        // ...
+       timeZone: 'Africa/Abidjan',
+       // ..
+       ``` -->
 ### `autoUpdateEventOnChange`
   - Type : boolean
   - Default : true
   If set to false, all event dragging, editing, and additions will not be updated on the grid and instead will have to be handled with event listeners.
-    ```js
+  ```js
      // ...
      autoUpdateEventOnChange: false,
      // ..
@@ -325,20 +341,21 @@ The `Calendar` class represents a calendar component that can be rendered in a s
      EventCalendar.on('eventAdd',({event})=>{
       EventCalendar.addEvent(event)
      })
-   ```
+  ```
 ### `stopAddEvent`
   - Type : boolean
   - Default : false
-  "If stopAddEvent is set to true, adding an event will be frozen on the grid to display a modal or perform another action, and it will be handled in event listeners. It's better to use it with Vue or React."
-    ```js
+  If stopAddEvent is set to true, adding an event will be frozen on the grid to display a modal or perform another action, and it will be handled in event listeners. It's better to use it with Vue or React."
+  ```js
      // ...
      stopAddEvent: true,
      // ..
      EventCalendar.on('eventAdd',({event})=>{
        EventCalendar.addEvent(event)
      })
-   ```
-## methods
+  ```
+## Methods
+
 ### `EventCalendar.render()`
   rendar calendar in the target element.
    ```js
@@ -589,7 +606,7 @@ $ pnpm i
 # dev server
 $ pnpm run dev
 ```
-
+`vanilla-examples:dev:   ➜  Local:   http://localhost:5174`
 ## License
 
 full-event-calendar is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
