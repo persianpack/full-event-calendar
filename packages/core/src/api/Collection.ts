@@ -1,11 +1,12 @@
 import { EventClass, SourceEvent } from '@full-event-calendar/shared-ts'
 
-export type EventTypes = 'eventClicked' | 'eventUpdate' | 'eventAdd'
+export type EventTypes = 'eventClicked' | 'eventUpdate' | 'eventAdd' | 'dataUpdate'
 
 export interface EventPayLoads {
   eventClicked: { event: EventClass }
   eventUpdate: { prev: SourceEvent; next: SourceEvent; id: any }
-  eventAdd: { event: EventClass }
+  eventAdd: { event: SourceEvent }
+  dataUpdate: { date: Date }
 }
 
 export default class EventCollection {

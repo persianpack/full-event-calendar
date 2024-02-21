@@ -1,8 +1,8 @@
 import { PropType, defineComponent, h, Fragment, Teleport, VNode } from 'vue'
-import { Calendar,CalendarSourceOptions } from '@full-event-calendar/core'
- 
+import { Calendar, CalendarSourceOptions } from '@full-event-calendar/core'
+
 type CalendaropptioNS = keyof CalendarSourceOptions
-const options :CalendaropptioNS[]= [
+const options: CalendaropptioNS[] = [
   'events',
   'initialDate',
   'timeZone',
@@ -18,23 +18,23 @@ const options :CalendaropptioNS[]= [
   'theme',
   'avalibalSots',
   'stopAddEvent',
-  'containerHeight',
+  'containerHeight'
 ]
 interface DateComponent {
-  EventCalendar : Calendar | null,
-  customRenderingMap:  Map<string, any>,
-  renderId:number
+  EventCalendar: Calendar | null
+  customRenderingMap: Map<string, any>
+  renderId: number
 }
 //@ts-ignore
 export const FullEventCalendar = defineComponent({
   props: {
     events: {
-      type :Array as unknown as PropType<CalendarSourceOptions['events']> ,
-      required: true,
+      type: Array as unknown as PropType<CalendarSourceOptions['events']>,
+      required: true
     },
     plugins: {
-      type :Array as any ,
-      required: true,
+      type: Array as any,
+      required: true
     },
     initialDate: Date as unknown as PropType<CalendarSourceOptions['initialDate']>,
     timeZone: String as unknown as PropType<CalendarSourceOptions['timeZone']>,
@@ -51,11 +51,11 @@ export const FullEventCalendar = defineComponent({
     listMode: Object as unknown as PropType<CalendarSourceOptions['listMode']>,
     containerHeight: Object as unknown as PropType<CalendarSourceOptions['containerHeight']>
   },
-  data():DateComponent {
+  data(): DateComponent {
     return {
       renderId: 0,
       customRenderingMap: new Map<string, any>(),
-      EventCalendar:null
+      EventCalendar: null
     }
   },
 
@@ -63,20 +63,19 @@ export const FullEventCalendar = defineComponent({
     const customRenderingNodes: VNode[] = []
 
     for (const customRendering of this.customRenderingMap.values()) {
-     if(!this.$slots[customRendering.name]) continue
+      if (!this.$slots[customRendering.name]) continue
       customRenderingNodes.push(
         h(CustomRenderingComponent, {
-          innerContext:this.$slots[customRendering.name],
-          targetContainer:customRendering.target.el,
-          data:customRendering.data
+          innerContext: this.$slots[customRendering.name],
+          targetContainer: customRendering.target.el,
+          data: customRendering.data
         })
       )
     }
-    return h('div', { id: `data-fc-render-id-${this.renderId}` },h(Fragment, customRenderingNodes))
+    return h('div', { id: `data-fc-render-id-${this.renderId}` }, h(Fragment, customRenderingNodes))
   },
-  
-  mounted() {
 
+  mounted() {
     const EventCalendar = new Calendar(this.$el, {
       events: this.events,
       gridHeight: this.gridHeight,
@@ -85,19 +84,18 @@ export const FullEventCalendar = defineComponent({
       locale: this.locale,
       initialDate: this.initialDate,
       plugins: this.plugins,
-      stopAddEvent:this.stopAddEvent,
-      autoUpdateEventOnChange:this.autoUpdateEventOnChange,
+      stopAddEvent: this.stopAddEvent,
+      autoUpdateEventOnChange: this.autoUpdateEventOnChange,
       grid: this.grid,
       listMode: this.listMode,
       groups: this.groups,
       editable: this.editable,
       theme: this.theme,
-      containerHeight: this.containerHeight,
+      containerHeight: this.containerHeight
     })
-    
+
     this.EventCalendar = EventCalendar
-    EventCalendar.renderStore.subscribe(()=>{
-     
+    EventCalendar.renderStore.subscribe(() => {
       this.customRenderingMap = EventCalendar.renderStore.getState()
       this.renderRequest()
     })
@@ -106,47 +104,51 @@ export const FullEventCalendar = defineComponent({
     this.registerListenrs()
   },
   methods: {
-    registerListenrs(){
+    registerListenrs() {
       const self = this
-      if(!this.EventCalendar) return
-      this.EventCalendar.on('eventClicked',(data:any)=>{
-        self.$emit('eventClicked',data)
+
+      if (!this.EventCalendar) return
+
+      this.EventCalendar.on('eventClicked', (data: any) => {
+        self.$emit('eventClicked', data)
       })
-  
-      this.EventCalendar.on('eventUpdate',(data:any)=>{
-        const eventsCopy = [...this.events] 
-        let ind = eventsCopy.findIndex(item=>item.id === data.id)
+
+      this.EventCalendar.on('eventUpdate', (data: any) => {
+        const eventsCopy = [...this.events]
+        let ind = eventsCopy.findIndex((item) => item.id === data.id)
         eventsCopy[ind] = data.next.sourceEvent
-        self.$emit('update:events',eventsCopy)
-     
+        self.$emit('update:events', eventsCopy)
+      })
+
+      this.EventCalendar.on('dataUpdate', (data: any) => {
+        self.$emit('update:initial-date', data.date)
       })
     },
-    renderRequest(){
+    renderRequest() {
       this.renderId++
     }
   },
-  watch:buildWatchers()
+  watch: buildWatchers()
 })
-function buildWatchers(){
-  const wacthers = {}as any
+function buildWatchers() {
+  const wacthers = {} as any
 
   for (let index = 0; index < options.length; index++) {
-    const option = options[index];
+    const option = options[index]
     wacthers[option] = {
       deep: true,
       handler(val: any) {
         //@ts-ignore
-        this.EventCalendar.resetOptions({[option]:val})
-
+        this.EventCalendar.resetOptions({ [option]: val })
       }
     }
   }
   return wacthers
 }
 const CustomRenderingComponent = defineComponent({
-  props: ['targetContainer','innerContext','data'],
+  props: ['targetContainer', 'innerContext', 'data'],
   render() {
-    return h(Teleport, { to: this.targetContainer }, h(this.innerContext,{'data': this.data }))
+    return h(Teleport, { to: this.targetContainer }, h(this.innerContext, { data: this.data }))
   }
 })
 
@@ -163,7 +165,7 @@ function kebabToCamelKeys<V>(map: { [key: string]: V }): { [key: string]: V } {
 function kebabToCamel(s: string): string {
   return s
     .split('-')
-    .map((word, index) => index ? capitalize(word) : word)
+    .map((word, index) => (index ? capitalize(word) : word))
     .join('')
 }
 function capitalize(s: string): string {

@@ -86,26 +86,21 @@ export class CalendarImpl implements CalendarApi {
     this.EventListenrsStorage[eventType].push(handler)
   }
   public setEventList(events: SourceEvent[]) {
-    //////////
     this.storeDispatch({ type: 'SET_ALL_EVENTS', events })
   }
   public updateEvent(id: SourceEvent['id'], event: SourceEvent): void {
-    //////////
     this.storeDispatch({ type: 'UPDATE_EVENT', id, event })
   }
   public addEvent(event: SourceEvent) {
-    ////////////
     this.storeDispatch({ type: 'ADD_EVENT', event })
   }
   public deleteEvent(id: string | number) {
-    ////////////
     this.storeDispatch({ type: 'DELETE_EVENT', id })
   }
   public setPlugins(plugins: Plugins[]) {
     this.storeDispatch({ type: 'SET_PLUGINS', plugins })
   }
   public setGridHeight(height: number) {
-    //////
     this.storeDispatch({ type: 'SET_GRID_HEIGHT', height })
   }
   public changeTimeZone(tz: string) {
@@ -148,7 +143,6 @@ export class CalendarImpl implements CalendarApi {
     this.storeDispatch({ type: 'SET_STOP_ADD_EVENT', val })
   }
   public changeContainerHeight(val: number) {
-    ////
     this.storeDispatch({ type: 'CHANGE_CONTAINER_HEIGHT', val })
   }
 

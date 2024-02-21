@@ -39,6 +39,9 @@ export function App() {
   }
 
   function onDateChange(d: Date) {
+    data.instance.emitEvent('dataUpdate', {
+      date: d
+    })
     data.instance.changeInitialDate(d.toISOString())
   }
 

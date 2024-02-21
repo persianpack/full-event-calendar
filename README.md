@@ -52,7 +52,11 @@ or
 ```
 pnpm i @full-event-calendar/core @full-event-calendar/daily-grid
 ```
-NOTE : <ins>you have to install atleast 1 plugin</ins> like loading material-icons files with cdn
+NOTE : <ins> atleast 1 plugin must be provided </ins> available grid plugins:
+  - `@full-event-calendar/daily-grid` - daily view
+  - `@full-event-calendar/weekly-grid` - weekly view
+  - `@full-event-calendar/month-grid` - month view
+  - `Cale@full-event-calendar/list` - list view
 
 # Basic Usage
 
@@ -172,7 +176,7 @@ The `Calendar` class represents a calendar component that can be rendered in a s
   - `@full-event-calendar/daily-grid` - daily view
   - `@full-event-calendar/weekly-grid` - weekly view
   - `@full-event-calendar/month-grid` - month view
-  - `Cale@full-event-calendar/list` - list view
+  - `@full-event-calendar/list` - list view
 
   ```js
   import { DailyGridPlugin } from '@full-event-calendar/daily-grid'
