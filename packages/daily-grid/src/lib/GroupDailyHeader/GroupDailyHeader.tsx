@@ -7,9 +7,10 @@ import './GroupDailyHeader.scss'
 import { DailyHeader } from '../..'
 import { GroupItemHeader } from './GroupItemHeader/GroupItemHeader'
 export interface GroupDailyHeaderProps {
-  columData: columData[],
+  columData: columData[]
   initialDate?: Date
   onDateChange?: (d: Date) => void
+  onEventClick?: (event: EventClass) => void
   onAddEvent?: (event: SourceEvent) => void
   calendar?: string
   timeZone?: string
@@ -17,8 +18,8 @@ export interface GroupDailyHeaderProps {
   id?: string
   showAllDay?: boolean
   container?: string
-  avalibalSots?:string[],
-  slotRenderStore:any
+  avalibalSots?: string[]
+  slotRenderStore: any
 }
 
 export const dailyDefaultProps = {
@@ -31,9 +32,10 @@ export const dailyDefaultProps = {
   showAllDay: true,
   onDateChange: () => {},
   onEventUpdate: () => {},
+  onEventClick: () => {},
   onAddEvent: () => {},
   gridHeight: 65 * 24,
-  avalibalSots:[]
+  avalibalSots: []
 }
 
 export const GroupDailyHeader: FComponent<GroupDailyHeaderProps> = (props) => {
@@ -44,16 +46,15 @@ export const GroupDailyHeader: FComponent<GroupDailyHeaderProps> = (props) => {
   return (
     <>
       <div style="display:flex;position:relative">
-       
-          <DailyHeader
-            headerDate={mergedProps.initialDate}
-            slotRenderStore={mergedProps.slotRenderStore}
-            timeZone={mergedProps.timeZone}
-            calendar={mergedProps.calendar}
-            onDateChange={mergedProps.onDateChange}
-            locale={mergedProps.locale}
-          />
-       
+        <DailyHeader
+          headerDate={mergedProps.initialDate}
+          slotRenderStore={mergedProps.slotRenderStore}
+          timeZone={mergedProps.timeZone}
+          calendar={mergedProps.calendar}
+          onDateChange={mergedProps.onDateChange}
+          locale={mergedProps.locale}
+        />
+
         <div class="fec-group-item-header">
           <For each={mergedProps.columData}>
             {(item) => (
@@ -71,6 +72,7 @@ export const GroupDailyHeader: FComponent<GroupDailyHeaderProps> = (props) => {
             <DailyAllDay
               isAllDOpen={isAllDOpen()}
               setIsAllDOpen={setIsAllDOpen}
+              onEventClick={mergedProps.onEventClick}
               locale={mergedProps.locale}
               events={item.props.events}
               initialDate={mergedProps.initialDate}

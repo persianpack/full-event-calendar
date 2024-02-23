@@ -10,6 +10,7 @@ import { getEventSourceFromTz } from '@full-event-calendar/utils'
 interface DateColProps {
   filteredEvents: EventClass[]
   onEventUpdate: (event: any) => void
+  onEventClick: (event: EventClass) => void
   onAddEvent: (event: SourceEvent, groupId?: Group['id']) => void
   headerDates: Date[]
   locale: string
@@ -22,7 +23,7 @@ interface DateColProps {
 
 export const DateCol: FComponent<DateColProps> = (props) => {
   const { onDragEnd, onDragStart, setDraggingEventData, onMouseEnter, draggingEventData, changeDraggerType } =
-    useMonthEventDragging(dragEnd,props.editable)
+    useMonthEventDragging(dragEnd, props.editable)
 
   const { modalElementNode, setSlotModalData, openSlotModalOnElement, isSlotModalOpen } = useSlotModal(
     'addModal',
@@ -52,7 +53,7 @@ export const DateCol: FComponent<DateColProps> = (props) => {
   function getRowListArr() {
     return Object.keys(getRowList())
   }
- const container = useCalenderContainerState()
+  const container = useCalenderContainerState()
   function dataColMouseDown(dateNumber: number, e: MouseEvent) {
     if (isSlotModalOpen()) return
     e.stopPropagation()
@@ -101,13 +102,14 @@ export const DateCol: FComponent<DateColProps> = (props) => {
   }
 
   function onEventClick(event: EventClass, e: MouseEvent) {
+    props.onEventClick(event)
     setEvModalElement(event)
     openEvSlotModalOnElement(e.target)
   }
   let hasMouseMoved = false
 
   function mouseDownSome(n: any, e: any) {
-    if(!props.editable) return
+    if (!props.editable) return
     function handelMouseMove() {
       if (!hasMouseMoved) {
         dataColMouseDown(n, e)
@@ -125,7 +127,7 @@ export const DateCol: FComponent<DateColProps> = (props) => {
     document.addEventListener('mouseup', handelMouseUp)
   }
   function mouseEnterSome(n: any) {
-    if(!props.editable) return
+    if (!props.editable) return
     if (hasMouseMoved || draggingEventData()) {
       onMouseEnterProxy(n)
     }

@@ -14,6 +14,7 @@ export interface ListGridProps {
   onEventUpdate?: (event: any) => void
   onDateChange?: (d: Date) => void
   onGridChange?: (d: any) => void
+  onEventClick: (event: EventClass) => void
   locale?: string
   calendar?: string
   timeZone?: string
@@ -27,6 +28,7 @@ const defaultProps = {
   onEventUpdate: () => {},
   onDateChange: () => {},
   onGridChange: () => {},
+  onEventClick: () => {},
   locale: 'en-US',
   calendar: 'gregory',
   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
@@ -57,9 +59,10 @@ export const List: FComponent<ListGridProps> = (props) => {
 
   function itemClick(event: EventClass, e: MouseEvent) {
     setEvModalElement(event)
+    props.onEventClick(event)
     openEvSlotModalOnElement(e.target)
   }
-  
+
   return (
     <>
       {addModalElement}

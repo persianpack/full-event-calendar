@@ -10,6 +10,7 @@ interface DailyAllDayProps {
   locale: string
   isAllDOpen: boolean
   setIsAllDOpen: any
+  onEventClick: any
 }
 
 export const DailyAllDay: FComponent<DailyAllDayProps> = (props) => {
@@ -78,6 +79,7 @@ export const DailyAllDay: FComponent<DailyAllDayProps> = (props) => {
   })
 
   function headerClick(event: EventClass, e: MouseEvent) {
+    props.onEventClick(event)
     setSlotModalData(event)
     openSlotModalOnElement(e.target)
   }
@@ -104,7 +106,11 @@ export const DailyAllDay: FComponent<DailyAllDayProps> = (props) => {
             </Show>
           </div>
 
-          <div class="fec-all-day-container" ref={allDRef} style='height: fit-content; max-height: 81px; overflow: hidden;'>
+          <div
+            class="fec-all-day-container"
+            ref={allDRef}
+            style="height: fit-content; max-height: 81px; overflow: hidden;"
+          >
             <For each={filteredEvents()}>
               {(item) => {
                 return (

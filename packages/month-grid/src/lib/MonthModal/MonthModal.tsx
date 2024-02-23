@@ -1,10 +1,10 @@
 // Types
 import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
-import { MonthDateObject } from '../MonthGrid'
+// import { MonthDateObject } from '../MonthGrid'
 // Utils
-import { formatToShortTime, getEventsInDate, rightOrLeftInDate, useCalenderContainerState } from '@full-event-calendar/utils'
+import { formatToShortTime, rightOrLeftInDate, useCalenderContainerState } from '@full-event-calendar/utils'
 // Solid.js
-import { For, Show, createSignal, onCleanup } from 'solid-js'
+import { For, Show, onCleanup } from 'solid-js'
 // Styles
 import './MonthModal.scss'
 
@@ -16,16 +16,15 @@ interface ModalData {
   somDate: Date
 }
 
- 
-
 interface ModalProps {
-  onDragStart: (draggingOnStartDate: Date,e:MouseEvent, event: EventClass) => void
+  onDragStart: (draggingOnStartDate: Date, e: MouseEvent, event: EventClass) => void
   onDragEnd: () => void
   locale: string
   openEvSlotModalOnElement: any
   setEvModalElement: any
   setModalData: any
   modalData: any
+  eventClick: any
 }
 
 export const EventModal: FComponent<ModalProps> = (props) => {
@@ -53,9 +52,9 @@ export const EventModal: FComponent<ModalProps> = (props) => {
     draggingEvent = null
   }
 
-  function mouseMove(e:MouseEvent) {
+  function mouseMove(e: MouseEvent) {
     if (draggingEvent) {
-      props.onDragStart(props.modalData.somDate,e, draggingEvent)
+      props.onDragStart(props.modalData.somDate, e, draggingEvent)
     }
   }
 
@@ -73,27 +72,28 @@ export const EventModal: FComponent<ModalProps> = (props) => {
     return ''
   }
 
-  function itemClick(eve:EventClass,e:MouseEvent){
+  function itemClick(eve: EventClass, e: MouseEvent) {
     // console.log(e.target,eve)
     e.stopPropagation()
     e.preventDefault()
-    props.setEvModalElement(eve)
-    props.openEvSlotModalOnElement(e.target)
+    // props.setEvModalElement(eve)
+    // props.openEvSlotModalOnElement(e.target)
+    props.eventClick(eve, e)
   }
 
   return (
     <Show when={props.modalData.show}>
       {/* 
       //@ts-ignore */}
-      <div use:ClickOutSide={modalClickOutSide}
+      <div
+        use:ClickOutSide={modalClickOutSide}
         class="fec-modal-event-list fec-custome-scroll-bar "
         style={`left:${props.modalData.left};top:${props.modalData.bottom};`}
-      
       >
         <For each={props.modalData.events}>
           {(event) => (
             <div
-              onclick={[itemClick,event]}
+              onclick={[itemClick, event]}
               class={`fec-modal-event ${isNotAllDay(event)} ${rightOrLeftInDate(event, props.modalData.somDate)}`}
               onmousedown={[modalDragStart, event]}
               style={`background:${event.color};--ca-color:${event.color}`}

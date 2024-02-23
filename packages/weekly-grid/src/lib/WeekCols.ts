@@ -35,6 +35,7 @@ export function useWeekCols(mergedProps: any, onDateChange: any) {
         columData[dayNumber].props.calendar = mergedProps.calendar
         columData[dayNumber].props.gridHeight = mergedProps.gridHeight
         columData[dayNumber].props.stopAddEvent = mergedProps.stopAddEvent
+        columData[dayNumber].props.onEventClick = mergedProps.onEventClick
         columData[dayNumber].props.editable = mergedProps.editable
         columData[dayNumber].props.onDateChange = onDateChange
         // Increment day for the next colum

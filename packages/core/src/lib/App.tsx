@@ -49,6 +49,12 @@ export function App() {
     data.instance.changeGrid(grid)
   }
 
+  function onEventClick(event: EventClass) {
+    data.instance.emitEvent('eventClicked', {
+      event
+    })
+  }
+
   // We need to unwrapp and cache events for better sorting and performace
   const unwrappedEvents = createMemo(() => [...data.store.events])
   return (
@@ -65,6 +71,7 @@ export function App() {
             component={data.instance.getcurrentGridCode()}
             onEventUpdate={onEventUpdate}
             onAddEvent={onAddEvent}
+            onEventClick={onEventClick}
             initialDate={new Date(data.store.initialDate)}
             events={unwrappedEvents()}
             locale={data.store.locale}

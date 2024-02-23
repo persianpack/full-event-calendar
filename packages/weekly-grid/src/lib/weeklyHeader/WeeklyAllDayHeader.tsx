@@ -22,6 +22,7 @@ interface WeeklyAllDayHeaderProps {
   locale: string
   timeZone: string
   calendar: string
+  onEventClick: (event: EventClass) => void
   stopAddEvent: boolean
   editable: boolean
 }
@@ -71,7 +72,7 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
     down: () => {}
   }
 
-  function mmouseDown(n: any, e: any) {  
+  function mmouseDown(n: any, e: any) {
     moseEvents.down(n, e)
   }
 
@@ -133,6 +134,7 @@ export const WeeklyAllDayHeader: FComponent<WeeklyAllDayHeaderProps> = (props) =
           <DateCol
             filteredEvents={filteredEvents()}
             onEventUpdate={props.onEventUpdate}
+            onEventClick={props.onEventClick}
             onAddEvent={props.onAddEvent}
             headerDates={props.headerDates}
             locale={props.locale}

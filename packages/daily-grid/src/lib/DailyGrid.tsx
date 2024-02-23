@@ -13,6 +13,7 @@ export interface DailyGridProps {
   calendar?: string
   onAddEvent?: (event: SourceEvent, groupId?: Group['id']) => void
   onEventUpdate?: (event: SourceEvent) => void
+  onEventClick?: (event: EventClass) => void
   timeZone?: string
   locale?: string
   id?: string
@@ -20,10 +21,10 @@ export interface DailyGridProps {
   editable?: boolean
   container?: string
   events: EventClass[]
-  group: Group,
-  avalibalSots:string[],
-  slotRenderStore:any,
-  stopAddEvent:boolean
+  group: Group
+  avalibalSots: string[]
+  slotRenderStore: any
+  stopAddEvent: boolean
 }
 
 export const dailyDefaultProps = {
@@ -36,12 +37,13 @@ export const dailyDefaultProps = {
   showAllDay: true,
   onDateChange: () => {},
   onEventUpdate: () => {},
+  onEventClick: () => {},
   onAddEvent: () => {},
   gridHeight: 65 * 24,
   group: null,
   editable: true,
   stopAddEvent: true,
-  avalibalSots:[]
+  avalibalSots: []
 }
 
 export const DailyGrid: FComponent<DailyGridProps> = (props) => {
@@ -71,13 +73,14 @@ export const DailyGrid: FComponent<DailyGridProps> = (props) => {
             locale={mergedProps.locale}
             onEventUpdate={mergedProps.onEventUpdate}
             onAddEvent={addEventProxy}
+            onEventClick={mergedProps.onEventClick}
             gridHeight={mergedProps.gridHeight}
             container={mergedProps.container}
             timeZone={mergedProps.timeZone}
             editable={mergedProps.editable}
             avalibalSots={mergedProps.avalibalSots}
             stopAddEvent={mergedProps.stopAddEvent}
-            />
+          />
         </div>
       </div>
     </>

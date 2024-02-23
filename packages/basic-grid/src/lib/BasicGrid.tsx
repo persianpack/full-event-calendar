@@ -6,7 +6,7 @@ import { useResize } from '../hooks/eventResize'
 import { TimeBar } from './TimeBar/TimeBar'
 import { lookForAvailableWith } from '../utils/coleLine'
 import './basicGrid.scss'
-import { getDateTimeRange, isDateToday, useSlotModal,useCalenderContainerState } from '@full-event-calendar/utils'
+import { getDateTimeRange, isDateToday, useSlotModal, useCalenderContainerState } from '@full-event-calendar/utils'
 import { EventItem } from './EventItem/EventItem'
 // import { TimeRange } from './TimeRange/TimeRange'
 import { TimeRanges } from './TimeRange/TimeRanges'
@@ -14,6 +14,7 @@ export interface BasicGridProps {
   events?: EventClass[]
   onEventUpdate?: (event: SourceEvent, dragData?: DraggedData) => void
   onAddEvent?: (event: SourceEvent) => void
+  onEventClick?: (event: EventClass) => void
   gridDate?: Date
   gridHeight?: number
   container?: string
@@ -29,6 +30,7 @@ const defaultProps = {
   events: [],
   onEventUpdate: () => {},
   onAddEvent: () => {},
+  onEventClick: () => {},
   gridDate: new Date(),
   gridHeight: 65 * 24,
   id: '',
@@ -73,7 +75,7 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
   })
 
   const container = useCalenderContainerState()
- 
+
   function dragEnd(a: DraggedData) {
     const sourceE = { ...a.item?.sourceEvent }
     sourceE.start = a.eventSourceStart as Date
@@ -108,6 +110,7 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
   }
 
   function onEventCLick(event: EventClass, targetELnode: HTMLElement) {
+    mergedProps.onEventClick(event)
     setSlotModalData(event)
     openSlotModalOnElement(targetELnode)
   }

@@ -34,10 +34,11 @@ export interface MonthGridProps {
   rowLimit?: number
   onDateChange?: (d: Date) => void
   onAddEvent?: (event: SourceEvent, groupId?: Group['id']) => void
+  onEventClick?: (event: EventClass) => void
   onGridChange?: (d: any) => void
   editable?: boolean
   stopAddEvent?: boolean
-  containerHeight:number
+  containerHeight: number
 }
 
 export interface MonthDateObject {
@@ -57,6 +58,7 @@ const defaultProps = {
   onEventUpdate: (_: SourceEvent) => {},
   onDateChange: () => {},
   onGridChange: () => {},
+  onEventClick: () => {},
   onAddEvent: () => {},
   locale: 'en-US',
   calendar: 'gregory',
@@ -76,47 +78,51 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
     somDate: Date
   }
 
-
   const [modalData, setModalData] = createSignal<ModalData>({
     bottom: '0px',
     left: '0px',
     events: [],
     show: false,
-    somDate: new Date(),
+    somDate: new Date()
   })
 
-  let monthGridRef :any=null
-  
-   function openModal(data: MonthDateObject, e: MouseEvent, events: EventClass[]) {
+  let monthGridRef: any = null
+
+  function openModal(data: MonthDateObject, e: MouseEvent, events: EventClass[]) {
     const eventsModal = getEventsInDate(events, data.date)
     const target = e.target as HTMLElement
     const targetRect = target.getBoundingClientRect()
     const containerRect = monthGridRef?.getBoundingClientRect() as DOMRect
     const modalDataCopy = { ...modalData() }
-  
+
     modalDataCopy.left = targetRect.left + 'px'
-    if(data.date.getDay()=== 6){
+    if (data.date.getDay() === 6) {
       modalDataCopy.left = '83%'
-    }else if(data.date.getDay()=== 0){
+    } else if (data.date.getDay() === 0) {
       modalDataCopy.left = '1%'
     }
     modalDataCopy.bottom = targetRect.top - containerRect.top + 'px'
     modalDataCopy.show = true
     modalDataCopy.events = eventsModal
     modalDataCopy.somDate = data.date
-  
+
     setModalData(modalDataCopy)
   }
 
   const { onDragEnd, onDragStart, onMouseEnter, draggingEventData, changeDraggerType, setDraggingEventData } =
-    useMonthEventDragging(dragEnd,props.editable)
+    useMonthEventDragging(dragEnd, props.editable)
   //@ts-ignore
   const { modalElementNode, setSlotModalData, openSlotModalOnElement, isSlotModalOpen } = useSlotModal(
     'addModal',
     clearDataCb
   )
   //@ts-ignore
-  const { modalElementNode:addModalElement, setSlotModalData:setEvModalElement, openSlotModalOnElement:openEvSlotModalOnElement, isSlotModalOpen:isEvOPen } = useSlotModal('eventClick')
+  const {
+    modalElementNode: addModalElement,
+    setSlotModalData: setEvModalElement,
+    openSlotModalOnElement: openEvSlotModalOnElement,
+    isSlotModalOpen: isEvOPen
+  } = useSlotModal('eventClick')
 
   function clearDataCb() {
     setDraggingEventData(null)
@@ -124,7 +130,8 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
 
   const sortedEvents = createMemo(() => sortEventByStart(mergedProps.events))
 
-  function eventClick(event:EventClass,e:MouseEvent){
+  function eventClick(event: EventClass, e: MouseEvent) {
+    mergedProps.onEventClick(event)
     setEvModalElement(event)
     openEvSlotModalOnElement(e.target)
   }
@@ -153,7 +160,7 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
   // row 1 -- eventlist[]
   // row n -- eventlist[]
   const monthRowsData = createMemo(() => {
-    let r = Math.floor((((props.containerHeight - 75 - 40) / monthDatesRows().length) - 50  -30) / 23)
+    let r = Math.floor(((props.containerHeight - 75 - 40) / monthDatesRows().length - 50 - 30) / 23)
     setRowLimit(r)
     return getMonthRows(monthDatesRows(), sortedEvents()) as MonthGridData[]
   })
@@ -196,7 +203,7 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
   }
   const container = useCalenderContainerState()
   function monthDateMouseDown(date: Date, e: MouseEvent) {
-    if(!detectLeftButton(e)) return
+    if (!detectLeftButton(e)) return
     e.stopPropagation()
     e.preventDefault()
 
@@ -211,13 +218,12 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
     const handeler = () => {
       document.removeEventListener('mouseup', handeler)
       if (props.stopAddEvent && !isSlotModalOpen()) {
-        
         setSlotModalData(ev)
-        if(container){
+        if (container) {
           openSlotModalOnElement(
             container.querySelector('#fec-month-wrapper-id')?.querySelector('.fec-dragging-wrapper .fec-month-item')
-            )
-          }
+          )
+        }
         onDragEnd(false)
       } else {
         onDragEnd()
@@ -239,11 +245,16 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
         calendar={mergedProps.calendar}
       ></MonthHeader>
       <div class="fec-month-wrapper" id="fec-month-wrapper-id" ref={monthGridRef}>
-        <EventModal 
-        setModalData={setModalData}
-        modalData={modalData()}
-        
-        openEvSlotModalOnElement={openEvSlotModalOnElement} setEvModalElement={setEvModalElement} locale={mergedProps.locale} onDragEnd={onDragEnd} onDragStart={ModalDragStart} />
+        <EventModal
+          setModalData={setModalData}
+          modalData={modalData()}
+          eventClick={eventClick}
+          openEvSlotModalOnElement={openEvSlotModalOnElement}
+          setEvModalElement={setEvModalElement}
+          locale={mergedProps.locale}
+          onDragEnd={onDragEnd}
+          onDragStart={ModalDragStart}
+        />
         <For each={monthDatesRows()}>
           {(monthRowDates, monthRowIndex) => (
             <MonthGridRow
@@ -261,7 +272,6 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
               monthDateMouseDown={monthDateMouseDown}
               onMouseEnter={EnterProxy}
               eventClick={eventClick}
-           
             ></MonthGridRow>
           )}
         </For>

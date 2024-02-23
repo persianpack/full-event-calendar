@@ -21,14 +21,13 @@ export interface columData {
 }
 
 export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
-
   const mergedProps = mergeProps(defaultProps, props)
   const container = useCalenderContainerState()
   function onDateChange(d: Date) {
     mergedProps.onDateChange(d)
   }
 
-  const { columData } = DailyCols(mergedProps,onDateChange)
+  const { columData } = DailyCols(mergedProps, onDateChange)
 
   function addEventProxy(event: SourceEvent, groupId?: number) {
     if (groupId) {
@@ -37,15 +36,17 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
       mergedProps.onAddEvent(event)
     }
   }
-  
+
   return (
     <>
       <GroupDailyHeader
-       slotRenderStore={mergedProps.slotRenderStore} 
-       columData={columData}
-       onDateChange={mergedProps.onDateChange}
-       locale={mergedProps.locale} 
-       initialDate={mergedProps.initialDate} />
+        slotRenderStore={mergedProps.slotRenderStore}
+        columData={columData}
+        onDateChange={mergedProps.onDateChange}
+        onEventClick={mergedProps.onEventClick}
+        locale={mergedProps.locale}
+        initialDate={mergedProps.initialDate}
+      />
       <div class="fec-scroll-wrapper " id="fec-scroll-wrapper">
         <div style="position: absolute;width:100%;display:flex;">
           <DailyTimeRanges locale={mergedProps.locale}></DailyTimeRanges>
@@ -58,7 +59,7 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
             hasCrossGridDrag={false}
             container={container}
           />
-      </div>
+        </div>
       </div>
     </>
   )

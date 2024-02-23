@@ -17,6 +17,7 @@ export interface WeeklyGridProps {
   events?: EventClass[]
   initialDate?: Date
   onEventUpdate?: (event: any) => void
+  onEventClick?: (event: EventClass) => void
   onAddEvent?: (event: SourceEvent, groupId?: Group['id']) => void
   onDateChange?: (d: Date) => void
   onGridChange?: (d: any) => void
@@ -33,6 +34,7 @@ const defaultProps = {
   initialDate: new Date(),
   onEventUpdate: () => {},
   onDateChange: () => {},
+  onEventClick: () => {},
   onGridChange: () => {},
   onAddEvent: () => {},
   locale: 'en-US',
@@ -100,6 +102,7 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
         timeZone={mergedProps.timeZone}
         calendar={mergedProps.calendar}
         stopAddEvent={mergedProps.stopAddEvent}
+        onEventClick={mergedProps.onEventClick}
         editable={mergedProps.editable}
         onDateChange={onDateChange}
       />

@@ -56,6 +56,7 @@ export function DailyCols(mergedProps: any, onDateChange: any) {
         columData[i].props.group = mergedProps.groups[i]
         columData[i].props.slotRenderStore = mergedProps.slotRenderStore
         columData[i].props.stopAddEvent = mergedProps.stopAddEvent
+        columData[i].props.onEventClick = mergedProps.onEventClick
       }
     } else {
       columData[0].props.events = getEventsInDate(mergedProps.events, mergedProps.initialDate)
@@ -71,6 +72,7 @@ export function DailyCols(mergedProps: any, onDateChange: any) {
       columData[0].props.onDateChange = onDateChange
       columData[0].props.slotRenderStore = mergedProps.slotRenderStore
       columData[0].props.stopAddEvent = mergedProps.stopAddEvent
+      columData[0].props.onEventClick = mergedProps.onEventClick
     }
   }
 

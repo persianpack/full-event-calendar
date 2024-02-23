@@ -311,9 +311,9 @@ const EventCalendar2 = new Calendar(el2, {
 console.log(EventCalendar2, EventCalendar)
 console.time('rendered in ')
 EventCalendar.render()
-setTimeout(() => {
-  EventCalendar.refresh()
-}, 2000)
+// setTimeout(() => {
+//   EventCalendar.refresh()
+// }, 2000)
 // EventCalendar2.render()
 console.timeEnd('rendered in ')
 EventCalendar.on('eventUpdate', (e, r, t) => {
