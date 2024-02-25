@@ -8,6 +8,7 @@ import { HeaderFormat } from './filterRange'
 import { useSlot } from '@full-event-calendar/utils'
 interface CalendarHeader {
   onDateChange: (d: Date) => void
+  changeGrid: (grid: GridModes) => void
 }
 
 export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
@@ -27,7 +28,7 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
   })
 
   function changeGrid(grid: GridModes) {
-    data.instance.changeGrid(grid)
+    props.changeGrid(grid)
   }
 
   function goBack() {

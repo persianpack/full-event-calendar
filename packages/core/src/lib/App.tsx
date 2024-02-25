@@ -39,13 +39,15 @@ export function App() {
   }
 
   function onDateChange(d: Date) {
-    data.instance.emitEvent('dataUpdate', {
+    data.instance.emitEvent('dateUpdate', {
       date: d
     })
     data.instance.changeInitialDate(d.toISOString())
   }
-
   function onGridChange(grid: GridModes) {
+    data.instance.emitEvent('gridUpdate', {
+      grid
+    })
     data.instance.changeGrid(grid)
   }
 
@@ -64,7 +66,7 @@ export function App() {
         id="full-event-calendar-core"
         style={`height:${data.store.containerHeight}px`}
       >
-        <CalendarHeader onDateChange={onDateChange} />
+        <CalendarHeader onDateChange={onDateChange} changeGrid={onGridChange} />
         <SliderWrapper>
           {/* Grid plugin goes here */}
           <Dynamic

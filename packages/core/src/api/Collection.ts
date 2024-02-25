@@ -1,12 +1,14 @@
 import { EventClass, SourceEvent } from '@full-event-calendar/shared-ts'
+import { GridModes } from './CalendarImpl'
 
-export type EventTypes = 'eventClicked' | 'eventUpdate' | 'eventAdd' | 'dataUpdate'
+export type EventTypes = 'eventClicked' | 'eventUpdate' | 'eventAdd' | 'dateUpdate' | 'gridUpdate'
 
 export interface EventPayLoads {
   eventClicked: { event: EventClass }
   eventUpdate: { prev: SourceEvent; next: SourceEvent; id: any }
   eventAdd: { event: SourceEvent }
-  dataUpdate: { date: Date }
+  dateUpdate: { date: Date }
+  gridUpdate: { grid: GridModes }
 }
 
 export default class EventCollection {

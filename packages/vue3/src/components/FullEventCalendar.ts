@@ -123,8 +123,11 @@ export const FullEventCalendar = defineComponent({
         self.$emit('update:events', eventsCopy)
       })
 
-      this.EventCalendar.on('dataUpdate', (data: any) => {
+      this.EventCalendar.on('dateUpdate', (data: any) => {
         self.$emit('update:initial-date', data.date)
+      })
+      this.EventCalendar.on('gridUpdate', (data: any) => {
+        self.$emit('update:grid', data.grid)
       })
     },
     renderRequest() {
