@@ -120,8 +120,7 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
   const {
     modalElementNode: addModalElement,
     setSlotModalData: setEvModalElement,
-    openSlotModalOnElement: openEvSlotModalOnElement,
-    isSlotModalOpen: isEvOPen
+    openSlotModalOnElement: openEvSlotModalOnElement
   } = useSlotModal('eventClick')
 
   function clearDataCb() {

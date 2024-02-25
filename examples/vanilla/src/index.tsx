@@ -303,7 +303,7 @@ const EventCalendar2 = new Calendar(el2, {
   // locale: 'fa-IR',
   initialDate: new Date('Thu Aug 10 2023 15:00:0'),
   //@ts-ignore
-  plugins: [DailyGridPlugin, MonthGridPlugin, WeeklyGridPlugin, ListPlugin],
+  plugins: [DailyGridPlugin, WeeklyGridPlugin, MonthGridPlugin, ListPlugin],
   grid: 'daily',
   listMode: 'week'
   // groups:[]
@@ -320,7 +320,7 @@ EventCalendar.on('eventUpdate', (e, r, t) => {
   console.log(e, r, t)
 })
 EventCalendar.on('eventAdd', ({ event }) => {
-  EventCalendar.addEvent(event)
+  // EventCalendar.addEvent(event)
 })
 let id = 1
 function addGroup(name: string) {

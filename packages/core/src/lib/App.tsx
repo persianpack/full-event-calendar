@@ -27,12 +27,12 @@ export function App() {
   }
 
   function onAddEvent(event: SourceEvent) {
-    if (data.store.autoUpdateEventOnChange) {
+    if (data.store.autoUpdateEventOnChange && !data.store.stopAddEvent) {
       // const prev = data.instance.getEventById(event.id) as EventClass
       data.instance.addEvent(event as any)
       // const next = data.instance.getEventById(event.id) as EventClass
-      console.log('eventAdd', event)
     }
+    // console.log('eventAdd', event)
     data.instance.emitEvent('eventAdd', {
       event
     })

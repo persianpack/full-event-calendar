@@ -18,8 +18,8 @@ export interface EventClass {
   doesEventEndOn(date: Date): boolean
   isIncludedInaRange(date1: Date, date2: Date): boolean
   calculatePositionTop(): string
-  getEventTopPositionIng():number
-  calculateHeightPersentage(calcFromZero: boolean):number
+  getEventTopPositionIng(): number
+  calculateHeightPersentage(calcFromZero: boolean): number
   calculateHeight(calcFromZero: boolean): string
   checkOverLap(event: EventClass): Boolean
   updateEventDetails(event: SourceEvent): void
@@ -27,10 +27,10 @@ export interface EventClass {
   convertDateByTimeZone(tz: string): void
   getIncludedDays(): Date[]
 }
-export interface Group{
-  id:string[] | number[]
-  name :string
-  image?:any
+export interface Group {
+  id: string | number
+  name: string
+  image?: any
 }
 
 export interface SourceEvent {

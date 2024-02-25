@@ -80,6 +80,7 @@ export const DailyGrid: FComponent<DailyGridProps> = (props) => {
             editable={mergedProps.editable}
             avalibalSots={mergedProps.avalibalSots}
             stopAddEvent={mergedProps.stopAddEvent}
+            group={mergedProps.group}
           />
         </div>
       </div>

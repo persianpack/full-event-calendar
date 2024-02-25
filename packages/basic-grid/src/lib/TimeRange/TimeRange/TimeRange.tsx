@@ -1,5 +1,5 @@
-import { EventClass, FComponent, SourceEvent } from '@full-event-calendar/shared-ts'
-import { Show, createEffect, createSignal, createUniqueId, on } from 'solid-js'
+import { EventClass, FComponent, Group, SourceEvent } from '@full-event-calendar/shared-ts'
+import { Show, createUniqueId } from 'solid-js'
 import { useResize } from '../../../hooks/eventResize'
 import { EventImpl, getEventSourceFromTz } from '@full-event-calendar/utils'
 import { EventItem } from '../../EventItem/EventItem'
@@ -15,9 +15,9 @@ interface TimeRangeProps {
   oneHoureInPixel: number
   eventPreviewData: EventClass | null
   setEventPreview: any
-  setEventPreview2: any
   setContainerRef: any
   showModal: any
+  group: Group
   stopAddEvent: boolean
 }
 
@@ -28,17 +28,17 @@ export const TimeRange: FComponent<TimeRangeProps> = (props) => {
 
   function resizeCb(sourceEv: SourceEvent) {
     if (!props.editable) return
-    const event = getEventSourceFromTz(new EventImpl(sourceEv),props.timeZone)
+    const event = getEventSourceFromTz(new EventImpl(sourceEv), props.timeZone)
     event.id = createUniqueId()
     if (props.stopAddEvent) {
       props.setContainerRef(refr)
       props.setEventPreview(event, props.houre)
     } else {
-      props.onAddEvent(event.sourceEvent)
       props.setEventPreview(null, null)
     }
+    props.onAddEvent(event.sourceEvent)
   }
-  
+
   function timeRangeMouseDown(hour: number, min: number, mouseEvent: MouseEvent) {
     if (props.showModal) return
 
@@ -47,8 +47,12 @@ export const TimeRange: FComponent<TimeRangeProps> = (props) => {
 
     basdate.setHours(hour, min)
     endDate.setHours(hour, min + 15)
-
-    const x = new EventImpl({ start: basdate, end: endDate, name: '(no title)', id: createUniqueId() })
+    let evData = { start: basdate, end: endDate, name: '(no title)', id: createUniqueId() }
+    if (props.group) {
+      //@ts-ignore
+      evData['groups'] = [props.group.id]
+    }
+    const x = new EventImpl(evData)
 
     props.setEventPreview(x, props.houre)
     onmousedownH(x, mouseEvent)

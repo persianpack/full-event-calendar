@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // import HelloWorld from './components/HelloWorld.vue'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { FullEventCalendar } from './components/FullEventCalendar'
 import { events } from '@full-event-calendar/test-events'
 import { DailyGridPlugin } from '@full-event-calendar/daily-grid'
@@ -25,10 +25,15 @@ function AddEvent(data: any) {
   console.log('dataAdded', data)
   eventsList.value.push(data.sourceEvent)
 }
+
 const dateee = ref(new Date('Thu Aug 10 2023 15:00:0'))
+
 setTimeout(() => {
   //dateee.value = new Date()
 }, 4000)
+function eventAdd(ev) {
+  console.log(ev)
+}
 </script>
 
 <template>
@@ -42,12 +47,19 @@ setTimeout(() => {
   </div>
   <button @click="count++">count</button>
   <FullEventCalendar
-    :auto-update-event-on-change="true"
+    :auto-update-event-on-change="false"
     :editable="true"
     v-model:events="eventsList"
     @eventUpdate="eventUpdate"
+    @eventAdd="eventAdd"
     stop-add-event
-    :initial-date="dateee"
+    :groups="[
+      {
+        id: 1,
+        name: 'string'
+      }
+    ]"
+    v-model:initial-date="dateee"
     :plugins="[DailyGridPlugin, MonthGridPlugin, WeeklyGridPlugin, ListPlugin]"
   >
     <template #dailyHeader="data"> daily header slot {{ data }} </template>
@@ -77,6 +89,9 @@ setTimeout(() => {
     </template>
     <template #goForwardDate>
       <button>جلو</button>
+    </template>
+    <template #groupContainer>
+      <button>یک دو سه</button>
     </template>
     <!-- <template #gridDropDown="DATA">
       <button  >گرید</button>  {{ DATA }}

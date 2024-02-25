@@ -10,6 +10,7 @@ import { getDateTimeRange, isDateToday, useSlotModal, useCalenderContainerState 
 import { EventItem } from './EventItem/EventItem'
 // import { TimeRange } from './TimeRange/TimeRange'
 import { TimeRanges } from './TimeRange/TimeRanges'
+import { Group } from '@full-event-calendar/shared-ts'
 export interface BasicGridProps {
   events?: EventClass[]
   onEventUpdate?: (event: SourceEvent, dragData?: DraggedData) => void
@@ -24,6 +25,7 @@ export interface BasicGridProps {
   editable?: boolean
   avalibalSots?: string[]
   stopAddEvent: boolean
+  group: Group
 }
 
 const defaultProps = {
@@ -38,7 +40,8 @@ const defaultProps = {
   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   editable: true,
   avalibalSots: [],
-  stopAddEvent: false
+  stopAddEvent: false,
+  group: null
 }
 
 export const BasicGrid: FComponent<BasicGridProps> = (props) => {
@@ -162,6 +165,7 @@ export const BasicGrid: FComponent<BasicGridProps> = (props) => {
             oneHoureInPixel={oneHoureInPixel()}
             editable={mergedProps.editable}
             stopAddEvent={mergedProps.stopAddEvent}
+            group={mergedProps.group}
           ></TimeRanges>
           <div class="fec-preview-wrapper fec-dragger-wrapper" style={getWrapperHeight()}>
             <Show when={isDragging()}>

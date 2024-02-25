@@ -41,7 +41,7 @@ export const FullEventCalendar = defineComponent({
     calendar: String as unknown as PropType<CalendarSourceOptions['calendar']>,
     locale: String as unknown as PropType<CalendarSourceOptions['locale']>,
     grid: String as unknown as PropType<CalendarSourceOptions['grid']>,
-    groups: String as unknown as PropType<CalendarSourceOptions['groups']>,
+    groups: Array as unknown as PropType<CalendarSourceOptions['groups']>,
     gridHeight: Number as unknown as PropType<CalendarSourceOptions['gridHeight']>,
     autoUpdateEventOnChange: Boolean as unknown as PropType<CalendarSourceOptions['autoUpdateEventOnChange']>,
     editable: Boolean as unknown as PropType<CalendarSourceOptions['editable']>,
@@ -111,6 +111,9 @@ export const FullEventCalendar = defineComponent({
 
       this.EventCalendar.on('eventClicked', (data: any) => {
         self.$emit('eventClicked', data)
+      })
+      this.EventCalendar.on('eventAdd', (data: any) => {
+        self.$emit('eventAdd', data)
       })
 
       this.EventCalendar.on('eventUpdate', (data: any) => {

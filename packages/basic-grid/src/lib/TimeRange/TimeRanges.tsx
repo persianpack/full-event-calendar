@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { EventClass, FComponent, SourceEvent } from '@full-event-calendar/shared-ts'
+import { EventClass, FComponent, Group, SourceEvent } from '@full-event-calendar/shared-ts'
 import { For, createEffect, createSignal, on, onCleanup, onMount } from 'solid-js'
 import { TimeRange } from './TimeRange/TimeRange'
 import './TimeRanges.scss'
@@ -12,6 +12,7 @@ interface TimeRangeProps {
   editable: boolean
   oneHoureInPixel: number
   stopAddEvent: boolean
+  group: Group
 }
 
 export const TimeRanges: FComponent<TimeRangeProps> = (props) => {
@@ -56,10 +57,10 @@ export const TimeRanges: FComponent<TimeRangeProps> = (props) => {
               timeZone={props.timeZone}
               oneHoureInPixel={props.oneHoureInPixel}
               editable={props.editable}
+              group={props.group}
               houre={i()}
               eventPreviewData={getEventPreviewData(i())}
               setEventPreview={getPreviewDate}
-              setEventPreview2={setSlotModalData}
               setContainerRef={openSlotModalOnElement}
               showModal={isSlotModalOpen()}
               stopAddEvent={props.stopAddEvent}
