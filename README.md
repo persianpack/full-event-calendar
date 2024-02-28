@@ -56,7 +56,7 @@ NOTE : <ins> atleast 1 plugin must be provided </ins> available grid plugins:
   - `@full-event-calendar/daily-grid` - daily view
   - `@full-event-calendar/weekly-grid` - weekly view
   - `@full-event-calendar/month-grid` - month view
-  - `Cale@full-event-calendar/list` - list view
+  - `@full-event-calendar/list` - list view
 
 # Basic Usage
 
@@ -207,7 +207,7 @@ The `Calendar` class represents a calendar component that can be rendered in a s
   - Default : 'en-US'
 
     The BCP 47 language tag for the locale actually used. If any Unicode extension values were requested in the input BCP 47 language tag that led to this locale, the key-value pairs that were requested and are supported for this locale are included in locale.
-  
+    [**_Intl Locales_**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument)
    ```js
      // ...
      locale: `fa-IR`,
@@ -432,13 +432,25 @@ The `Calendar` class represents a calendar component that can be rendered in a s
    ```js
     EventCalendar.deleteEvent(updatedEvent.id)
    ```
-### `EventCalendar.on(eventType: 'eventUpdate' | 'eventAdd', handler: Function)`
+### `EventCalendar.on(eventType:  'eventClicked' | 'eventUpdate' | 'eventAdd' | 'gridUpdate' | 'gridUpdate', handler: Function)`
   fiers a callback function when an event happens.
    ```js
     fullEventCalendar.on('eventUpdate', ({prev,next,id}) => {
       console.log('updated event : ' ,prev)
       console.log('to event : ' ,next)
       console.log('with id : ' ,id)
+    })
+    fullEventCalendar.on('eventClicked', ({event}) => {
+      console.log('clicked event : ' ,event)
+    })
+    fullEventCalendar.on('eventAdd', ({event}) => {
+      console.log('added event : ' ,event)
+    })
+    fullEventCalendar.on('dateUpdate', ({date}) => {
+      console.log('new date : ' ,date)
+    })
+    fullEventCalendar.on('gridUpdate', ({grid}) => {
+      console.log('new grid : ' ,grid)
     })
    ```
 ### `EventCalendar.setGridHeight(height: number)`

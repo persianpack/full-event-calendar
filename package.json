@@ -17,7 +17,7 @@
     "test-root-ui": "vitest --ui",
     "dev": "turbo run dev",
     "format": "prettier --write",
-    "build": "pnpm -r build",
+    "build": "pnpm -r build && node ./scripts/build.js",
     "precommit": "pretty-quick --staged",
     "commitmsg": "node scripts/verify.js",
     "prepare": "husky install .husky",

@@ -47,7 +47,11 @@ or
 ```
 yarn add @full-event-calendar/vue @full-event-calendar/daily-grid
 ```
-NOTE : <ins>you have to install atleast 1 plugin</ins> like loading material-icons files with cdn
+NOTE : <ins> atleast 1 plugin must be provided </ins> available grid plugins:
+  - `@full-event-calendar/daily-grid` - daily view
+  - `@full-event-calendar/weekly-grid` - weekly view
+  - `@full-event-calendar/month-grid` - month view
+  - `@full-event-calendar/list` - list view
 
 # Basic Usage
 Vue js 3:
@@ -145,14 +149,21 @@ The `Calendar` class represents a calendar component that can be rendered in a s
   - `@full-event-calendar/month-grid` - month view
   - `Cale@full-event-calendar/list` - list view
 
-  ```js
+  ```html
+  <script setup>
+
   import { DailyGridPlugin } from '@full-event-calendar/daily-grid'
   import { WeeklyGridPlugin } from '@full-event-calendar/weekly-grid'
   import { MonthGridPlugin } from '@full-event-calendar/month-grid'
   import { ListPlugin } from '@full-event-calendar/list'
-  // ...
-   plugins: [DailyGridPlugin, WeeklyGridPlugin, MonthGridPlugin, ListPlugin],
-  // ..
+  </script>
+  <template>
+    <FullEventCalendar 
+      // ...
+      :plugins=[DailyGridPlugin, WeeklyGridPlugin, MonthGridPlugin, ListPlugin]
+      // ..
+    />
+  </template>
   ```
    <!-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale/getCalendars#supported_calendar_types -->
   <!-- [**_Groups_**](#css-class) -->
@@ -163,17 +174,19 @@ The `Calendar` class represents a calendar component that can be rendered in a s
 
    The type of calendar to be used . the Calendar formatting is done with javascript [**_Intl_**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale/getCalendars#supported_calendar_types) avalible calendars : 
    `buddhist`,`chinese`,`coptic`,`dangi`,`ethioaa`,`ethiopic`,`gregory`,`hebrew`,`indian`,`islamic`,`islamic-umalqura`,`islamic-umalqura`,`islamic-tbla`,`islamic-civil`,`islamic-rgsa`,`iso8601`,`iso8601`,`japanese`,`persian`,`roc`,`islamicc`
-  
-   ```js
-     // ...
-     calendar: `persian`,
-     // ..
+   ```html
+    <FullEventCalendar 
+      // ...
+      :calendar="persian",
+      // ..
+    />
    ```
 ### `locale`
   - Type : String
   - Default : 'en-US'
 
     The BCP 47 language tag for the locale actually used. If any Unicode extension values were requested in the input BCP 47 language tag that led to this locale, the key-value pairs that were requested and are supported for this locale are included in locale.
+    [**_Intl Locales_**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument)
   
    ```js
      // ...
@@ -196,9 +209,9 @@ The `Calendar` class represents a calendar component that can be rendered in a s
   - Default : 1920
 
     height of the daily and weekly grid(not the container). for example if we consider every hour 60px then th grid hieght will be 60 * 24
-   ```js
+   ```html
      // ...
-     gridHeight: 60 * 24,
+     :gridHeight="60 * 24",
      // ..
    ```
 ### `containerHeight`
@@ -208,7 +221,7 @@ The `Calendar` class represents a calendar component that can be rendered in a s
     height of the entire container.
    ```js
      // ...
-     containerHeight: 700,
+     containerHeight="700",
      // ..
    ```
 ### `editable`
@@ -226,7 +239,8 @@ The `Calendar` class represents a calendar component that can be rendered in a s
   - Default : []
 
      An array of resource objects. If provided, the daily grid will be divided into grouped resources, and only events containing the group ID property will be displayed on the corresponding grid resource.
-      ```js
+      ```html
+      <script>
       const events = [
           {
             name: 'some name',
@@ -253,6 +267,16 @@ The `Calendar` class represents a calendar component that can be rendered in a s
        groups : [{ id:1, name:'resource 1' },{ id:2, name:'resource 2' }],
        // ... 
       }
+      </script>
+      <template>
+       <FullEventCalendar
+           ...
+          :events="events"
+           ...
+          :groups="groups"
+        >
+       </FullEventCalendar>
+      </template>
     ```
     ```ts
       interface Group {
@@ -299,19 +323,29 @@ The `Calendar` class represents a calendar component that can be rendered in a s
 ### `autoUpdateEventOnChange`
   - Type : boolean
   - Default : true
-  If set to false, all event dragging, editing, and additions will not be updated on the grid and instead will have to be handled with event listeners.
-  ```js
-     // ...
-     autoUpdateEventOnChange: false,
-     // ..
-     EventCalendar.on('eventUpdate',({next,prev,id})=>{
-       //sourceEvent is the base event without timezone convertion
-        EventCalendar.updateEvent(id,next.sourceEvent)
-     })
+  If set to false, all event dragging, editing, and additions will not be updated on the grid and instead will have to be handled with event listeners or modals.
+ 
+  ```html
+  <script setup>
+    const eventsList = ref([])
 
-     EventCalendar.on('eventAdd',({event})=>{
-      EventCalendar.addEvent(event)
-     })
+    function eventAdd({event}) {
+      eventsList.value.push(event)
+       console.log(event)
+    }
+    function eventUpdate({next,prev,id}) {
+      eventsList.value.push(next.sourceEvent)
+    }
+  </script>
+  <template>
+   <FullEventCalendar
+      :autoUpdateEventOnChange="false"
+      v-model:events="eventsList"
+      ...
+      @eventUpdate="eventUpdate"
+      @eventAdd="eventAdd">
+    </FullEventCalendar>
+   </template>
   ```
 ### `stopAddEvent`
   - Type : boolean
@@ -324,6 +358,41 @@ The `Calendar` class represents a calendar component that can be rendered in a s
      EventCalendar.on('eventAdd',({event})=>{
        EventCalendar.addEvent(event)
      })
+  ```
+  ```html
+
+  <script setup>
+
+    const eventsList = ref([])
+
+    function AddEvent(calendarEvent) {
+      //sourceEvent is the base event data without any timeZone conversion
+      // calendarEvent.start and calendarEvent.end is with timeZone conversion
+      eventsList.value.push(calendarEvent.sourceEvent)
+    }
+
+  </script>
+
+  <template>
+
+   <FullEventCalendar
+    stop-add-event
+    :auto-update-event-on-change="false"
+    :editable="true"
+    v-model:events="eventsList"
+    :plugins="[DailyGridPlugin]"
+   >
+     <template #addModal="{ data }">
+       <div >
+          from {{ data?.eventData?.start?.toString() }} --- to {{ data?.eventData?.end?. toString() }}
+          <div @click="data.saveModal"> <!-- Call this to close the modal-->
+            <button @click="AddEvent(data.eventData)">save</button>
+          </div>
+       </div>
+     </template>
+    </FullEventCalendar>
+
+    </template>
   ```
 #### Source Event properties
 
@@ -341,33 +410,61 @@ interface SourceEvent {
 
 ### Events
 
-| Event Name                     | Description                                                            |
-|--------------------------------|:-----------------------------------------------------------------------|
-| `@item-click(MenuItem)`        | fired when a menu item is clicked                                      |
-|`@update:collapsed(isCollapsed)`| fired when menu collapse state changes - should be used with "v-model" |
-| `@update:miniMenu(isMiniMenu)` | fired when mini menu state changes - should be used with "v-model"     |
+| Event Name                         | Description                                                            |
+|------------------------------------|:-----------------------------------------------------------------------|
+| `@eventClicked({event})`           | fired when a event is clicked on a grid                                |
+| `@eventUpdate({ prev, next, id })` | fired when menu collapse state changes - should be used with "v-model" |
+| `@eventAdd({event})`               | fired when mini menu state changes - should be used with "v-model"     |
+| `@dateUpdate({date})`              | fired when mini menu state changes - should be used with "v-model"     |
+| `@gridUpdate({grid})`              | fired when mini menu state changes - should be used with "v-model"     |
+| `@update:events(Array[])`          | fired when mini menu state changes - should be used with "v-model"     |
+| `@update:initial-date(date)`       | fired when mini menu state changes - should be used with "v-model"     |
+| `@update:grid(string)`             | fired when mini menu state changes - should be used with "v-model"     |
 
 ### Slots
 
 ```html
-<!--slot for daily header -->
-<template #dailyHeader="{ icon,isChildrenMenuOpen, active,miniActive }"></template>
-<!--menu items label -->
-<template #headerSlot="{labelName ,isChildrenMenuOpen, active,miniActive}"></template>
-<!--menu items Preppend icon-->
-<template #headerDateSlot="{ icon,isChildrenMenuOpen, active,miniActive }"></template>
+<!--modal to show on event when the event is clicked -->
+ <template #eventClick="{ data }">
+   <div class="eventClickModal">{{ data }}</div>
+ </template>
+<!--modal to show on event when an event is added with draging -->
+    <template #addModal="{ data }">
+      <div >
+        this is a vue modal slot {{ data?.eventData?.start?.toString() }} --- {{ data?.eventData?.end?.toString() }}
+        <div @click="data.saveModal"> <!--call this to close the modal-->
+          <button @click="AddEvent(data.eventData)">save</button>
+        </div>
+      </div>
+    </template>
+<!--header date slot-->
+<template #headerDateSlot="data"> daily header slot {{ data.date }} </template>
 <!--menu header item-->
 <template #headerItem="{ header }"></template>
-<!--menu header at the top of the menu-->
-<template #todayBtn></template>
-<!--menu footer -->
-<template #goBackDate></template>
-<!--menus bottom toggle btn -->
-<template #goForwardDate></template>
+<!--today btn in header-->
+<template #todayBtn>
+  <button>go to today</button>
+</template>
+<!-- move date back buttun in header-->
 
+<template #goBackDate>
+  <button>عقب</button>
+</template>
+<!-- move date forward buttun in header-->
 
-<template #addModal></template>
-<template #eventClick></template>
+<template #goForwardDate>
+  <button>جلو</button>
+</template>
+<!--group container header , for when a group item is added -->
+
+<template #groupContainer="{data}">
+  <div>{{data.group}}</div>
+</template>
+<!-- grid drop down  -->
+<template #gridDropDown="data">
+ {{ data.data }}
+</template> 
+
 ```
 
 ## Styling
@@ -383,4 +480,4 @@ $ pnpm run dev
 
 ## License
 
-vue-awesome-sidebar is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+@full-event-calendar/vue is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
