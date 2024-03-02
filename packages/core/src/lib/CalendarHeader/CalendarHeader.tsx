@@ -94,15 +94,25 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
   const dd = () => {
     return data.store.initialDate
   }
+  const haedderData = () => {
+    return {
+      date: headerDate()
+    }
+  }
+  const gridData = () => {
+    return {
+      grid: data.store.grid
+    }
+  }
   const { isSlotAvalibale: isHeaderDateSlotAvalibale } = useSlot(
     headerSlot,
-    headerDate,
+    haedderData,
     'headerDateSlot',
     () => data.store.initialDate
   )
   const { isSlotAvalibale: isGridDropDownSlotAvalibale } = useSlot(
     gridDropDown,
-    () => data.store.grid,
+    gridData,
     'gridDropDown',
     () => data.store.grid
   )

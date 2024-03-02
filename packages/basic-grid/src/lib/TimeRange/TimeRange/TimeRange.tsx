@@ -36,7 +36,7 @@ export const TimeRange: FComponent<TimeRangeProps> = (props) => {
     } else {
       props.setEventPreview(null, null)
     }
-    props.onAddEvent(event.sourceEvent)
+    props.onAddEvent(event)
   }
 
   function timeRangeMouseDown(hour: number, min: number, mouseEvent: MouseEvent) {

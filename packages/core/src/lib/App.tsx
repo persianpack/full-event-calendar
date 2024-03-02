@@ -32,10 +32,16 @@ export function App() {
       data.instance.addEvent(event as any)
       // const next = data.instance.getEventById(event.id) as EventClass
     }
+    if (data.store.stopAddEvent) {
+      data.instance.emitEvent('addEventStoped', {
+        event
+      })
+    } else {
+      data.instance.emitEvent('eventAdd', {
+        event
+      })
+    }
     // console.log('eventAdd', event)
-    data.instance.emitEvent('eventAdd', {
-      event
-    })
   }
 
   function onDateChange(d: Date) {

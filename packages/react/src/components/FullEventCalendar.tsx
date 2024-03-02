@@ -9,18 +9,18 @@ const syncRenderingByDefault = reactMajorVersion < 18
 interface CalendarState {
   customRenderingMap: Map<string, any>
 }
-interface FullEventCalendarProps{
-  dailyHeader:any
-  eventClick:any
-  addModal:any
-  [key :string]: any
+interface FullEventCalendarProps {
+  dailyHeader: any
+  eventClick: any
+  addModal: any
+  [key: string]: any
 }
 export class FullEventCalendar extends Component<CalendarSourceOptions & FullEventCalendarProps, CalendarState> {
   static act = runNow // DEPRECATED. Not leveraged anymore
 
   private elRef = createRef<HTMLDivElement>()
   private calendar!: Calendar
- 
+
   private isUpdating = false
   private isUnmounting = false
 
@@ -30,25 +30,27 @@ export class FullEventCalendar extends Component<CalendarSourceOptions & FullEve
 
   render() {
     const customRenderingNodes: JSX.Element[] = []
-    
+
     for (const customRendering of this.state.customRenderingMap.values()) {
-        if(!this.props[customRendering.name] ||  !customRendering.target.el) continue
-        const vnode = this.props[customRendering.name]
-        
-         customRenderingNodes.push(<CustomRenderingComponent
-         key={customRendering.id}
-         data={customRendering.data}
-         target={customRendering.target}
-         customRendering={vnode} />)
+      if (!this.props[customRendering.name] || !customRendering.target.el) continue
+      const vnode = this.props[customRendering.name]
+
+      customRenderingNodes.push(
+        <CustomRenderingComponent
+          key={customRendering.id}
+          data={customRendering.data}
+          target={customRendering.target}
+          customRendering={vnode}
+        />
+      )
     }
 
     return <div ref={this.elRef}>{customRenderingNodes}</div>
-
   }
 
   componentDidMount() {
     const hasMoundted = !!this.calendar
-    if(hasMoundted) return
+    if (hasMoundted) return
     this.calendar = new Calendar(this.elRef.current!, {
       events: this.props.events,
       gridHeight: this.props.gridHeight,
@@ -83,78 +85,90 @@ export class FullEventCalendar extends Component<CalendarSourceOptions & FullEve
         requestTimestamp - lastRequestTimestamp! < 100 // rerendering frequently
           ? runNow // either sync rendering (first-time or React 16/17) or async (React 18)
           : flushSync // guaranteed sync rendering
-          this.calendar.renderStore.getState()
-      
+      this.calendar.renderStore.getState()
+
       runFunc(() => {
         this.setState({ customRenderingMap: this.calendar.renderStore.getState() }, () => {
           lastRequestTimestamp = requestTimestamp
-        }) 
+        })
       })
-
     })
 
     this.registerListenrs()
-    
+
     this.calendar.setAvalibleSlots(Object.keys(kebabToCamelKeys(this.props)))
     this.calendar.render()
-
   }
 
-  componentDidUpdate(preProps:any) {
-    if(!equal(this.props, preProps)) // Check if it's a new user, you can also use some unique property, like the ID  (this.props.user.id !== prevProps.user.id)
-    {
+  componentDidUpdate(preProps: any) {
+    if (!equal(this.props, preProps)) {
+      // Check if it's a new user, you can also use some unique property, like the ID  (this.props.user.id !== prevProps.user.id)
       this.isUpdating = true
       this.calendar.resetOptions({
-        ...this.props})
+        ...this.props
+      })
       this.isUpdating = false
     }
   }
-  registerListenrs(){
-
-    this.calendar.on('eventUpdate',(data:any)=>{
-      this.props.eventUpdate(data)
+  registerListenrs() {
+    const self = this
+    this.calendar.on('eventUpdate', (data: any) => {
+      if (self.props.eventUpdate) self.props.eventUpdate(data)
     })
-
+    this.calendar.on('eventAdd', (data: any) => {
+      if (self.props.eventAdd) self.props.eventAdd(data)
+    })
+    this.calendar.on('gridUpdate', (data: any) => {
+      if (self.props.gridUpdate) self.props.gridUpdate(data)
+    })
+    this.calendar.on('addEventStoped', (data: any) => {
+      if (self.props.addEventStoped) self.props.addEventStoped(data)
+    })
+    this.calendar.on('dateUpdate', (data: any) => {
+      if (self.props.dateUpdate) self.props.dateUpdate(data)
+    })
+    this.calendar.on('eventClicked', (data: any) => {
+      if (self.props.eventClicked) self.props.eventClicked(data)
+    })
   }
- 
 }
 // Custom Rendering
 // -------------------------------------------------------------------------------------------------
 
 interface CustomRenderingComponentProps {
   customRendering: any
-  target:any
-  data:any
+  target: any
+  data: any
 }
 
 class CustomRenderingComponent extends PureComponent<CustomRenderingComponentProps> {
   render() {
-    const { customRendering,data,target } = this.props
-    const ndoe = React.cloneElement(customRendering, { additionalProp: 'value',...data })
+    const { customRendering, data, target } = this.props
+    const ndoe = React.cloneElement(customRendering, { additionalProp: 'value', ...data })
     return createPortal(ndoe, target.el)
   }
 }
 // Util
 // -------------------------------------------------------------------------------------------------
 function kebabToCamelKeys<V>(map: { [key: string]: V }): { [key: string]: V } {
-    const newMap: { [key: string]: V } = {}
-  
-    for (const key in map) {
-      newMap[kebabToCamel(key)] = map[key]
-    }
-  
-    return newMap
+  const newMap: { [key: string]: V } = {}
+
+  for (const key in map) {
+    newMap[kebabToCamel(key)] = map[key]
   }
-  
-  function kebabToCamel(s: string): string {
-    return s
-      .split('-')
-      .map((word, index) => index ? capitalize(word) : word)
-      .join('')
-  }
-  function capitalize(s: string): string {
-    return s.charAt(0).toUpperCase() + s.slice(1)
-  }
+
+  return newMap
+}
+
+function kebabToCamel(s: string): string {
+  return s
+    .split('-')
+    .map((word, index) => (index ? capitalize(word) : word))
+    .join('')
+}
+function capitalize(s: string): string {
+  return s.charAt(0).toUpperCase() + s.slice(1)
+}
 
 function runNow(f: () => void): void {
   f()

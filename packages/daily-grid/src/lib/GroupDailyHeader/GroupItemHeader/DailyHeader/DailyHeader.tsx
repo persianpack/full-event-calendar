@@ -18,31 +18,31 @@ export const DailyHeader: FComponent<DailyHeaderProps> = (props) => {
   let headerSlot: any = {
     el: null
   }
-  function headerClick(e:MouseEvent){
+  function headerClick(e: MouseEvent) {
     e.stopPropagation()
     e.preventDefault()
     props.onDateChange(props.headerDate)
   }
   const dd = () => {
-    return { datee: props.headerDate, ondataChange: props.onDateChange }
+    return { date: props.headerDate, ondataChange: props.onDateChange }
   }
   const { isSlotAvalibale } = useSlot(headerSlot, dd, 'dailyHeader', () => props.headerDate)
 
   return (
     <>
-    <div ref={headerSlot.el}>
-      {/* <div ref={headerSlot.el}></div> */}
-      <Show when={!isSlotAvalibale}>
-        <div class={`fec-daily-header ${isDateToday(props.headerDate) ? 'fec-daily-header-today' : ' '}`}>
-          <div class="fec-weekend-narrow">
-            {formatWeekDays(props.headerDate, props.calendar, props.timeZone, props.locale)}
+      <div ref={headerSlot.el}>
+        {/* <div ref={headerSlot.el}></div> */}
+        <Show when={!isSlotAvalibale}>
+          <div class={`fec-daily-header ${isDateToday(props.headerDate) ? 'fec-daily-header-today' : ' '}`}>
+            <div class="fec-weekend-narrow">
+              {formatWeekDays(props.headerDate, props.calendar, props.timeZone, props.locale)}
+            </div>
+            <div onClick={headerClick} class="fec-week-day">
+              {formatDayNumber(props.locale, props.calendar, props.timeZone, props.headerDate)}
+            </div>
           </div>
-          <div onClick={headerClick} class="fec-week-day">
-            {formatDayNumber(props.locale, props.calendar, props.timeZone, props.headerDate)}
-          </div>
-        </div>
-      </Show>
-    </div>
+        </Show>
+      </div>
     </>
   )
 }

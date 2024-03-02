@@ -1,13 +1,13 @@
-.fec-calendar-draging  {
+.fec-calendar-draging {
   .fec-time-range:hover {
     .fec-time-rage-up-container {
       &:hover {
-        border: 2px solid var(--primary) ;
+        border: 2px solid var(--primary);
       }
     }
     .fec-time-rage-down-container {
       &:hover {
-        border: 2px solid var(--primary) ;
+        border: 2px solid var(--primary);
       }
     }
   }
@@ -68,14 +68,14 @@
     border-radius: 10px;
   }
   &:hover {
-    z-index: 123123123;
+    z-index: 30;
   }
 }
 .fec-basic-grid {
   position: relative;
   flex: 1;
-  .fec-dragger-wrapper{
-    .fec-event{
+  .fec-dragger-wrapper {
+    .fec-event {
       box-shadow: var(--shawdow);
     }
   }

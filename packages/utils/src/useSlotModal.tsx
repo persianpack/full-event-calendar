@@ -1,6 +1,6 @@
 import { EventClass } from '@full-event-calendar/shared-ts'
 
-import {   createSignal, onCleanup, onMount } from 'solid-js'
+import { createSignal, onCleanup, onMount } from 'solid-js'
 import { useCalenderContainerState, useSlot } from '.'
 
 let inctenceCout = 0
@@ -27,20 +27,19 @@ export function useSlotModal(modalType: string, clearDataCb?: any) {
   const calculateModalPosition = () => {
     setIsModalOpen(false)
     setTimeout(() => {
-
       const container = targetElRef()
       const modal = modalContainerRef()
-  
+
       if (!container || !modal) return
-  
+
       const containerRect = container.getBoundingClientRect()
       const modalRect = modal.getBoundingClientRect()
-  
+
       const spaceTop = containerRect.top
       // const spaceRight = window.innerWidth - containerRect.right;
       // const spaceBottom = window.innerHeight - containerRect.bottom;
       // const spaceLeft = containerRect.left;
-  
+
       // Find the side with the most available space
       // const maxSpace = Math.max(spaceTop, spaceRight, spaceBottom, spaceLeft);
       if (modalRect.height < spaceTop) {
@@ -62,24 +61,22 @@ export function useSlotModal(modalType: string, clearDataCb?: any) {
     }, 0)
   }
   const container = useCalenderContainerState()
-    
-  function setScrollListner(){
-     // fec-scroll-wrapper 
-    const scrollWrapper =  container?.querySelector('.fec-scroll-wrapper')
-    scrollWrapper?.addEventListener('scroll',closeModal)
-    document.addEventListener('scroll',closeModal)
-  }
-  function removeScrollListner(){
-     // fec-scroll-wrapper 
-    const scrollWrapper =  container?.querySelector('.fec-scroll-wrapper')
-    scrollWrapper?.removeEventListener('scroll',closeModal)
-    document.removeEventListener('scroll',closeModal)
 
+  function setScrollListner() {
+    // fec-scroll-wrapper
+    const scrollWrapper = container?.querySelector('.fec-scroll-wrapper')
+    scrollWrapper?.addEventListener('scroll', closeModal)
+    document.addEventListener('scroll', closeModal)
+  }
+  function removeScrollListner() {
+    // fec-scroll-wrapper
+    const scrollWrapper = container?.querySelector('.fec-scroll-wrapper')
+    scrollWrapper?.removeEventListener('scroll', closeModal)
+    document.removeEventListener('scroll', closeModal)
   }
 
   onMount(() => {
-
-    if(container){
+    if (container) {
       container.querySelector('#fec-scroll-wrapper')?.addEventListener('scroll', () => {
         // remove modal
       })
@@ -88,21 +85,28 @@ export function useSlotModal(modalType: string, clearDataCb?: any) {
   onCleanup(() => {
     const container = targetElRef()
     container && container.removeEventListener('resize', calculateModalPosition)
-    inctenceCout= 0
+    inctenceCout = 0
     const modal = modalContainerRef()
     modal && modal.removeEventListener('resize', calculateModalPosition)
   })
-  
+
   //@ts-ignore
   function ClickOutSide(el: any, accessor: any) {
- 
     const onClick = (e: MouseEvent) => {
       e.preventDefault()
       e.stopPropagation()
-      let someID = targetElRef()?.classList.contains('fec-event')? targetElRef()?.id: targetElRef()?.querySelector('.fec-event')?.id
+      let someID = targetElRef()?.classList.contains('fec-event')
+        ? targetElRef()?.id
+        : targetElRef()?.querySelector('.fec-event')?.id
       // console.log(targetElRef(),e.target)
       //@ts-ignore
-      return !el.contains(e.target) && !(e.target === targetElRef()) && !targetElRef()?.contains(e.target) && !(e.target?.id === someID) && accessor()?.()
+      return (
+        !el.contains(e.target) &&
+        !(e.target === targetElRef()) &&
+        !targetElRef()?.contains(e.target) &&
+        !(e.target?.id === someID) &&
+        accessor()?.()
+      )
     }
     document.addEventListener('mousedown', onClick)
     onCleanup(() => document.removeEventListener('mousedown', onClick))
@@ -111,32 +115,30 @@ export function useSlotModal(modalType: string, clearDataCb?: any) {
     el: null
   }
 
-  function closeModal(){
+  function closeModal() {
     setIsModalOpen(false)
     removeScrollListner()
     setSlotModalData(null)
+    setModalPosition({ top: '0px', left: '0px' })
     if (clearDataCb) clearDataCb()
   }
   function modaClickOut() {
-   
-    if(activeInstence === thisInsctence){
+    if (activeInstence === thisInsctence) {
       setTimeout(() => {
         if (isSlotModalOpen()) {
           setIsModalOpen(false)
           removeScrollListner()
           setSlotModalData(null)
+          setModalPosition({ top: '0px', left: '0px' })
           if (clearDataCb) clearDataCb()
         }
-      }, 0);
-    
-    }else{
+      }, 0)
+    } else {
       if (isSlotModalOpen()) {
         setSlotModalData(null)
         if (clearDataCb) clearDataCb()
       }
- 
     }
-
   }
   function saveModal() {
     setIsModalOpen(false)
@@ -147,29 +149,42 @@ export function useSlotModal(modalType: string, clearDataCb?: any) {
   }
 
   const slotDependencies = () => {
-    return { time: slotModalData(), saveModal: saveModal }
+    return { eventData: slotModalData(), saveModal: saveModal }
   }
 
   useSlot(headerSlot, slotDependencies, modalType, slotModalData)
 
   const modalElementNode = (
-    <div ref={setModalRef} style={{ position: 'fixed', ...modalPosition() }} class="fec-modal-container">
+    <div
+      ref={setModalRef}
+      style={{
+        position: 'fixed',
+        ...modalPosition(),
+        opacity: isSlotModalOpen() && activeInstence === thisInsctence ? '1' : '0',
+        'pointer-events': isSlotModalOpen() && activeInstence === thisInsctence ? 'all' : 'none'
+      }}
+      class="fec-modal-container"
+    >
       {/* 
      //@ts-ignore */}
-      <div use:ClickOutSide={modaClickOut}
-        class="modal-wrapper"
-        style={isSlotModalOpen() && (activeInstence === thisInsctence) ? 'opacity:1' : 'opacity:0;pointer-events:none'}
-        ref={headerSlot.el}
-      ></div>
+      <div use:ClickOutSide={modaClickOut} class="modal-wrapper" ref={headerSlot.el}></div>
     </div>
   )
 
   function openSlotModalOnElement(el: any) {
-    if(isSlotModalOpen()) return
+    if (isSlotModalOpen()) return
     setTargetElRef(el)
     calculateModalPosition()
     setScrollListner()
   }
 
-  return { modalElementNode, isSlotModalOpen, setTargetElRef, setSlotModalData, setIsModalOpen, slotModalData, openSlotModalOnElement }
+  return {
+    modalElementNode,
+    isSlotModalOpen,
+    setTargetElRef,
+    setSlotModalData,
+    setIsModalOpen,
+    slotModalData,
+    openSlotModalOnElement
+  }
 }
