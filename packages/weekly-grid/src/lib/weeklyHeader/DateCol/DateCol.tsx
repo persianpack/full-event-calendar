@@ -11,7 +11,7 @@ interface DateColProps {
   filteredEvents: EventClass[]
   onEventUpdate: (event: any) => void
   onEventClick: (event: EventClass) => void
-  onAddEvent: (event: SourceEvent, groupId?: Group['id']) => void
+  onAddEvent: (event: EventClass, groupId?: Group['id']) => void
   headerDates: Date[]
   locale: string
   timeZone: string
@@ -90,7 +90,7 @@ export const DateCol: FComponent<DateColProps> = (props) => {
       if (props.stopAddEvent) {
         setSlotModalData(eventD)
       } else {
-        props.onAddEvent(eventD.sourceEvent)
+        props.onAddEvent(eventD)
       }
     }
   }

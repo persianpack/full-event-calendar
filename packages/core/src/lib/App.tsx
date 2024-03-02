@@ -26,10 +26,10 @@ export function App() {
     })
   }
 
-  function onAddEvent(event: SourceEvent) {
+  function onAddEvent(event: EventClass) {
     if (data.store.autoUpdateEventOnChange && !data.store.stopAddEvent) {
       // const prev = data.instance.getEventById(event.id) as EventClass
-      data.instance.addEvent(event as any)
+      data.instance.addEvent(event.sourceEvent)
       // const next = data.instance.getEventById(event.id) as EventClass
     }
     if (data.store.stopAddEvent) {

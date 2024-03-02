@@ -18,7 +18,7 @@ interface WeeklyAllDayHeaderProps {
   headerDates: Date[]
   onEventUpdate: (event: any) => void
   onDateChange: (d: any) => void
-  onAddEvent: (event: SourceEvent, groupId?: Group['id']) => void
+  onAddEvent: (event: EventClass, groupId?: Group['id']) => void
   locale: string
   timeZone: string
   calendar: string

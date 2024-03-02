@@ -1,4 +1,4 @@
-import { FComponent, Group, SourceEvent } from '@full-event-calendar/shared-ts'
+import { EventClass, FComponent, Group } from '@full-event-calendar/shared-ts'
 import { DailyGrid, DailyGridProps, dailyDefaultProps } from './DailyGrid'
 import { GroupGrid } from '@full-event-calendar/group-grid'
 import './GroupDaily.scss'
@@ -29,7 +29,7 @@ export const GroupDaily: FComponent<GroupDailyProps> = (props) => {
 
   const { columData } = DailyCols(mergedProps, onDateChange)
 
-  function addEventProxy(event: SourceEvent, groupId?: number) {
+  function addEventProxy(event: EventClass, groupId?: number) {
     if (groupId) {
       mergedProps.onAddEvent({ ...event, ...{ groups: [groupId] } })
     } else {

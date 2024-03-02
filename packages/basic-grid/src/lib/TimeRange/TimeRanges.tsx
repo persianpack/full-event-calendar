@@ -5,7 +5,7 @@ import { TimeRange } from './TimeRange/TimeRange'
 import './TimeRanges.scss'
 import { useSlot, useSlotModal } from '@full-event-calendar/utils'
 interface TimeRangeProps {
-  onAddEvent: (event: SourceEvent) => void
+  onAddEvent: (event: EventClass) => void
   gridDate: Date
   locale: string
   timeZone: string

@@ -18,7 +18,7 @@ export interface WeeklyGridProps {
   initialDate?: Date
   onEventUpdate?: (event: any) => void
   onEventClick?: (event: EventClass) => void
-  onAddEvent?: (event: SourceEvent, groupId?: Group['id']) => void
+  onAddEvent?: (event: EventClass, groupId?: Group['id']) => void
   onDateChange?: (d: Date) => void
   onGridChange?: (d: any) => void
   locale?: string
@@ -83,7 +83,7 @@ export const WeeklyGrid: FComponent<WeeklyGridProps> = (props) => {
     })
   }
 
-  function addEventProxy(event: SourceEvent, groupId?: number) {
+  function addEventProxy(event: EventClass, groupId?: number) {
     if (groupId) {
       mergedProps.onAddEvent({ ...event, ...{ groups: [groupId] } })
     } else {

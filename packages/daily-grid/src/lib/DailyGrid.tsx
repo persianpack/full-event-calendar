@@ -11,7 +11,7 @@ export interface DailyGridProps {
   initialDate?: Date
   onDateChange?: (d: Date) => void
   calendar?: string
-  onAddEvent?: (event: SourceEvent, groupId?: Group['id']) => void
+  onAddEvent?: (event: EventClass, groupId?: Group['id']) => void
   onEventUpdate?: (event: SourceEvent) => void
   onEventClick?: (event: EventClass) => void
   timeZone?: string
@@ -51,7 +51,7 @@ export const DailyGrid: FComponent<DailyGridProps> = (props) => {
 
   const filteredOut = createMemo(() => mergedProps.events.filter((item) => !item.isAllDay()))
 
-  function addEventProxy(event: SourceEvent) {
+  function addEventProxy(event: EventClass) {
     if (mergedProps.group) {
       mergedProps.onAddEvent(event, mergedProps.group.id)
     } else {

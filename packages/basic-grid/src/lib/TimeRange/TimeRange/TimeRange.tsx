@@ -6,7 +6,7 @@ import { EventItem } from '../../EventItem/EventItem'
 import './TimeRange.scss'
 
 interface TimeRangeProps {
-  onAddEvent: (event: SourceEvent) => void
+  onAddEvent: (event: EventClass) => void
   gridDate: Date
   houre: number
   locale: string

@@ -103,7 +103,9 @@ export function useSlotModal(modalType: string, clearDataCb?: any) {
       return (
         !el.contains(e.target) &&
         !(e.target === targetElRef()) &&
+        //@ts-ignore
         !targetElRef()?.contains(e.target) &&
+        //@ts-ignore
         !(e.target?.id === someID) &&
         accessor()?.()
       )

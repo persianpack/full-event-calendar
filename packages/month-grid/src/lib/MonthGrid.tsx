@@ -33,7 +33,7 @@ export interface MonthGridProps {
   timeZone?: string
   rowLimit?: number
   onDateChange?: (d: Date) => void
-  onAddEvent?: (event: SourceEvent, groupId?: Group['id']) => void
+  onAddEvent?: (event: EventClass, groupId?: Group['id']) => void
   onEventClick?: (event: EventClass) => void
   onGridChange?: (d: any) => void
   editable?: boolean
@@ -180,7 +180,7 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
       if (mergedProps.stopAddEvent) {
         setSlotModalData(eventD)
       } else {
-        mergedProps.onAddEvent(eventD.sourceEvent)
+        mergedProps.onAddEvent(eventD)
       }
     }
   }

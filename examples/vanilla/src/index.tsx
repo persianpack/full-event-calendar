@@ -277,18 +277,17 @@ const events = [
   }
 ]
 
-console.log('page init')
 const EventCalendar = new Calendar(el, {
   events: events,
   // @ts-ignore
   gridHeight: 60 * 24,
-  // autoUpdateEventOnChange:false,
+  autoUpdateEventOnChange: false,
   timeZone: 'Africa/Abidjan',
   // calendar: 'persian',
   // locale: 'fa-IR',
   initialDate: new Date('Thu Aug 10 2023 15:00:0'),
   //@ts-ignore
-  plugins: [DailyGridPlugin, MonthGridPlugin, WeeklyGridPlugin, ListPlugin],
+  plugins: [DailyGridPlugin, WeeklyGridPlugin, MonthGridPlugin, ListPlugin],
   grid: 'daily',
   listMode: 'week'
   // groups:[]

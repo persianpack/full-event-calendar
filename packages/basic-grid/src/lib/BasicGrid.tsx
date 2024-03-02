@@ -14,7 +14,7 @@ import { Group } from '@full-event-calendar/shared-ts'
 export interface BasicGridProps {
   events?: EventClass[]
   onEventUpdate?: (event: SourceEvent, dragData?: DraggedData) => void
-  onAddEvent?: (event: SourceEvent) => void
+  onAddEvent?: (event: EventClass) => void
   onEventClick?: (event: EventClass) => void
   gridDate?: Date
   gridHeight?: number
