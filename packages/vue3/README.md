@@ -38,22 +38,24 @@ Check out Live demo at [**_amirkian007.github.io/vasmenu_**](https://amirkian007
 - [**_Author_**](#author)
 - [**_License_**](#license)
 
-# Installation
+## Installation
 
+::: code-group
+```bash [npm]
+npm i @full-event-calendar/core @full-event-calendar/daily-grid
 ```
-npm i @full-event-calendar/vue @full-event-calendar/daily-grid
+
+```bash [pnpm]
+pnpm i @full-event-calendar/core @full-event-calendar/daily-grid
 ```
-or
-```
-yarn add @full-event-calendar/vue @full-event-calendar/daily-grid
-```
+:::
 NOTE : <ins> atleast 1 plugin must be provided </ins> available grid plugins:
   - `@full-event-calendar/daily-grid` - daily view
   - `@full-event-calendar/weekly-grid` - weekly view
   - `@full-event-calendar/month-grid` - month view
   - `@full-event-calendar/list` - list view
  
-# Basic Usage
+## Basic Usage
 Vue js 3:
 ```html
 <script setup>
@@ -193,7 +195,7 @@ The `Calendar` class represents a calendar component that can be rendered in a s
      locale: `fa-IR`,
      // ..
    ```
-### `locale`
+### `grid`
   - Type : String
   - Default : 'daily'
 
@@ -323,7 +325,7 @@ The `Calendar` class represents a calendar component that can be rendered in a s
     const eventsList = ref([])
 
     function eventAdd({event}) {
-      eventsList.value.push(event)
+      eventsList.value.push(event.sourceEvent)
        console.log(event)
     }
     function eventUpdate({next,prev,id}) {
@@ -401,7 +403,7 @@ interface SourceEvent {
 
 ```
 
-### Events
+## Events
 
 | Event Name                         | Description                                                            |
 |------------------------------------|:-----------------------------------------------------------------------|
@@ -414,7 +416,7 @@ interface SourceEvent {
 | `@update:initial-date(date)`       | fired when mini menu state changes - should be used with "v-model"     |
 | `@update:grid(string)`             | fired when mini menu state changes - should be used with "v-model"     |
 
-### Slots
+## Slots
 
 ```html
 <!--modal to show on event when the event is clicked -->

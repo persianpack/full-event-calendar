@@ -14,7 +14,7 @@ hero:
       text: View on GitHub
       link: https://github.com/persianpack/full-event-calendar
   image:
-    src: /desktop.png
+    src: /image0.png
     alt: VitePress
 features:
   - title: Made with solid.js
@@ -26,6 +26,9 @@ features:
   - title: Built for React
     icon: <svg viewBox="-10.5 -9.45 21 18.9" fill="none" xmlns="http://www.w3.org/2000/svg" style="color:rgb(20, 158, 202);scale:0.8;" ><circle cx="0" cy="0" r="2" fill="currentColor"></circle><g stroke="currentColor" stroke-width="1" fill="none"><ellipse rx="10" ry="4.5"></ellipse><ellipse rx="10" ry="4.5" transform="rotate(60)"></ellipse><ellipse rx="10" ry="4.5" transform="rotate(120)"></ellipse></g></svg>
     details: Full-Event-Calendar provides a highly performant React component that accepts JSX components for rendering nested content
+  - title: 18 calendar types support.
+    icon: <img style="height:35px" src="/intl.png">
+    details: using the powerof intL. this calendar formats to any calendar.
 ---
 
 <style>

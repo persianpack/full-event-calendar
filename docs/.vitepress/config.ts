@@ -16,16 +16,16 @@ export default defineConfig({
         text: 'Introduction',
         items: [
           { text: 'About Full-Event-Calendar', link: '/introduction/about' },
-          { text: 'Getting Started', link: '/introduction/getting-started.md' },
-          { text: 'Configuration', link: '/api-examples' }
+          { text: 'Getting Started', link: '/introduction/getting-started.md' }
+          // { text: 'Configuration', link: '/api-examples' }
         ]
       },
       {
-        text: 'Introduction',
+        text: 'Usage',
         items: [
-          { text: 'About Full-Event-Calendar', link: '/introduction/about' },
-          { text: 'Getting Started', link: '/introduction/getting-started.md' },
-          { text: 'Configuration', link: '/api-examples' }
+          { text: 'Vanilla', link: '/usage/vanilla' },
+          { text: 'React', link: '/usage/react' },
+          { text: 'Vue', link: '/usage/vue' }
         ]
       }
     ],

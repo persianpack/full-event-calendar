@@ -38,7 +38,7 @@ Check out Live demo at [**_amirkian007.github.io/vasmenu_**](https://amirkian007
 - [**_Author_**](#author)
 - [**_License_**](#license)
 
-# Installation
+## Installation
 
 ```
 npm i @full-event-calendar/react @full-event-calendar/daily-grid
@@ -53,7 +53,7 @@ NOTE : <ins> atleast 1 plugin must be provided </ins> available grid plugins:
   - `@full-event-calendar/month-grid` - month view
   - `@full-event-calendar/list` - list view
  
-# Basic Usage
+## Basic Usage
 react js :
 ```jsx
  
@@ -209,7 +209,7 @@ function App() {
      locale="fa-IR",
      // ..
    ```
-### `locale`
+### `grid`
   - Type : String
   - Default : 'daily'
 
@@ -494,7 +494,7 @@ interface SourceEvent {
 
 ```
 
-### Events
+## Events
 
 | Event Name                         | Description                                                            |
 |------------------------------------|:-----------------------------------------------------------------------|
@@ -507,7 +507,7 @@ interface SourceEvent {
 | `update:initial-date(date)`       | fired when mini menu state changes - should be used with "v-model"     |
 | `update:grid(string)`             | fired when mini menu state changes - should be used with "v-model"     |
 
-### Slots
+## Slots
 
 ```jsx
  // modal to show on event when the event is clicked -->

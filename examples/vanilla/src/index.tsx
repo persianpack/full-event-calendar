@@ -319,7 +319,8 @@ EventCalendar.on('eventUpdate', (e, r, t) => {
   console.log(e, r, t)
 })
 EventCalendar.on('eventAdd', ({ event }) => {
-  // EventCalendar.addEvent(event)
+  console.log(event)
+  EventCalendar.addEvent(event.sourceEvent)
 })
 let id = 1
 function addGroup(name: string) {

@@ -43,7 +43,7 @@ Connectors:
 - [**_License_**](#license)
 
 
-# Installation
+## Installation
 
 ```
 npm i @full-event-calendar/core @full-event-calendar/daily-grid
@@ -59,7 +59,7 @@ available grid plugins:
   - `@full-event-calendar/month-grid` - month view
   - `@full-event-calendar/list` - list view
 
-# Basic Usage
+## Basic Usage
 
 A simple vanill example would be like this :
 
@@ -345,7 +345,7 @@ The `Calendar` class represents a calendar component that can be rendered in a s
      })
 
      EventCalendar.on('eventAdd',({event})=>{
-      EventCalendar.addEvent(event)
+      EventCalendar.addEvent(event.sourceEvent)
      })
   ```
 ### `stopAddEvent`
@@ -357,7 +357,7 @@ The `Calendar` class represents a calendar component that can be rendered in a s
      stopAddEvent: true,
      // ..
      EventCalendar.on('addEventStoped',({event})=>{
-       EventCalendar.addEvent(event)
+       EventCalendar.addEvent(event.sourceEvent)
      })
   ```
 ## Methods
@@ -558,14 +558,18 @@ interface SourceEvent {
 }
 
 ```
-#### Events
+### Events
 
 ```ts
-export type EventTypes ='eventUpdate' | 'eventAdd '
+export type EventTypes = 'eventClicked' | 'eventUpdate' | 'eventAdd' | 'dateUpdate' | 'gridUpdate' | 'addEventStoped'
 
 export interface EventPayLoads {
-  eventUpdate: { prev: SourceEvent; next: SourceEvent,id:any }
-  eventAdd:{ event: EventClass }
+  eventClicked: { event: EventClass }
+  eventUpdate: { prev: SourceEvent; next: SourceEvent; id: any }
+  eventAdd: { event: SourceEvent }
+  addEventStoped: { event: SourceEvent }
+  dateUpdate: { date: Date }
+  gridUpdate: { grid: GridModes }
 }
 ```
 
