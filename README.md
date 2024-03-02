@@ -16,7 +16,7 @@ Connectors:
 - [Vue 3](https://github.com/persianpack/full-event-calendar/tree/main/packages/vue3)
 
 ## Features
-- ✔️ Built with typescript and [**_solid.js_**](https://www.solidjs.com/).
+- ✔️ Built with typescript and [**_solid.js_**](https://www.solidjs.com/)(fastest ui library).
 - ✔️ Support for Vue.js(3x) and React.js.
 - ✔️ Mulitple Calendar type support like `chinese` , `gregory` , `persian` and ...
 - ✔️ Timezone converstion suppourt.
@@ -52,7 +52,8 @@ or
 ```
 pnpm i @full-event-calendar/core @full-event-calendar/daily-grid
 ```
-NOTE : <ins> atleast 1 plugin must be provided </ins> available grid plugins:
+NOTE : <ins> atleast 1 plugin must be provided </ins>
+available grid plugins:
   - `@full-event-calendar/daily-grid` - daily view
   - `@full-event-calendar/weekly-grid` - weekly view
   - `@full-event-calendar/month-grid` - month view
@@ -64,9 +65,9 @@ A simple vanill example would be like this :
 
 Check out [**__Options__**](#props) for properites
 
-[**__Vue usage__**](#props)
+[**__Vue usage__**](#https://github.com/persianpack/full-event-calendar/tree/main/packages/vue3#basic-usage)
 
-[**__React usage__**](#props)
+[**__React usage__**](#https://github.com/persianpack/full-event-calendar/tree/main/packages/react#basic-usage)
 
 Vanilla JS:
 ```js
@@ -112,6 +113,7 @@ const options = {
   // listMode: 'week',
   // stopAddEvent: 'week',
 }
+
 const fullEventCalendar = new Calendar(el,options)
 
 fullEventCalendar.render()
@@ -121,8 +123,8 @@ fullEventCalendar.on('eventUpdate', ({prev,next,id}) => {
   console.log('to event : ' ,next)
   console.log('with id : ' ,id)
 })
-
 ```
+
 ```html
 <!-- index.html -->
 <!doctype html>
@@ -139,6 +141,7 @@ fullEventCalendar.on('eventUpdate', ({prev,next,id}) => {
   </body>
 </html>
 ```
+
 # Api
 
 ## Calendar Class
@@ -196,7 +199,10 @@ The `Calendar` class represents a calendar component that can be rendered in a s
 
    The type of calendar to be used . the Calendar formatting is done with javascript [**_Intl_**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale/getCalendars#supported_calendar_types) avalible calendars : 
    `buddhist`,`chinese`,`coptic`,`dangi`,`ethioaa`,`ethiopic`,`gregory`,`hebrew`,`indian`,`islamic`,`islamic-umalqura`,`islamic-umalqura`,`islamic-tbla`,`islamic-civil`,`islamic-rgsa`,`iso8601`,`iso8601`,`japanese`,`persian`,`roc`,`islamicc`
-  
+     or just run this code to see the avalible timeZones :
+    ```js
+    console.log(Intl.supportedValuesOf('calendar'));
+    ```
    ```js
      // ...
      calendar: `persian`,
@@ -213,7 +219,7 @@ The `Calendar` class represents a calendar component that can be rendered in a s
      locale: `fa-IR`,
      // ..
    ```
-### `locale`
+### `grid`
   - Type : String
   - Default : 'daily'
 
@@ -297,7 +303,7 @@ The `Calendar` class represents a calendar component that can be rendered in a s
   - Type : String
   - Default : light
 
-    sets the theme of calendar. can be ethier `light` or `dark`.
+    sets the theme of calendar. can be either `light` or `dark`.
   <!-- ```js
      // ...
      theme: 'dark',
@@ -319,16 +325,12 @@ The `Calendar` class represents a calendar component that can be rendered in a s
   - Type : String
   - Default : Intl.DateTimeFormat().resolvedOptions().timeZone
 
-    The time zone to use. The only value implementations must recognize is "UTC"; the default is the runtime's default time zone. Implementations may also recognize the time zone names of the IANA time zone database, such as `Asia/Shanghai`, `Asia/Kolkata`, `America/New_York`.
-    or just run this code to see the avalible timeZones :
-    ```js
-    console.log(Intl.supportedValuesOf('calendar'));
-    ```
-       <!-- ```js
+    The time zone to use. The only value implementations must recognize is "UTC"; the default is the runtime's default time zone. Implementations may also recognize the time zone names of the IANA time zone database, such as `Asia/Shanghai`, `Asia/Kolkata`, `America/New_York`
+       ```js
         // ...
        timeZone: 'Africa/Abidjan',
        // ..
-       ``` -->
+       ```
 ### `autoUpdateEventOnChange`
   - Type : boolean
   - Default : true
