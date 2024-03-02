@@ -354,7 +354,7 @@ The `Calendar` class represents a calendar component that can be rendered in a s
      // ...
      stopAddEvent: true,
      // ..
-     EventCalendar.on('eventAdd',({event})=>{
+     EventCalendar.on('addEventStoped',({event})=>{
        EventCalendar.addEvent(event)
      })
   ```
@@ -432,7 +432,7 @@ The `Calendar` class represents a calendar component that can be rendered in a s
    ```js
     EventCalendar.deleteEvent(updatedEvent.id)
    ```
-### `EventCalendar.on(eventType:  'eventClicked' | 'eventUpdate' | 'eventAdd' | 'gridUpdate' | 'gridUpdate', handler: Function)`
+### `EventCalendar.on(eventType:  'eventClicked' | 'eventUpdate' | 'eventAdd' | 'gridUpdate' | 'addEventStoped', handler: Function)`
   fiers a callback function when an event happens.
    ```js
     fullEventCalendar.on('eventUpdate', ({prev,next,id}) => {
@@ -452,6 +452,9 @@ The `Calendar` class represents a calendar component that can be rendered in a s
     fullEventCalendar.on('gridUpdate', ({grid}) => {
       console.log('new grid : ' ,grid)
     })
+    fullEventCalendar.on('addEventStoped', ({event})=>{
+       //EventCalendar.addEvent(event)
+     })
    ```
 ### `EventCalendar.setGridHeight(height: number)`
    height of the daily and weekly grid(not the container)
@@ -569,19 +572,9 @@ export interface EventPayLoads {
 ### Css varibles
 to use sass varibles import the SCSS file insted of Css, then import custom varibles,
 example:
-```scss
-//style.scss
-@import "custom-var.scss";
-@import "vue-awesome-sidebar/src/scss/vue-awesome-sidebar.scss";
-```
-```js
-//main.js
-import vueAwesomeSidebar from 'vue-awesome-sidebar'
-//import 'vue-awesome-sidebar/dist/vue-awesome-sidebar.css'
-import './style.scss'
-```
-Sass varibles:
-```scss
+
+Css varibles:
+```css
 .calendar-theme-light {
   --shadow: 0px 4px 4px 0px rgba(60, 64, 67, 0.3), 0px 8px 12px 6px rgba(60, 64, 67, 0.15);
   --now: rgb(234, 67, 53);

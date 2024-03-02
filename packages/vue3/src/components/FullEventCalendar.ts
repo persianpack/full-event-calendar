@@ -116,6 +116,10 @@ export const FullEventCalendar = defineComponent({
         self.$emit('eventAdd', data)
       })
 
+      this.EventCalendar.on('addEventStoped', (data: any) => {
+        self.$emit('addEventStoped', data)
+      })
+
       this.EventCalendar.on('eventUpdate', (data: any) => {
         const eventsCopy = [...this.events]
         let ind = eventsCopy.findIndex((item) => item.id === data.id)

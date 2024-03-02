@@ -52,7 +52,7 @@ NOTE : <ins> atleast 1 plugin must be provided </ins> available grid plugins:
   - `@full-event-calendar/weekly-grid` - weekly view
   - `@full-event-calendar/month-grid` - month view
   - `@full-event-calendar/list` - list view
-
+ 
 # Basic Usage
 Vue js 3:
 ```html
@@ -110,7 +110,7 @@ const initialDate = ref(new Date('Thu Aug 10 2023 15:00:0'))
 
 ## Api
 
-# Api
+<!-- # Api
 
 ## Calendar Class
 
@@ -120,7 +120,7 @@ The `Calendar` class represents a calendar component that can be rendered in a s
   - `targetElement`: HTMLElement - The HTML element where the calendar will be rendered.
 
 #### options
-  - `options`: CalendarSourceOptions - Options for configuring the calendar.
+  - `options`: CalendarSourceOptions - Options for configuring the calendar. -->
 
 ## options
 
@@ -248,7 +248,7 @@ The `Calendar` class represents a calendar component that can be rendered in a s
             end: new Date('Aug 10 2023 10:00:00'),
             id: 16123,
             color: '#BF51F9',
-            // groups: [2]
+            groups: [2]
           },
           {
             name: 'some name',
@@ -256,17 +256,10 @@ The `Calendar` class represents a calendar component that can be rendered in a s
             color: '#31B5F7',
             end: new Date('Aug 10 2023 11:00:00'),
             id: 18123,
-            // groups: [1]
+            groups: [1]
           },
       ]
-      const options = {
-       events: events,
-       initialDate: new Date('Thu Aug 10 2023 15:00:0'),
-       plugins: [ DailyGridPlugin],
-       // ... 
-       groups : [{ id:1, name:'resource 1' },{ id:2, name:'resource 2' }],
-       // ... 
-      }
+      const groups = [{ id:1, name:'resource 1' },{ id:2, name:'resource 2' }]
       </script>
       <template>
        <FullEventCalendar
@@ -355,7 +348,7 @@ The `Calendar` class represents a calendar component that can be rendered in a s
      // ...
      stopAddEvent: true,
      // ..
-     EventCalendar.on('eventAdd',({event})=>{
+     EventCalendar.on('addEventStoped',({event})=>{
        EventCalendar.addEvent(event)
      })
   ```
@@ -428,47 +421,91 @@ interface SourceEvent {
  <template #eventClick="{ data }">
    <div class="eventClickModal">{{ data }}</div>
  </template>
+ 
 <!--modal to show on event when an event is added with draging -->
-    <template #addModal="{ data }">
-      <div >
-        this is a vue modal slot {{ data?.eventData?.start?.toString() }} --- {{ data?.eventData?.end?.toString() }}
-        <div @click="data.saveModal"> <!--call this to close the modal-->
-          <button @click="AddEvent(data.eventData)">save</button>
-        </div>
+ <template #addModal="{ data }">
+   <div>
+       this is a vue modal slot {{ data?.eventData?.start?.toString() }} --- {{ data?.eventData?.end?.toString() }}
+      <div @click="data.saveModal"> <!--call this to close the modal-->
+        <button @click="AddEvent(data.eventData)">save</button>
       </div>
-    </template>
+    </div>
+ </template>
+
 <!--header date slot-->
 <template #headerDateSlot="data"> daily header slot {{ data.date }} </template>
+
 <!--menu header item-->
 <template #headerItem="{ header }"></template>
+
 <!--today btn in header-->
 <template #todayBtn>
   <button>go to today</button>
 </template>
+
 <!-- move date back buttun in header-->
-
 <template #goBackDate>
-  <button>عقب</button>
+  <button>go back</button>
 </template>
+
 <!-- move date forward buttun in header-->
-
 <template #goForwardDate>
-  <button>جلو</button>
+  <button>go forward</button>
 </template>
-<!--group container header , for when a group item is added -->
 
+<!--group container header , for when a group item is added -->
 <template #groupContainer="{data}">
   <div>{{data.group}}</div>
 </template>
+
 <!-- grid drop down  -->
 <template #gridDropDown="data">
  {{ data.data }}
-</template> 
+</template>
+
 
 ```
 
 ## Styling
 
+### Css varibles
+to use sass varibles import the SCSS file insted of Css, then import custom varibles,
+example:
+
+Css varibles:
+```css
+.calendar-theme-light {
+  --shadow: 0px 4px 4px 0px rgba(60, 64, 67, 0.3), 0px 8px 12px 6px rgba(60, 64, 67, 0.15);
+  --now: rgb(234, 67, 53);
+  --primary: #31b5f7;
+  --hairline: rgb(218, 220, 224);
+  --on-surface-variant-agm: #70757a;
+  --on-surface-variant: rgb(95, 99, 104);
+  --textfield-surface: rgb(32, 33, 36);
+  --bg-color:white;
+  --bg-hover:rgba(208, 208, 208, 0.38);
+  --shawdow:inset 0 0 0.5px 1px hsla(0, 0%,   100%, 0.075),  0 0 0 1px hsla(0, 0%, 0%, 0.05),
+  0 0.3px 0.4px hsla(0, 0%, 0%, 0.02),
+  0 0.9px 1.5px hsla(0, 0%, 0%, 0.045),
+  0 3.5px 6px hsla(0, 0%, 0%, 0.09);
+}
+
+.calendar-theme-dark {
+  --now: rgb(234, 67, 53);
+  --primary: #3499F5;
+  --hairline: #3a536b;
+  --on-surface-variant-agm: #BBBBBB;
+  --on-surface-variant: #FFFFFF;
+  --textfield-surface: #E6E6E6;
+  --bg-color:#243443;
+  --bg-hover:#3f4d5a;
+  --shawdow:inset 0 0 0.5px 1px hsla(0, 0%,   100%, 0.075),  0 0 0 1px hsla(0, 0%, 0%, 0.05),
+  0 0.3px 0.4px hsla(0, 0%, 0%, 0.02),
+  0 0.9px 1.5px hsla(0, 0%, 0%, 0.045),
+  0 3.5px 6px hsla(0, 0%, 0%, 0.09);
+}
+
+```
 
 ## Contributing
 
