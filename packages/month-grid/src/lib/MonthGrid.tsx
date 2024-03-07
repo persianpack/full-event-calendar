@@ -23,6 +23,7 @@ import { sortEventByStart } from '@full-event-calendar/utils'
 import { useMonthEventDragging } from '../utils/EventDragging'
 import { DraggerTypes } from '../utils/RowDragger'
 import { MonthGridRow } from './MonthGridRow/MonthGridRow'
+import { calendarLocale } from '@full-event-calendar/locale'
 
 export interface MonthGridProps {
   events?: EventClass[]
@@ -211,7 +212,12 @@ export const MonthGrid: FComponent<MonthGridProps> = (props) => {
     basdate.setHours(0, 0)
     endDate.setHours(23, 59, 59)
 
-    const ev = new EventImpl({ start: basdate, end: endDate, name: '(no title)', id: createUniqueId() })
+    const ev = new EventImpl({
+      start: basdate,
+      end: endDate,
+      name: calendarLocale(mergedProps.locale, 'no_title'),
+      id: createUniqueId()
+    })
     changeDraggerType('addEventRow')
     onDragStart(ev, e)
     const handeler = () => {

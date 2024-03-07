@@ -24,7 +24,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/persianpack/full-event-calendar.git",
-    "directory": "packages/components/utils"
+    "directory": "packages/utils"
   },
   "bugs": {
     "url": "https://github.com/persianpack/full-event-calendar/issues"

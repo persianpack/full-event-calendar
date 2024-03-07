@@ -281,10 +281,10 @@ const EventCalendar = new Calendar(el, {
   events: events,
   // @ts-ignore
   gridHeight: 60 * 24,
-  autoUpdateEventOnChange: false,
+  // autoUpdateEventOnChange: false,
   timeZone: 'Africa/Abidjan',
   // calendar: 'persian',
-  // locale: 'fa-IR',
+  locale: 'fa-IR',
   initialDate: new Date('Thu Aug 10 2023 15:00:0'),
   //@ts-ignore
   plugins: [DailyGridPlugin, WeeklyGridPlugin, MonthGridPlugin, ListPlugin],

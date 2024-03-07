@@ -5,6 +5,7 @@ import { useGlobalState } from '../../context-injector/context'
 import { GridModes } from '../../api/CalendarImpl'
 import { Transition } from 'solid-transition-group'
 import { HeaderFormat } from './filterRange'
+import { calendarLocale } from '@full-event-calendar/locale'
 import { useSlot } from '@full-event-calendar/utils'
 interface CalendarHeader {
   onDateChange: (d: Date) => void
@@ -139,7 +140,7 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
     <div class="fec-calendar-header">
       <div onclick={goToday} ref={todayBtnSlot.el}>
         <Show when={!isTodayBtnSlotAvalibale}>
-          <div class="fec-go-to-today">Today</div>
+          <div class="fec-go-to-today">{calendarLocale(data.instance.storeManager.locale, 'today')}</div>
         </Show>
       </div>
 
@@ -185,7 +186,7 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
       <div ref={gridDropDown.el}>
         <Show when={!isGridDropDownSlotAvalibale}>
           <div class="fec-grid-drop" data-test-id-dropdown="1" onclick={() => SetDropDown(!showDropDown())}>
-            {data.store.grid}
+            {calendarLocale(data.instance.storeManager.locale, data.store.grid)}
             <Transition name="slide-fade">
               <Show when={showDropDown()}>
                 {/*
@@ -202,7 +203,7 @@ export const CalendarHeader: FComponent<CalendarHeader> = (props) => {
                         }}
                         data-test-id-drop="0"
                       >
-                        {item}
+                        {calendarLocale(data.instance.storeManager.locale, item)}
                       </div>
                     )}
                   </For>

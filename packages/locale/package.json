@@ -1,0 +1,45 @@
+{
+  "name": "@full-event-calendar/locale",
+  "version": "0.0.2",
+  "description": "A grid",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "keywords": [
+    "grid",
+    "calendar",
+    "calendar drag n drop"
+  ],
+  "author": "Amirkian Adl <amircc1200@gmail.com>",
+  "homepage": "https://github.com/persianpack/full-event-calendar#readme",
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/persianpack/full-event-calendar.git",
+    "directory": "packages/locale"
+  },
+  "bugs": {
+    "url": "https://github.com/persianpack/full-event-calendar/issues"
+  },
+  "devDependencies": {
+    "@full-event-calendar/shared-ts": "workspace:*",
+    "framer-motion": "^10.16.1",
+    "esbuild-sass-plugin": "^2.16.0"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --dts",
+    "build:fast": "tsup src/index.ts",
+    "dev": "pnpm build:fast -- --watch",
+    "clean": "rimraf dist .turbo",
+    "typecheck": "tsc --noEmit",
+    "typedocs": "tsx ../../../scripts/generate-type-docs.ts"
+  }
+}

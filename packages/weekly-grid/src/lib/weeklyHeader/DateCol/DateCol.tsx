@@ -6,6 +6,7 @@ import { EventImpl, useCalenderContainerState, useSlotModal } from '@full-event-
 import { DraggerTypes } from '@full-event-calendar/month-grid/src/utils/RowDragger'
 import './DateCol.scss'
 import { getEventSourceFromTz } from '@full-event-calendar/utils'
+import { calendarLocale } from '@full-event-calendar/locale'
 
 interface DateColProps {
   filteredEvents: EventClass[]
@@ -63,7 +64,12 @@ export const DateCol: FComponent<DateColProps> = (props) => {
     basdate.setHours(0, 0)
     endDate.setHours(23, 59, 59)
 
-    const ev = new EventImpl({ start: basdate, end: endDate, name: '(no title)', id: createUniqueId() })
+    const ev = new EventImpl({
+      start: basdate,
+      end: endDate,
+      name: calendarLocale(props.locale, 'no_title'),
+      id: createUniqueId()
+    })
     changeDraggerType('addEventRow')
     onDragStart(ev, e)
     const handeler = () => {

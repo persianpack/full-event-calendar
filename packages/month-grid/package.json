@@ -24,7 +24,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/persianpack/full-event-calendar.git",
-    "directory": "packages/components/month-grid"
+    "directory": "packages/month-grid"
   },
   "bugs": {
     "url": "https://github.com/persianpack/full-event-calendar/issues"
@@ -47,7 +47,8 @@
   "dependencies": {
     "@full-event-calendar/utils": "workspace:^",
     "esbuild-sass-plugin": "^2.16.0",
-    "solid-transition-group": "^0.2.3"
+    "solid-transition-group": "^0.2.3",
+    "@full-event-calendar/locale": "workspace:^"
   },
   "peerDependencies": {
     "solid-js": ">=1.0.0"

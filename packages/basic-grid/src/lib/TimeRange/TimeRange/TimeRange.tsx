@@ -4,6 +4,7 @@ import { useResize } from '../../../hooks/eventResize'
 import { EventImpl, getEventSourceFromTz } from '@full-event-calendar/utils'
 import { EventItem } from '../../EventItem/EventItem'
 import './TimeRange.scss'
+import { calendarLocale } from '@full-event-calendar/locale'
 
 interface TimeRangeProps {
   onAddEvent: (event: EventClass) => void
@@ -47,7 +48,9 @@ export const TimeRange: FComponent<TimeRangeProps> = (props) => {
 
     basdate.setHours(hour, min)
     endDate.setHours(hour, min + 15)
-    let evData = { start: basdate, end: endDate, name: '(no title)', id: createUniqueId() }
+    // no_title
+
+    let evData = { start: basdate, end: endDate, name: calendarLocale(props.locale, 'no_title'), id: createUniqueId() }
     if (props.group) {
       //@ts-ignore
       evData['groups'] = [props.group.id]

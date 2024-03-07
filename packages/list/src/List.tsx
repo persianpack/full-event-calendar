@@ -4,10 +4,11 @@ import { EventClass, FComponent } from '@full-event-calendar/shared-ts'
 import { For, Show, createMemo, mergeProps } from 'solid-js'
 //utils
 import { formatDD, formatDM, formatRange, useSlotModal } from '@full-event-calendar/utils'
+
+import { calendarLocale } from '@full-event-calendar/locale'
 import { GroupEventMap } from './lib/EventListCollection'
 // Styles
 import './List.scss'
-
 export interface ListGridProps {
   events?: EventClass[]
   initialDate?: Date
@@ -15,7 +16,7 @@ export interface ListGridProps {
   onDateChange?: (d: Date) => void
   onGridChange?: (d: any) => void
   onEventClick: (event: EventClass) => void
-  locale?: string
+  locale: string
   calendar?: string
   timeZone?: string
   gridHeight?: number
@@ -69,7 +70,7 @@ export const List: FComponent<ListGridProps> = (props) => {
       <div class="fec-event-list">
         <div class="fec-scroll-wrapper-list fec-custome-scroll-bar">
           <Show when={isMlistEmpty()}>
-            <div class="fec-no-events-text">No events here</div>
+            <div class="fec-no-events-text">{calendarLocale(props.locale, 'no_events')}</div>
           </Show>
 
           <For each={Object.keys(generateGroup())}>
