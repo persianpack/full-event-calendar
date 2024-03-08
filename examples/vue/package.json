@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build": "vue-tsc && vite build"
   },
   "dependencies": {
     "vue": "^3.3.8"

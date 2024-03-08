@@ -16,8 +16,8 @@ export default defineConfig({
         text: 'Introduction',
         items: [
           { text: 'About Full-Event-Calendar', link: '/introduction/about' },
-          { text: 'Getting Started', link: '/introduction/getting-started.md' }
-          // { text: 'Configuration', link: '/api-examples' }
+          { text: 'Getting Started', link: '/introduction/getting-started.md' },
+          { text: 'hi', link: '/introduction/hi' }
         ]
       },
       {

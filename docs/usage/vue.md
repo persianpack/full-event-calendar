@@ -142,7 +142,7 @@ The type of calendar to be used . the Calendar formatting is done with javascrip
 `buddhist`,`chinese`,`coptic`,`dangi`,`ethioaa`,`ethiopic`,`gregory`,`hebrew`,`indian`,`islamic`,`islamic-umalqura`,`islamic-umalqura`,`islamic-tbla`,`islamic-civil`,`islamic-rgsa`,`iso8601`,`iso8601`,`japanese`,`persian`,`roc`,`islamicc`
 
 ```html
-<FullEventCalendar // ... :calendar="persian", // .. />
+<FullEventCalendar :calendar="persian" />
 ```
 
 ### `locale`
@@ -166,22 +166,19 @@ The type of calendar to be used . the Calendar formatting is done with javascrip
 
   which grid plugin to show. options are :
   `daily`,`weekly`,`month`,`list`
-  <!-- ```js
-    // ...
-    grid: `weekly`,
-    // ..
 
-````-->
 ### `gridHeight`
+
 - Type : Number
 - Default : 1920
 
- height of the daily and weekly grid(not the container). for example if we consider every hour 60px then th grid hieght will be 60 * 24
-```html
+height of the daily and weekly grid(not the container). for example if we consider every hour 60px then th grid hieght will be 60 \* 24
+
+```js
   // ...
   :gridHeight="60 * 24",
   // ..
-````
+```
 
 ### `containerHeight`
 
@@ -202,71 +199,73 @@ The type of calendar to be used . the Calendar formatting is done with javascrip
 - Default : true
 
   can add or update event with dragging
-  <!-- ```js
-    // ...
-    editable: false,
-    // ..
 
-````-->
 ### `groups`
+
 - Type : Array
 - Default : []
 
   An array of resource objects. If provided, the daily grid will be divided into grouped resources, and only events containing the group ID property will be displayed on the corresponding grid resource.
-   ```html
-   <script>
-   const events = [
-       {
-         name: 'some name',
-         start: new Date('Aug 10 2023 08:00:0'),
-         end: new Date('Aug 10 2023 10:00:00'),
-         id: 16123,
-         color: '#BF51F9',
-         groups: [2]
-       },
-       {
-         name: 'some name',
-         start: new Date('Aug 10 2023 10:00:0'),
-         color: '#31B5F7',
-         end: new Date('Aug 10 2023 11:00:00'),
-         id: 18123,
-         groups: [1]
-       },
-   ]
-   const groups = [{ id:1, name:'resource 1' },{ id:2, name:'resource 2' }]
-   </script>
-   <template>
-    <FullEventCalendar
-        ...
-       :events="events"
-        ...
-       :groups="groups"
-     >
-    </FullEventCalendar>
-   </template>
- ```
- ```ts
-   interface Group {
-      id:string[] | number[]
-      name:string
-   }
- ```
+
+  ```html
+  <script>
+    const events = [
+      {
+        name: 'some name',
+        start: new Date('Aug 10 2023 08:00:0'),
+        end: new Date('Aug 10 2023 10:00:00'),
+        id: 16123,
+        color: '#BF51F9',
+        groups: [2]
+      },
+      {
+        name: 'some name',
+        start: new Date('Aug 10 2023 10:00:0'),
+        color: '#31B5F7',
+        end: new Date('Aug 10 2023 11:00:00'),
+        id: 18123,
+        groups: [1]
+      }
+    ]
+    const groups = [
+      { id: 1, name: 'resource 1' },
+      { id: 2, name: 'resource 2' }
+    ]
+  </script>
+  <template>
+    <FullEventCalendar ... :events="events" ... :groups="groups"> </FullEventCalendar>
+  </template>
+  ```
+
+````
+```ts
+  interface Group {
+     id:string[] | number[]
+     name:string
+  }
+````
+
 ### `theme`
+
 - Type : String
 - Default : light
 
- sets the theme of calendar. can be ethier `light` or `dark`.
+sets the theme of calendar. can be ethier `light` or `dark`.
+
 <!-- ```js
   // ...
   theme: 'dark',
   // ..
 ``` -->
+
 ### `listMode`
+
 - Type : String
 - Default : day
 
- sets the `list` grids formatting. avalible
+sets the `list` grids formatting. avalible
 `day`, `week`, `month`
+
 <!-- ```js
 // ...
 listMode: `week`,
@@ -274,46 +273,52 @@ listMode: `week`,
 ``` -->
 
 ### `timeZone`
+
 - Type : String
 - Default : Intl.DateTimeFormat().resolvedOptions().timeZone
 
- The time zone to use. The only value implementations must recognize is "UTC"; the default is the runtime's default time zone. Implementations may also recognize the time zone names of the IANA time zone database, such as `Asia/Shanghai`, `Asia/Kolkata`, `America/New_York`.
- or just run this code to see the avalible timeZones :
- ```js
- console.log(Intl.supportedValuesOf('calendar'));
- ```
+The time zone to use. The only value implementations must recognize is "UTC"; the default is the runtime's default time zone. Implementations may also recognize the time zone names of the IANA time zone database, such as `Asia/Shanghai`, `Asia/Kolkata`, `America/New_York`.
+or just run this code to see the avalible timeZones :
+
+```js
+console.log(Intl.supportedValuesOf('calendar'))
+```
+
     <!-- ```js
      // ...
     timeZone: 'Africa/Abidjan',
     // ..
     ``` -->
+
 ### `autoUpdateEventOnChange`
+
 - Type : boolean
 - Default : true
-If set to false, all event dragging, editing, and additions will not be updated on the grid and instead will have to be handled with event listeners or modals.
+  If set to false, all event dragging, editing, and additions will not be updated on the grid and instead will have to be handled with event listeners or modals.
 
 ```html
 <script setup>
- const eventsList = ref([])
+  const eventsList = ref([])
 
- function eventAdd({event}) {
-   eventsList.value.push(event.sourceEvent)
+  function eventAdd({ event }) {
+    eventsList.value.push(event.sourceEvent)
     console.log(event)
- }
- function eventUpdate({next,prev,id}) {
-   eventsList.value.push(next.sourceEvent)
- }
+  }
+  function eventUpdate({ next, prev, id }) {
+    eventsList.value.push(next.sourceEvent)
+  }
 </script>
 <template>
-<FullEventCalendar
-   :autoUpdateEventOnChange="false"
-   v-model:events="eventsList"
-   ...
-   @eventUpdate="eventUpdate"
-   @eventAdd="eventAdd">
- </FullEventCalendar>
+  <FullEventCalendar
+    :autoUpdateEventOnChange="false"
+    v-model:events="eventsList"
+    ...
+    @eventUpdate="eventUpdate"
+    @eventAdd="eventAdd"
+  >
+  </FullEventCalendar>
 </template>
-````
+```
 
 ### `stopAddEvent`
 

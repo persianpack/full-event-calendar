@@ -138,13 +138,7 @@ import { MonthGridPlugin } from '@full-event-calendar/month-grid'
 import { ListPlugin } from '@full-event-calendar/list'
 
 function App() {
-  return (
-    <FullEventCalendar
-      // ...
-      plugins={[DailyGridPlugin, WeeklyGridPlugin, MonthGridPlugin, ListPlugin]}
-      // ..
-    />
-  )
+  return <FullEventCalendar plugins={[DailyGridPlugin, WeeklyGridPlugin, MonthGridPlugin, ListPlugin]} />
 }
 ```
 
@@ -160,11 +154,7 @@ The type of calendar to be used . the Calendar formatting is done with javascrip
 `buddhist`,`chinese`,`coptic`,`dangi`,`ethioaa`,`ethiopic`,`gregory`,`hebrew`,`indian`,`islamic`,`islamic-umalqura`,`islamic-umalqura`,`islamic-tbla`,`islamic-civil`,`islamic-rgsa`,`iso8601`,`iso8601`,`japanese`,`persian`,`roc`,`islamicc`
 
 ```jsx
- <FullEventCalendar
-   // ...
-   calendar={"persian"},
-   // ..
- />
+<FullEventCalendar calendar={'persian'} />
 ```
 
 ### `locale`
@@ -186,24 +176,21 @@ The type of calendar to be used . the Calendar formatting is done with javascrip
 - Type : String
 - Default : 'daily'
 
-  which grid plugin to show. options are :
-  `daily`,`weekly`,`month`,`list`
-  <!-- ```js
-    // ...
-    grid: `weekly`,
-    // ..
+which grid plugin to show. options are :
+`daily`,`weekly`,`month`,`list`
 
-````-->
 ### `gridHeight`
+
 - Type : Number
 - Default : 1920
 
- height of the daily and weekly grid(not the container). for example if we consider every hour 60px then th grid hieght will be 60 * 24
-```jsx
-  // ...
+height of the daily and weekly grid(not the container). for example if we consider every hour 60px then th grid hieght will be 60 \* 24
+
+```js
+
   gridHeight={60 * 24}
-  // ..
-````
+
+```
 
 ### `containerHeight`
 
@@ -224,95 +211,104 @@ The type of calendar to be used . the Calendar formatting is done with javascrip
 - Default : true
 
   can add or update event with dragging
-  <!-- ```js
-    // ...
-    editable: false,
-    // ..
 
-````-->
+```js
+   // ...
+   editable: false,
+   // ..
+```
+
 ### `groups`
+
 - Type : Array
 - Default : []
 
   An array of resource objects. If provided, the daily grid will be divided into grouped resources, and only events containing the group ID property will be displayed on the corresponding grid resource.
 
- ```jsx
- import { useEffect, useState } from 'react'
- import { FullEventCalendar } from '@full-event-calendar/react'
- import { DailyGridPlugin } from '@full-event-calendar/daily-grid'
- import '@full-event-calendar/core/dist/main.css' // this must be imported
- // import { MonthGridPlugin } from '@full-event-calendar/month-grid'
- // import { WeeklyGridPlugin } from '@full-event-calendar/weekly-grid'
- // import { ListPlugin } from '@full-event-calendar/list'
+```jsx
+import { useEffect, useState } from 'react'
+import { FullEventCalendar } from '@full-event-calendar/react'
+import { DailyGridPlugin } from '@full-event-calendar/daily-grid'
+import '@full-event-calendar/core/dist/main.css' // this must be imported
+// import { MonthGridPlugin } from '@full-event-calendar/month-grid'
+// import { WeeklyGridPlugin } from '@full-event-calendar/weekly-grid'
+// import { ListPlugin } from '@full-event-calendar/list'
 
- const events = [
-       {
-         name: 'some name',
-         start: new Date('Aug 10 2023 08:00:0'),
-         end: new Date('Aug 10 2023 10:00:00'),
-         id: 16123,
-         color: '#BF51F9',
-         groups: [2]
-       },
-       {
-         name: 'some name',
-         start: new Date('Aug 10 2023 10:00:0'),
-         color: '#31B5F7',
-         end: new Date('Aug 10 2023 11:00:00'),
-         id: 18123,
-         groups: [1]
-       },
-   ]
+const events = [
+  {
+    name: 'some name',
+    start: new Date('Aug 10 2023 08:00:0'),
+    end: new Date('Aug 10 2023 10:00:00'),
+    id: 16123,
+    color: '#BF51F9',
+    groups: [2]
+  },
+  {
+    name: 'some name',
+    start: new Date('Aug 10 2023 10:00:0'),
+    color: '#31B5F7',
+    end: new Date('Aug 10 2023 11:00:00'),
+    id: 18123,
+    groups: [1]
+  }
+]
 
- const groups = [{ id:1, name:'resource 1' },{ id:2, name:'resource 2' }]
+const groups = [
+  { id: 1, name: 'resource 1' },
+  { id: 2, name: 'resource 2' }
+]
 
- function App() {
-   const [initialDate, setInitialDate] = useState(new Date('Thu Aug 10 2023 15:00:0'))
-   const [events, setEvents] = useState(eventsList)
+function App() {
+  const [initialDate, setInitialDate] = useState(new Date('Thu Aug 10 2023 15:00:0'))
+  const [events, setEvents] = useState(eventsList)
 
-   function eventUpdate({prev,next,id}) {
-       console.log('updated event : ' ,prev)
-       console.log('to event : ' ,next)
-       console.log('with id : ' ,id)
-       // eventsList.value.push(data.next.sourceEvent)
-   }
+  function eventUpdate({ prev, next, id }) {
+    console.log('updated event : ', prev)
+    console.log('to event : ', next)
+    console.log('with id : ', id)
+    // eventsList.value.push(data.next.sourceEvent)
+  }
 
- return (
-     <FullEventCalendar
-         plugins={[DailyGridPlugin]}
-         events={eventsR}
-         initialDate={count}
-         eventUpdate={onEveUpdate}
-         groups={groups}
-     ></FullEventCalendar>
-   )
+  return (
+    <FullEventCalendar
+      plugins={[DailyGridPlugin]}
+      events={eventsR}
+      initialDate={count}
+      eventUpdate={onEveUpdate}
+      groups={groups}
+    ></FullEventCalendar>
+  )
+}
+```
 
- }
- ```
- ```ts
-   interface Group {
-      id:string[] | number[]
-      name:string
-   }
- ```
-
+```ts
+interface Group {
+  id: string[] | number[]
+  name: string
+}
+```
 
 ### `theme`
+
 - Type : String
 - Default : light
 
- sets the theme of calendar. can be ethier `light` or `dark`.
+sets the theme of calendar. can be ethier `light` or `dark`.
+
 <!-- ```js
   // ...
   theme: 'dark',
   // ..
 ``` -->
+
 ### `listMode`
+
 - Type : String
 - Default : day
 
- sets the `list` grids formatting. avalible
+sets the `list` grids formatting. avalible
 `day`, `week`, `month`
+
 <!-- ```js
 // ...
 listMode: `week`,
@@ -320,110 +316,113 @@ listMode: `week`,
 ``` -->
 
 ### `timeZone`
+
 - Type : String
 - Default : Intl.DateTimeFormat().resolvedOptions().timeZone
 
- The time zone to use. The only value implementations must recognize is "UTC"; the default is the runtime's default time zone. Implementations may also recognize the time zone names of the IANA time zone database, such as `Asia/Shanghai`, `Asia/Kolkata`, `America/New_York`.
- or just run this code to see the avalible timeZones :
- ```js
- console.log(Intl.supportedValuesOf('calendar'));
- ```
-    <!-- ```js
-     // ...
-    timeZone: 'Africa/Abidjan',
-    // ..
-    ``` -->
+The time zone to use. The only value implementations must recognize is "UTC"; the default is the runtime's default time zone. Implementations may also recognize the time zone names of the IANA time zone database, such as `Asia/Shanghai`, `Asia/Kolkata`, `America/New_York`.
+or just run this code to see the avalible timeZones :
+
+```js
+console.log(Intl.supportedValuesOf('calendar'))
+```
+
+```js
+    // ...
+   timeZone: 'Africa/Abidjan',
+   // ..
+```
+
 ### `autoUpdateEventOnChange`
+
 - Type : boolean
 - Default : true
-If set to false, all event dragging, editing, and additions will not be updated on the grid and instead will have to be handled with event listeners or modals.
- ```jsx
- import { useEffect, useState } from 'react'
- import { FullEventCalendar } from '@full-event-calendar/react'
- import { DailyGridPlugin } from '@full-event-calendar/daily-grid'
- import '@full-event-calendar/core/dist/main.css' // this must be imported
+  If set to false, all event dragging, editing, and additions will not be updated on the grid and instead will have to be handled with event listeners or modals.
 
+```jsx
+import { useEffect, useState } from 'react'
+import { FullEventCalendar } from '@full-event-calendar/react'
+import { DailyGridPlugin } from '@full-event-calendar/daily-grid'
+import '@full-event-calendar/core/dist/main.css' // this must be imported
 
- const events = [
-       {
-         name: 'some name',
-         start: new Date('Aug 10 2023 08:00:0'),
-         end: new Date('Aug 10 2023 10:00:00'),
-         id: 16123,
-         color: '#BF51F9',
-       },
-       {
-         name: 'some name',
-         start: new Date('Aug 10 2023 10:00:0'),
-         color: '#31B5F7',
-         end: new Date('Aug 10 2023 11:00:00'),
-         id: 18123,
-       },
-   ]
+const events = [
+  {
+    name: 'some name',
+    start: new Date('Aug 10 2023 08:00:0'),
+    end: new Date('Aug 10 2023 10:00:00'),
+    id: 16123,
+    color: '#BF51F9'
+  },
+  {
+    name: 'some name',
+    start: new Date('Aug 10 2023 10:00:0'),
+    color: '#31B5F7',
+    end: new Date('Aug 10 2023 11:00:00'),
+    id: 18123
+  }
+]
 
+function App() {
+  const [initialDate, setInitialDate] = useState(new Date('Thu Aug 10 2023 15:00:0'))
+  const [events, setEvents] = useState(eventsList)
 
- function App() {
-
-   const [initialDate, setInitialDate] = useState(new Date('Thu Aug 10 2023 15:00:0'))
-   const [events, setEvents] = useState(eventsList)
-
-   const onEveUpdate = (data)=>{
-       const eventsCopy = [...eventsR]
-       let ind = eventsCopy.findIndex(item=>item.id === data.id)
-       eventsCopy[ind] = data.next.sourceEvent
-       setEvents(eventsCopy)
-   }
-  function eventAdd({event}){
-     const eventsCopy = [...eventsR]
-     eventsCopy.push(event.sourceEvent)
-     setEvents(eventsCopy)
+  const onEveUpdate = (data) => {
+    const eventsCopy = [...eventsR]
+    let ind = eventsCopy.findIndex((item) => item.id === data.id)
+    eventsCopy[ind] = data.next.sourceEvent
+    setEvents(eventsCopy)
+  }
+  function eventAdd({ event }) {
+    const eventsCopy = [...eventsR]
+    eventsCopy.push(event.sourceEvent)
+    setEvents(eventsCopy)
   }
 
- return (
-     <FullEventCalendar
-         autoUpdateEventOnChange={false}
-         plugins={[DailyGridPlugin]}
-         events={events}
-         eventAdd={eventAdd}
-         eventUpdate={onEveUpdate}
-         initialDate={initialDate}
-         eventUpdate={onEveUpdate}
-     ></FullEventCalendar>
-   )
-
- }
- ```
+  return (
+    <FullEventCalendar
+      autoUpdateEventOnChange={false}
+      plugins={[DailyGridPlugin]}
+      events={events}
+      eventAdd={eventAdd}
+      eventUpdate={onEveUpdate}
+      initialDate={initialDate}
+      eventUpdate={onEveUpdate}
+    ></FullEventCalendar>
+  )
+}
+```
 
 ### `stopAddEvent`
+
 - Type : boolean
 - Default : false
-If stopAddEvent is set to true, adding an event will be frozen on the grid to display a modal or perform another action,a modal should be provided with [**_Slots_**](#slots)"
+  If stopAddEvent is set to true, adding an event will be frozen on the grid to display a modal or perform another action,a modal should be provided with [**_Slots_**](#slots)"
+
 ```jsx
 function App() {
+  const [initialDate, setInitialDate] = useState(new Date('Thu Aug 10 2023 15:00:0'))
+  const [events, setEvents] = useState(eventsList)
 
-   const [initialDate, setInitialDate] = useState(new Date('Thu Aug 10 2023 15:00:0'))
-   const [events, setEvents] = useState(eventsList)
-
-  function eventStoped({event}){
-     const eventsCopy = [...eventsR]
-     eventsCopy.push(event.sourceEvent)
-     setEvents(eventsCopy)
+  function eventStoped({ event }) {
+    const eventsCopy = [...eventsR]
+    eventsCopy.push(event.sourceEvent)
+    setEvents(eventsCopy)
   }
 
- return (
-     <FullEventCalendar
-         autoUpdateEventOnChange={false}
-         plugins={[DailyGridPlugin]}
-         events={events}
-         addEventStoped={eventStoped}
-         eventUpdate={onEveUpdate}
-         initialDate={initialDate}
-     ></FullEventCalendar>
-   )
- }
-````
+  return (
+    <FullEventCalendar
+      autoUpdateEventOnChange={false}
+      plugins={[DailyGridPlugin]}
+      events={events}
+      addEventStoped={eventStoped}
+      eventUpdate={onEveUpdate}
+      initialDate={initialDate}
+    ></FullEventCalendar>
+  )
+}
+```
 
-    or with modal :
+or with modal :
 
 ```jsx
 function EventaddModalSlot(props) {

@@ -1,6 +1,7 @@
 
 # Full Event Calendar
 
+<img src="https://github.com/persianpack/full-event-calendar/blob/main/docs/public/image0.png" alt="full-event-calendar-v">
 <img src="https://github.com/persianpack/full-event-calendar/blob/main/docs/public/video1.gif" alt="full-event-calendar">
 
 ## About

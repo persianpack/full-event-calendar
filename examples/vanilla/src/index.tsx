@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Calendar } from '@full-event-calendar/core/src/Calendar'
 import { DailyGridPlugin } from '@full-event-calendar/daily-grid/src/index'
 import { MonthGridPlugin } from '@full-event-calendar/month-grid/src/index'
@@ -284,7 +285,7 @@ const EventCalendar = new Calendar(el, {
   // autoUpdateEventOnChange: false,
   timeZone: 'Africa/Abidjan',
   // calendar: 'persian',
-  locale: 'fa-IR',
+  // locale: 'fa-IR',
   initialDate: new Date('Thu Aug 10 2023 15:00:0'),
   //@ts-ignore
   plugins: [DailyGridPlugin, WeeklyGridPlugin, MonthGridPlugin, ListPlugin],
@@ -309,6 +310,9 @@ const EventCalendar2 = new Calendar(el2, {
 })
 console.log(EventCalendar2, EventCalendar)
 console.time('rendered in ')
+setTimeout(() => {
+  EventCalendar.changeTimeZone('America/new_york', true)
+}, 2000)
 EventCalendar.render()
 // setTimeout(() => {
 //   EventCalendar.refresh()

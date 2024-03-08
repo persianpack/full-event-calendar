@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build-p": "tsc && vite build"
   },
   "dependencies": {
     "solid-js": "^1.7.8",

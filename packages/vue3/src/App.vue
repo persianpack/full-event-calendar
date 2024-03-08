@@ -304,18 +304,348 @@ function eventAdd({ event }) {
   eventsList.value.push(event)
   console.log(event)
 }
+//@ts-ignore
+const timeZonez = Intl.supportedValuesOf('timeZone')
+//@ts-ignore
+const calendars = Intl.supportedValuesOf('calendar')
+
+const langs = [
+  'af',
+  'am',
+  'ar',
+  'az',
+  'bg',
+  'bn',
+  'bs',
+  'ca',
+  'cs',
+  'da',
+  'de',
+  'el',
+  'en',
+  'es',
+  'et',
+  'eu',
+  'fa',
+  'fi',
+  'fr',
+  'ga',
+  'gl',
+  'he',
+  'hi',
+  'hr',
+  'hu',
+  'hy',
+  'id',
+  'is',
+  'it',
+  'ja',
+  'kk',
+  'km',
+  'kn',
+  'ko',
+  'ky',
+  'lt',
+  'lv',
+  'mn',
+  'ms',
+  'mt',
+  'my',
+  'nb',
+  'ne',
+  'nl',
+  'nn',
+  'pl',
+  'pt',
+  'ro',
+  'ru',
+  'si',
+  'sk',
+  'sl',
+  'sq',
+  'sr',
+  'sv',
+  'sw',
+  'ta',
+  'te',
+  'th',
+  'tl',
+  'tlh',
+  'tr',
+  'uk',
+  'uz',
+  'uz_latn',
+  'vi',
+  'yi',
+  'zh'
+]
+
+const localesss = [
+  'af-ZA',
+  'am-ET',
+  'ar-AE',
+  'ar-BH',
+  'ar-DZ',
+  'ar-EG',
+  'ar-IQ',
+  'ar-JO',
+  'ar-KW',
+  'ar-LB',
+  'ar-LY',
+  'ar-MA',
+  'arn-CL',
+  'ar-OM',
+  'ar-QA',
+  'ar-SA',
+  'ar-SD',
+  'ar-SY',
+  'ar-TN',
+  'ar-YE',
+  'as-IN',
+  'az-az',
+  'az-Cyrl-AZ',
+  'az-Latn-AZ',
+  'ba-RU',
+  'be-BY',
+  'bg-BG',
+  'bn-BD',
+  'bn-IN',
+  'bo-CN',
+  'br-FR',
+  'bs-Cyrl-BA',
+  'bs-Latn-BA',
+  'ca-ES',
+  'co-FR',
+  'cs-CZ',
+  'cy-GB',
+  'da-DK',
+  'de-AT',
+  'de-CH',
+  'de-DE',
+  'de-LI',
+  'de-LU',
+  'dsb-DE',
+  'dv-MV',
+  'el-CY',
+  'el-GR',
+  'en-029',
+  'en-AU',
+  'en-BZ',
+  'en-CA',
+  'en-cb',
+  'en-GB',
+  'en-IE',
+  'en-IN',
+  'en-JM',
+  'en-MT',
+  'en-MY',
+  'en-NZ',
+  'en-PH',
+  'en-SG',
+  'en-TT',
+  'en-US',
+  'en-ZA',
+  'en-ZW',
+  'es-AR',
+  'es-BO',
+  'es-CL',
+  'es-CO',
+  'es-CR',
+  'es-DO',
+  'es-EC',
+  'es-ES',
+  'es-GT',
+  'es-HN',
+  'es-MX',
+  'es-NI',
+  'es-PA',
+  'es-PE',
+  'es-PR',
+  'es-PY',
+  'es-SV',
+  'es-US',
+  'es-UY',
+  'es-VE',
+  'et-EE',
+  'eu-ES',
+  'fa-IR',
+  'fi-FI',
+  'fil-PH',
+  'fo-FO',
+  'fr-BE',
+  'fr-CA',
+  'fr-CH',
+  'fr-FR',
+  'fr-LU',
+  'fr-MC',
+  'fy-NL',
+  'ga-IE',
+  'gd-GB',
+  'gd-ie',
+  'gl-ES',
+  'gsw-FR',
+  'gu-IN',
+  'ha-Latn-NG',
+  'he-IL',
+  'hi-IN',
+  'hr-BA',
+  'hr-HR',
+  'hsb-DE',
+  'hu-HU',
+  'hy-AM',
+  'id-ID',
+  'ig-NG',
+  'ii-CN',
+  'in-ID',
+  'is-IS',
+  'it-CH',
+  'it-IT',
+  'iu-Cans-CA',
+  'iu-Latn-CA',
+  'iw-IL',
+  'ja-JP',
+  'ka-GE',
+  'kk-KZ',
+  'kl-GL',
+  'km-KH',
+  'kn-IN',
+  'kok-IN',
+  'ko-KR',
+  'ky-KG',
+  'lb-LU',
+  'lo-LA',
+  'lt-LT',
+  'lv-LV',
+  'mi-NZ',
+  'mk-MK',
+  'ml-IN',
+  'mn-MN',
+  'moh-CA',
+  'mr-IN',
+  'ms-BN',
+  'ms-MY',
+  'mt-MT',
+  'nb-NO',
+  'ne-NP',
+  'nl-BE',
+  'nl-NL',
+  'nn-NO',
+  'no-no',
+  'nso-ZA',
+  'oc-FR',
+  'or-IN',
+  'pa-IN',
+  'pl-PL',
+  'prs-AF',
+  'ps-AF',
+  'pt-BR',
+  'pt-PT',
+  'qut-GT',
+  'quz-BO',
+  'quz-EC',
+  'quz-PE',
+  'rm-CH',
+  'ro-mo',
+  'ro-RO',
+  'ru-mo',
+  'ru-RU',
+  'rw-RW',
+  'sah-RU',
+  'sa-IN',
+  'se-FI',
+  'se-NO',
+  'se-SE',
+  'si-LK',
+  'sk-SK',
+  'sl-SI',
+  'sma-NO',
+  'sma-SE',
+  'smj-NO',
+  'smj-SE',
+  'smn-FI',
+  'sms-FI',
+  'sq-AL',
+  'sr-BA',
+  'sr-CS',
+  'sr-ME',
+  'sr-RS',
+  'sr-sp',
+  'sv-FI',
+  'sv-SE',
+  'sw-KE',
+  'syr-SY',
+  'ta-IN',
+  'te-IN',
+  'th-TH',
+  'tk-TM',
+  'tlh-QS',
+  'tn-ZA',
+  'tr-TR',
+  'tt-RU',
+  'ug-CN',
+  'uk-UA',
+  'ur-PK',
+  'uz-uz',
+  'vi-VN',
+  'wo-SN',
+  'xh-ZA',
+  'yo-NG',
+  'zh-CN',
+  'zh-HK',
+  'zh-MO',
+  'zh-SG',
+  'zh-TW',
+  'zu-ZA'
+]
+const themes = ['light', 'dark']
+const listModes = ['day', 'month', 'week']
+const selectedTz = ref('America/New_York')
+
+const selectedCalendar = ref('gregory')
+const selectedLocale = ref('en-US')
+const selectedTheme = ref('light')
+const selectedListMode = ref('week')
+
+watch(selectedTz, () => {
+  console.log(selectedTz.value)
+})
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div style="margin: 30px 10px">
+    <label for="cars">Choose a timezone :</label>
+    <select name="cars" id="cars" v-model="selectedTz">
+      <option v-for="tz in timeZonez" :value="tz">{{ tz }}</option>
+    </select>
   </div>
-  <button @click="count++">count</button>
+
+  <div style="margin: 30px 10px">
+    <label for="selectedCalendar">Choose a Calendar :</label>
+    <select name="selectedCalendar" id="selectedCalendar" v-model="selectedCalendar">
+      <option v-for="ca in calendars" :value="ca">{{ ca }}</option>
+    </select>
+  </div>
+
+  <div style="margin: 30px 10px">
+    <label for="selectedLocale">Choose a Locale :</label>
+    <select name="selectedLocale" id="selectedLocale" v-model="selectedLocale">
+      <option v-for="lang in localesss" :value="lang">{{ lang }}</option>
+    </select>
+  </div>
+
+  <div style="margin: 30px 10px">
+    <label for="selectedTheme">Choose a Theme :</label>
+    <select name="selectedTheme" id="selectedTheme" v-model="selectedTheme">
+      <option v-for="theme in themes" :value="theme">{{ theme }}</option>
+    </select>
+  </div>
+  <div style="margin: 30px 10px">
+    <label for="selectedlistModes">Choose a listMode :</label>
+    <select name="selectedlistModes" id="selectedlistModes" v-model="selectedListMode">
+      <option v-for="listMode in listModes" :value="listMode">{{ listMode }}</option>
+    </select>
+  </div>
+
   <FullEventCalendar
     :auto-update-event-on-change="false"
     :editable="true"
@@ -324,8 +654,12 @@ function eventAdd({ event }) {
     @eventUpdate="eventUpdate"
     @eventAdd="eventAdd"
     stop-add-event
-    list-mode="week"
+    :list-mode="selectedListMode"
+    :theme="selectedTheme"
+    :time-zone="selectedTz"
+    :locale="selectedLocale"
     v-model:initial-date="dateee"
+    :calendar="selectedCalendar"
     :plugins="[DailyGridPlugin, WeeklyGridPlugin, MonthGridPlugin, ListPlugin]"
   >
     <!-- <template #dailyHeader="data"> daily header slot {{ data }} </template> -->
@@ -356,7 +690,7 @@ function eventAdd({ event }) {
           ><b>{{ data.eventData?.end?.toString() }}</b></span
         >
         <div class="" style="flex: 1"></div>
-        <button>Edit event</button>
+        <!-- <button>Edit event</button> -->
       </div>
       <!-- <div class="eventClickModal">{{ data }}</div> -->
     </template>
@@ -435,5 +769,8 @@ function eventAdd({ event }) {
 
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
+}
+.full-event-calendar-core {
+  border-radius: 20px;
 }
 </style>

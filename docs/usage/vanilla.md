@@ -22,11 +22,11 @@ available grid plugins:
 
 A simple vanill example would be like this :
 
-Check out [****Options****](#props) for properites
+Check out [\***\*Options\*\***](#props) for properites
 
-[****Vue usage****](#https://github.com/persianpack/full-event-calendar/tree/main/packages/vue3#basic-usage)
+[\***\*Vue usage\*\***](#https://github.com/persianpack/full-event-calendar/tree/main/packages/vue3#basic-usage)
 
-[****React usage****](#https://github.com/persianpack/full-event-calendar/tree/main/packages/react#basic-usage)
+[\***\*React usage\*\***](#https://github.com/persianpack/full-event-calendar/tree/main/packages/react#basic-usage)
 
 Vanilla JS:
 
@@ -116,6 +116,8 @@ The `Calendar` class represents a calendar component that can be rendered in a s
 
 #### options
 
+### `calendar`
+
 - `options`: CalendarSourceOptions - Options for configuring the calendar.
 
 ## options
@@ -171,9 +173,10 @@ import { ListPlugin } from '@full-event-calendar/list'
 The type of calendar to be used . the Calendar formatting is done with javascript [**_Intl_**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale/getCalendars#supported_calendar_types) avalible calendars :
 `buddhist`,`chinese`,`coptic`,`dangi`,`ethioaa`,`ethiopic`,`gregory`,`hebrew`,`indian`,`islamic`,`islamic-umalqura`,`islamic-umalqura`,`islamic-tbla`,`islamic-civil`,`islamic-rgsa`,`iso8601`,`iso8601`,`japanese`,`persian`,`roc`,`islamicc`
 or just run this code to see the avalible timeZones :
-`js
-    console.log(Intl.supportedValuesOf('calendar'));
-    `
+
+```js
+console.log(Intl.supportedValuesOf('calendar'))
+```
 
 ```js
   // ...
@@ -202,22 +205,25 @@ or just run this code to see the avalible timeZones :
 
   which grid plugin to show. options are :
   `daily`,`weekly`,`month`,`list`
-  <!-- ```js
+
+```js
     // ...
     grid: `weekly`,
     // ..
+```
 
-````-->
 ### `gridHeight`
+
 - Type : Number
 - Default : 1920
 
- height of the daily and weekly grid(not the container). for example if we consider every hour 60px then th grid hieght will be 60 * 24
+height of the daily and weekly grid(not the container). for example if we consider every hour 60px then th grid hieght will be 60 \* 24
+
 ```js
   // ...
   gridHeight: 60 * 24,
   // ..
-````
+```
 
 ### `containerHeight`
 
@@ -238,67 +244,75 @@ or just run this code to see the avalible timeZones :
 - Default : true
 
   can add or update event with dragging
-  <!-- ```js
-    // ...
-    editable: false,
-    // ..
 
-````-->
 ### `groups`
+
 - Type : Array
 - Default : []
 
   An array of resource objects. If provided, the daily grid will be divided into grouped resources, and only events containing the group ID property will be displayed on the corresponding grid resource.
-   ```js
-   const events = [
-       {
-         name: 'some name',
-         start: new Date('Aug 10 2023 08:00:0'),
-         end: new Date('Aug 10 2023 10:00:00'),
-         id: 16123,
-         color: '#BF51F9',
-         // groups: [2]
-       },
-       {
-         name: 'some name',
-         start: new Date('Aug 10 2023 10:00:0'),
-         color: '#31B5F7',
-         end: new Date('Aug 10 2023 11:00:00'),
-         id: 18123,
-         // groups: [1]
-       },
-   ]
-   const options = {
+
+  ```js
+  const events = [
+    {
+      name: 'some name',
+      start: new Date('Aug 10 2023 08:00:0'),
+      end: new Date('Aug 10 2023 10:00:00'),
+      id: 16123,
+      color: '#BF51F9'
+      // groups: [2]
+    },
+    {
+      name: 'some name',
+      start: new Date('Aug 10 2023 10:00:0'),
+      color: '#31B5F7',
+      end: new Date('Aug 10 2023 11:00:00'),
+      id: 18123
+      // groups: [1]
+    }
+  ]
+  const options = {
     events: events,
     initialDate: new Date('Thu Aug 10 2023 15:00:0'),
-    plugins: [ DailyGridPlugin],
+    plugins: [DailyGridPlugin],
     // ...
-    groups : [{ id:1, name:'resource 1' },{ id:2, name:'resource 2' }],
+    groups: [
+      { id: 1, name: 'resource 1' },
+      { id: 2, name: 'resource 2' }
+    ]
     // ...
-   }
- ```
- ```ts
-   interface Group {
-      id:string[] | number[]
-      name:string
-   }
- ```
+  }
+  ```
+
+````
+```ts
+  interface Group {
+     id:string[] | number[]
+     name:string
+  }
+````
+
 ### `theme`
+
 - Type : String
 - Default : light
 
- sets the theme of calendar. can be either `light` or `dark`.
+sets the theme of calendar. can be either `light` or `dark`.
+
 <!-- ```js
   // ...
   theme: 'dark',
   // ..
 ``` -->
+
 ### `listMode`
+
 - Type : String
 - Default : day
 
- sets the `list` grids formatting. avalible
+sets the `list` grids formatting. avalible
 `day`, `week`, `month`
+
 <!-- ```js
 // ...
 listMode: `week`,
@@ -306,32 +320,36 @@ listMode: `week`,
 ``` -->
 
 ### `timeZone`
+
 - Type : String
 - Default : Intl.DateTimeFormat().resolvedOptions().timeZone
 
- The time zone to use. The only value implementations must recognize is "UTC"; the default is the runtime's default time zone. Implementations may also recognize the time zone names of the IANA time zone database, such as `Asia/Shanghai`, `Asia/Kolkata`, `America/New_York`
-    ```js
+The time zone to use. The only value implementations must recognize is "UTC"; the default is the runtime's default time zone. Implementations may also recognize the time zone names of the IANA time zone database, such as `Asia/Shanghai`, `Asia/Kolkata`, `America/New_York`
+`js
      // ...
     timeZone: 'Africa/Abidjan',
     // ..
-    ```
+    `
+
 ### `autoUpdateEventOnChange`
+
 - Type : boolean
 - Default : true
-If set to false, all event dragging, editing, and additions will not be updated on the grid and instead will have to be handled with event listeners.
+  If set to false, all event dragging, editing, and additions will not be updated on the grid and instead will have to be handled with event listeners.
+
 ```js
-  // ...
-  autoUpdateEventOnChange: false,
+// ...
+autoUpdateEventOnChange: false,
   // ..
-  EventCalendar.on('eventUpdate',({next,prev,id})=>{
+  EventCalendar.on('eventUpdate', ({ next, prev, id }) => {
     //sourceEvent is the base event without timezone convertion
-     EventCalendar.updateEvent(id,next.sourceEvent)
+    EventCalendar.updateEvent(id, next.sourceEvent)
   })
 
-  EventCalendar.on('eventAdd',({event})=>{
-   EventCalendar.addEvent(event.sourceEvent)
-  })
-````
+EventCalendar.on('eventAdd', ({ event }) => {
+  EventCalendar.addEvent(event.sourceEvent)
+})
+```
 
 ### `stopAddEvent`
 
