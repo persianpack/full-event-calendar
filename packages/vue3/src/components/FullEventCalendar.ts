@@ -48,7 +48,7 @@ export const FullEventCalendar = defineComponent({
     theme: String as unknown as PropType<CalendarSourceOptions['theme']>,
     avalibalSots: Array as unknown as PropType<CalendarSourceOptions['avalibalSots']>,
     stopAddEvent: Boolean as unknown as PropType<CalendarSourceOptions['stopAddEvent']>,
-    listMode: Object as unknown as PropType<CalendarSourceOptions['listMode']>,
+    listMode: String as unknown as PropType<CalendarSourceOptions['listMode']>,
     containerHeight: Object as unknown as PropType<CalendarSourceOptions['containerHeight']>
   },
   data(): DateComponent {

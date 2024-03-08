@@ -119,8 +119,7 @@ export interface CalendarState extends EventCalendarOptions {
   events: EventClass[]
 }
 
-export const createReducer =(ds:CalendarState)=>{
-
+export const createReducer = (ds: CalendarState) => {
   const calendarReducer: Reducer<CalendarState, StoreActions> = (state = ds, action) => {
     switch (action.type) {
       case 'CHANGE_CONTAINER_HEIGHT':
@@ -163,7 +162,7 @@ export const createReducer =(ds:CalendarState)=>{
         return { ...state, locale: action.locale }
       case 'SET_INITIAL_DATE':
         return { ...state, initialDate: action.date }
-  
+
       case 'SET_ALL_EVENTS':
         const data: EventImpl[] = []
         for (let i = 0; i < action.events.length; i++) {
@@ -171,9 +170,9 @@ export const createReducer =(ds:CalendarState)=>{
           ev.convertDateByTimeZone(state.timeZone)
           data.push(ev)
         }
-  
+
         return { ...state, events: data }
-  
+
       case 'UPDATE_EVENT':
         const events = [...state.events]
         const eventIndex = events.findIndex((item) => item.id === action.id)
@@ -185,19 +184,23 @@ export const createReducer =(ds:CalendarState)=>{
         // const eventss = new EventImpl(events[eventIndex].sourceEvent)
         // eventss.updateEventDetails(action.event)
         // events[eventIndex] = eventss
-  
+
         return { ...state, events: events }
-  
+
       case 'SET_TIMEZONE':
-        return { ...state, timeZone: action.tz }
-  
+        const events22 = [...state.events]
+        events22.forEach((ev) => {
+          ev.convertDateByTimeZone(action.tz)
+        })
+        return { ...state, timeZone: action.tz, events: events22 }
+
       case 'UPDATE_TIMEZONE':
         let calendar_events = [...state.events]
         for (let index = 0; index < calendar_events.length; index++) {
           calendar_events[index]?.convertDateByTimeZone(action.tz)
         }
         return { ...state, timeZone: action.tz, events: calendar_events }
-  
+
       default:
         return state
     }
