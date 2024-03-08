@@ -93,8 +93,8 @@ export function useSlotModal(modalType: string, clearDataCb?: any) {
   //@ts-ignore
   function ClickOutSide(el: any, accessor: any) {
     const onClick = (e: MouseEvent) => {
-      e.preventDefault()
-      e.stopPropagation()
+      // e.preventDefault()
+      // e.stopPropagation()
       let someID = targetElRef()?.classList.contains('fec-event')
         ? targetElRef()?.id
         : targetElRef()?.querySelector('.fec-event')?.id
