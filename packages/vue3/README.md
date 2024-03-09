@@ -40,12 +40,12 @@ Check out Live demo at [**_amirkian007.github.io/vasmenu_**](https://amirkian007
 
 ## Installation
 
-::: code-group
-```bash [npm]
-npm i @full-event-calendar/core @full-event-calendar/daily-grid
+ 
+```bash
+npm i @full-event-calendar/vue @full-event-calendar/daily-grid
 ```
-
-```bash [pnpm]
+or
+```bash
 pnpm i @full-event-calendar/core @full-event-calendar/daily-grid
 ```
 :::
@@ -149,7 +149,7 @@ The `Calendar` class represents a calendar component that can be rendered in a s
   - `@full-event-calendar/daily-grid` - daily view
   - `@full-event-calendar/weekly-grid` - weekly view
   - `@full-event-calendar/month-grid` - month view
-  - `Cale@full-event-calendar/list` - list view
+  - `@full-event-calendar/list` - list view
 
   ```html
   <script setup>
@@ -176,6 +176,12 @@ The `Calendar` class represents a calendar component that can be rendered in a s
 
    The type of calendar to be used . the Calendar formatting is done with javascript [**_Intl_**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale/getCalendars#supported_calendar_types) avalible calendars : 
    `buddhist`,`chinese`,`coptic`,`dangi`,`ethioaa`,`ethiopic`,`gregory`,`hebrew`,`indian`,`islamic`,`islamic-umalqura`,`islamic-umalqura`,`islamic-tbla`,`islamic-civil`,`islamic-rgsa`,`iso8601`,`iso8601`,`japanese`,`persian`,`roc`,`islamicc`
+  
+   ```js
+   //get lists of suppourted timezones
+    console.log(Intl.supportedValuesOf('timeZone'));
+   ```
+
    ```html
     <FullEventCalendar 
       // ...
@@ -308,13 +314,15 @@ The `Calendar` class represents a calendar component that can be rendered in a s
     The time zone to use. The only value implementations must recognize is "UTC"; the default is the runtime's default time zone. Implementations may also recognize the time zone names of the IANA time zone database, such as `Asia/Shanghai`, `Asia/Kolkata`, `America/New_York`.
     or just run this code to see the avalible timeZones :
     ```js
-    console.log(Intl.supportedValuesOf('calendar'));
+    //get lists of suppourted timezones
+    console.log(Intl.supportedValuesOf('timeZone'));
     ```
-       <!-- ```js
-        // ...
-       timeZone: 'Africa/Abidjan',
-       // ..
-       ``` -->
+
+    ```js
+     // ...
+    timeZone="Africa/Abidjan",
+    // ..
+    ``` 
 ### `autoUpdateEventOnChange`
   - Type : boolean
   - Default : true
@@ -346,14 +354,36 @@ The `Calendar` class represents a calendar component that can be rendered in a s
   - Type : boolean
   - Default : false
   If stopAddEvent is set to true, adding an event will be frozen on the grid to display a modal or perform another action,a modal should be provided with [**_Slots_**](#slots)"
-  ```js
-     // ...
-     stopAddEvent: true,
-     // ..
-     EventCalendar.on('addEventStoped',({event})=>{
-       EventCalendar.addEvent(event)
-     })
+ 
+   ```html
+
+  <script setup>
+
+    const eventsList = ref([])
+
+    function AddEvent(calendarEvent) {
+      //sourceEvent is the base event data without any timeZone conversion
+      // calendarEvent.start and calendarEvent.end is with timeZone conversion
+      eventsList.value.push(calendarEvent.sourceEvent)
+    }
+
+  </script>
+
+  <template>
+
+   <FullEventCalendar
+    stop-add-event
+    :auto-update-event-on-change="false"
+    :editable="true"
+    v-model:events="eventsList"
+    :plugins="[DailyGridPlugin]"
+   >
+  
+    </FullEventCalendar>
+
+    </template>
   ```
+
   ```html
 
   <script setup>
@@ -405,16 +435,17 @@ interface SourceEvent {
 
 ## Events
 
-| Event Name                         | Description                                                            |
-|------------------------------------|:-----------------------------------------------------------------------|
-| `@eventClicked({event})`           | fired when a event is clicked on a grid                                |
-| `@eventUpdate({ prev, next, id })` | fired when menu collapse state changes - should be used with "v-model" |
-| `@eventAdd({event})`               | fired when mini menu state changes - should be used with "v-model"     |
-| `@dateUpdate({date})`              | fired when mini menu state changes - should be used with "v-model"     |
-| `@gridUpdate({grid})`              | fired when mini menu state changes - should be used with "v-model"     |
-| `@update:events(Array[])`          | fired when mini menu state changes - should be used with "v-model"     |
-| `@update:initial-date(date)`       | fired when mini menu state changes - should be used with "v-model"     |
-| `@update:grid(string)`             | fired when mini menu state changes - should be used with "v-model"     |
+| Event Name                         | Description                                                                                         |
+|------------------------------------|:----------------------------------------------------------------------------------------------------|
+| `@eventClicked({event})`           | fired when a event is clicked on a grid                                                             |
+| `@eventUpdate({ prev, next, id })` | fired when a event is Updated on a grid with drag n drop                                            |
+| `@eventAdd({event})`               | fired when a event is Added on a grid with drag n drop                                              |
+| `@addEventStoped({event})`         | fired when a event is Added on a grid with drag n drop and the stopAddEvent option is set top true  |
+| `@dateUpdate({date})`              | fired when the initial date updates                                                                 |
+| `@gridUpdate({grid})`              | fired when the grid type updates                                                                    |
+| `@update:events(Array[])`          | fired when event list Updates - should be used with "v-model"                                       |
+| `@update:initial-date(date)`       | fired when initial-date changes - should be used with "v-model"                                     |
+| `@update:grid(string)`             | fired when grid type changes - should be used with "v-model"                                        |
 
 ## Slots
 

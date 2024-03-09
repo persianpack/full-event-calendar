@@ -89,7 +89,7 @@ function App() {
   const [initialDate, setInitialDate] = useState(new Date('Thu Aug 10 2023 15:00:0'))
   const [events, setEvents] = useState(eventsList)
 
-  function eventUpdate({prev,next,id}) {
+  function onEventUpdate({prev,next,id}) {
     console.log('updated event : ' ,prev)
     console.log('to event : ' ,next)
     console.log('with id : ' ,id)
@@ -99,9 +99,9 @@ function App() {
   return (
       <FullEventCalendar
          plugins={[DailyGridPlugin]}
-         events={eventsR} 
-         initialDate={count}
-         eventUpdate={onEveUpdate}
+         events={events} 
+         initialDate={initialDate}
+         eventUpdate={onEventUpdate}
 
          {/* eventClick={<EventClickSlot someProp={asaveEv}/>}
          addModal={<EventaddModalSlot someProp={asaveEv}/>}
@@ -120,18 +120,6 @@ function App() {
 ```
 
 ## Api
-
-<!-- # Api
-
-## Calendar Class
-
-The `Calendar` class represents a calendar component that can be rendered in a specified HTML element.
-  ### Parameters
-  #### targetElement
-  - `targetElement`: HTMLElement - The HTML element where the calendar will be rendered.
-
-#### options
-  - `options`: CalendarSourceOptions - Options for configuring the calendar. -->
 
 ## options
 
@@ -158,28 +146,24 @@ The `Calendar` class represents a calendar component that can be rendered in a s
   - `@full-event-calendar/daily-grid` - daily view
   - `@full-event-calendar/weekly-grid` - weekly view
   - `@full-event-calendar/month-grid` - month view
-  - `Cale@full-event-calendar/list` - list view
+  - `@full-event-calendar/list` - list view
 
   ```jsx
- 
-
   import { DailyGridPlugin } from '@full-event-calendar/daily-grid'
   import { WeeklyGridPlugin } from '@full-event-calendar/weekly-grid'
   import { MonthGridPlugin } from '@full-event-calendar/month-grid'
   import { ListPlugin } from '@full-event-calendar/list'
  
-function App() {
+  function App() {
 
-  return(
-    <FullEventCalendar 
-      // ...
-      plugins={[DailyGridPlugin, WeeklyGridPlugin, MonthGridPlugin, ListPlugin]}
-      // ..
-    />
-    )
-}
-
- 
+    return(
+      <FullEventCalendar 
+        // ...
+        plugins={[DailyGridPlugin, WeeklyGridPlugin, MonthGridPlugin, ListPlugin]}
+        // ..
+       />
+      )
+   }
   ```
    <!-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale/getCalendars#supported_calendar_types -->
   <!-- [**_Groups_**](#css-class) -->
@@ -190,6 +174,12 @@ function App() {
 
    The type of calendar to be used . the Calendar formatting is done with javascript [**_Intl_**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale/getCalendars#supported_calendar_types) avalible calendars : 
    `buddhist`,`chinese`,`coptic`,`dangi`,`ethioaa`,`ethiopic`,`gregory`,`hebrew`,`indian`,`islamic`,`islamic-umalqura`,`islamic-umalqura`,`islamic-tbla`,`islamic-civil`,`islamic-rgsa`,`iso8601`,`iso8601`,`japanese`,`persian`,`roc`,`islamicc`
+  
+   ```js
+   //get lists of suppourted timezones
+    console.log(Intl.supportedValuesOf('timeZone'));
+   ```
+  
    ```jsx
     <FullEventCalendar 
       // ...
@@ -442,7 +432,8 @@ function App() {
       )
     }
 ```
-    or with modal :
+
+or with modal :
 ```jsx
  function EventaddModalSlot(props){
   
@@ -498,14 +489,15 @@ interface SourceEvent {
 
 | Event Name                         | Description                                                            |
 |------------------------------------|:-----------------------------------------------------------------------|
-| `eventClicked({event})`           | fired when a event is clicked on a grid                                |
-| `eventUpdate({ prev, next, id })` | fired when menu collapse state changes - should be used with "v-model" |
-| `eventAdd({event})`               | fired when mini menu state changes - should be used with "v-model"     |
-| `dateUpdate({date})`              | fired when mini menu state changes - should be used with "v-model"     |
-| `gridUpdate({grid})`              | fired when mini menu state changes - should be used with "v-model"     |
-| `update:events(Array[])`          | fired when mini menu state changes - should be used with "v-model"     |
-| `update:initial-date(date)`       | fired when mini menu state changes - should be used with "v-model"     |
-| `update:grid(string)`             | fired when mini menu state changes - should be used with "v-model"     |
+| `eventClicked({event})`            | fired when a event is clicked on a grid                                |
+| `eventUpdate({ prev, next, id })`  | fired when menu collapse state changes - should be used with "v-model" |
+| `eventAdd({event})`                | fired when mini menu state changes - should be used with "v-model"     |
+| `addEventStoped({event})`          | fired when mini menu state changes - should be used with "v-model"     |
+| `dateUpdate({date})`               | fired when mini menu state changes - should be used with "v-model"     |
+| `gridUpdate({grid})`               | fired when mini menu state changes - should be used with "v-model"     |
+| `update:events(Array[])`           | fired when mini menu state changes - should be used with "v-model"     |
+| `update:initial-date(date)`        | fired when mini menu state changes - should be used with "v-model"     |
+| `update:grid(string)`              | fired when mini menu state changes - should be used with "v-model"     |
 
 ## Slots
 

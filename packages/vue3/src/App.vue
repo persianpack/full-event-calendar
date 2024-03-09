@@ -309,77 +309,6 @@ const timeZonez = Intl.supportedValuesOf('timeZone')
 //@ts-ignore
 const calendars = Intl.supportedValuesOf('calendar')
 
-const langs = [
-  'af',
-  'am',
-  'ar',
-  'az',
-  'bg',
-  'bn',
-  'bs',
-  'ca',
-  'cs',
-  'da',
-  'de',
-  'el',
-  'en',
-  'es',
-  'et',
-  'eu',
-  'fa',
-  'fi',
-  'fr',
-  'ga',
-  'gl',
-  'he',
-  'hi',
-  'hr',
-  'hu',
-  'hy',
-  'id',
-  'is',
-  'it',
-  'ja',
-  'kk',
-  'km',
-  'kn',
-  'ko',
-  'ky',
-  'lt',
-  'lv',
-  'mn',
-  'ms',
-  'mt',
-  'my',
-  'nb',
-  'ne',
-  'nl',
-  'nn',
-  'pl',
-  'pt',
-  'ro',
-  'ru',
-  'si',
-  'sk',
-  'sl',
-  'sq',
-  'sr',
-  'sv',
-  'sw',
-  'ta',
-  'te',
-  'th',
-  'tl',
-  'tlh',
-  'tr',
-  'uk',
-  'uz',
-  'uz_latn',
-  'vi',
-  'yi',
-  'zh'
-]
-
 const localesss = [
   'af-ZA',
   'am-ET',
@@ -612,38 +541,40 @@ watch(selectedTz, () => {
 </script>
 
 <template>
-  <div style="margin: 30px 10px">
-    <label for="cars">Choose a timezone :</label>
-    <select name="cars" id="cars" v-model="selectedTz">
-      <option v-for="tz in timeZonez" :value="tz">{{ tz }}</option>
-    </select>
-  </div>
+  <div style="display: flex">
+    <div style="margin: 30px 10px">
+      <label for="cars">Choose a timezone :</label>
+      <select name="cars" id="cars" v-model="selectedTz">
+        <option v-for="tz in timeZonez" :value="tz">{{ tz }}</option>
+      </select>
+    </div>
 
-  <div style="margin: 30px 10px">
-    <label for="selectedCalendar">Choose a Calendar :</label>
-    <select name="selectedCalendar" id="selectedCalendar" v-model="selectedCalendar">
-      <option v-for="ca in calendars" :value="ca">{{ ca }}</option>
-    </select>
-  </div>
+    <div style="margin: 30px 10px">
+      <label for="selectedCalendar">Choose a Calendar :</label>
+      <select name="selectedCalendar" id="selectedCalendar" v-model="selectedCalendar">
+        <option v-for="ca in calendars" :value="ca">{{ ca }}</option>
+      </select>
+    </div>
 
-  <div style="margin: 30px 10px">
-    <label for="selectedLocale">Choose a Locale :</label>
-    <select name="selectedLocale" id="selectedLocale" v-model="selectedLocale">
-      <option v-for="lang in localesss" :value="lang">{{ lang }}</option>
-    </select>
-  </div>
+    <div style="margin: 30px 10px">
+      <label for="selectedLocale">Choose a Locale :</label>
+      <select name="selectedLocale" id="selectedLocale" v-model="selectedLocale">
+        <option v-for="lang in localesss" :value="lang">{{ lang }}</option>
+      </select>
+    </div>
 
-  <div style="margin: 30px 10px">
-    <label for="selectedTheme">Choose a Theme :</label>
-    <select name="selectedTheme" id="selectedTheme" v-model="selectedTheme">
-      <option v-for="theme in themes" :value="theme">{{ theme }}</option>
-    </select>
-  </div>
-  <div style="margin: 30px 10px">
-    <label for="selectedlistModes">Choose a listMode :</label>
-    <select name="selectedlistModes" id="selectedlistModes" v-model="selectedListMode">
-      <option v-for="listMode in listModes" :value="listMode">{{ listMode }}</option>
-    </select>
+    <div style="margin: 30px 10px">
+      <label for="selectedTheme">Choose a Theme :</label>
+      <select name="selectedTheme" id="selectedTheme" v-model="selectedTheme">
+        <option v-for="theme in themes" :value="theme">{{ theme }}</option>
+      </select>
+    </div>
+    <div style="margin: 30px 10px">
+      <label for="selectedlistModes">Choose a listMode :</label>
+      <select name="selectedlistModes" id="selectedlistModes" v-model="selectedListMode">
+        <option v-for="listMode in listModes" :value="listMode">{{ listMode }}</option>
+      </select>
+    </div>
   </div>
 
   <FullEventCalendar
@@ -682,6 +613,7 @@ watch(selectedTz, () => {
     </template>
     <template #eventClick="{ data }">
       <div class="eventClickModal">
+        this can be a vue.js/React.js slot
         <h2>{{ data.eventData?.name }}</h2>
         <span style="display: block"
           ><b>{{ data.eventData?.start?.toString() }}</b></span

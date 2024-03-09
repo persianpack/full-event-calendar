@@ -201,9 +201,11 @@ The `Calendar` class represents a calendar component that can be rendered in a s
    The type of calendar to be used . the Calendar formatting is done with javascript [**_Intl_**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale/getCalendars#supported_calendar_types) avalible calendars : 
    `buddhist`,`chinese`,`coptic`,`dangi`,`ethioaa`,`ethiopic`,`gregory`,`hebrew`,`indian`,`islamic`,`islamic-umalqura`,`islamic-umalqura`,`islamic-tbla`,`islamic-civil`,`islamic-rgsa`,`iso8601`,`iso8601`,`japanese`,`persian`,`roc`,`islamicc`
      or just run this code to see the avalible timeZones :
-    ```js
+
+   ```js
     console.log(Intl.supportedValuesOf('calendar'));
-    ```
+   ```
+
    ```js
      // ...
      calendar: `persian`,
@@ -274,7 +276,7 @@ The `Calendar` class represents a calendar component that can be rendered in a s
             end: new Date('Aug 10 2023 10:00:00'),
             id: 16123,
             color: '#BF51F9',
-            // groups: [2]
+            groups: [2]
           },
           {
             name: 'some name',
@@ -282,7 +284,7 @@ The `Calendar` class represents a calendar component that can be rendered in a s
             color: '#31B5F7',
             end: new Date('Aug 10 2023 11:00:00'),
             id: 18123,
-            // groups: [1]
+            groups: [1]
           },
       ]
       const options = {
@@ -327,6 +329,12 @@ The `Calendar` class represents a calendar component that can be rendered in a s
   - Default : Intl.DateTimeFormat().resolvedOptions().timeZone
 
     The time zone to use. The only value implementations must recognize is "UTC"; the default is the runtime's default time zone. Implementations may also recognize the time zone names of the IANA time zone database, such as `Asia/Shanghai`, `Asia/Kolkata`, `America/New_York`
+
+       ```js
+       //get lists of suppourted timezones
+        console.log(Intl.supportedValuesOf('timeZone'));
+       ```
+
        ```js
         // ...
        timeZone: 'Africa/Abidjan',
