@@ -23,7 +23,7 @@
     "prepare": "husky install .husky",
     "build-css": "vite build",
     "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
+    "docs:build": "vitepress build docs && cd ./packages/vue3 && pnpm run build-demo && cd ../.. && node ./scripts/build-demo.js",
     "docs:preview": "vitepress preview docs"
   },
   "author": "Amirkian adl",
@@ -43,6 +43,9 @@
     "vitest": "^0.34.6"
   },
   "dependencies": {
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@vitejs/plugin-vue": "^4.5.0",
+    "fs-extra": "^11.2.0",
     "jsdom": "^22.1.0",
     "picocolors": "^1.0.0",
     "tsup": "^7.3.0",
