@@ -1,6 +1,6 @@
 # Full Event Calendar
  
-<img src="https://github.com/persianpack/full-event-calendar/blob/main/docs/public/image0.png" alt="full-event-calendar-v" width="400px"><img src="https://github.com/persianpack/full-event-calendar/blob/main/docs/public/video1.gif" alt="full-event-calendar" width="400px">
+<img src="https://github.com/persianpack/full-event-calendar/blob/main/docs/public/image0.png" alt="full-event-calendar-v" width="400px"><img src="https://github.com/persianpack/full-event-calendar/blob/main/docs/public/video1.gif" alt="full-event-calendar" width="400px" style="border-radius: 14px;margin-left: 10px;">
 
 ## About
 Full Event Calendar is a simple, lightweight, and fast event calendar that renders in any framework or library. It supports 18 calendars and 100 locales, powered by [Solid.js](https://solidjs.com/) and [Intl](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
