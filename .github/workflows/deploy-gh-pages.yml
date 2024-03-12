@@ -4,9 +4,9 @@ on:
   push:
     branches: ["main"]
     paths:
-      - "./docs/**"
-      - "./pnpm-lock.yaml"
-      - "./.github/workflows/deploy-gh-pages.yml"
+      - "docs/**"
+      - "pnpm-lock.yaml"
+      - ".github/workflows/deploy-gh-pages.yml"
 
   release:
     types:
