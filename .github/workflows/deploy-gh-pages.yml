@@ -8,6 +8,10 @@ on:
       - "./pnpm-lock.yaml"
       - "./.github/workflows/deploy-gh-pages.yml"
 
+  release:
+    types:
+      - published
+
   workflow_dispatch:
 
 permissions:
