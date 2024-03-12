@@ -1,4 +1,5 @@
 <script setup lang="ts">
+//@ts-nocheck
 // import HelloWorld from './components/HelloWorld.vue'
 import { ref, watch } from 'vue'
 import { FullEventCalendar } from './components/FullEventCalendar'

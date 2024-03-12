@@ -1,16 +1,19 @@
 ## Installation
 
-```
+::: code-group
+
+```bash [npm]
 npm i @full-event-calendar/react @full-event-calendar/daily-grid
 ```
 
-or
-
-```
-yarn add @full-event-calendar/react @full-event-calendar/daily-grid
+```bash [pnpm]
+pnpm i @full-event-calendar/react @full-event-calendar/daily-grid
 ```
 
+:::
+::: warning
 NOTE : <ins> atleast 1 plugin must be provided </ins> available grid plugins:
+:::
 
 - `@full-event-calendar/daily-grid` - daily view
 - `@full-event-calendar/weekly-grid` - weekly view
@@ -324,7 +327,7 @@ The time zone to use. The only value implementations must recognize is "UTC"; th
 or just run this code to see the avalible timeZones :
 
 ```js
-console.log(Intl.supportedValuesOf('calendar'))
+console.log(Intl.supportedValuesOf('timeZone'))
 ```
 
 ```js
@@ -477,16 +480,17 @@ interface SourceEvent {
 
 ## Events
 
-| Event Name                        | Description                                                            |
-| --------------------------------- | :--------------------------------------------------------------------- |
-| `eventClicked({event})`           | fired when a event is clicked on a grid                                |
-| `eventUpdate({ prev, next, id })` | fired when menu collapse state changes - should be used with "v-model" |
-| `eventAdd({event})`               | fired when mini menu state changes - should be used with "v-model"     |
-| `dateUpdate({date})`              | fired when mini menu state changes - should be used with "v-model"     |
-| `gridUpdate({grid})`              | fired when mini menu state changes - should be used with "v-model"     |
-| `update:events(Array[])`          | fired when mini menu state changes - should be used with "v-model"     |
-| `update:initial-date(date)`       | fired when mini menu state changes - should be used with "v-model"     |
-| `update:grid(string)`             | fired when mini menu state changes - should be used with "v-model"     |
+| Event Name                        | Description                                                                                        |
+| --------------------------------- | :------------------------------------------------------------------------------------------------- |
+| `eventClicked({event})`           | fired when a event is clicked on a grid                                                            |
+| `eventUpdate({ prev, next, id })` | fired when a event is Updated on a grid with drag n drop                                           |
+| `eventAdd({event})`               | fired when a event is Added on a grid with drag n drop                                             |
+| `addEventStoped({event})`         | fired when a event is Added on a grid with drag n drop and the stopAddEvent option is set top true |
+| `dateUpdate({date})`              | fired when the initial date updates                                                                |
+| `gridUpdate({grid})`              | fired when the grid type updates                                                                   |
+| `update:events(Array[])`          | fired when event list Updates                                                                      |
+| `update:initial-date(date)`       | fired when initial-date changes                                                                    |
+| `update:grid(string)`             | fired when grid type changes                                                                       |
 
 ## Slots
 

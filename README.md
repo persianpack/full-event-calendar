@@ -8,7 +8,7 @@ Full Event Calendar is a simple, lightweight, and fast event calendar that rende
 
 Inspired by [FullCalendar](https://fullcalendar.io/) and [ClickUp](https://clickup.com/).
 ## Demo
-Check out Live demo at [**_amirkian007.github.io/fulleventcalendar_**](https://amirkian007.github.io/) and full Docs at [**_amirkian007.github.io/fulleventcalendar__**](https://amirkian007.github.io/fulleventcalendar/)
+Check out Live demo at [**_amirkian007.github.io/fulleventcalendar_**](https://amirkian007.github.io/fulleventcalendar) and full Docs at [**_amirkian007.github.io/fulleventcalendar__**](https://amirkian007.github.io/fulleventcalendar/)
 <!-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale/getCalendars#supported_calendar_types -->
 Connectors:
 
@@ -567,7 +567,17 @@ interface SourceEvent {
 
 ```
 ### Events
-
+| Event Name                         | Description                                                                                         |
+|------------------------------------|:----------------------------------------------------------------------------------------------------|
+| `eventClicked({event})`            | fired when a event is clicked on a grid                                                             |
+| `eventUpdate({ prev, next, id })`  | fired when a event is Updated on a grid with drag n drop                                            |
+| `eventAdd({event})`                | fired when a event is Added on a grid with drag n drop                                              |
+| `addEventStoped({event})`          | fired when a event is Added on a grid with drag n drop and the stopAddEvent option is set top true  |
+| `dateUpdate({date})`               | fired when the initial date updates                                                                 |
+| `gridUpdate({grid})`               | fired when the grid type updates                                                                    |
+| `update:events(Array[])`           | fired when event list Updates                                                                       |
+| `update:initial-date(date)`        | fired when initial-date changes                                                                     |
+| `update:grid(string)`              | fired when grid type changes                                                                        |
 ```ts
 export type EventTypes = 'eventClicked' | 'eventUpdate' | 'eventAdd' | 'dateUpdate' | 'gridUpdate' | 'addEventStoped'
 

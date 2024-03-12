@@ -1,17 +1,18 @@
 ## Installation
 
-```
+::: code-group
+
+```bash [npm]
 npm i @full-event-calendar/core @full-event-calendar/daily-grid
 ```
 
-or
-
-```
+```bash [pnpm]
 pnpm i @full-event-calendar/core @full-event-calendar/daily-grid
 ```
 
-NOTE : <ins> atleast 1 plugin must be provided </ins>
-available grid plugins:
+::: warning
+NOTE : <ins> atleast 1 plugin must be provided </ins> available grid plugins:
+:::
 
 - `@full-event-calendar/daily-grid` - daily view
 - `@full-event-calendar/weekly-grid` - weekly view
@@ -19,14 +20,6 @@ available grid plugins:
 - `@full-event-calendar/list` - list view
 
 ## Basic Usage
-
-A simple vanill example would be like this :
-
-Check out [\***\*Options\*\***](#props) for properites
-
-[\***\*Vue usage\*\***](#https://github.com/persianpack/full-event-calendar/tree/main/packages/vue3#basic-usage)
-
-[\***\*React usage\*\***](#https://github.com/persianpack/full-event-calendar/tree/main/packages/react#basic-usage)
 
 Vanilla JS:
 
@@ -113,12 +106,6 @@ The `Calendar` class represents a calendar component that can be rendered in a s
 #### targetElement
 
 - `targetElement`: HTMLElement - The HTML element where the calendar will be rendered.
-
-#### options
-
-### `calendar`
-
-- `options`: CalendarSourceOptions - Options for configuring the calendar.
 
 ## options
 
@@ -616,6 +603,18 @@ interface SourceEvent {
 ```
 
 ### Events
+
+| Event Name                        | Description                                                                                        |
+| --------------------------------- | :------------------------------------------------------------------------------------------------- |
+| `eventClicked({event})`           | fired when a event is clicked on a grid                                                            |
+| `eventUpdate({ prev, next, id })` | fired when a event is Updated on a grid with drag n drop                                           |
+| `eventAdd({event})`               | fired when a event is Added on a grid with drag n drop                                             |
+| `addEventStoped({event})`         | fired when a event is Added on a grid with drag n drop and the stopAddEvent option is set top true |
+| `dateUpdate({date})`              | fired when the initial date updates                                                                |
+| `gridUpdate({grid})`              | fired when the grid type updates                                                                   |
+| `update:events(Array[])`          | fired when event list Updates                                                                      |
+| `update:initial-date(date)`       | fired when initial-date changes                                                                    |
+| `update:grid(string)`             | fired when grid type changes                                                                       |
 
 ```ts
 export type EventTypes = 'eventClicked' | 'eventUpdate' | 'eventAdd' | 'dateUpdate' | 'gridUpdate' | 'addEventStoped'

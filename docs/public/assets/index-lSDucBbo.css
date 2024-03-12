@@ -1084,6 +1084,29 @@
   position: fixed;
   z-index: 999;
 }
-body * {
-  font-family: League Spartan !important;
+.addModal,
+.eventClickModal {
+  width: 300px;
+  height: 200px;
+  box-shadow: #64646f33 0 7px 29px;
+  border-radius: 20px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 10px;
+}
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 0.3s;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.vue:hover {
+  filter: drop-shadow(0 0 2em #42b883aa);
+}
+.full-event-calendar-core {
+  border-radius: 20px;
 }

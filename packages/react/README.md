@@ -1,13 +1,13 @@
 # Full Event Calendar
 
-<img src="https://github.com/persianpack/full-event-calendar/blob/main/docs/public/video1.gif" alt="full-event-calendar">
+<img src="https://github.com/persianpack/full-event-calendar/blob/main/docs/public/image0.png" alt="full-event-calendar-v" width="400px"><img src="https://github.com/persianpack/full-event-calendar/blob/main/docs/public/video1.gif" alt="full-event-calendar" width="400px">
 
 ## About
 Full Event Calendar is a simple, lightweight, and fast event calendar that renders in any framework or library. It supports 18 calendars and 100 locales, powered by [Solid.js](https://solidjs.com/) and [Intl](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
 
 Inspired by [FullCalendar](https://fullcalendar.io/) and [ClickUp](https://clickup.com/).
 ## Demo
-Check out Live demo at [**_amirkian007.github.io/vasmenu_**](https://amirkian007.github.io/vasmenu/) and full Docs at [**_amirkian007.github.io/vasmenu_**](https://amirkian007.github.io/vasmenu/)
+Check out Live demo at [**_amirkian007.github.io/fulleventcalendar_**](https://amirkian007.github.io/fulleventcalendar/) and full Docs at [**_amirkian007.github.io/fulleventcalendar_**](https://amirkian007.github.io/fulleventcalendar/)
 <!-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale/getCalendars#supported_calendar_types -->
 
 ## Features
@@ -158,9 +158,9 @@ function App() {
 
     return(
       <FullEventCalendar 
-        // ...
+         ...
         plugins={[DailyGridPlugin, WeeklyGridPlugin, MonthGridPlugin, ListPlugin]}
-        // ..
+          ...
        />
       )
    }
@@ -174,11 +174,6 @@ function App() {
 
    The type of calendar to be used . the Calendar formatting is done with javascript [**_Intl_**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale/getCalendars#supported_calendar_types) avalible calendars : 
    `buddhist`,`chinese`,`coptic`,`dangi`,`ethioaa`,`ethiopic`,`gregory`,`hebrew`,`indian`,`islamic`,`islamic-umalqura`,`islamic-umalqura`,`islamic-tbla`,`islamic-civil`,`islamic-rgsa`,`iso8601`,`iso8601`,`japanese`,`persian`,`roc`,`islamicc`
-  
-   ```js
-   //get lists of suppourted timezones
-    console.log(Intl.supportedValuesOf('timeZone'));
-   ```
   
    ```jsx
     <FullEventCalendar 
@@ -205,11 +200,7 @@ function App() {
 
     which grid plugin to show. options are : 
     `daily`,`weekly`,`month`,`list`
-   <!-- ```js
-     // ...
-     grid: `weekly`,
-     // ..
-   ``` -->
+ 
 ### `gridHeight`
   - Type : Number
   - Default : 1920
@@ -336,7 +327,7 @@ function App() {
     The time zone to use. The only value implementations must recognize is "UTC"; the default is the runtime's default time zone. Implementations may also recognize the time zone names of the IANA time zone database, such as `Asia/Shanghai`, `Asia/Kolkata`, `America/New_York`.
     or just run this code to see the avalible timeZones :
     ```js
-    console.log(Intl.supportedValuesOf('calendar'));
+    console.log(Intl.supportedValuesOf('timeZone'));
     ```
        <!-- ```js
         // ...
@@ -434,6 +425,7 @@ function App() {
 ```
 
 or with modal :
+
 ```jsx
  function EventaddModalSlot(props){
   
@@ -484,20 +476,20 @@ interface SourceEvent {
 }
 
 ```
-
+ 
 ## Events
 
-| Event Name                         | Description                                                            |
-|------------------------------------|:-----------------------------------------------------------------------|
-| `eventClicked({event})`            | fired when a event is clicked on a grid                                |
-| `eventUpdate({ prev, next, id })`  | fired when menu collapse state changes - should be used with "v-model" |
-| `eventAdd({event})`                | fired when mini menu state changes - should be used with "v-model"     |
-| `addEventStoped({event})`          | fired when mini menu state changes - should be used with "v-model"     |
-| `dateUpdate({date})`               | fired when mini menu state changes - should be used with "v-model"     |
-| `gridUpdate({grid})`               | fired when mini menu state changes - should be used with "v-model"     |
-| `update:events(Array[])`           | fired when mini menu state changes - should be used with "v-model"     |
-| `update:initial-date(date)`        | fired when mini menu state changes - should be used with "v-model"     |
-| `update:grid(string)`              | fired when mini menu state changes - should be used with "v-model"     |
+| Event Name                         | Description                                                                                         |
+|------------------------------------|:----------------------------------------------------------------------------------------------------|
+| `eventClicked({event})`            | fired when a event is clicked on a grid                                                             |
+| `eventUpdate({ prev, next, id })`  | fired when a event is Updated on a grid with drag n drop                                            |
+| `eventAdd({event})`                | fired when a event is Added on a grid with drag n drop                                              |
+| `addEventStoped({event})`          | fired when a event is Added on a grid with drag n drop and the stopAddEvent option is set top true  |
+| `dateUpdate({date})`               | fired when the initial date updates                                                                 |
+| `gridUpdate({grid})`               | fired when the grid type updates                                                                    |
+| `update:events(Array[])`           | fired when event list Updates                                                                       |
+| `update:initial-date(date)`        | fired when initial-date changes                                                                     |
+| `update:grid(string)`              | fired when grid type changes                                                                        |
 
 ## Slots
 

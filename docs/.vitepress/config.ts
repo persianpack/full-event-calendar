@@ -8,7 +8,7 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' }
+      { text: 'Examples', link: '/ex.html', target: '_self' }
     ],
 
     sidebar: [
@@ -16,8 +16,7 @@ export default defineConfig({
         text: 'Introduction',
         items: [
           { text: 'About Full-Event-Calendar', link: '/introduction/about' },
-          { text: 'Getting Started', link: '/introduction/getting-started.md' },
-          { text: 'hi', link: '/introduction/hi' }
+          { text: 'Getting Started', link: '/introduction/getting-started.md' }
         ]
       },
       {
