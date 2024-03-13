@@ -58,7 +58,41 @@
       "dependsOn": ["@full-event-calendar/shared-ts#dev", "@full-event-calendar/utils#dev"]
     },
     "@full-event-calendar/month-grid#dev": {
-      "dependsOn": [ "@full-event-calendar/utils#dev"]
+      "dependsOn": ["@full-event-calendar/utils#dev"]
+    },
+
+    "vue3#build": {
+      "dependsOn": [
+        "@full-event-calendar/basic-grid#build",
+        "@full-event-calendar/daily-grid#build",
+        "@full-event-calendar/group-grid#build",
+        "@full-event-calendar/list#build",
+        "@full-event-calendar/month-grid#build",
+        "@full-event-calendar/shared-ts#build",
+        "@full-event-calendar/utils#build",
+        "@full-event-calendar/weekly-grid#build"
+      ]
+    },
+    "@full-event-calendar/weekly-grid#build": {
+      "dependsOn": ["@full-event-calendar/daily-grid#build", "@full-event-calendar/month-grid#build"]
+    },
+    "@full-event-calendar/daily-grid#build": {
+      "dependsOn": ["@full-event-calendar/basic-grid#build", "@full-event-calendar/group-grid#build"]
+    },
+    "@full-event-calendar/basic-grid#build": {
+      "dependsOn": ["@full-event-calendar/shared-ts#build", "@full-event-calendar/utils#build"]
+    },
+    "@full-event-calendar/list#build": {
+      "dependsOn": ["@full-event-calendar/shared-ts#build", "@full-event-calendar/utils#build"]
+    },
+    "@full-event-calendar/group-grid#build": {
+      "dependsOn": ["@full-event-calendar/shared-ts#build", "@full-event-calendar/utils#build"]
+    },
+    "@full-event-calendar/month-grid#build": {
+      "dependsOn": ["@full-event-calendar/utils#build"]
+    },
+    "@full-event-calendar/locale#build": {
+      "dependsOn": ["@full-event-calendar/utils#build"]
     },
     "@full-event-calendar/core#build": {
       "dependsOn": [
@@ -69,7 +103,8 @@
         "@full-event-calendar/month-grid#build",
         "@full-event-calendar/shared-ts#build",
         "@full-event-calendar/utils#build",
-        "@full-event-calendar/weekly-grid#build"
+        "@full-event-calendar/weekly-grid#build",
+        "@full-event-calendar/locale#build"
       ]
     },
     "@full-event-calendar/core#dev": {
