@@ -30,8 +30,8 @@
     "url": "https://github.com/persianpack/full-event-calendar/issues"
   },
   "scripts": {
-    "build": "tsup src/index.ts --dts",
-    "build:fast": "tsup src/index.ts",
+    "build": "tsup src/index.ts --dts && pnpm run build-css",
+    "build:fast": "tsup src/index.ts && pnpm run build-css",
     "dev": "pnpm build:fast --watch",
     "build-css": "vite build"
   },
