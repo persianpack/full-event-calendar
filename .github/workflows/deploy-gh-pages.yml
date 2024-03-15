@@ -47,9 +47,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: build dependencies
-        run: pnpm run build
-
       - name: Build
         run: pnpm run docs:build
 
