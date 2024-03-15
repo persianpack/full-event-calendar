@@ -68,7 +68,6 @@
       "dependsOn": [
         "@full-event-calendar/utils#build",
         "@full-event-calendar/locale#build",
-        "@full-event-calendar/weekly-grid#build",
         "@full-event-calendar/month-grid#build",
         "@full-event-calendar/daily-grid#build",
         "@full-event-calendar/basic-grid#build",
