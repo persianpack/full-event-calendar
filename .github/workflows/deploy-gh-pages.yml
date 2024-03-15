@@ -48,7 +48,7 @@ jobs:
         run: pnpm install
 
       - name: build dependencies
-        run: pnpm run build
+        run: pnpm run build-demo-que
 
       - name: Build
         run: pnpm run docs:build

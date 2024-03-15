@@ -21,6 +21,7 @@
     "precommit": "pretty-quick --staged",
     "commitmsg": "node scripts/verify.js",
     "prepare": "husky install .husky",
+    "build-demo-que": "cd ./packages/utils && pnpm run build && cd ../locale && pnpm run build && cd ../shared-types && pnpm run build  && cd ../group-grid && pnpm run build && cd ../basic-grid && pnpm run build && cd ../daily-grid && pnpm run build && cd ../weekly-grid && pnpm run build && cd ../month-grid && pnpm run build && cd ../list && pnpm run build && cd ../core && pnpm run build  && cd ../vue3 && pnpm run build && cd ../react && pnpm run build",
     "build-css": "vite build",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs && cd ./packages/vue3 && pnpm run build-demo && cd ../.. && node ./scripts/build-demo.js",
