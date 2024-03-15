@@ -31,38 +31,6 @@
     },
     "vanilla-examples#dev": {
       "dependsOn": [
-        "@full-event-calendar/basic-grid#dev",
-        "@full-event-calendar/daily-grid#dev",
-        "@full-event-calendar/group-grid#dev",
-        "@full-event-calendar/list#dev",
-        "@full-event-calendar/month-grid#dev",
-        "@full-event-calendar/shared-ts#dev",
-        "@full-event-calendar/utils#dev",
-        "@full-event-calendar/weekly-grid#dev"
-      ]
-    },
-
-    "@full-event-calendar/weekly-grid#dev": {
-      "dependsOn": ["@full-event-calendar/daily-grid#dev", "@full-event-calendar/month-grid#dev"]
-    },
-    "@full-event-calendar/daily-grid#dev": {
-      "dependsOn": ["@full-event-calendar/basic-grid#dev", "@full-event-calendar/group-grid#dev"]
-    },
-    "@full-event-calendar/basic-grid#dev": {
-      "dependsOn": ["@full-event-calendar/shared-ts#dev", "@full-event-calendar/utils#dev"]
-    },
-    "@full-event-calendar/list#dev": {
-      "dependsOn": ["@full-event-calendar/shared-ts#dev", "@full-event-calendar/utils#dev"]
-    },
-    "@full-event-calendar/group-grid#dev": {
-      "dependsOn": ["@full-event-calendar/shared-ts#dev", "@full-event-calendar/utils#dev"]
-    },
-    "@full-event-calendar/month-grid#dev": {
-      "dependsOn": ["@full-event-calendar/utils#dev"]
-    },
-
-    "vue3#build": {
-      "dependsOn": [
         "@full-event-calendar/basic-grid#build",
         "@full-event-calendar/daily-grid#build",
         "@full-event-calendar/group-grid#build",
@@ -70,30 +38,47 @@
         "@full-event-calendar/month-grid#build",
         "@full-event-calendar/shared-ts#build",
         "@full-event-calendar/utils#build",
-        "@full-event-calendar/weekly-grid#build"
+        "@full-event-calendar/weekly-grid#build",
+        "@full-event-calendar/core#build"
       ]
     },
-    "@full-event-calendar/weekly-grid#build": {
-      "dependsOn": ["@full-event-calendar/daily-grid#build", "@full-event-calendar/month-grid#build"]
+
+    "@full-event-calendar/basic-grid#build": {
+      "dependsOn": ["@full-event-calendar/utils#build", "@full-event-calendar/locale#build"]
     },
     "@full-event-calendar/daily-grid#build": {
-      "dependsOn": ["@full-event-calendar/basic-grid#build", "@full-event-calendar/group-grid#build"]
-    },
-    "@full-event-calendar/basic-grid#build": {
-      "dependsOn": ["@full-event-calendar/shared-ts#build", "@full-event-calendar/utils#build"]
-    },
-    "@full-event-calendar/list#build": {
-      "dependsOn": ["@full-event-calendar/shared-ts#build", "@full-event-calendar/utils#build"]
+      "dependsOn": ["@full-event-calendar/shared-ts#build"]
     },
     "@full-event-calendar/group-grid#build": {
-      "dependsOn": ["@full-event-calendar/shared-ts#build", "@full-event-calendar/utils#build"]
+      "dependsOn": ["@full-event-calendar/utils#build", "@full-event-calendar/shared-ts#build"]
+    },
+    "@full-event-calendar/list#build": {
+      "dependsOn": ["@full-event-calendar/utils#build", "@full-event-calendar/locale#build"]
     },
     "@full-event-calendar/month-grid#build": {
-      "dependsOn": ["@full-event-calendar/utils#build"]
+      "dependsOn": ["@full-event-calendar/utils#build", "@full-event-calendar/locale#build"]
+    },
+    "@full-event-calendar/shared-ts#build": {
+      "dependsOn": []
+    },
+    "@full-event-calendar/utils#build": {
+      "dependsOn": ["@full-event-calendar/shared-ts#build"]
+    },
+    "@full-event-calendar/weekly-grid#build": {
+      "dependsOn": [
+        "@full-event-calendar/utils#build",
+        "@full-event-calendar/locale#build",
+        "@full-event-calendar/weekly-grid#build",
+        "@full-event-calendar/month-grid#build",
+        "@full-event-calendar/daily-grid#build",
+        "@full-event-calendar/basic-grid#build",
+        "@full-event-calendar/group-grid#build"
+      ]
     },
     "@full-event-calendar/locale#build": {
-      "dependsOn": ["@full-event-calendar/utils#build"]
+      "dependsOn": []
     },
+
     "@full-event-calendar/core#build": {
       "dependsOn": [
         "@full-event-calendar/basic-grid#build",
@@ -105,18 +90,6 @@
         "@full-event-calendar/utils#build",
         "@full-event-calendar/weekly-grid#build",
         "@full-event-calendar/locale#build"
-      ]
-    },
-    "@full-event-calendar/core#dev": {
-      "dependsOn": [
-        "@full-event-calendar/basic-grid#dev",
-        "@full-event-calendar/daily-grid#dev",
-        "@full-event-calendar/group-grid#dev",
-        "@full-event-calendar/list#dev",
-        "@full-event-calendar/month-grid#dev",
-        "@full-event-calendar/shared-ts#dev",
-        "@full-event-calendar/utils#dev",
-        "@full-event-calendar/weekly-grid#dev"
       ]
     }
   },
