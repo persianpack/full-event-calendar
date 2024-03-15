@@ -542,7 +542,7 @@ watch(selectedTz, () => {
 </script>
 
 <template>
-  <div style="display: flex">
+  <div style="display: flex; flex-wrap: wrap">
     <div style="margin: 30px 10px">
       <label for="cars">Choose a timezone :</label>
       <select name="cars" id="cars" v-model="selectedTz">
