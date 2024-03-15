@@ -1,6 +1,6 @@
 {
   "name": "@full-event-calendar/month-grid",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A grid",
   "main": "dist/index.cjs",
   "module": "dist/index.js",
