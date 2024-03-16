@@ -8,7 +8,7 @@ Full Event Calendar is a simple, lightweight, and fast event calendar that rende
 
 Inspired by [FullCalendar](https://fullcalendar.io/) and [ClickUp](https://clickup.com/).
 ## Demo
-Check out Live demo at [**_https://persianpack.github.io/full-event-calendar/ex.html_**](https://https://persianpack.github.io/full-event-calendar/ex.html) and full Docs at [**_https://persianpack.github.io/full-event-calendar/__**](https://persianpack.github.io/full-event-calendar/)
+Check out Live demo at [**_https://persianpack.github.io/full-event-calendar/ex.html_**](https://persianpack.github.io/full-event-calendar/ex.html) and full Docs at [**_https://persianpack.github.io/full-event-calendar/_**](https://persianpack.github.io/full-event-calendar/)
 <!-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale/getCalendars#supported_calendar_types -->
 Connectors:
 
